@@ -1,0 +1,87 @@
+﻿
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="~/Scripts/canvas-bg/css/component.css" />
+<style>
+    .large-header {
+        background-image: url("../img/demo-1-bg.jpg");
+    }
+    .about-intro{
+        position:absolute;
+        top:15%;
+        width:100%;
+        margin:0 auto;
+    }
+    .join p:hover{
+    }
+</style>
+
+<div id="large-header" class="large-header">
+    <canvas id="demo-canvas"></canvas>
+
+    <div class="about-intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2 class="customer-h2 whitefont">平台简介</h2>
+                    <p class="customer-content-md whitefont">厦门智能+创新创业公共服务平台由厦门产业技术研究院与英特尔、硅谷高创会、厦门市派美特科技有限公司等共建。平台定位于为各众创空间助力传统产业升级转型和创新创业团队的智能产品项目提供高效的转化支撑综合服务，可以在创新创业各阶段弥补他们的不足和短板并提高项目成功率。平台将创意、创新、创业、市场、资本、孵化和产业化相结合，进行嫁接磨合，快速低成本地验证创新创业产品的市场、完善制造技术（工程化）、管控供应链和成本、对接资本市场等，加速项目的市场化与产业化，同时也为各个众创空间、高校及孵化器、科研院所提供一个低门槛、低成本、专业化、全要素、全流程、开放式的智能产品和智能制造协同创新一站式服务平台。</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="customer-h2">加入平台</h2>
+            </div>
+        </div>
+        <div class="row join">
+            <div class="col-md-12">
+                <p class="customer-content-md text-center">
+
+                    如果，你有一个好的创意，却无力实现，<br />
+                    加入我们，让你理想照进现实；<br />
+                    如果，你的项目已初具雏形，却遭受阻力，无法继续向前，<br />
+                    加入我们，协助你创造完整的产品；<br />
+                    如果，你已拥有完整的产品，却苦于没有渠道推向市场；<br />
+                    加入我们，让你的产品迅速打通市场；<br />
+                    理想还是要有的，万一见鬼了呢！
+                </p>
+                <br /><br />
+                <p class="customer-content-md text-center">
+
+                    爱创新，充满奇思妙想？<br />
+                    爱发明，致力于爱创新，充满奇思妙想？<br />
+                    爱发明，致力于将想法变成行动？<br />
+                    厦门智能+创新创业公共服务平台，等你来！<br />
+                    这是一个创客们的大本营。在这里，你可以：<br />
+                    向志同道合的伙伴们展示自己的作品，分享创作的快乐；<br />
+                    和全世界的创客大神们一起煮酒论英雄；<br />
+                    更有创客教父李大维、高磊等创客大神亲临现场，与你分享点滴感悟。<br />
+                    现在就马上加入我们的团队，与大家分享你的创意和奇思妙想，加入创客大狂欢！
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/canvas-bg/TweenLite.min.js"></script>
+<script src="~/Scripts/canvas-bg/EasePack.min.js"></script>
+<script src="~/Scripts/canvas-bg/rAF.js"></script>
+<script src="~/Scripts/canvas-bg/demo-1.js"></script>
+
+<script>
+    $(function () {
+        $(".join").hover(function () {
+            $(".join").addClass("animated flipInY");
+        }, function () {
+            //$(".join").removeClass("animated flip");
+        });
+
+    })
+</script>

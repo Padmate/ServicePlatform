@@ -1,0 +1,1016 @@
+﻿
+@using Padmate.ServicePlatform.Entities;
+@{
+    string type = (string)ViewData["type"];
+    List<Article> activityForecastArticles = (List<Article>)ViewData["activityForecastArticles"];
+    List<Article> wonderfulActivityArticles = (List<Article>)ViewData["wonderfulActivityArticles"];
+    List<Article> informationArticles = (List<Article>)ViewData["informationArticles"];
+
+    List<Image> homebgImages = (List<Image>)ViewData["homebgImages"];
+    
+}
+
+<script src="~/Scripts/cbpAnimatedHeader.js"></script>
+<script src="~/Scripts/particle/jquery.particleground.min.js"></script>
+
+
+<style>
+  
+   
+</style>    
+
+<!--左侧边栏-->
+<div class="nav-float suspendedList hidden">
+    <h4 class="panel-title" style="width:144px;">
+        <a href="javaScript:void(0)" class="suspendedBtn">
+            <i class="fa fa-lg fa-chevron-left" style="color:white;"></i>
+        </a>
+    </h4>
+    <ul>
+        <li class="nav-float-title"><strong>平台服务</strong></li>
+        <li><a class="page-scroll" href="#services-marketplatform"><strong>市场平台</strong></a></li>
+        <li><a class="page-scroll" href="#services-productplatform"><strong>产品平台</strong></a></li>
+        <li><a class="page-scroll" href="#services-projectplatform"><strong>工程平台</strong></a></li>
+        <li><a class="page-scroll" href="#services-makeplatform"><strong>制造平台</strong></a></li>
+        <li><a class="page-scroll" href="#services-sellplatform"><strong>销售平台</strong></a></li>
+        <li><a class="page-scroll" href="#services-supplymanagement"><strong>供应链管理</strong></a></li>
+        <li><a class="page-scroll" href="#services-brandpaltform"><strong>品牌经营</strong></a></li>
+        <li><a class="page-scroll" href="#services-tutorplatform"><strong>导师平台</strong></a></li>
+        <li><a class="page-scroll" href="#services-fundplatform"><strong>资金平台</strong></a></li>
+    </ul>
+</div>
+
+
+<!-- Header -->
+<header>
+    <div id="headbg-img" class="carousel slide">
+        <!-- 轮播（Carousel）指标 -->
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < homebgImages.Count; i++)
+            {
+                var activeClass = "";
+                if (i == 0)
+                {
+                    activeClass = "active";
+                }
+                <li data-target="#headbg-img" data-slide-to="@i" class="blackfont @activeClass"></li>
+            }
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            @for (int i = 0; i < homebgImages.Count; i++)
+            {
+                var activeClass = "";
+                if (i == 0)
+                {
+                    activeClass = "active";
+                }
+                <div class="item @activeClass">
+                    <img class="image-bigsize" src="@homebgImages[i].ImageUrl">
+
+                </div>
+            }
+
+        </div>
+        @if (homebgImages.Count > 1)
+        {
+            //超过一张才需要轮播导航按钮
+            <!-- 轮播（Carousel）导航 -->
+            <a class="carousel-control" href="#headbg-img"
+               data-slide="prev"><span class="icon-prev" style="font-size: 50px; top: 70%;"></span></a>
+            <a class="carousel-control" style="right:0;left:auto;" href="#headbg-img"
+               data-slide="next"><span class="icon-next" style="font-size: 50px; top: 70%;"></span></a>
+        }
+
+    </div>
+
+</header>
+
+<section class="partner">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="customer-h2">合作伙伴</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/1.png" />
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/2.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/3.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/4.png" />
+
+                </a>
+
+            </div>
+
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/5.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/6.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/7.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/8.png" />
+
+                </a>
+
+            </div>
+
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/9.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/10.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/11.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/12.png" />
+
+                </a>
+
+            </div>
+
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/13.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/14.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/15.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/16.png" />
+
+                </a>
+
+            </div>
+
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/17.png" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="image200" src="~/img/Service/BrandPlatform/partner/18.png" />
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+ <!-- Services Section -->
+<section id="services" class="service-section">
+    <div class="container">
+        
+        <div class="row particles" id="particles">
+            <div class="service-intro">
+                <div class="col-lg-12 text-center">
+                    <h2 class="customer-h2 whitefont">
+                        <strong class="nine wow slideInDown">9</strong>
+                        大服务供您选择
+                    </h2>
+                </div>
+            </div>
+                    
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/MarketPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+                        <img src="~/img/Service/service-market.png" class="image96" />
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8 service-info">
+                        <h4 class="customer-h4 whitefont">市场平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            进行市场调研、举办论坛讲座和创意创新创业大赛
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-market">市场平台</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/ProductPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+                        <img src="~/img/Service/service-product.png" class="image96" />
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">产品平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            设计-方案、客户需求、产品众筹、ODM/OEM
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-6 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-product">产品平台</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/ProjectPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+                        <img src="~/img/Service/service-project.png" class="image96" />
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">工程平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            样板制作、模治检量工具、试做试产、产品认证
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-project">工程平台</span>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/MakePlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+
+                        <img src="~/img/Service/service-make.png" class="image96" />
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">制造平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            大批量生产&专业化制造
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-make">制造平台</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/SellPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+
+                        <img src="~/img/Service/service-sell.png" class="image96" />
+
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">销售平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            国内电商、跨境电商、B2B、B2C等进行销售
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-sell">销售平台</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/SupplyManagement?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+                        <img src="~/img/Service/service-supply.png" class="image96" />
+
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">供应链管理</h4>
+                        <span class="customer-content-sm whitefont">
+                            仓储物流、分发配送、采购外发、精益管理
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-supply">供应链管理</span>
+                    </div>
+                </a>
+
+
+            </div>
+
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/BrandPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+                        <img src="~/img/Service/service-brand.png" class="image96" />
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">品牌经营</h4>
+                        <span class="customer-content-sm whitefont">
+                            进行品牌策划、品牌管理、品牌开发、品牌规划等
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-brand">品牌经营</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/TutorPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+                        <img src="~/img/Service/service-tutor.png" class="image96" />
+
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">导师平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            战略规划、企业教练、顾问培训、产学研、协会、人力资源开发
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-tutor">导师平台</span>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
+                <a href="/Service/FundPlatform?nav=service">
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
+
+                        <img src="~/img/Service/service-fund.png" class="image96" />
+
+                    </div>
+                    <div class="col-xs-8 col-is-8 col-sm-8 col-md-8">
+                        <h4 class="customer-h4 whitefont">资金平台</h4>
+                        <span class="customer-content-sm whitefont">
+                            发起种子基金、进行股权投资、对接股权众筹、基金、PE、VC、股权交易结构和保险、银行等金融机构
+                        </span>
+                    </div>
+                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 service-more wrap">
+                        <span class="ribbon6 ribbon-fund">资金平台</span>
+                    </div>
+                </a>
+
+            </div>
+
+
+        </div>
+    </div>
+    
+</section>
+
+<!--#endregion Service-->
+<!--Activity Section-->
+<section id="activity" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="customer-h2" style="margin-bottom: 20px;">活动预告&精彩活动</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="customer-h3">
+                <i class="fa fa-play" aria-hidden="true"></i>
+                活动预告
+            </h3>
+            @{
+                for (int i = 0; i < activityForecastArticles.Count; i++)
+                {
+                    var contentHref = "/Article/ShowContent?id=" + activityForecastArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
+                    var aHref = activityForecastArticles[i].IsHref ? activityForecastArticles[i].Href : contentHref;
+                    var aTarget = activityForecastArticles[i].IsHref ? "_blank" : "_self";
+
+                    if (i >= 3) { break; };
+                    <div class="col-is-6 col-sm-4 col-md-4 text-center">
+                        <div class="service-box">
+                            <a href="@aHref" class="information-box" target="@aTarget">
+                                <img class="image-smallsize" src="@activityForecastArticles[i].ArticleImage" />
+                                <div class="information-box-caption">
+                                    <div class="information-box-caption-content">
+
+                                        <div class="project-name">
+                                            查看详细
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="service-information-caption">
+                                <h4 class="customer-h4">
+                                    @activityForecastArticles[i].Title
+                                </h4>
+                                <span class="customer-content-sm">
+                                    @activityForecastArticles[i].SubTitle
+
+                                </span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+        <div class="row">
+            <h3 class="customer-h3">
+                <i class="fa fa-play" aria-hidden="true"></i>
+                精彩活动
+            </h3>
+            @{
+                for (int i = 0; i < wonderfulActivityArticles.Count; i++)
+                {
+                    var contentHref = "/Article/ShowContent?id=" + wonderfulActivityArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
+                    var aHref = wonderfulActivityArticles[i].IsHref ? wonderfulActivityArticles[i].Href : contentHref;
+                    var aTarget = wonderfulActivityArticles[i].IsHref ? "_blank" : "_self";
+
+                    if (i >= 3) { break; };
+                    <div class="col-is-6 col-sm-4 col-md-4 text-center" style="padding-right:25px;">
+                        <div class="service-box">
+                            <a href="@aHref" class="information-box" target="@aTarget">
+                                <img class="image-smallsize" src="@wonderfulActivityArticles[i].ArticleImage" />
+                                <div class="information-box-caption">
+                                    <div class="information-box-caption-content">
+
+                                        <div class="project-name">
+                                            查看详细
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="service-information-caption">
+                                <h4 class="customer-h4">
+                                    @wonderfulActivityArticles[i].Title
+                                </h4>
+                                <p class="customer-content-sm">
+                                    @wonderfulActivityArticles[i].SubTitle 
+                                </p>
+                            </div>
+                           
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="row">
+            <div class="col-md-offset-5 col-md-7">
+                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Article/Index?nav=activity&anchor=wonderfulactivity">
+                    <i class="fa fa-refresh"></i>
+                    <span class="customer-content-sm whitefont">更多活动</span>
+                </a>
+
+
+            </div>
+        </div>
+        <script>
+             
+            //找出所有service-information-caption中div最高的那个高度
+            var higestCaption = 0;
+            $(".service-information-caption").each(function () {
+                
+                var sectionHight = $(this).height();
+                if(higestCaption < sectionHight)
+                {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有service-information-caption的div高度赋值为最高高度
+            $(".service-information-caption").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
+
+
+            });
+            
+        </script>
+    </div>
+</section>
+
+<!--information-->
+<section id="information" class="bg-light-gray" style="padding-bottom:0px;">
+
+    <div class="row no-gutter">
+        @{
+            for (int i = 0; i < informationArticles.Count; i++)
+            {
+                var contentHref = "/Article/ShowContent?id=" + informationArticles[i].Id + "&returnUrl=/Home/Default&anchor=information";
+                var aHref = informationArticles[i].IsHref ? informationArticles[i].Href : contentHref;
+                var aTarget = informationArticles[i].IsHref ? "_blank" : "_self";
+
+                if (i >= 6) { break; };
+                <div class="col-is-6 col-sm-4 col-md-4 ">
+                    <a href="@aHref" class="information-box" target="@aTarget">
+                        <img class="image-mediumsize" src="@informationArticles[i].ArticleImage" />
+                        <div class="information-box-caption">
+                            <div class="information-box-caption-content">
+                                <div class="project-category text-faded">
+                                    &nbsp;
+                                </div>
+                                <div class="project-name">
+                                    了解更多
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+    <div class="row bg-black" style="padding:40px 0px;">
+        <div class="col-lg-12 text-center">
+            <h2 class="customer-h2 whitefont" style="margin: 0px 0px 5px 0px;">最新资讯随时分享</h2>
+            <a class="btn-gelatine btn-gelatine-white-lg" href="/Article/Index?nav=info&anchor=information">
+                <i class="fa fa-refresh"></i>
+                <span class="customer-content-sm">更多资讯</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="customer-h2">关于我们</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle image-auto" src="~/img/about/introduce.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="customer-h4">平台简介</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <span class="customer-content-xs">厦门智能+创新创业公共服务平台由厦门产业技术研究院与英特尔、硅谷高创会、厦门市派美特科技有限公司等共建。平台定位于为各众创空间助力传统产业升级转型和创新创业团队的智能产品项目提供高效的转化支撑综合服务，可以在创新创业各阶段弥补他们的不足和短板并提高项目成功率。平台将创意、创新、创业、市场、资本、孵化和产业化相结合，进行嫁接磨合，快速低成本地验证创新创业产品的市场、完善制造技术（工程化）、管控供应链和成本、对接资本市场等，加速项目的市场化与产业化，同时也为各个众创空间、高校及孵化器、科研院所提供一个低门槛、低成本、专业化、全要素、全流程、开放式的智能产品和智能制造协同创新一站式服务平台。</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="~/img/about/3.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel" style="padding-right:0px;">
+                            <div class="timeline-heading">
+                                <h4 class="customer-h4">加入平台</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="customer-content-xs text-center">
+
+                                    如果，你有一个好的创意，却无力实现，<br />
+                                    加入我们，让你理想照进现实；<br />
+                                    如果，你的项目已初具雏形，却遭受阻力，无法继续向前，<br />
+                                    加入我们，协助你创造完整的产品；<br />
+                                    如果，你已拥有完整的产品，却苦于没有渠道推向市场；<br />
+                                    加入我们，让你的产品迅速打通市场；<br />
+                                    理想还是要有的，万一见鬼了呢！
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-panel" style="float:right;padding-left:0px;">
+                            <div class="timeline-heading">
+                                <h4>&nbsp;</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="customer-content-xs text-center">
+
+                                    爱创新，充满奇思妙想？<br />
+                                    爱发明，致力于爱创新，充满奇思妙想？<br />
+                                    爱发明，致力于将想法变成行动？<br />
+                                    厦门智能+创新创业公共服务平台，等你来！<br />
+                                    这是一个创客们的大本营。在这里，你可以：<br />
+                                    向志同道合的伙伴们展示自己的作品，分享创作的快乐；<br />
+                                    和全世界的创客大神们一起煮酒论英雄；<br />
+                                    更有创客教父李大维、高磊等创客大神亲临现场，与你分享点滴感悟。<br />
+                                    现在就马上加入我们的团队，与大家分享你的创意和奇思妙想，加入创客大狂欢！
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <h4 class="customer-h4">
+                                Be Part
+                                <br>Of Our
+                                <br>Story!
+                            </h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="customer-h2 whitefont">联系我们</h2>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="contact-section">
+                    <h4 class="customer-h4 whitefont">产品开发</h4>
+                    <p class="customer-content-sm whitefont">	陈先生，邮箱：cwm@hardagroup.com</p>
+                </div>
+                <div class="contact-section">
+                    <h4 class="customer-h4 whitefont">供应链</h4>
+                    <p class="customer-content-sm whitefont">杜先生，邮箱：dxb@hardagroup.com</p>
+                </div>
+                <div class="contact-section">
+                    <h4 class="customer-h4 whitefont">投融资</h4>
+                    <p class="customer-content-sm whitefont">
+                        黄先生，邮箱：hxh@padmate.cn
+                        <br /><span style="padding-left:65px;">联系电话：15160022892</span>
+                        <br />陈先生，邮箱：cyc@padmate.cn
+                        <br /><span style="padding-left:65px;">联系电话：15805915836
+                    </p>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-section">
+                    <h4 class="customer-h4 whitefont">工程制作、检测</h4>
+                    <p class="customer-content-sm whitefont">郑先生，邮箱：zhe@padmate.cn</p>
+                </div>
+                <div class="contact-section">
+                    <h4 class="customer-h4 whitefont">市场</h4>
+                    <p class="customer-content-sm whitefont">
+                        董先生，邮箱：dongliang@padmate.cn（国内线下）<br />
+                        柯先生，邮箱：knj@padmate.cn（国内电商）<br />
+                        李小姐，邮箱：plum@hardagroup.com（国内大客户）<br />
+                        熊先生，邮箱：rickey@padmate.cn（国际贸易）
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="你的邮箱" id="emailfrom">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="emailto"> 
+                        <option value="mzp@padmate.cn">产品研发-陈先生</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="邮件主题" id="emailsubject">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="邮件内容" id="emailbody"></textarea>
+                </div>
+                <div class="text-right">
+                    <a class="btn-gelatine btn-gelatine-website" href="javaScript:void(0);" id="btn-sendmail">发送邮件</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    $(function () {
+        //初始化wow动画
+        new WOW().init();
+        InitSuspendedBtn();
+        InitCarousel();
+        //InitCollapse();
+        //InitSlick();
+        //InitTabPanel();
+        InitialModal();
+        InitSuperSlider();
+        
+        ServiceHover();
+
+        SendMail();
+        //粒子系统
+        $('#particles').particleground({
+            dotColor: 'rgba(190, 190, 153, 0.81)',
+            lineColor: 'rgba(190, 190, 153, 0.81)',
+            directionY:'up'
+        });
+        //为relative父级div赋值absolute高度
+        sliderheight();
+        $(window).resize(sliderheight);
+    })
+    
+    
+    //发送邮件
+    function SendMail() {
+        $("#btn-sendmail").click(function () {
+
+            var obj = {
+                From: $("#emailfrom").val(),
+                To: $("#emailto").val(),
+                Subject: $("#emailsubject").val(),
+                Body: $("#emailbody").val()
+            };
+
+            var jsonParam = JSON.stringify(obj);
+            $.ajax({
+                type: "POST",
+                url: "/Home/SendMail",
+                dataType: "json",
+                data: jsonParam,
+                async: false,   //同步
+                success: function (status) {
+                    //图片更新后不做任何操作
+                }
+            });
+
+            
+
+        });
+    }
+
+    function ServiceHover()
+    {
+        $(".service-col").bind('mouseenter', function () {
+            $(this).addClass("animated flipInX");
+            var current = $(this);
+            //删除出选中div外的其它div的特效
+            $(".service-col").each(function () {
+                if (current.html() != $(this).html())
+                {
+                    $(this).removeClass("animated flipInX");
+                }
+            });
+
+            //为service-more 设置高度
+            var divHeight = $(this).height();
+            $('.service-more').css({ 'height': divHeight });
+
+            $(this).find(".image-section").hide(50);
+            $(this).find(".service-more").show(50);
+        });
+
+        $(".service-col").bind('mouseleave',function () {
+           // $(this).removeClass("animated flipInY");
+            $(".image-section").show();
+            $(".service-more").hide();
+        });
+        //$(".service-col").hover(function () {
+            
+        //    $(this).addClass("animated flipInY");
+        //    $(this).find(".image-section").hide();
+        //    $(this).find(".service-more").show();
+        //},
+        //function () {
+        //    $(this).removeClass("animated flipInY");
+        //    $(".image-section").show();
+        //    $(".service-more").hide();
+
+        //});
+    }
+
+    function sliderheight() {
+        divHeight = $('.service-intro').height();
+        $('#particles').css({ 'height': divHeight });
+    }
+
+       
+    //初始化模态框事件
+    function InitialModal() {
+        //模态宽显示时，隐藏侧边栏和返回顶部按钮
+        $('.modal').on('show.bs.modal', function () {
+            $(".suspendedList").hide();
+            $(".nav-right-float").hide();
+        })
+
+        //模态框关闭时，恢复侧边栏和返回顶部按钮
+        $('.modal').on('hide.bs.modal', function () {
+            $(".suspendedList").show();
+            $(".nav-right-float").show();
+
+        })
+
+    }
+
+    //初始化侧边栏收缩按钮
+    function InitSuspendedBtn() {
+        $(".suspendedBtn").click(function () {
+
+            //获取侧边栏相对于left的大小
+            var leftPosition = $(".suspendedList").position().left;
+            if (leftPosition < 0) {
+                //展开
+                $(".suspendedList").animate({ left: "0px" }, 500);
+                $(".suspendedBtn").find("i").removeClass("fa-chevron-right");
+                $(".suspendedBtn").find("i").addClass("fa-chevron-left");
+            } else {
+                //收起
+                $(".suspendedList").animate({ left: "-130px" }, 500);
+                $(".suspendedBtn").find("i").removeClass("fa-chevron-left");
+                $(".suspendedBtn").find("i").addClass("fa-chevron-right");
+            }
+        });
+    }
+
+    //初始化轮播图片
+    function InitCarousel() {
+        $('#headbg-img').carousel({
+            interval: 6000,
+            pause: 'cycle'
+        });
+
+       
+    }
+
+    //初始化一行多图轮播
+    function InitSuperSlider()
+    {
+        /* 图片滚动效果 */
+        $(".mr_frbox").slide({
+            titCell: "",
+            mainCell: ".mr_frUl ul",
+            autoPage: true,
+            effect: "leftLoop",
+            autoPlay: true,
+            triggerTime: 100,
+            interTime: 2000,
+            vis: 3
+        });
+
+        //$(".mr_frbox").slide({
+        //    mainCell: ".mr_frUl ul",
+        //    autoPlay: true,
+        //    effect: "leftMarquee",
+        //    vis: 3,
+        //    interTime: 50,
+        //    trigger: "click"
+        //});
+    }
+
+    //初始化收缩面板
+    function InitCollapse() {
+        $('#collapseTwo').collapse('show');
+        $('#collapseThree').collapse('show');
+        $('#collapseOne').collapse('show');
+        $('#collapseFour').collapse('show');
+        $('#collapseFive').collapse('show');
+    }
+
+    //初始化可切换Tab面板
+    function InitTabPanel() {
+        //region 初始化Tab
+        $('#sellplatformTab a:last').tab('show');//初始化显示哪个tab
+        $('#sellplatformTab a').click(function (e) {
+            e.preventDefault();//阻止a链接的跳转行为
+            $(this).tab('show');//显示当前选中的链接及关联的content
+               
+        });
+        // #endregion
+    }
+
+    //初始化旋转效果
+    function InitSlick() {
+        $('.responsive').slick({
+            dots: true,
+            infinite: false,
+            speed: 100,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+
+
+    }
+
+    //初始化放大图片
+    function EnLargeImg()
+    {
+        xOffset = 200;
+        yOffset = 30;
+        $(".enlarge-left-img").find("img").hover(function (e) {
+                
+            $("<img id='imgshow' class='img-responsive' src='" + this.src + "' />").appendTo("body");
+            $("#imgshow")
+                .css("top", (e.pageY - xOffset) + "px")
+                .css("left", (e.pageX + yOffset) + "px")
+			    .fadeIn("fast");
+        }, function () {
+            $("#imgshow").remove();
+        });
+
+        $(".enlarge-left-img").find("img").mousemove(function (e) {
+            $("#imgshow")
+                .css("top", (e.pageY - xOffset) + "px")
+		        .css("left", (e.pageX + yOffset) + "px")
+        });
+
+        $(".enlarge-right-img").find("img").hover(function (e) {
+                
+            $("<img id='imgshow' class='img-responsive' src='" + this.src + "' />").appendTo("body");
+            $("#imgshow")
+                .css("top", (e.pageY - xOffset) + "px")
+                .css("right", (window.screen.width - e.pageX + yOffset) + "px")
+			    .fadeIn("fast");
+        }, function () {
+            $("#imgshow").remove();
+        });
+
+        $(".enlarge-right-img").find("img").mousemove(function (e) {
+            $("#imgshow")
+                .css("top", (e.pageY - xOffset) + "px")
+		        .css("right", (window.screen.width - e.pageX + yOffset) + "px")
+        });
+    }
+
+       
+</script>
+
+

@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity
+
+<style>
+    
+</style>
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right login-box fa-dropdown">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #8EC31E; background-color: transparent;">
+                @User.Identity.GetUserName()
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu login-li-bg">
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            @Html.ActionLink("系统管理", "SystemManage", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("文章管理", "Index", "Article")
+                        </li>
+                        @*<li>
+                            @Html.ActionLink("系统管理", "SystemManagement", "Home")
+                        </li>*@
+                    }
+                }
+                <li>
+                    @Html.ActionLink("密码管理", "ChangePassword", "Manage")
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" >注销</a></li>
+            </ul>
+        </li>
+
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right login-box">
+        <li>@Html.ActionLink("登录", "Login", "Account", new { ReturnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink", style = "color: #8EC31E;" })</li>
+    </ul>
+}

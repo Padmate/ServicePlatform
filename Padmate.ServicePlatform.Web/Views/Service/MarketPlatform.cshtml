@@ -1,0 +1,65 @@
+﻿
+<!--市场平台-->
+<section id="services-marketplatform">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-is-12 col-sm-5 col-md-5 service-section-halfcolumn wow slideInLeft">
+                <div id="service-scpt-img" class="carousel slide">
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#service-scpt-img" data-slide-to="0" class="active"></li>
+                        <li data-target="#service-scpt-img" data-slide-to="1"></li>
+                        <li data-target="#service-scpt-img" data-slide-to="2"></li>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img class="image-mediumsize" src="~/img/Service/MarketPlatform/2015.5.23海西创客论坛1.jpg">
+
+                        </div>
+                        <div class="item">
+                            <img class="image-mediumsize" src="~/img/Service/MarketPlatform/2015.5.23海西创客论坛2.jpg">
+
+                        </div>
+                        <div class="item">
+                            <img class="image-mediumsize" src="~/img/Service/MarketPlatform/2016.1American_CES_Show-1.jpg">
+
+
+                        </div>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#service-scpt-img"
+                       data-slide="prev">&lsaquo;</a>
+                    <a class="carousel-control right" href="#service-scpt-img"
+                       data-slide="next">&rsaquo;</a>
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-is-12 col-sm-7 col-md-7 service-section-halfcolumn wow slideInRight">
+                <h3 class="customer-h3 service-heading">市场平台</h3>
+                <span class="customer-content-sm">
+                    进行市场调研、举办论坛讲座和创意创新创业大赛，在国内外知名媒体进行广告宣传、参加国内国际一流展会
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    $(function () {
+
+        InitCarousel();
+
+    })
+
+    //初始化轮播图片
+    function InitCarousel() {
+
+        $('#service-scpt-img').carousel({
+            interval: 2000,
+            pause: 'hover'
+        });
+
+    }
+</script>

@@ -1,0 +1,254 @@
+﻿/**
+ * 动感弹性按钮
+ **/
+/*****Default button */
+a.btn-gelatine {
+  display: inline-block;
+  margin: 15px 15px 0;
+  padding: .8em 1.1em;
+  font-size: 26px;
+  font-size: 1.625rem;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #fe4365;
+  border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fe4365;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fe4365;
+  border: none;
+  -webkit-transition: -webkit-box-shadow .3s;
+  transition: box-shadow .3s;
+}
+a.btn-gelatine:hover, a.btn-gelatine:focus {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
+  -webkit-transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+  transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+  -webkit-animation: gelatine 0.5s 1;
+  animation: gelatine 0.5s 1;
+}
+
+
+a.btn-gelatine:active:active {
+  background: #4ecdc4;
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #3ac7bd;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #3ac7bd;
+}
+/****success button*/
+a.btn-gelatine-success {
+  background: #5cb85c;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #5cb85c;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #5cb85c;
+}
+a.btn-gelatine-success:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+/****info button****/
+a.btn-gelatine-info {
+  background: #31b0d5;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #31b0d5;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #31b0d5;
+}
+a.btn-gelatine-info:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+/***绿色***/
+a.btn-gelatine-website {
+  background: #8EC31E;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #8EC31E;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #8EC31E;
+}
+a.btn-gelatine-website:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+
+a.btn-gelatine-website-lg {
+  border-radius: 300px;
+  padding: .9em 2.3em;
+  font-weight:bolder;
+  background: #8EC31E;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #8EC31E;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #8EC31E;
+}
+a.btn-gelatine-website-lg:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+
+/***白色***/
+a.btn-gelatine-white {
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fff;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fff;
+}
+a.btn-gelatine-white:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+
+a.btn-gelatine-white-lg {
+  color:black;
+  border-radius: 300px;
+  background: #fff;
+  padding: .9em 2.3em;
+  font-weight:bolder;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fff;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fff;
+}
+a.btn-gelatine-white-lg:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+
+/***灰色***/
+a.btn-gelatine-gray {
+  background: #555;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #555;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #555;
+}
+a.btn-gelatine-gray:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+
+a.btn-gelatine-gray-lg {
+  padding: .9em 2.3em;
+  font-weight:bolder;
+  background: #555;
+  -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #555;
+  box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #555;
+}
+a.btn-gelatine-gray-lg:hover {
+  -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+  box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #bebe99;
+}
+
+/**
+ * $keyframes \ gelatine 
+ **/
+@keyframes gelatine {
+  from, to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+    transform: scale(0.95, 1.05);
+  }
+
+  from, to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+    transform: scale(0.95, 1.05);
+  }
+}
+@-webkit-keyframes gelatine {
+  from, to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+    transform: scale(0.95, 1.05);
+  }
+
+  from, to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+    transform: scale(0.95, 1.05);
+  }
+}
+/*********endergion 动感弹性按钮*********/
+
+a.btn-colorful {
+		font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+		font-size: 1.5em;
+		text-transform: uppercase;
+		padding: 7px 20px;
+		left: 50%;
+		top: 50%;
+		border-radius: 10px;
+		color: white;
+		text-shadow: -1px -1px 1px rgba(0,0,0,0.8);
+		border: 5px solid transparent;
+		border-bottom-color: rgba(0,0,0,0.35);
+		background: hsla(260, 100%, 50%, 1);
+		cursor: pointer;
+
+		animation: pulse 1s infinite alternate;
+		transition: background 0.4s, border 0.2s, margin 0.2s;
+	}
+	a.btn-colorful:hover {
+		background: hsla(220, 100%, 60%, 1);
+		margin-top: -1px;
+
+		animation: none;
+	}
+	a.btn-colorful:active {
+		border-bottom-width: 0;
+		margin-top: 5px;
+	}
+	@keyframes pulse {
+		0% {
+			margin-top: 0px;
+		}
+		100% {
+			margin-top: 6px; 
+		} 
+	}

@@ -1,0 +1,104 @@
+﻿
+
+.friend {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.mr_frbox {
+    padding: 24px 0px 0px;
+}
+
+.mr_frBtn{
+    cursor: pointer;
+    display: inline;
+    position:absolute;
+    top:60px;
+    z-index:300;
+}
+.mr_frBtnL {
+    left:20px;
+}
+.mr_frBtnR {
+    right:40px;
+}
+.mr_frUl {
+    float: left;
+    width: 100%;
+    position:relative;
+}
+
+.mr_frUl ul li {
+    display: inline;
+    float: left; /*height:389px;*/
+    width: 350%;
+    padding:0px 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .mr_frUl ul li a img { /*display:block;*/
+        width: 100%;
+    }
+
+.mr_zhe {
+    width: 300px;
+    position: absolute;
+    top: 0;
+    background: rgba(78, 164, 181, 0.65) none repeat scroll 0 0 !important; /*实现FF背景透明，文字不透明*/
+    filter: Alpha(opacity=80);
+    background: #4ea4b5; /*实现IE背景透明*/ /*height:389px;*/
+    left: 0;
+    right: 0;
+}
+
+.mr_zhe_i h1 {
+    text-align: center;
+    font-size: 182px;
+    height: 138px;
+    line-height: 138px;
+    margin-top: 72px;
+    margin-bottom: 64px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.mr_zhe_p {
+    margin-bottom: 60px;
+}
+
+    .mr_zhe_p h3 {
+        text-align: center;
+        font-size: 15px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 30px;
+    }
+
+        .mr_zhe_p h3 span {
+            display: block;
+            margin: 0 auto;
+            width: 260px;
+            font-size: 18px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+.mr_zhe_hover {
+    bottom: -596px;
+    height: 200px;
+    position: absolute;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important; /*实现FF背景透明，文字不透明*/
+    filter: Alpha(opacity=80);
+    background: #0a0a0a; /*实现IE背景透明*/
+}
+
+    .mr_zhe_hover h1 {
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        margin: 22px 0;
+        color: #fff;
+    }
+        

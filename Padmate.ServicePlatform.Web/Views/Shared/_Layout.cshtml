@@ -1,0 +1,305 @@
+﻿@{
+    var nav =  @Request["nav"];
+    
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>厦门智能﹢创新创业公共服务平台</title>
+    <link rel="shortcut icon" href="~/img/logos/favicon.ico" />
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/Scripts/slick/css/style.css" rel="stylesheet">
+    <link href="~/Scripts/slick/slick/slick.css" rel="stylesheet">
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/creative.css" rel="stylesheet">
+    <link href="~/Content/agency.css" rel="stylesheet">
+    <link href="~/Content/ribbon.css" rel="stylesheet">
+    <link href="~/Content/SuspendedNav.css" rel="stylesheet">
+    <link href="~/Scripts/jqzoom-2.3/css/jquery.jqzoom.css" rel="stylesheet">
+    <link href="~/Scripts/superslider/superslider.css" rel="stylesheet">
+
+    <link href="~/Content/buttons.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Scripts/loading/showLoading.css">
+    <link href="~/Content/system.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>*@
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+
+    </style>
+</head>
+<body id="page-top" class="index">
+   
+
+    <!-- Navigation -->
+    @{
+        var navClass = "navbar navbar-default navbar-fixed-top";
+        var bodyPaddingClass = "";
+        var contactUs = "#contact";
+        if (ViewBag.From != "Default")
+        {
+            navClass += " navbar-shrink";
+            bodyPaddingClass = "content-body-padding";
+            contactUs = "/Home/Contact?nav=about";
+        }
+    }
+    
+    <!--右侧边栏-->
+    <div class="nav-right-float">
+
+        <ul>
+            <!--联系我们-->
+            <li>
+                <a class="rightSection page-scroll information-box" href="@contactUs"
+                   style="display: block; background-color: rgba(52, 152, 219, 0.78)">
+                    <i class=" fa fa-phone-square">
+                    </i>
+                    <div class="information-box-caption">
+                        <div class="information-box-caption-content">
+
+                            <div style="font-size:medium;height:50px;">
+                                联系<br />我们
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </li>
+            <!--返回顶部-->
+            <li id="linavtop" class="navtop">
+                <a class="rightSection page-scroll information-box" href="#page-top"
+                   style="display: block; background-color: #999">
+                    <i class=" fa fa-angle-up">
+                    </i>
+                    <div class="information-box-caption">
+                        <div class="information-box-caption-content">
+
+                            <div style="font-size:medium;height:50px;">
+                                返回<br />顶部
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </li>
+        </ul>
+    </div>
+
+    <nav class="@navClass">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="/Home">厦门智能<sup>+</sup> 创新创业公共服务平台</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                @Html.Partial("_LoginPartial")
+                @if (ViewBag.From == "Default")
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top">首页</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#services">服务</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#activity">活动</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#information">资讯</a>
+                        </li>
+                        @*<li>
+                            <a class="page-scroll" href="#shop">商城</a>
+                        </li>*@
+                        <li>
+                            <a class="page-scroll" href="#about">关于我们</a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/Home">首页</a>
+                        </li>
+                        <li id="service" class="dropdown fa-dropdown">
+                            <a href="/Service/Index?nav=service">
+                                服务
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu nav-submenu">
+                                <li><a href="/Service/MarketPlatform?nav=service"> 市场平台</a></li>
+                                <li><a href="/Service/ProductPlatform?nav=service">产品平台</a></li>
+                                <li><a href="/Service/ProjectPlatform?nav=service">工程平台</a></li>
+                                <li><a href="/Service/MakePlatform?nav=service">制造平台</a></li>
+                                <li><a href="/Service/SellPlatform?nav=service">销售平台</a></li>
+                                <li><a href="/Service/SupplyManagement?nav=service">供应链管理</a></li>
+                                <li><a href="/Service/BrandPlatform?nav=service">品牌经营</a></li>
+                                <li><a href="/Service/TutorPlatform?nav=service">导师平台</a></li>
+                                <li><a href="/Service/FundPlatform?nav=service">资金平台</a></li>
+                            </ul>
+                        </li>
+                        <li id="activity"><a href="/Article/Index?nav=activity">活动</a></li>
+                        <li id="info"><a href="/Article/Index?nav=info&anchor=information">资讯</a></li>
+                        @*<li id="shop"><a href="/Home/Error">商城</a></li>*@
+                        <li id="about"><a href="/Home/About?nav=about">关于我们</a></li>
+                    </ul>
+
+                }
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="~/Scripts/jquery.easing.1.3.js"></script>
+    <script src="~/Scripts/classie.js"></script>
+    @*<script src="~/Scripts/cbpAnimatedHeader.js"></script>*@
+    <!-- Contact Form JavaScript -->
+    <script src="~/Scripts/jqBootstrapValidation.js"></script>
+    <script src="~/Scripts/contact_me.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Scripts/agency.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <!--wow-->
+    <script src="~/Scripts/wow.min.js"></script>
+    <script src="~/Scripts/slick/slick/slick.min.js"></script>
+    <!--Print font-->
+    <script src="~/Scripts/l-by-l.min.js"></script>
+    <script src="~/Scripts/superslider/jquery.SuperSlide2.js"></script>
+
+    <script src="~/Scripts/bootstrap-paginator.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/Scripts/loading/jquery.showLoading.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+    <script>
+        var nav = '@Request["nav"]';
+        $(function () {
+
+            if(nav != null && nav !="")
+            {
+                $("#" + nav).addClass("active");
+            }
+
+
+            $(".fa-dropdown").hover(function () {
+                $(this).find("ul").show();
+            }, function () {
+                $(this).find("ul").hide();
+
+            })
+
+            /*返回顶部*/
+            $(window).scroll(function () {
+                if ($(document).scrollTop() >= 600) {
+                    $("#linavtop").removeClass("navtop");
+                }
+                else {
+                    $("#linavtop").addClass("navtop");
+                }
+            });
+        })
+    </script>
+    <div class="content-body @bodyPaddingClass">
+        @RenderBody()
+
+    </div>
+    <section class="bg-black">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-md-offset-1">
+                    <p class="customer-content-xs whitefont">相关网站</p>
+                    <ul>
+                        <li>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.hardagroup.com/">华尔达(厦门)塑胶有限公司</a>
+                        </li>
+                        <li>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.harda.net/">华尔达(厦门)塑胶有限公司(卫浴)</a>
+                        </li>
+                        
+                        <li>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmate.cn/">派美特科技有限公司(中文网)</a>
+                        </li>
+                        <li>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmate.co.uk/">派美特科技有限公司(英文网)</a>
+                        </li>
+                        <li>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmatesmart.com/">派美特科技有限公司(OEM/ODM)</a>
+                        </li>
+
+                        <li>
+                            <a class=" customer-content-xs lightwhitefont" href="http://padmatespace.com/">派美特众创空间</a>
+                        </li>
+
+                    </ul>
+                   
+
+                </div>
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <p class="customer-content-xs whitefont">智能<sup>+</sup></p>
+                    <ul>
+                        <li><a class=" customer-content-xs lightwhitefont" href="/Home/About?nav=about">关于我们</a></li>
+                        <li><a class=" customer-content-xs lightwhitefont" href="/Home/Contact?nav=about">联系我们</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    
+                </div>
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <img src="~/img/logos/weixin.png" class="image200" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer style="background-color: black; border-top: solid 1px #222; ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="customer-content-xs whitefont">
+                     Copyright © 2016-@DateTime.Now.Year All Rights Reserved
+                        &nbsp;|&nbsp;
+                     备案号:闽ICP备16000044号-2
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

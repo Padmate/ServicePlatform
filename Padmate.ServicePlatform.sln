@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Web", "Padmate.ServicePlatform.Web\Padmate.ServicePlatform.Web.csproj", "{BA3647A1-B14D-4743-8A4E-C52A59FC4CA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Service", "Padmate.ServicePlatform.Service\Padmate.ServicePlatform.Service.csproj", "{3CBD5F1C-30E7-4703-98B0-F9CF97444704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.DataAccess", "Padmate.ServicePlatform.DataAccess\Padmate.ServicePlatform.DataAccess.csproj", "{A296064D-C8C2-48E5-AC8C-C6852C9CD6F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Utility", "Padmate.ServicePlatform.Utility\Padmate.ServicePlatform.Utility.csproj", "{B0169F8C-FB39-4429-9F5F-3005C7569E0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Entities", "Padmate.ServicePlatform.Entities\Padmate.ServicePlatform.Entities.csproj", "{1E66D616-276A-421A-B8C0-AC82A0C8C23D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA3647A1-B14D-4743-8A4E-C52A59FC4CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3647A1-B14D-4743-8A4E-C52A59FC4CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3647A1-B14D-4743-8A4E-C52A59FC4CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3647A1-B14D-4743-8A4E-C52A59FC4CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CBD5F1C-30E7-4703-98B0-F9CF97444704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CBD5F1C-30E7-4703-98B0-F9CF97444704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CBD5F1C-30E7-4703-98B0-F9CF97444704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CBD5F1C-30E7-4703-98B0-F9CF97444704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A296064D-C8C2-48E5-AC8C-C6852C9CD6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A296064D-C8C2-48E5-AC8C-C6852C9CD6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A296064D-C8C2-48E5-AC8C-C6852C9CD6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A296064D-C8C2-48E5-AC8C-C6852C9CD6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0169F8C-FB39-4429-9F5F-3005C7569E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0169F8C-FB39-4429-9F5F-3005C7569E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0169F8C-FB39-4429-9F5F-3005C7569E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0169F8C-FB39-4429-9F5F-3005C7569E0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

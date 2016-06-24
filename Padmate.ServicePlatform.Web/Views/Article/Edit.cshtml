@@ -1,0 +1,239 @@
+﻿@using Padmate.ServicePlatform.Web.Models;
+@using Padmate.ServicePlatform.Utility;
+@model ArticleViewModel
+@{
+    Padmate.ServicePlatform.Entities.Article article = (Padmate.ServicePlatform.Entities.Article)ViewData["article"];
+    var returnUrl = @Request["returnUrl"]; 
+}
+
+<style>
+    .inputS {
+        width: 50%;
+        max-width: 50%;
+        line-height: 35px;
+        height: 35px;
+    }
+    .textareaS {
+        height: 150px;
+        width: 50%;
+        max-width: 50%;
+    }
+    .imgSize-250{
+        height:250px;
+        width:100%;
+    }
+</style>
+<section>
+    <div class="container">
+        @using (Html.BeginForm("Edit", "Article", new { ReturnUrl = returnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <a href='@returnUrl' class="customer-content-sm" style="text-decoration:none;">
+                <i class="fa fa-arrow-left"></i>返回
+            </a>
+            <br />
+            <h3 class="customer-h3 text-center">修 改</h3>
+
+            @Html.ValidationSummary(true, null, new { @class = "login-tip" })
+            <hr />
+            <div class="form-group hidden">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Id, new { @Value = article.Id })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.Title, "一级标题：")
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Title, new { @placeholder = "一级标题", @class = "inputS", @Value = article.Title })
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.SubTitle, "二级标题：")
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.SubTitle, new { @placeholder = "二级标题", @class = "inputS", @Value = article.SubTitle })
+                    @Html.ValidationMessageFor(m => m.SubTitle, null)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.Description, "文章描述：")
+                </div>
+                <div class="col-md-10">
+                    <textarea class="textareaS" id="Description" name="Description">@article.Description</textarea>
+                    @Html.ValidationMessageFor(m => m.Description, null)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.ArticleImage, "文章图片：")
+                </div>
+                <div class="col-md-10">
+                    <input type="file" id="articleImage" name="articleImage" accept=".jpg,.png,.jpeg,.gif" />
+                </div>
+
+                <div class="col-lg-4 col-md-6" style="margin-top:10px;">
+
+
+                    @if (!string.IsNullOrEmpty(article.Type) && article.Type == Common.Information)
+                    {
+                        var imgSrc = "../img/medium_model.jpg";
+                        if (!string.IsNullOrEmpty(article.ArticleImage))
+                        {
+                            imgSrc = article.ArticleImage;
+                        }
+                        <img class="image-mediumsize" id="showUploadImage" src="@imgSrc" />
+                    }
+                    else
+                    {
+                        var imgSrc = "../img/small_model.jpg";
+                        if (!string.IsNullOrEmpty(article.ArticleImage))
+                        {
+                            imgSrc = article.ArticleImage;
+                        }
+                        <img class="image-smallsize" id="showUploadImage" src="@imgSrc" />
+
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.Pubtime, "发布时间：")
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group date form_datetime" data-date=""
+                         data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="PubTime">
+                        <input class="form-control" size="16" type="text" value="@article.Pubtime.ToString("yyyy-MM-dd hh:mm:ss")" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                    <input type="hidden" id="PubTime" name="PubTime" value="@article.Pubtime.ToString("yyyy-MM-dd hh:mm:ss")" /><br />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.IsHref, "是否链接：")
+                </div>
+                <div class="col-md-10">
+
+                    <input type="radio" value="true" name="IsHref" /><label>是</label>
+                    <input type="radio" value="false" checked="checked" name="IsHref" style="margin-left:50px;" /><label>否</label>
+
+                </div>
+            </div>
+
+            <div class="form-group" id="divArticleHref" style="display:none;">
+                <div class="col-md-2 control-label">
+                    @Html.LabelFor(m => m.Href, "文章链接：")
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Href, new { @placeholder = "文章链接", @class = "inputS", @Value = article.Href })
+                    @Html.ValidationMessageFor(m => m.Href, null)
+                </div>
+            </div>
+
+            <div class="form-group" id="divArticleContent">
+                <div class="col-md-12">
+                    @Html.ValidationMessageFor(m => m.Content, null)
+                    <br />
+                    <div class="checkbox">
+                        <textarea id="Content" name="Content">@article.Content</textarea>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-danger" style="float:right;" value="发 布" />
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+<script src="~/ckfinder/ckfinder.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script>
+
+    var editor = CKEDITOR.instances["Content"];
+    if (editor) { editor.distory(true); }
+    CKEDITOR.replace("Content", {
+        enterMode: CKEDITOR.ENTER_BR
+    });
+    CKFinder.setupCKEditor(null, '@Url.Content("~/ckfinder/")');
+
+    $(document).ready(function () {
+        //初始化文章内容
+        // CKEDITOR.instances.Content.setData("<h2>asdf</h2>");
+        $('.form_datetime').datetimepicker({
+            //language:  'fr',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            language: 'zh-CN'
+        });
+
+        $("#articleImage").change(function (e) {
+            setImagePreview();
+
+        });
+        
+
+        //文章是否链接事件
+        $("[name='IsHref']").change(function () {
+            ChangeHrefRadio();
+        });
+
+        //如果文章是链接，则选中链接选项
+        var isHref = '@article.IsHref';
+        if(isHref.toLowerCase() == "true")
+        {
+            $("input[type=radio][value=true]").attr("checked", 'checked');
+            ChangeHrefRadio();
+        }
+    });
+
+    function ChangeHrefRadio()
+    {
+        var isHref = $("input[name='IsHref']:checked").val();
+
+        $("#divArticleHref").toggle();
+        $("#divArticleContent").toggle();
+
+        if (isHref == "true") {
+            //如果是链接，则隐藏并且清空内容编辑框,显示Href输入框
+            CKEDITOR.instances.Content.setData("");
+
+        } else {
+            //如果不是链接，则隐藏并且清空Href输入框,显示内容编辑框
+            $("#Href").val(" ");
+        }
+    }
+
+    //下面用于图片上传预览功能
+    function setImagePreview() {
+        var docObj = document.getElementById("articleImage");
+        var imgSrc = "";
+        if (docObj.files && docObj.files[0]) {
+
+            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+            imgSrc = window.URL.createObjectURL(docObj.files[0]);
+        }
+        else {
+            //IE下，使用滤镜
+            docObj.select();
+            imgSrc = document.selection.createRange().text;
+
+        }
+        $("#showUploadImage").attr('src', imgSrc);
+    }
+</script> 

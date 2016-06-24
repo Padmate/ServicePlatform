@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+@model Padmate.ServicePlatform.Web.Models.RegisterViewModel
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="~/Content/login-style.css">
+
+</head>
+
+
+<body>
+    <div class="container">
+        <section id="content">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>注册新账户。</h4>
+                <hr />
+                @Html.ValidationSummary(false, null, new { @class = "login-tip" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @placeholder = "用户名", @class = "username" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = "密码", @class = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "确认密码", @class = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.EmailAddress, new { @placeholder = "邮箱", @class = "email" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="注册" />
+                    <a href="/Home/Default">回到首页</a>
+                    <a href="/Account/Login">Login</a>
+
+                </div>
+            }
+        </section><!-- content -->
+    </div><!-- container -->
+</body>
+
+</html>

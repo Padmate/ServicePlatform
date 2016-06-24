@@ -1,0 +1,109 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+/* nav-float */
+.nav-float {
+    width: 120px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1999;
+    background-color:transparent;
+    border: 1px solid #8EC31E;
+    margin: 10% 0 0 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 20px;
+    border-top-right-radius:5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-float-title{
+    background-color: #8EC31E; 
+    border-radius: 20px 0px 0px; 
+    font-size: large;color:white;
+}
+
+.nav-float li {
+    height: 36px;
+    line-height: 36px;
+    /*border-bottom: 1px solid #d3d3d3;*/
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav-float li:last-child {
+    border-bottom: none;
+}
+
+.nav-float li a {
+    display: block;
+    width: 98%;
+    height: 34px;
+    font-size: 16px;
+}
+
+.nav-float li a:hover {
+    background: #f9f9f9;
+    text-decoration: none;
+}
+
+.nav-float li a.cur {
+    background: #ffc;
+}
+
+.suspendedBtn{
+    float: right;
+    width: 25px; 
+    height: 60px; 
+    line-height: 60px; 
+    border-radius: 0px 5px 5px 0; 
+    text-align: center; 
+    background-color:rgba(131, 206, 31, 0.68);
+    /*background-color: rgba(52, 152, 219, 0.67);*/
+}
+
+/*modal close button*/
+.modalClose
+{
+    position:fixed;
+    right:50px;
+    bottom:20px;
+    z-index:9999
+}
+
+/*contact us*/
+.nav-right-float {
+    width: 60px;
+    position: fixed;
+    top: 100px;
+    right: 0;
+    z-index: 1999;
+    background-color:transparent;
+    margin: 10% 0 0 10px;
+}
+
+.rightSection {
+    display: none;
+    font-size: 32px;
+    font-weight: bold;
+    height: 50px;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    z-index: 9999;
+    color: white;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.rightSection:hover, .rightSection:focus {
+    text-decoration: none;
+    outline: none;
+}

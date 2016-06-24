@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        #imglist img {
+            width: 150px;
+            height: 120px;
+        }
+
+        #imgshow {
+            position: absolute;
+            border: 1px solid #ccc;
+            background: #333;
+            padding: 5px;
+            color: #fff;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <ul id="imglist">
+        <li><a><img src="http://www.jquery001.com/images/demo/35624390.jpg" alt="jQuery图片预览" /></a></li>
+    </ul>
+    <script src="~/Scripts/jquery.js"></script>
+    <script type="text/javascript">
+        var ShowImage = function () {
+            xOffset = 10;
+            yOffset = 30;
+            $("#imglist").find("img").hover(function (e) {
+                $("<img id='imgshow' src='" + this.src + "' />").appendTo("body");
+                $("#imgshow")
+                    .css("top", (e.pageY - xOffset) + "px")
+                	.css("left", (e.pageX + yOffset) + "px")
+			        .fadeIn("fast");
+            }, function () {
+                $("#imgshow").remove();
+            });
+
+            $("#imglist").find("img").mousemove(function (e) {
+                $("#imgshow")
+                   .css("top", (e.pageY - xOffset) + "px")
+		           .css("left", (e.pageX + yOffset) + "px")
+            });
+        };
+
+        $(document).ready(function () {
+            ShowImage();
+        });
+    </script>
+</body>
+</html>
