@@ -39,8 +39,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="B_Article.cs" />
+    <Compile Include="B_Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Padmate.ServicePlatform.DataAccess\Padmate.ServicePlatform.DataAccess.csproj">
+      <Project>{a296064d-c8c2-48e5-ac8c-c6852c9cd6f5}</Project>
+      <Name>Padmate.ServicePlatform.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Padmate.ServicePlatform.Entities\Padmate.ServicePlatform.Entities.csproj">
+      <Project>{1e66d616-276a-421a-b8c0-ac82a0c8c23d}</Project>
+      <Name>Padmate.ServicePlatform.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Padmate.ServicePlatform.Models\Padmate.ServicePlatform.Models.csproj">
+      <Project>{2a069975-6c63-449c-b549-4878c426dee2}</Project>
+      <Name>Padmate.ServicePlatform.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Padmate.ServicePlatform.Utility\Padmate.ServicePlatform.Utility.csproj">
+      <Project>{b0169f8c-fb39-4429-9f5f-3005c7569e0c}</Project>
+      <Name>Padmate.ServicePlatform.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,7 +5,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
-namespace Padmate.ServicePlatform.DataAccess
+namespace Padmate.ServicePlatform.DataAccess.DBConfiguration
 {
     public class MailAttachmentConfiguration:EntityTypeConfiguration<MailAttachment>
     {

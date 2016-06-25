@@ -5,11 +5,11 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
-namespace Padmate.ServicePlatform.DataAccess
+namespace Padmate.ServicePlatform.DataAccess.DBConfiguration
 {
-    public class ImageConfiguration : EntityTypeConfiguration<Image>
+    public class AtricleConfiguration : EntityTypeConfiguration<Article>
     {
-        internal ImageConfiguration()
+        internal AtricleConfiguration()
         {
             this.HasKey(m => m.Id);
 

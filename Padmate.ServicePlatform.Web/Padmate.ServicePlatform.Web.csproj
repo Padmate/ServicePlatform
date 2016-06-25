@@ -39,21 +39,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ckfinder\bin\Debug\CKFinder.dll</HintPath>
+    <Reference Include="CKFinder">
+      <HintPath>..\..\Padmate\Padmate.ServicePlatform\RefBin\CKFinder.dll</HintPath>
     </Reference>
-    <Reference Include="CKFinder_FileEditor, Version=2.1.0.1132, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ckfinder\bin\Debug\CKFinder_FileEditor.dll</HintPath>
+    <Reference Include="CKFinder_FileEditor">
+      <HintPath>..\..\Padmate\Padmate.ServicePlatform\RefBin\CKFinder_FileEditor.dll</HintPath>
     </Reference>
-    <Reference Include="CKFinder_ImageResize, Version=2.1.0.1132, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ckfinder\bin\Debug\CKFinder_ImageResize.dll</HintPath>
+    <Reference Include="CKFinder_ImageResize">
+      <HintPath>..\..\Padmate\Padmate.ServicePlatform\RefBin\CKFinder_ImageResize.dll</HintPath>
     </Reference>
-    <Reference Include="CKFinder_Watermark, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ckfinder\bin\Debug\CKFinder_Watermark.dll</HintPath>
+    <Reference Include="CKFinder_Watermark">
+      <HintPath>..\..\Padmate\Padmate.ServicePlatform\RefBin\CKFinder_Watermark.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -174,25 +170,20 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Arrtibutes\ApplicationHandleErrorAttribute .cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ArticleViewModel.cs" />
-    <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\ImageViewModel.cs" />
-    <Compile Include="Models\MailViewModel.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\PageResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1109,7 +1100,7 @@
     <Content Include="Scripts\slick\slick\slick.scss" />
     <Content Include="Views\Home\Default.cshtml" />
     <Content Include="Views\Home\Default1.cshtml" />
-    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\SystemManage.cshtml" />
     <Content Include="Views\Activity\Index.cshtml" />
     <Content Include="Views\Article\Add.cshtml" />
@@ -1127,6 +1118,7 @@
     <Content Include="Views\Service\SellPlatform.cshtml" />
     <Content Include="Views\Service\SupplyManagement.cshtml" />
     <Content Include="Views\Service\TutorPlatform.cshtml" />
+    <Content Include="Views\Home\Error500.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1146,6 +1138,10 @@
     <ProjectReference Include="..\Padmate.ServicePlatform.Entities\Padmate.ServicePlatform.Entities.csproj">
       <Project>{1e66d616-276a-421a-b8c0-ac82a0c8c23d}</Project>
       <Name>Padmate.ServicePlatform.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Padmate.ServicePlatform.Models\Padmate.ServicePlatform.Models.csproj">
+      <Project>{2a069975-6c63-449c-b549-4878c426dee2}</Project>
+      <Name>Padmate.ServicePlatform.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Padmate.ServicePlatform.Service\Padmate.ServicePlatform.Service.csproj">
       <Project>{3cbd5f1c-30e7-4703-98b0-f9cf97444704}</Project>

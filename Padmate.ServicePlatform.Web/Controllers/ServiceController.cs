@@ -1,4 +1,4 @@
-﻿using Padmate.ServicePlatform.Web.Models;
+﻿using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.DataAccess;
 using System;
 using System.Collections.Generic;

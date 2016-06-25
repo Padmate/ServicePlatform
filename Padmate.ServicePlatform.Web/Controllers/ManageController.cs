@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Padmate.ServicePlatform.Web.Models;
+using System.Collections.Generic;
+using Padmate.ServicePlatform.Models;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -228,17 +229,28 @@ namespace Padmate.ServicePlatform.Web.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+            try
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
+                var userid = User.Identity.GetUserId();
+                var result = await UserManager.ChangePasswordAsync(userid, model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user != null)
+                    {
+                        //退出登录
+                        HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                       
+                        return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                    }
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                AddErrors(result);
             }
-            AddErrors(result);
+            catch
+            {
+                
+                ModelState.AddModelError("", "更改密码失败。");
+            }
             return View(model);
         }
 
@@ -383,5 +395,26 @@ namespace Padmate.ServicePlatform.Web.Controllers
         }
 
 #endregion
+    }
+
+    public class IndexViewModel
+    {
+        public bool HasPassword { get; set; }
+        public IList<UserLoginInfo> Logins { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool TwoFactor { get; set; }
+        public bool BrowserRemembered { get; set; }
+    }
+
+    public class ManageLoginsViewModel
+    {
+        public IList<UserLoginInfo> CurrentLogins { get; set; }
+        public IList<AuthenticationDescription> OtherLogins { get; set; }
+    }
+
+    public class ConfigureTwoFactorViewModel
+    {
+        public string SelectedProvider { get; set; }
+        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
 }

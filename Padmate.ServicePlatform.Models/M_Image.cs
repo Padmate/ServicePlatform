@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Padmate.ServicePlatform.Web.Models
+namespace Padmate.ServicePlatform.Models
 {
-    public class ImageViewModel
+    public class M_Image
     {
         public int Id { get; set; }
         public string ImageUrl { get; set; }

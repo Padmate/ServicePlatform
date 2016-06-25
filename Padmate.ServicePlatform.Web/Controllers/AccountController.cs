@@ -8,8 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Padmate.ServicePlatform.Web.Models;
 using Padmate.ServicePlatform.DataAccess;
+using System.Collections.Generic;
+using Padmate.ServicePlatform.Models;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -482,5 +483,13 @@ namespace Padmate.ServicePlatform.Web.Controllers
             }
         }
         #endregion
+    }
+
+    public class SendCodeViewModel
+    {
+        public string SelectedProvider { get; set; }
+        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public string ReturnUrl { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

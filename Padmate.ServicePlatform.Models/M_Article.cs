@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Padmate.ServicePlatform.Web.Models
+namespace Padmate.ServicePlatform.Models
 {
-    public class ArticleViewModel
+    public class M_Article:BaseModel
     {
         public Int32 Id { get; set; }
 

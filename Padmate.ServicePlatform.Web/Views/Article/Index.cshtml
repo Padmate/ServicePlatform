@@ -1,11 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Padmate.ServicePlatform.Utility;
-@using Padmate.ServicePlatform.Web.Models;
-@using Padmate.ServicePlatform.Entities;
+@using Padmate.ServicePlatform.Models;
 @{
-    List<Article> activityForecastArticles = (List<Article>)ViewData["activityForecastArticles"];
-    List<Article> wonderfulActivityArticles = (List<Article>)ViewData["wonderfulActivityArticles"];
-    List<Article> informationArticles = (List<Article>)ViewData["informationArticles"];
+   
     var returnUrl = "/Article/Index";
     bool isAdmin = Request.IsAuthenticated && User.IsInRole("Admin") ? true : false;
 }

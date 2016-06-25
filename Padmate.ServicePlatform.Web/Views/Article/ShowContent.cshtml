@@ -1,8 +1,7 @@
 ﻿
-@using Padmate.ServicePlatform.Web.Models;
-@using Padmate.ServicePlatform.Entities;
+@using Padmate.ServicePlatform.Models;
 @{
-    Article article = (Article)ViewData["article"];
+    M_Article article = (M_Article)ViewData["article"];
     var returnUrl = @Request["returnUrl"];
     var anchor = @Request["anchor"];
     var returnRui = anchor != null && anchor != "" ? returnUrl + "#" + anchor : returnUrl;

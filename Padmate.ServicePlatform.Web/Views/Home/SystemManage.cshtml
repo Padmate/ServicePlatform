@@ -140,7 +140,7 @@
             var imageId = $(this).parent().parent().attr("id");
             $.ajax({
                 type: "POST",
-                url: "/Home/DeleteImage",
+                url: "/Image/DeleteImage",
                 dataType: "json",
                 data: { Id: imageId },
                 async: false,   //同步
@@ -174,7 +174,7 @@
         var jsonParam = JSON.stringify(imageListDic); 
         $.ajax({
             type: "POST",
-            url: "/Home/UpdateImageSequence",
+            url: "/Image/UpdateImageSequence",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步
@@ -196,7 +196,7 @@
         var uploader = WebUploader.create({
             auto: true,   // 选完文件后，是否自动上传。
             swf: '../Scripts/webuploader/Uploader.swf',
-            server: '/Home/UploadHomeBGImage',
+            server: '/Image/UploadHomeBGImage',
             formData: obj,  //额外参数传递
             duplicate:true, //可重复上传同一文件
             pick: '#filePicker',
@@ -265,7 +265,7 @@
     {
         $.ajax({
             type: "POST",
-            url: "/Home/GetHomeBGImages",
+            url: "/Image/GetHomeBGImages",
             dataType: "json",
             async: false,   //同步
             success: function (bgImages) {

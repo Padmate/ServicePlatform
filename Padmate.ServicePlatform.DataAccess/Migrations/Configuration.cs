@@ -48,6 +48,8 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                 {
                     UserName = userName,
                     PasswordHash = passwordHash,
+                    Email = "123@qq.com",
+                    EmailConfirmed = true,
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
 

@@ -1,45 +1,20 @@
-﻿using Padmate.ServicePlatform.Web.Models;
-using Padmate.ServicePlatform.Utility;
+﻿using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Padmate.ServicePlatform.DataAccess;
-using Padmate.ServicePlatform.Entities;
+using Padmate.ServicePlatform.Models;
+using Padmate.ServicePlatform.Service;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
     public class ArticleController:BaseController
     {
-        ServiceDbContext _dbContext = new ServiceDbContext();
-
+       
         public ActionResult Index()
         {
-            //活动预告
-            List<Article> activityForecastArticles = _dbContext.Atricles
-                .Where(a => a.Type == Common.ActivityForecast)
-                .OrderByDescending(a => a.Pubtime)
-                .ToList();
-            //精彩活动
-            List<Article> wonderfulActivityArticles = _dbContext.Atricles
-                .Where(a => a.Type == Common.WonderfulActivity)
-                .OrderByDescending(a => a.Pubtime)
-                .ToList();
-
-            //资讯
-            List<Article> informationArticles = _dbContext.Atricles
-                .Where(a => a.Type == Common.Information)
-                .OrderByDescending(a => a.Pubtime)
-                .ToList();
-
-
-            ViewData["activityForecastArticles"] = activityForecastArticles;
-            ViewData["wonderfulActivityArticles"] = wonderfulActivityArticles;
-            ViewData["informationArticles"] = informationArticles;
-
-
             return View();
         }
 
@@ -52,59 +27,32 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// <param name="page">当前所在页数</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult GetPageData(AtricleSearchModel articleSearchModel)
+        public ActionResult GetPageData(M_Article searchModel)
         {
             //每页显示数据条数
-            int limits = 5;
-            var articleType = articleSearchModel.ArticleType;
-            var subTitle = articleSearchModel.SubTitle;
-            var currentPage = articleSearchModel.page;
+            int limit = 5;
+            searchModel.limit = limit;
 
-            var query = _dbContext.Atricles
-                .Where(a => a.Type == articleType);
+            B_Article bArticle = new B_Article();
+            var pageData = bArticle.GetPageData(searchModel);
+            var totalCount = bArticle.GetPageDataTotalCount(searchModel.ArticleType);
+            //总页数
+            var totalPages = System.Convert.ToInt32(Math.Ceiling((double)totalCount / limit));
 
-            //过滤查询条件
-            if (!string.IsNullOrEmpty(subTitle))
-                query = query.Where(a=>a.SubTitle.Contains(subTitle));
-
-            //总条数
-            var totalCount = query.ToList().Count();
-            var totalPages = System.Convert.ToInt32(Math.Ceiling((double)totalCount / limits));
-
-            
-            //page:第一页表示从第0条数据开始索引
-            Int32 skip = System.Convert.ToInt32((currentPage - 1) * limits);
-            //当前分页条数
-            var pageData = query.OrderByDescending(a => a.Pubtime)
-            .Skip(skip)
-            .Take(limits)
-            .ToList();
-
-            PageResult<Article> result = new PageResult<Article>(totalPages, pageData);
+            PageResult<M_Article> result = new PageResult<M_Article>(totalPages, pageData);
             return Json(result);
         }
         
 
         public ActionResult ShowContent(string id)
         {
-            
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                    return RedirectToAction("Error", "Home");
-                Int32 articleId = System.Convert.ToInt32(id);
-                var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == articleId);
+            B_Article bArticle = new B_Article();
 
-                if (article == null)
-                    return RedirectToAction("Error", "Home");
+            Int32 articleId = System.Convert.ToInt32(id);
+            var article = bArticle.GetArticleById(articleId); ;
 
-                ViewData["article"] = article;
+            ViewData["article"] = article;
 
-            }catch(Exception e)
-            {
-                return RedirectToAction("Error","Home");
-            }
-            
             return View();
         }
 
@@ -115,54 +63,46 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
+        string articleImageVirtualFloader = "../img/Upload/";
          // POST:
         [HttpPost]
         [ValidateInput(false)]
         [Authorize(Roles="Admin")]
-        public ActionResult Add(ArticleViewModel model, HttpPostedFileBase articleImage, string ReturnUrl)
+        public ActionResult Add(M_Article model, HttpPostedFileBase articleImage, string ReturnUrl)
         {
 
             if (ModelState.IsValid && ValideData(model))
             {
                 try
                 {
-                    string virtualUrl = "";
+                    var mapPath = Server.MapPath("");
+                    FileUpload fileUpload = new FileUpload(mapPath);
+
+                    string virtualSavePath = "";
                     if(articleImage != null)
                     {
                         FileInfo articleImageFile = new FileInfo(articleImage.FileName);
-                        string saveName = Guid.NewGuid().ToString() + articleImageFile.Extension;
-                        string virtualFloder = "../img/Upload/";
-                        virtualUrl = Path.Combine(virtualFloder, saveName);
-                        string physicleDirectory = Server.MapPath(virtualFloder);
-                        string physicalUrl = Path.Combine(physicleDirectory, saveName);
-                        if(!System.IO.Directory.Exists(physicleDirectory))
-                        {
-                            System.IO.Directory.CreateDirectory(physicleDirectory);
-                        }
-                        articleImage.SaveAs(physicalUrl);
+                        var physicalSavePath = fileUpload.ConstructPhysicalSavePath(articleImageVirtualFloader
+                            ,articleImage.FileName,articleImageFile.Extension);
+                        virtualSavePath = fileUpload.ConstructVirtualSavePath(articleImageVirtualFloader
+                            , articleImage.FileName, articleImageFile.Extension);
+
+                        articleImage.SaveAs(physicalSavePath);
 
                     }
-                    
+                    model.ArticleImage = virtualSavePath;
 
-                    var article = new Article()
+                    var currentUser = this.GetCurrentUser();
+                    B_Article bArticle = new B_Article(currentUser);
+                    Message message = bArticle.AddArticle(model);
+                    if (!message.Success)
                     {
-                        Title = model.Title,
-                        SubTitle = model.SubTitle,
-                        Description = model.Description,
-                        ArticleImage = virtualUrl,
-                        Content = model.Content,
-                        CreateDate = DateTime.Now,
-                        Creator = User.Identity.Name,
-                        Pubtime =model.Pubtime,
-                        Type = model.ArticleType,
-                        IsHref = model.IsHref,
-                        Href=model.Href
-                    };
-
-                    _dbContext.Atricles.Add(article);
-                    _dbContext.SaveChanges();
+                        ModelState.AddModelError("", message.Content);
+                        return View(model);
+                    }
+                    
                     //返回文章显示页面
-                    return Redirect("/Article/ShowContent?id=" + article.Id.ToString() + "&returnUrl=" + ReturnUrl);
+                    return Redirect("/Article/ShowContent?id=" + message.ReturnId + "&returnUrl=" + ReturnUrl);
 
                 }catch(Exception e)
                 {
@@ -180,23 +120,11 @@ namespace Padmate.ServicePlatform.Web.Controllers
         public ActionResult Edit(string id)
         {
 
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                    return RedirectToAction("Error", "Home");
-                Int32 articleId = System.Convert.ToInt32(id);
-                var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == articleId);
+            Int32 articleId = System.Convert.ToInt32(id);
 
-                if (article == null)
-                    return RedirectToAction("Error", "Home");
-
-                ViewData["article"] = article;
-
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error", "Home");
-            }
+            B_Article bArticle = new B_Article();
+            var article = bArticle.GetArticleById(articleId);
+            ViewData["article"] = article;
 
             return View();
         }
@@ -205,9 +133,10 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(ArticleViewModel model, HttpPostedFileBase articleImage, string ReturnUrl)
+        public ActionResult Edit(M_Article model, HttpPostedFileBase articleImage, string ReturnUrl)
         {
-            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == model.Id);
+            B_Article bArticle = new B_Article();
+            var article = bArticle.GetArticleById(model.Id);
             ViewData["article"] = article;
             if (ModelState.IsValid && ValideData(model))
             {
@@ -247,14 +176,14 @@ namespace Padmate.ServicePlatform.Web.Controllers
                     article.Description = model.Description;
                     article.ArticleImage = virtualUrl;
                     article.Content = model.Content;
-                    article.ModifiedDate = DateTime.Now;
-                    article.Modifier = User.Identity.Name;
-                    article.Pubtime = model.Pubtime;
-                    article.IsHref = model.IsHref;
-                    article.Href = model.Href;
+                    //article.ModifiedDate = DateTime.Now;
+                    //article.Modifier = User.Identity.Name;
+                    //article.Pubtime = model.Pubtime;
+                    //article.IsHref = model.IsHref;
+                    //article.Href = model.Href;
                     
 
-                    _dbContext.SaveChanges();
+                    //_dbContext.SaveChanges();
                     //返回文章显示页面
                     return Redirect("/Article/ShowContent?id=" + article.Id.ToString() + "&returnUrl=" + ReturnUrl);
 
@@ -270,7 +199,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View(model);
         }
 
-        private bool ValideData(ArticleViewModel model)
+        private bool ValideData(M_Article model)
         {
             if (model.IsHref && string.IsNullOrEmpty(model.Href))
             {
@@ -288,17 +217,17 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(Int32 id,string returnUrl)
         {
-            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
-            //删除图标
-            //删除原来图片
-            if (!string.IsNullOrEmpty(article.ArticleImage))
-            {
-                if (System.IO.File.Exists(Server.MapPath(article.ArticleImage)))
-                    System.IO.File.Delete(Server.MapPath(article.ArticleImage));
-            }
+            //var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+            ////删除图标
+            ////删除原来图片
+            //if (!string.IsNullOrEmpty(article.ArticleImage))
+            //{
+            //    if (System.IO.File.Exists(Server.MapPath(article.ArticleImage)))
+            //        System.IO.File.Delete(Server.MapPath(article.ArticleImage));
+            //}
 
-            _dbContext.Atricles.Remove(article);
-            _dbContext.SaveChanges();
+            //_dbContext.Atricles.Remove(article);
+            //_dbContext.SaveChanges();
             return Redirect(returnUrl); 
         }
 

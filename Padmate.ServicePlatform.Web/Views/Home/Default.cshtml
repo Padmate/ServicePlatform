@@ -1,12 +1,12 @@
 ﻿
-@using Padmate.ServicePlatform.Entities;
+@using Padmate.ServicePlatform.Models;
 @{
     string type = (string)ViewData["type"];
-    List<Article> activityForecastArticles = (List<Article>)ViewData["activityForecastArticles"];
-    List<Article> wonderfulActivityArticles = (List<Article>)ViewData["wonderfulActivityArticles"];
-    List<Article> informationArticles = (List<Article>)ViewData["informationArticles"];
+    List<M_Article> activityForecastArticles = (List<M_Article>)ViewData["activityForecastArticles"];
+    List<M_Article> wonderfulActivityArticles = (List<M_Article>)ViewData["wonderfulActivityArticles"];
+    List<M_Article> informationArticles = (List<M_Article>)ViewData["informationArticles"];
 
-    List<Image> homebgImages = (List<Image>)ViewData["homebgImages"];
+    List<M_Image> homebgImages = (List<M_Image>)ViewData["homebgImages"];
     
 }
 
@@ -513,7 +513,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-5 col-md-7">
-                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Article/Index?nav=activity&anchor=wonderfulactivity">
+                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Article/Index?nav=activity&anchor=activityforecast">
                     <i class="fa fa-refresh"></i>
                     <span class="customer-content-sm whitefont">更多活动</span>
                 </a>
@@ -691,7 +691,7 @@
                         黄先生，邮箱：hxh@padmate.cn
                         <br /><span style="padding-left:65px;">联系电话：15160022892</span>
                         <br />陈先生，邮箱：cyc@padmate.cn
-                        <br /><span style="padding-left:65px;">联系电话：15805915836
+                        <br /><span style="padding-left:65px;">联系电话：15805915836</span>
                     </p>
 
                 </div>
@@ -779,7 +779,7 @@
             var jsonParam = JSON.stringify(obj);
             $.ajax({
                 type: "POST",
-                url: "/Home/SendMail",
+                url: "/Mail/SendMail",
                 dataType: "json",
                 data: jsonParam,
                 async: false,   //同步

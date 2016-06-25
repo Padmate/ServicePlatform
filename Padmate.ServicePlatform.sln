@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Uti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Entities", "Padmate.ServicePlatform.Entities\Padmate.ServicePlatform.Entities.csproj", "{1E66D616-276A-421A-B8C0-AC82A0C8C23D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Padmate.ServicePlatform.Models", "Padmate.ServicePlatform.Models\Padmate.ServicePlatform.Models.csproj", "{2A069975-6C63-449C-B549-4878C426DEE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E66D616-276A-421A-B8C0-AC82A0C8C23D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A069975-6C63-449C-B549-4878C426DEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A069975-6C63-449C-B549-4878C426DEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A069975-6C63-449C-B549-4878C426DEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A069975-6C63-449C-B549-4878C426DEE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,14 +2,14 @@
 
     Layout = null;
 }
-@using Padmate.ServicePlatform.Entities;
+@using Padmate.ServicePlatform.Models;
 @{
     string type = (string)ViewData["type"];
-    List<Article> activityForecastArticles = (List<Article>)ViewData["activityForecastArticles"];
-    List<Article> wonderfulActivityArticles = (List<Article>)ViewData["wonderfulActivityArticles"];
-    List<Article> informationArticles = (List<Article>)ViewData["informationArticles"];
+    List<M_Article> activityForecastArticles = (List<M_Article>)ViewData["activityForecastArticles"];
+    List<M_Article> wonderfulActivityArticles = (List<M_Article>)ViewData["wonderfulActivityArticles"];
+    List<M_Article> informationArticles = (List<M_Article>)ViewData["informationArticles"];
 
-    List<Image> homebgImages = (List<Image>)ViewData["homebgImages"];
+    List<M_Image> homebgImages = (List<M_Image>)ViewData["homebgImages"];
 
 }
 
