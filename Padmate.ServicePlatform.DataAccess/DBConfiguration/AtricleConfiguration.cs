@@ -12,6 +12,9 @@ namespace Padmate.ServicePlatform.DataAccess.DBConfiguration
         internal AtricleConfiguration()
         {
             this.HasKey(m => m.Id);
+            //this.HasOptional<Image>(s => s.Image)
+            //        .(s => s.Articles)
+            //        .HasForeignKey(s => s.ImageId);
 
         }
     }

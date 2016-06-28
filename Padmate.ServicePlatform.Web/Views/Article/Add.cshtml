@@ -87,10 +87,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-2 control-label">
-                    @Html.LabelFor(m => m.ArticleImage, "文章图片：")
+                    @Html.LabelFor(m => m.Image.VirtualPath, "文章图片：")
                 </div>
                 <div class="col-md-10">
-                    <input type="file" id="articleImage" name="articleImage" accept=".jpg,.png,.jpeg,.gif" />
+                    <input type="file" id="thumbnails" name="thumbnails" accept=".jpg,.png,.jpeg,.gif" />
                 </div>
                 <div class="col-lg-4 col-md-6" style="margin-top:10px;">
                     @if (!string.IsNullOrEmpty(type) && type == Common.Information)
@@ -183,7 +183,7 @@
             language:'zh-CN'
         });
 
-        $("#articleImage").change(function (e) {
+        $("#thumbnails").change(function (e) {
             setImagePreview();
              
         });
@@ -209,7 +209,7 @@
 
     //下面用于图片上传预览功能
     function setImagePreview() {
-        var docObj = document.getElementById("articleImage");
+        var docObj = document.getElementById("thumbnails");
         var imgSrc = "";
         if (docObj.files && docObj.files[0]) {
            

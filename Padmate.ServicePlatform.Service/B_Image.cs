@@ -15,7 +15,7 @@ namespace Padmate.ServicePlatform.Service
     public class B_Image
     {
         D_Image _dImage = new D_Image();
-
+        
         /// <summary>
         /// 获取首页背景图片
         /// </summary>
@@ -68,28 +68,84 @@ namespace Padmate.ServicePlatform.Service
         /// 新增图片
         /// </summary>
         /// <returns></returns>
-        public Message AddImage(M_Image image)
+        public Message AddImage(HttpPostedFileBase file,string virtualDirectory,string imageType)
         {
             Message message = new Message();
             message.Success = true;
             message.Content = "图片新增成功";
             try
             {
-                Image model = new Image();
-                model.VirtualPath = image.VirtualPath;
-                model.PhysicalPath = image.PhysicalPath;
-                model.Name = image.Name;
-                model.SaveName = image.SaveName;
-                model.Extension = image.Extension;
-                model.Sequence = image.Sequence;
-                model.Type = image.Type;
-                _dImage.AddImage(model);
+                if (file != null)
+                {
+                    #region
+                    //保存缩略图
+                    Message imgMsg = SaveFile(file, virtualDirectory);
+                    if (!imgMsg.Success)
+                        return message;
+                    FileInfo imageInfo = new FileInfo(file.FileName);
+                    var saveName = imgMsg.Content;
+                    var fileName = imageInfo.Name;
+                    var extension = imageInfo.Extension;
+                    var virtualPath = Path.Combine(virtualDirectory, saveName);
 
+                    //图片顺序
+                    B_Image _bImage = new B_Image();
+                    var totalImages = _dImage.GetImagesByType(imageType);
+                    var sequence = totalImages.Count + 1;
+
+                    var image = new Image()
+                    {
+                        VirtualPath = virtualPath,
+                        Name = fileName,
+                        Extension = extension,
+                        SaveName = saveName,
+                        Sequence = sequence,
+                        Type = imageType
+                    };
+                    message.ReturnId = _dImage.AddImage(image);
+                    #endregion
+                }
             }
             catch (Exception e)
             {
                 message.Success = false;
                 message.Content = "图片新增失败。异常：" + e.Message + e.InnerException + e;
+            }
+            return message;
+        }
+
+
+        /// <summary>
+        /// 保存文件
+        /// Success:true,则返回文件保存名称
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private Message SaveFile(HttpPostedFileBase file, string virtualDirectory)
+        {
+            Message message = new Message();
+            message.Success = true;
+            try
+            {
+                FileInfo fileInfo = new FileInfo(file.FileName);
+                var fileName = fileInfo.Name;
+                var extension = fileInfo.Extension;
+                string saveName = Guid.NewGuid().ToString() + extension;
+
+                string physicleDirectory = HttpContext.Current.Server.MapPath("~" + virtualDirectory);
+                if (!System.IO.Directory.Exists(physicleDirectory))
+                {
+                    System.IO.Directory.CreateDirectory(physicleDirectory);
+                }
+                string physicalPath = Path.Combine(physicleDirectory, saveName);
+                file.SaveAs(physicalPath);
+
+                message.Content = saveName;
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "文件保存失败。异常：" + e.Message;
             }
             return message;
         }
@@ -130,6 +186,16 @@ namespace Padmate.ServicePlatform.Service
             message.Content = "图片删除成功";
             try
             {
+                //删除图片文件
+                var image = _dImage.GetImageById(id);
+                if (!string.IsNullOrEmpty(image.VirtualPath))
+                {
+                    var physicalPath = HttpContext.Current.Server.MapPath("~" + image.VirtualPath);
+
+                    if (System.IO.File.Exists(physicalPath))
+                        System.IO.File.Delete(physicalPath);
+                }
+
                 _dImage.DeleteImage(id);
 
             }

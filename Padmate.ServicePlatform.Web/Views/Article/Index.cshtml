@@ -325,7 +325,10 @@
             dynamicHtml += '</div>';
             dynamicHtml += '<div class="col-md-4">';
             dynamicHtml += '<a href="' + contentHref + '">';
-            dynamicHtml += '<img src="' + articles[i].ArticleImage + '" class="image-smallsize" />';
+            var imageVirtualPath = "";
+            if (articles[i].Image != null)
+                imageVirtualPath = articles[i].Image.VirtualPath;
+            dynamicHtml += '<img src="' + imageVirtualPath + '" class="image-smallsize" alt="无图标"/>';
             dynamicHtml += '</a>';
             dynamicHtml += '</div>';
             dynamicHtml += '<div class="col-md-8">';

@@ -43,7 +43,7 @@ namespace Padmate.ServicePlatform.DataAccess
         /// <returns></returns>
         public List<Article> GetPageData(Article article,int skip,int limit)
         {
-            var query = _dbContext.Atricles.Where(a=>1==1);
+            var query = _dbContext.Atricles.Where(a => 1 == 1);
 
             #region　条件过滤
             if (!string.IsNullOrEmpty(article.Type))
@@ -91,7 +91,7 @@ namespace Padmate.ServicePlatform.DataAccess
             article.Title = model.Title;
             article.SubTitle = model.SubTitle;
             article.Description = model.Description;
-            article.ArticleImage = model.ArticleImage;
+            article.ImageId = model.ImageId;
             article.Content = model.Content;
             article.ModifiedDate = model.ModifiedDate;
             article.Modifier = model.Modifier;

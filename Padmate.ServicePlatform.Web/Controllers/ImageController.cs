@@ -17,8 +17,6 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
         //允许的图片类型
         public List<string> AllowImageExtensions = new List<string>() { ".gif", ".jpg", ".jpeg", ".bmp", ".png" };
-        //背景图片虚拟目录
-        private string homebgVirtualDirectory = SystemConfig.Init.PathConfiguration["homebgVirtualDirectory"].ToString();
        
         /// <summary>
         /// 获取背景图片
@@ -68,20 +66,6 @@ namespace Padmate.ServicePlatform.Web.Controllers
             Message message = new Message();
             B_Image bImage = new B_Image();
 
-            M_Image image = bImage.GetImageById(Id);
-            if (image != null)
-            {
-                //删除图片
-                if (!string.IsNullOrEmpty(image.VirtualPath))
-                {
-                    var physicalPath = HttpContext.Server.MapPath("~"+image.VirtualPath);
-
-                    if (System.IO.File.Exists(physicalPath))
-                        System.IO.File.Delete(physicalPath);
-                }
-            }
-
-
             message = bImage.DeleteImage(Id);
 
             return Json(message);
@@ -98,64 +82,29 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult UploadHomeBGImage(HttpPostedFileBase file)
         {
+            //背景图片虚拟目录
+            string _homebgVirtualDirectory = SystemConfig.Init.PathConfiguration["homebgVirtualDirectory"].ToString();
+       
             Message message = new Message();
             message.Success = true;
 
-            try
-            {
-                if (file != null)
-                {
-                    #region 保存图片文件
-                    FileInfo imageInfo = new FileInfo(file.FileName);
-                    var fileName = imageInfo.Name;
-                    var extension = imageInfo.Extension;
-                    string saveName = Guid.NewGuid().ToString() + imageInfo.Extension;
-                    string virtualPath = Path.Combine(homebgVirtualDirectory, saveName);
-
-                    string physicleDirectory = Server.MapPath(homebgVirtualDirectory);
-                    if (!System.IO.Directory.Exists(physicleDirectory))
-                    {
-                        System.IO.Directory.CreateDirectory(physicleDirectory);
-                    }
-                    string physicalPath = Path.Combine(physicleDirectory, saveName);
-                    file.SaveAs(physicalPath);
-                    #endregion
-
-                    #region 保存图片信息
-                    //图片顺序
-                    B_Image _bImage = new B_Image();
-                    var totalImages = _bImage.GetHomeBGImages();
-                    var sequence = totalImages.Count + 1;
-
-                    var imageModel = new M_Image()
-                    {
-                        VirtualPath = virtualPath,
-                        Name = fileName,
-                        Extension = extension,
-                        SaveName = saveName,
-                        Sequence = sequence,
-                        Type = Common.Image_HomeBG
-                    };
-                    message = _bImage.AddImage(imageModel);
-                    if (!message.Success)
-                        return Json(message);
-                    
-                    #endregion
-
-                }
-                else
-                {
-                    message.Success = false;
-                    message.Content = "上传失败。未获取到图片信息";
-                }
-
-            }
-            catch (Exception e)
+            if(file == null)
             {
                 message.Success = false;
-                message.Content = "上传失败。异常：" + e.Message + e.InnerException + e;
+                message.Content = "未获取到文件信息,请重新尝试";
+                return Json(message);
             }
-
+            FileInfo fileInfo = new FileInfo(file.FileName);
+            var extension = fileInfo.Extension;
+            if(AllowImageExtensions.All(i=>i !=extension))
+            {
+                message.Success = false;
+                message.Content = "图片格式不正确。只支持以下类型:.gif,.jpg,.jpeg,.bmp,.png";
+                return Json(message);
+            }
+            B_Image _bImage = new B_Image();
+            message = _bImage.AddImage(file, _homebgVirtualDirectory, Common.Image_HomeBG);
+            
             return Json(message);
 
         }

@@ -438,12 +438,14 @@
                     var contentHref = "/Article/ShowContent?id=" + activityForecastArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
                     var aHref = activityForecastArticles[i].IsHref ? activityForecastArticles[i].Href : contentHref;
                     var aTarget = activityForecastArticles[i].IsHref ? "_blank" : "_self";
-
+                    var imageVirtualPath = activityForecastArticles[i].Image == null ? "../img/small_model.jpg" 
+                        : activityForecastArticles[i].Image.VirtualPath;
+                    
                     if (i >= 3) { break; };
                     <div class="col-is-6 col-sm-4 col-md-4 text-center">
                         <div class="service-box">
                             <a href="@aHref" class="information-box" target="@aTarget">
-                                <img class="image-smallsize" src="@activityForecastArticles[i].ArticleImage" />
+                                <img class="image-smallsize" src="@imageVirtualPath" alt="无图标"/>
                                 <div class="information-box-caption">
                                     <div class="information-box-caption-content">
 
@@ -481,12 +483,14 @@
                     var contentHref = "/Article/ShowContent?id=" + wonderfulActivityArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
                     var aHref = wonderfulActivityArticles[i].IsHref ? wonderfulActivityArticles[i].Href : contentHref;
                     var aTarget = wonderfulActivityArticles[i].IsHref ? "_blank" : "_self";
-
+                    var imageVirtualPath = wonderfulActivityArticles[i].Image == null ? "../img/small_model.jpg"
+                       : wonderfulActivityArticles[i].Image.VirtualPath;
+                    
                     if (i >= 3) { break; };
                     <div class="col-is-6 col-sm-4 col-md-4 text-center" style="padding-right:25px;">
                         <div class="service-box">
                             <a href="@aHref" class="information-box" target="@aTarget">
-                                <img class="image-smallsize" src="@wonderfulActivityArticles[i].ArticleImage" />
+                                <img class="image-smallsize" src="@imageVirtualPath" alt="无图标"/>
                                 <div class="information-box-caption">
                                     <div class="information-box-caption-content">
 
@@ -555,11 +559,13 @@
                 var contentHref = "/Article/ShowContent?id=" + informationArticles[i].Id + "&returnUrl=/Home/Default&anchor=information";
                 var aHref = informationArticles[i].IsHref ? informationArticles[i].Href : contentHref;
                 var aTarget = informationArticles[i].IsHref ? "_blank" : "_self";
-
+                var imageVirtualPath = informationArticles[i].Image == null ? "../img/medium_model.jpg"
+                       : informationArticles[i].Image.VirtualPath;
+                
                 if (i >= 6) { break; };
                 <div class="col-is-6 col-sm-4 col-md-4 ">
                     <a href="@aHref" class="information-box" target="@aTarget">
-                        <img class="image-mediumsize" src="@informationArticles[i].ArticleImage" />
+                        <img class="image-mediumsize" src="@imageVirtualPath" alt="无图标"/>
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
                                 <div class="project-category text-faded">

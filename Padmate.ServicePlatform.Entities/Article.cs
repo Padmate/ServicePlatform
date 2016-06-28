@@ -50,9 +50,9 @@ namespace Padmate.ServicePlatform.Entities
         public string Content { get; set; }
 
         /// <summary>
-        /// 文章图片url
+        /// 文章图片ID
         /// </summary>
-        public string ArticleImage { get; set; }
+        public int? ImageId { get; set; }
 
 
         /// <summary>

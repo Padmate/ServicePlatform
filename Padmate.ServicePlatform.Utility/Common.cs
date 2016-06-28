@@ -36,10 +36,13 @@ namespace Padmate.ServicePlatform.Utility
         #region 图片类型
 
         public const string Image_HomeBG = "homebg";
+        public const string Article_Thumbnails = "article_thumbnails";
 
 
         public static Dictionary<string, string> Dic_ImageType = new Dictionary<string, string>(){
-            {Image_HomeBG,"首页背景图片"}
+            {Image_HomeBG,"首页背景图片"},
+            {Article_Thumbnails,"文章缩略图"}
+
         };
         #endregion
     }

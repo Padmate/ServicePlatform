@@ -8,12 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Padmate.ServicePlatform.Service
 {
     public class B_Article
     {
         D_Article _dArticle = new D_Article();
+        string _imageVirtualDirectory = SystemConfig.Init.PathConfiguration["articleThumbnailsVirtualDirectory"].ToString();
 
         public B_Article()
         {
@@ -53,20 +55,9 @@ namespace Padmate.ServicePlatform.Service
             //page:第一页表示从第0条数据开始索引
             Int32 skip = System.Convert.ToInt32((currentPage - 1) * limit);
 
+            B_Image bImage = new B_Image();
             var pageResult = _dArticle.GetPageData(searchModel,skip,limit);
-            var result = pageResult.Select(a => new M_Article()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                SubTitle = a.SubTitle,
-                Description = a.Description,
-                IsHref = a.IsHref,
-                Href = a.Href,
-                Content = a.Content,
-                ArticleImage = a.ArticleImage,
-                ArticleType = a.Type,
-                Pubtime = a.Pubtime
-            }).ToList();
+            var result = pageResult.Select(a => ConverEntityToModel(a)).ToList();
 
             return result;
         }
@@ -88,40 +79,20 @@ namespace Padmate.ServicePlatform.Service
         /// <returns></returns>
         public List<M_Article> GetActivityForecast()
         {
+            B_Image bImage = new B_Image();
+
             var articles = _dArticle.GetArticlesByType(Common.ActivityForecast,null);
-            var result = articles.Select(a => new M_Article()
-                {
-                    Id = a.Id,
-                    Title = a.Title,
-                    SubTitle = a.SubTitle,
-                    Description = a.Description,
-                    IsHref = a.IsHref,
-                    Href = a.Href,
-                    Content = a.Content,
-                    ArticleImage = a.ArticleImage,
-                    ArticleType = a.Type,
-                    Pubtime = a.Pubtime
-                })
-                .ToList();
+            var result = articles.Select(a => ConverEntityToModel(a)).ToList();
 
             return result ;
         }
 
         public M_Article GetArticleById(int id)
         {
+            B_Image bImage = new B_Image();
+
             var article = _dArticle.GetArticleById(id);
-            var result = new M_Article() {
-                Id = article.Id,
-                Title = article.Title,
-                SubTitle = article.SubTitle,
-                Description = article.Description,
-                IsHref = article.IsHref,
-                Href = article.Href,
-                Content = article.Content,
-                ArticleImage = article.ArticleImage,
-                ArticleType = article.Type,
-                Pubtime = article.Pubtime
-            };
+            var result = ConverEntityToModel(article);
             return result;
         }
 
@@ -131,21 +102,10 @@ namespace Padmate.ServicePlatform.Service
         /// <returns></returns>
         public List<M_Article> GetFirstThreeActivityForecast()
         {
+            B_Image bImage = new B_Image();
+
             var articles = _dArticle.GetArticlesByType(Common.ActivityForecast, 3);
-            var result = articles.Select(a => new M_Article()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                SubTitle = a.SubTitle,
-                Description = a.Description,
-                IsHref = a.IsHref,
-                Href = a.Href,
-                Content = a.Content,
-                ArticleImage = a.ArticleImage,
-                ArticleType = a.Type,
-                Pubtime = a.Pubtime
-            })
-                .ToList();
+            var result = articles.Select(a => ConverEntityToModel(a)).ToList();
 
             return result;
         }
@@ -157,20 +117,7 @@ namespace Padmate.ServicePlatform.Service
         public List<M_Article> GetWonderfulActivity()
         {
             var articles = _dArticle.GetArticlesByType(Common.WonderfulActivity, null);
-            var result = articles.Select(a => new M_Article()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                SubTitle = a.SubTitle,
-                Description = a.Description,
-                IsHref = a.IsHref,
-                Href = a.Href,
-                Content = a.Content,
-                ArticleImage = a.ArticleImage,
-                ArticleType = a.Type,
-                Pubtime = a.Pubtime
-            })
-                .ToList();
+            var result = articles.Select(a =>ConverEntityToModel(a)).ToList();
 
             return result;
         }
@@ -182,20 +129,7 @@ namespace Padmate.ServicePlatform.Service
         public List<M_Article> GetFirstThreeWonderfulActivity()
         {
             var articles = _dArticle.GetArticlesByType(Common.WonderfulActivity, 3);
-            var result = articles.Select(a => new M_Article()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                SubTitle = a.SubTitle,
-                Description = a.Description,
-                IsHref = a.IsHref,
-                Href = a.Href,
-                Content = a.Content,
-                ArticleImage = a.ArticleImage,
-                ArticleType = a.Type,
-                Pubtime = a.Pubtime
-            })
-                .ToList();
+            var result = articles.Select(a => ConverEntityToModel(a)).ToList();
 
             return result;
         }
@@ -207,20 +141,7 @@ namespace Padmate.ServicePlatform.Service
         public List<M_Article> GetInformation()
         {
             var articles = _dArticle.GetArticlesByType(Common.Information, null);
-            var result = articles.Select(a => new M_Article()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                SubTitle = a.SubTitle,
-                Description = a.Description,
-                IsHref = a.IsHref,
-                Href = a.Href,
-                Content = a.Content,
-                ArticleImage = a.ArticleImage,
-                ArticleType = a.Type,
-                Pubtime = a.Pubtime
-            })
-                .ToList();
+            var result = articles.Select(a => ConverEntityToModel(a)).ToList();
 
             return result;
         }
@@ -232,25 +153,18 @@ namespace Padmate.ServicePlatform.Service
         public List<M_Article> GetFirstSixInformation()
         {
             var articles = _dArticle.GetArticlesByType(Common.Information, 6);
-            var result = articles.Select(a => new M_Article()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                SubTitle = a.SubTitle,
-                Description = a.Description,
-                IsHref = a.IsHref,
-                Href = a.Href,
-                Content = a.Content,
-                ArticleImage = a.ArticleImage,
-                ArticleType = a.Type,
-                Pubtime = a.Pubtime
-            })
-                .ToList();
+            var result = articles.Select(a => ConverEntityToModel(a)).ToList();
 
             return result;
         }
 
-        public Message AddArticle(M_Article model)
+        /// <summary>
+        /// 新增文章
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public Message AddArticle(M_Article model,HttpPostedFileBase file)
         {
             Message message = new Message();
             message.Success = true;
@@ -258,12 +172,18 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
+                B_Image bImage = new B_Image();
+                message = bImage.AddImage(file, _imageVirtualDirectory, Common.Article_Thumbnails);
+                if (!message.Success)
+                    return message;
+                
+                //新增文章
                 var article = new Article()
                 {
                     Title = model.Title,
                     SubTitle = model.SubTitle,
                     Description = model.Description,
-                    ArticleImage = model.ArticleImage,
+                    ImageId = message.ReturnId,
                     Content = model.Content,
                     CreateDate = DateTime.Now,
                     Creator = _currentUser.UserName,
@@ -283,7 +203,7 @@ namespace Padmate.ServicePlatform.Service
             return message;
         }
 
-        public Message EditArticle(int id,M_Article model)
+        public Message EditArticle(M_Article model,HttpPostedFileBase file)
         {
             Message message = new Message();
             message.Success = true;
@@ -291,12 +211,30 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
+                B_Image bImage = new B_Image();
+                var articleEntity = _dArticle.GetArticleById(model.Id);
+                int? newImageId = articleEntity.ImageId;
+                if(file != null)
+                {
+                    //删除原来的图标
+                    if (articleEntity.ImageId != null)
+                    {
+                        message = bImage.DeleteImage(System.Convert.ToInt32(articleEntity.ImageId));
+                        if (!message.Success) return message;
+                    }
+                    //上传新图标
+                    message = bImage.AddImage(file, _imageVirtualDirectory, Common.Article_Thumbnails);
+                    if (!message.Success)
+                        return message;
+                    newImageId = message.ReturnId;
+                }
+
                 var article = new Article()
                 {
                     Title = model.Title,
                     SubTitle = model.SubTitle,
                     Description = model.Description,
-                    ArticleImage = model.ArticleImage,
+                    ImageId = newImageId,
                     Content = model.Content,
                     CreateDate = DateTime.Now,
                     Creator = _currentUser.UserName,
@@ -306,7 +244,7 @@ namespace Padmate.ServicePlatform.Service
                     Href = model.Href
                 };
 
-                message.ReturnId = _dArticle.EditArticle(id,article);
+                message.ReturnId = _dArticle.EditArticle(model.Id, article);
 
             }
             catch (Exception e)
@@ -317,6 +255,10 @@ namespace Padmate.ServicePlatform.Service
             return message;
         }
 
+        
+
+        
+
         public Message DeleteArticle(int id)
         {
             Message message = new Message();
@@ -324,6 +266,12 @@ namespace Padmate.ServicePlatform.Service
             message.Content = "文章删除成功";
             try
             {
+                B_Image bImage = new B_Image();
+                //删除文章图标
+                var article = _dArticle.GetArticleById(id);
+                if(article.ImageId != null)
+                    bImage.DeleteImage(System.Convert.ToInt32(article.ImageId));
+
                 _dArticle.DeleteArticle(id);
 
             }
@@ -334,5 +282,26 @@ namespace Padmate.ServicePlatform.Service
             }
             return message;
         }
+
+        private M_Article ConverEntityToModel(Article article)
+        {
+            B_Image bImage = new B_Image();
+
+            var model = new M_Article()
+            {
+                Id = article.Id,
+                Title = article.Title,
+                SubTitle = article.SubTitle,
+                Description = article.Description,
+                IsHref = article.IsHref,
+                Href = article.Href,
+                Content = article.Content,
+                Image = article.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(article.ImageId)),
+                ArticleType = article.Type,
+                Pubtime = article.Pubtime
+            };
+            return model;
+        }
+
     }
 }

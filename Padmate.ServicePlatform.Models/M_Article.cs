@@ -36,9 +36,9 @@ namespace Padmate.ServicePlatform.Models
         public string Content { get; set; }
 
         /// <summary>
-        /// 文章图片url
+        /// 缩略图
         /// </summary>
-        public string ArticleImage { get; set; }
+        public M_Image Image { get; set; }
 
 
         /// <summary>
@@ -50,10 +50,5 @@ namespace Padmate.ServicePlatform.Models
 
         public string ArticleType { get; set; }
     }
-
-    public class AtricleSearchModel : BaseModel
-    {
-        public string ArticleType { get; set; }
-        public string SubTitle { get; set; }
-    }
+   
 }
