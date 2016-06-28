@@ -19,7 +19,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                         IsHref = c.Boolean(nullable: false),
                         Href = c.String(),
                         Content = c.String(storeType: "ntext"),
-                        ArticleImage = c.String(),
+                        ImageId = c.Int(),
                         Creator = c.String(),
                         CreateDate = c.DateTime(nullable: false),
                         Modifier = c.String(),
@@ -33,9 +33,13 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ImageUrl = c.String(),
+                        VirtualPath = c.String(),
+                        PhysicalPath = c.String(),
+                        Name = c.String(),
+                        SaveName = c.String(),
+                        Extension = c.String(maxLength: 10),
                         Sequence = c.Int(nullable: false),
-                        Type = c.String(),
+                        Type = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id);
             
