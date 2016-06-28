@@ -24,7 +24,15 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
             StreamReader srRequest = new StreamReader(Request.InputStream);
             String strReqStream = srRequest.ReadToEnd();
-            MailViewModel mail = JsonHandler.DeserializeJsonToObject<MailViewModel>(strReqStream);
+            M_Mail mail = JsonHandler.DeserializeJsonToObject<M_Mail>(strReqStream);
+
+            Message validateMsg = mail.validate();
+            if(!validateMsg.Success)
+            {
+                message.Success = false;
+                message.Content = validateMsg.Content;
+                return Json(message);
+            }
 
             // 设置发送方的邮件信息,例如使用网易的smtp
             string smtpServer = "smtp.qq.com"; //SMTP服务器

@@ -2,7 +2,7 @@
 @using Padmate.ServicePlatform.Utility;
 @model M_Article
 @{
-    Padmate.ServicePlatform.Entities.Article article = (Padmate.ServicePlatform.Entities.Article)ViewData["article"];
+    M_Article article = (M_Article)ViewData["article"];
     var returnUrl = @Request["returnUrl"]; 
 }
 
@@ -79,7 +79,7 @@
                 <div class="col-lg-4 col-md-6" style="margin-top:10px;">
 
 
-                    @if (!string.IsNullOrEmpty(article.Type) && article.Type == Common.Information)
+                    @if (!string.IsNullOrEmpty(article.ArticleType) && article.ArticleType == Common.Information)
                     {
                         var imgSrc = "../img/medium_model.jpg";
                         if (!string.IsNullOrEmpty(article.ArticleImage))

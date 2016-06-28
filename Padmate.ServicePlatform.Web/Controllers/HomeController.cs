@@ -1,7 +1,9 @@
 ﻿using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.Service;
+using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -42,6 +44,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
         public ActionResult Default()
         {
+          
             ViewBag.From = "Default";
 
             B_Article _bArticle = new B_Article();

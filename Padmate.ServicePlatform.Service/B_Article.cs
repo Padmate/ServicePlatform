@@ -4,6 +4,7 @@ using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,17 @@ namespace Padmate.ServicePlatform.Service
         }
 
         UserInfo _currentUser;
+        string _mapPath;
         public B_Article(UserInfo currentUser)
         {
             _currentUser = currentUser;
+
+        }
+
+        public B_Article(UserInfo currentUser,string mapPath)
+        {
+            _currentUser = currentUser;
+            _mapPath = mapPath;
 
         }
 
@@ -270,6 +279,58 @@ namespace Padmate.ServicePlatform.Service
             {
                 message.Success = false;
                 message.Content = "文章新增失败，异常："+e.Message ;
+            }
+            return message;
+        }
+
+        public Message EditArticle(int id,M_Article model)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "文章修改成功";
+
+            try
+            {
+                var article = new Article()
+                {
+                    Title = model.Title,
+                    SubTitle = model.SubTitle,
+                    Description = model.Description,
+                    ArticleImage = model.ArticleImage,
+                    Content = model.Content,
+                    CreateDate = DateTime.Now,
+                    Creator = _currentUser.UserName,
+                    Pubtime = model.Pubtime,
+                    Type = model.ArticleType,
+                    IsHref = model.IsHref,
+                    Href = model.Href
+                };
+
+                message.ReturnId = _dArticle.EditArticle(id,article);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "文章修改失败，异常：" + e.Message;
+            }
+            return message;
+        }
+
+        public Message DeleteArticle(int id)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "文章删除成功";
+            try
+            {
+                _dArticle.DeleteArticle(id);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "文章删除失败，异常：" + e.Message;
             }
             return message;
         }

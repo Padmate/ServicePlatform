@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,8 +15,11 @@ namespace Padmate.ServicePlatform.Web.Controllers
     {
         #region 背景图片管理
 
+        //允许的图片类型
         public List<string> AllowImageExtensions = new List<string>() { ".gif", ".jpg", ".jpeg", ".bmp", ".png" };
-        private string homebgVirtualFloader = "../img/Upload/homebg/";
+        //背景图片虚拟目录
+        private string homebgVirtualDirectory = SystemConfig.Init.PathConfiguration["homebgVirtualDirectory"].ToString();
+       
         /// <summary>
         /// 获取背景图片
         /// </summary>
@@ -30,9 +34,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 更新图片顺序
         /// </summary>
-        /// <param name="images"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult UpdateImageSequence()
@@ -54,16 +57,36 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return Json(true);
         }
 
+        /// <summary>
+        /// 删除图片
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult DeleteImage(int Id)
         {
             Message message = new Message();
+            B_Image bImage = new B_Image();
 
-            B_Image bImage = new B_Image(Server.MapPath(""));
+            M_Image image = bImage.GetImageById(Id);
+            if (image != null)
+            {
+                //删除图片
+                if (!string.IsNullOrEmpty(image.VirtualPath))
+                {
+                    var physicalPath = HttpContext.Server.MapPath("~"+image.VirtualPath);
+
+                    if (System.IO.File.Exists(physicalPath))
+                        System.IO.File.Delete(physicalPath);
+                }
+            }
+
+
             message = bImage.DeleteImage(Id);
 
             return Json(message);
         }
+
 
         /// <summary>
         /// 上传图片
@@ -73,9 +96,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult UploadHomeBGImage(string id, string name, string type, string lastModifiedDate, int size, HttpPostedFileBase file)
+        public ActionResult UploadHomeBGImage(HttpPostedFileBase file)
         {
-            string virtualUrl = "";
             Message message = new Message();
             message.Success = true;
 
@@ -83,35 +105,49 @@ namespace Padmate.ServicePlatform.Web.Controllers
             {
                 if (file != null)
                 {
-                    FileInfo articleImageFile = new FileInfo(file.FileName);
-                    string saveName = Guid.NewGuid().ToString() + articleImageFile.Extension;
-                    virtualUrl = Path.Combine(homebgVirtualFloader, saveName);
-                    string physicleDirectory = Server.MapPath(homebgVirtualFloader);
-                    string physicalUrl = Path.Combine(physicleDirectory, saveName);
+                    #region 保存图片文件
+                    FileInfo imageInfo = new FileInfo(file.FileName);
+                    var fileName = imageInfo.Name;
+                    var extension = imageInfo.Extension;
+                    string saveName = Guid.NewGuid().ToString() + imageInfo.Extension;
+                    string virtualPath = Path.Combine(homebgVirtualDirectory, saveName);
+
+                    string physicleDirectory = Server.MapPath(homebgVirtualDirectory);
                     if (!System.IO.Directory.Exists(physicleDirectory))
                     {
                         System.IO.Directory.CreateDirectory(physicleDirectory);
                     }
-                    file.SaveAs(physicalUrl);
+                    string physicalPath = Path.Combine(physicleDirectory, saveName);
+                    file.SaveAs(physicalPath);
+                    #endregion
+
+                    #region 保存图片信息
+                    //图片顺序
+                    B_Image _bImage = new B_Image();
+                    var totalImages = _bImage.GetHomeBGImages();
+                    var sequence = totalImages.Count + 1;
+
+                    var imageModel = new M_Image()
+                    {
+                        VirtualPath = virtualPath,
+                        Name = fileName,
+                        Extension = extension,
+                        SaveName = saveName,
+                        Sequence = sequence,
+                        Type = Common.Image_HomeBG
+                    };
+                    message = _bImage.AddImage(imageModel);
+                    if (!message.Success)
+                        return Json(message);
+                    
+                    #endregion
 
                 }
-                //图片顺序
-                B_Image _bImage = new B_Image();
-                var totalImages = _bImage.GetHomeBGImages();
-                var sequence = totalImages.Count + 1;
-
-                var imageModel = new M_Image()
+                else
                 {
-                    ImageUrl = virtualUrl,
-                    Sequence = sequence,
-                    Type = Common.Image_HomeBG
-                };
-                message = _bImage.AddImage(imageModel);
-                if (!message.Success)
-                {
-                    return Json(message);
+                    message.Success = false;
+                    message.Content = "上传失败。未获取到图片信息";
                 }
-
 
             }
             catch (Exception e)

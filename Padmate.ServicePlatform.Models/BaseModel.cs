@@ -24,6 +24,13 @@ namespace Padmate.ServicePlatform.Models
         #endregion
 
         #region 实体验证方法
+        public Message validate()
+        {
+            Message message = new Message();
+            message = validate(this);
+            return message;
+        }
+
         /// <summary>
         /// 验证视图数据属性，可递归调用
         /// </summary>

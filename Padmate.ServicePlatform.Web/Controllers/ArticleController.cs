@@ -63,7 +63,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
-        string articleImageVirtualFloader = "../img/Upload/";
+        string imageVirtualDirectory = SystemConfig.Init.PathConfiguration["articleVirtualDirectory"].ToString();
          // POST:
         [HttpPost]
         [ValidateInput(false)]
@@ -75,21 +75,23 @@ namespace Padmate.ServicePlatform.Web.Controllers
             {
                 try
                 {
-                    var mapPath = Server.MapPath("");
-                    FileUpload fileUpload = new FileUpload(mapPath);
-
                     string virtualSavePath = "";
-                    if(articleImage != null)
+                    if (articleImage != null)
                     {
+                        #region 上传文件
                         FileInfo articleImageFile = new FileInfo(articleImage.FileName);
-                        var physicalSavePath = fileUpload.ConstructPhysicalSavePath(articleImageVirtualFloader
-                            ,articleImage.FileName,articleImageFile.Extension);
-                        virtualSavePath = fileUpload.ConstructVirtualSavePath(articleImageVirtualFloader
-                            , articleImage.FileName, articleImageFile.Extension);
-
-                        articleImage.SaveAs(physicalSavePath);
-
+                        string saveName = Guid.NewGuid().ToString() + articleImageFile.Extension;
+                        virtualSavePath = Path.Combine(imageVirtualDirectory, saveName);
+                        string physicleDirectory = Server.MapPath(imageVirtualDirectory);
+                        string physicalSavePaht = Path.Combine(physicleDirectory, saveName);
+                        if (!System.IO.Directory.Exists(physicleDirectory))
+                        {
+                            System.IO.Directory.CreateDirectory(physicleDirectory);
+                        }
+                        articleImage.SaveAs(physicalSavePaht);
+                        #endregion
                     }
+
                     model.ArticleImage = virtualSavePath;
 
                     var currentUser = this.GetCurrentUser();
@@ -135,55 +137,49 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(M_Article model, HttpPostedFileBase articleImage, string ReturnUrl)
         {
-            B_Article bArticle = new B_Article();
+            var currentUser = this.GetCurrentUser();
+            B_Article bArticle = new B_Article(currentUser);
             var article = bArticle.GetArticleById(model.Id);
             ViewData["article"] = article;
             if (ModelState.IsValid && ValideData(model))
             {
                 try
                 {
-
-
-                    string virtualUrl = article.ArticleImage;
+                    string virtualSavePath = article.ArticleImage;
                     if (articleImage != null)
                     {
+                        #region 文件修改：先删除后上传
+                        //删除原来图片
+                        if (!string.IsNullOrEmpty(article.ArticleImage))
+                        {
+                            var physicalPath = HttpContext.Server.MapPath("~" + article.ArticleImage);
+
+                            if (System.IO.File.Exists(physicalPath))
+                                System.IO.File.Delete(physicalPath);
+                        }
+
                         //保存图片
                         FileInfo articleImageFile = new FileInfo(articleImage.FileName);
                         string saveName = Guid.NewGuid().ToString() + articleImageFile.Extension;
-                        string virtualFloder = "../img/Upload/";
-                        virtualUrl = Path.Combine(virtualFloder, saveName);
-                        string physicleDirectory = Server.MapPath(virtualFloder);
-                        string physicalUrl = Path.Combine(physicleDirectory, saveName);
+                        virtualSavePath = Path.Combine(imageVirtualDirectory, saveName);
+                        string physicleDirectory = Server.MapPath(imageVirtualDirectory);
+                        string physicalSavePath = Path.Combine(physicleDirectory, saveName);
                         if (!System.IO.Directory.Exists(physicleDirectory))
                         {
                             System.IO.Directory.CreateDirectory(physicleDirectory);
                         }
-                        articleImage.SaveAs(physicalUrl);
+                        articleImage.SaveAs(physicalSavePath);
 
-
-                        //删除原来图片
-                        if (!string.IsNullOrEmpty(article.ArticleImage))
-                        {
-                            if (System.IO.File.Exists(Server.MapPath(article.ArticleImage)))
-                                System.IO.File.Delete(Server.MapPath(article.ArticleImage));
-                        }
-
+                        #endregion
                     }
 
-
-                    article.Title = model.Title;
-                    article.SubTitle = model.SubTitle;
-                    article.Description = model.Description;
-                    article.ArticleImage = virtualUrl;
-                    article.Content = model.Content;
-                    //article.ModifiedDate = DateTime.Now;
-                    //article.Modifier = User.Identity.Name;
-                    //article.Pubtime = model.Pubtime;
-                    //article.IsHref = model.IsHref;
-                    //article.Href = model.Href;
-                    
-
-                    //_dbContext.SaveChanges();
+                    article.ArticleImage = virtualSavePath;
+                    Message message = bArticle.EditArticle(model.Id,article);
+                    if (!message.Success)
+                    {
+                        ModelState.AddModelError("", message.Content);
+                        return View(model);
+                    }
                     //返回文章显示页面
                     return Redirect("/Article/ShowContent?id=" + article.Id.ToString() + "&returnUrl=" + ReturnUrl);
 
@@ -217,17 +213,23 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(Int32 id,string returnUrl)
         {
-            //var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
-            ////删除图标
-            ////删除原来图片
-            //if (!string.IsNullOrEmpty(article.ArticleImage))
-            //{
-            //    if (System.IO.File.Exists(Server.MapPath(article.ArticleImage)))
-            //        System.IO.File.Delete(Server.MapPath(article.ArticleImage));
-            //}
+            var currentUser = this.GetCurrentUser();
+            B_Article bArticle = new B_Article();
 
-            //_dbContext.Atricles.Remove(article);
-            //_dbContext.SaveChanges();
+            M_Article article = bArticle.GetArticleById(id);
+            if (article != null)
+            {
+                //删除原来图片
+                if (!string.IsNullOrEmpty(article.ArticleImage))
+                {
+                    var physicalPath = Server.MapPath("~"+article.ArticleImage);
+                    if (System.IO.File.Exists(physicalPath))
+                        System.IO.File.Delete(physicalPath);
+                }
+            }
+
+            Message message = bArticle.DeleteArticle(id);
+           
             return Redirect(returnUrl); 
         }
 

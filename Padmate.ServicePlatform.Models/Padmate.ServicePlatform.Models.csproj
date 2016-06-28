@@ -44,7 +44,7 @@
     <Compile Include="M_Article.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="M_Image.cs" />
-    <Compile Include="MailViewModel.cs" />
+    <Compile Include="M_Mail.cs" />
     <Compile Include="ManageViewModels.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="PageResult.cs" />

@@ -8,7 +8,31 @@ namespace Padmate.ServicePlatform.Entities
     public class Image
     {
         public int Id { get; set; }
-        public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 图片虚拟路径
+        /// </summary>
+        public string VirtualPath { get; set; }
+
+        /// <summary>
+        /// 图片物理路径
+        /// </summary>
+        public string PhysicalPath { get; set; }
+
+        /// <summary>
+        /// 图片原始名称
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 图片保存名称
+        /// </summary>
+        public string SaveName { get; set; }
+
+        /// <summary>
+        /// 图片后缀
+        /// </summary>
+        public string Extension { get; set; }
 
         /// <summary>
         /// 图片排列顺序

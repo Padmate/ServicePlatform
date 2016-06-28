@@ -66,7 +66,7 @@
                     activeClass = "active";
                 }
                 <div class="item @activeClass">
-                    <img class="image-bigsize" src="@homebgImages[i].ImageUrl">
+                    <img class="image-bigsize" src="@homebgImages[i].VirtualPath">
 
                 </div>
             }
@@ -783,8 +783,13 @@
                 dataType: "json",
                 data: jsonParam,
                 async: false,   //同步
-                success: function (status) {
+                success: function (message) {
                     //图片更新后不做任何操作
+
+                    //tips层
+                    layer.tips(message.Content, "#btn-sendmail", {
+                        tips: [1, '#78BA32'] //提示位置：上,还可配置颜色
+                    });
                 }
             });
 

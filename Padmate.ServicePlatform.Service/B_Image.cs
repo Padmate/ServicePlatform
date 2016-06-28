@@ -8,22 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Padmate.ServicePlatform.Service
 {
     public class B_Image
     {
         D_Image _dImage = new D_Image();
-        public B_Image()
-        {
-
-        }
-
-        string _mapPath;
-        public B_Image(string mapPath)
-        {
-            _mapPath = mapPath;
-        }
 
         /// <summary>
         /// 获取首页背景图片
@@ -34,7 +25,11 @@ namespace Padmate.ServicePlatform.Service
             var images = _dImage.GetImagesByType(Common.Image_HomeBG);
             var result = images.Select(i=>new M_Image(){
                 Id = i.Id,
-                ImageUrl = i.ImageUrl,
+                VirtualPath = i.VirtualPath,
+                PhysicalPath = i.PhysicalPath,
+                Name = i.Name,
+                SaveName = i.SaveName,
+                Extension = i.Extension,
                 Sequence = i.Sequence,
                 Type = i.Type
 
@@ -42,6 +37,32 @@ namespace Padmate.ServicePlatform.Service
 
             return result;
         }
+
+        /// <summary>
+        /// 根据ID获取图片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public M_Image GetImageById(int id)
+        {
+            var image = _dImage.GetImageById(id);
+            var result = new M_Image()
+            {
+                Id = image.Id,
+                VirtualPath = image.VirtualPath,
+                PhysicalPath = image.PhysicalPath,
+                Name = image.Name,
+                SaveName = image.SaveName,
+                Extension = image.Extension,
+                Sequence = image.Sequence,
+                Type = image.Type
+
+            };
+
+            return result;
+        }
+
+        
 
         /// <summary>
         /// 新增图片
@@ -55,7 +76,11 @@ namespace Padmate.ServicePlatform.Service
             try
             {
                 Image model = new Image();
-                model.ImageUrl = image.ImageUrl;
+                model.VirtualPath = image.VirtualPath;
+                model.PhysicalPath = image.PhysicalPath;
+                model.Name = image.Name;
+                model.SaveName = image.SaveName;
+                model.Extension = image.Extension;
                 model.Sequence = image.Sequence;
                 model.Type = image.Type;
                 _dImage.AddImage(model);
@@ -105,25 +130,13 @@ namespace Padmate.ServicePlatform.Service
             message.Content = "图片删除成功";
             try
             {
-                Image image = _dImage.GetImageById(id);
-                if (image != null)
-                {
-                    //删除原来图片
-                    if (!string.IsNullOrEmpty(image.ImageUrl))
-                    {
-                        var physicalPath = Path.Combine(_mapPath,image.ImageUrl);
-                        if (System.IO.File.Exists(physicalPath))
-                            System.IO.File.Delete(physicalPath);
-                    }
-
-                    _dImage.DeleteImage(id);
-                }
+                _dImage.DeleteImage(id);
 
             }
             catch (Exception e)
             {
                 message.Success = false;
-                message.Content = "图片顺序更新失败，异常：" + e.Message;
+                message.Content = "图片删除失败，异常：" + e.Message;
             }
             return message;
 

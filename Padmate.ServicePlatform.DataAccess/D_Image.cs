@@ -28,7 +28,7 @@ namespace Padmate.ServicePlatform.DataAccess
         }
 
         /// <summary>
-        /// 删除图片
+        /// 获取图片
         /// </summary>
         /// <param name="id"></param>
         public Image GetImageById(int id)
