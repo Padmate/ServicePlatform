@@ -6,7 +6,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @*<meta http-equiv="X-UA-Compatible" content="E=EmulateIE7">*@
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -43,6 +44,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    @*<script src="~/Scripts/respond.min.js"></script>*@
     <style>
 
     </style>
@@ -70,7 +72,7 @@
             <!--联系我们-->
             <li>
                 <a class="rightSection page-scroll information-box" href="@contactUs"
-                   style="display: block; background-color: rgba(52, 152, 219, 0.78)">
+                   style="display: block; background-color: rgba(52, 152, 219, 0.78); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088cc,endColorstr=#E50088cc)">
                     <i class=" fa fa-phone-square">
                     </i>
                     <div class="information-box-caption">
@@ -87,7 +89,7 @@
             <!--返回顶部-->
             <li id="linavtop" class="navtop">
                 <a class="rightSection page-scroll information-box" href="#page-top"
-                   style="display: block; background-color: #999">
+                   style="display: block; background-color: #8EC31E">
                     <i class=" fa fa-angle-up">
                     </i>
                     <div class="information-box-caption">
@@ -187,14 +189,11 @@
     <script src="~/Scripts/jquery.easing.1.3.js"></script>
     <script src="~/Scripts/classie.js"></script>
     @*<script src="~/Scripts/cbpAnimatedHeader.js"></script>*@
-    <!-- Contact Form JavaScript -->
-    <script src="~/Scripts/jqBootstrapValidation.js"></script>
-    <script src="~/Scripts/contact_me.js"></script>
+    
     <!-- Custom Theme JavaScript -->
     <script src="~/Scripts/agency.js"></script>
     <script src="~/Scripts/layer/layer.js"></script>
-    <!--wow-->
-    <script src="~/Scripts/wow.min.js"></script>
+
     <script src="~/Scripts/slick/slick/slick.min.js"></script>
     <!--Print font-->
     <script src="~/Scripts/l-by-l.min.js"></script>
@@ -204,7 +203,7 @@
     <script src="~/Scripts/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="~/Scripts/loading/jquery.showLoading.js"></script>
-
+    <script src="~/Scripts/jquery.placeholder.js"></script>
 
     @RenderSection("scripts", required: false)
     <script>
@@ -233,6 +232,11 @@
                     $("#linavtop").addClass("navtop");
                 }
             });
+
+            //IE8 placeholder
+            // Invoke the plugin
+            $('input, textarea').placeholder();
+
         })
     </script>
     <div class="content-body @bodyPaddingClass">
@@ -282,7 +286,7 @@
                     
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-2">
-                    <img src="~/img/logos/weixin.png" class="image200" />
+                    <img src="~/img/logos/weixin.png" class="img-responsive" />
                 </div>
             </div>
         </div>

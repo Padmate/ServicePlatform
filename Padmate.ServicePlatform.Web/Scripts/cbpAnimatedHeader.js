@@ -17,15 +17,31 @@ var cbpAnimatedHeader = (function() {
 
 	
 	function init() {
-		window.addEventListener( 'scroll', function( event ) {
-			if( !didScroll ) {
-				didScroll = true;
-				setTimeout( scrollPage, 250 );
-			}
-		}, false );
+	    
+        if(window.addEventListener)
+        {
+            window.addEventListener('scroll', function (event) {
+                if (!didScroll) {
+                    didScroll = true;
+                    setTimeout(scrollPage, 250);
+                }
+            }, false);
+
+        } else {
+            //IE8
+            $(window).bind("scroll", function () {
+                if (!didScroll) {
+                    didScroll = true;
+                    setTimeout(scrollPage, 250);
+                }
+
+            });
+        }
+		
 	}
 
 	function scrollPage() {
+
 		var sy = scrollY();
 		if ( sy >= changeHeaderOn ) {
 			classie.add( header, 'navbar-shrink' );

@@ -296,16 +296,16 @@ header .carousel-indicators li:hover{background-color:gray;}
 
 
 .service-section{
+    background-image:url("../img/servicebg2.jpg");
     background-repeat:no-repeat;
-    background-size:cover;
     background-attachment:fixed;
-    background-image:url("../img/servicebg2.jpg")
+    background-size:cover;
 }
 .about-section{
     background-repeat:no-repeat;
     background-size:cover;
     background-attachment:fixed;
-    background-image:url("../img/aboutbg.jpg")
+    background-image:url("../img/aboutbg.jpg");
 }
 
 /*Customer CSS*/
@@ -371,12 +371,12 @@ header .carousel-indicators li:hover{background-color:gray;}
     background-color:green;
 }
 .ribbon-product{
-    color:white;
-    background-color:#8A6D3B;
+    color:black;
+    background-color:#fff;
 }
 .ribbon-project{
     color:white;
-    background-color:#000;
+    background-color:#337ab7;
 }
 .ribbon-make{
     color:black;
@@ -392,7 +392,7 @@ header .carousel-indicators li:hover{background-color:gray;}
 }
 .ribbon-brand{
     color:white;
-    background-color:#31708f;
+    background-color:#2AC31E;
 }
 .ribbon-tutor{
     color:white;
@@ -420,9 +420,15 @@ header .carousel-indicators li:hover{background-color:gray;}
 .partner img{
     -webkit-filter: grayscale(1);/* Webkit */ 
     filter: grayscale(1);/* W3C */ 
+    filter: gray; /* ie6-8 */ 
+    filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);/*ie6-9 */ 
 }
 
 .partner img:hover{
     -webkit-filter: grayscale(0);/* Webkit */ 
     filter: grayscale(0);/* W3C */ 
+}
+
+.product-smallsection{
+    margin-bottom:30px;
 }

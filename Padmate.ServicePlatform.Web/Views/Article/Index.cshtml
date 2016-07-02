@@ -49,11 +49,14 @@
     .tags li a:focus,
     .tags li a:hover {
         background-color: rgba(0, 136, 204, 0.88);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
+
     }
     .tags > li.active > a, .tags > li.active > a:hover, .tags > li.active > a:focus {
         color: white;
         cursor: default;
         background-color: rgba(0, 136, 204, 0.88);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
     }
     .pageBar{
        text-align:center;
@@ -328,7 +331,7 @@
             var imageVirtualPath = "";
             if (articles[i].Image != null)
                 imageVirtualPath = articles[i].Image.VirtualPath;
-            dynamicHtml += '<img src="' + imageVirtualPath + '" class="image-smallsize" alt="无图标"/>';
+            dynamicHtml += '<img src="' + imageVirtualPath + '" class="img-responsive" alt="无图标"/>';
             dynamicHtml += '</a>';
             dynamicHtml += '</div>';
             dynamicHtml += '<div class="col-md-8">';

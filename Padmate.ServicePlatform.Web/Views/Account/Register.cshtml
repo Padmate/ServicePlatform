@@ -11,13 +11,15 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <link rel="stylesheet" href="~/Content/login-style.css">
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.placeholder.js"></script>
 
 </head>
 
 
 <body>
     <div class="container">
-        <section id="content">
+        <div id="content">
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
@@ -51,8 +53,15 @@
 
                 </div>
             }
-        </section><!-- content -->
+        </div><!-- content -->
     </div><!-- container -->
 </body>
 
 </html>
+<script>
+    $(function () {
+        // Invoke the plugin
+        $('input, textarea').placeholder({ customClass: 'my-placeholder' });
+        
+    });
+</script>

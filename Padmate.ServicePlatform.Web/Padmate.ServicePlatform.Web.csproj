@@ -15,7 +15,7 @@
     <AssemblyName>Padmate.ServicePlatform.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -720,6 +720,7 @@
     <Content Include="Content\shop-item.css" />
     <Content Include="Content\SuspendedNav.css" />
     <Content Include="Content\SuspendedNavMac.css" />
+    <Content Include="Content\system-IE8.css" />
     <Content Include="Content\system.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
@@ -733,11 +734,14 @@
     <Content Include="img\aboutbg.jpg" />
     <Content Include="img\about\1.jpg" />
     <Content Include="img\about\2.jpg" />
+    <Content Include="img\about\3-circle.png" />
     <Content Include="img\about\3.jpg" />
     <Content Include="img\about\4.jpg" />
+    <Content Include="img\about\introduce-circle.png" />
     <Content Include="img\about\introduce.jpg" />
     <Content Include="img\about\introduce.png" />
     <Content Include="img\about\mail.png" />
+    <Content Include="img\about\story-circle.jpg" />
     <Content Include="img\Activity\activitybg.jpg" />
     <Content Include="img\addimage.jpg" />
     <Content Include="img\addimage.png" />
@@ -907,15 +911,26 @@
     <Content Include="img\Service\SellPlatform\tm_logo.png" />
     <Content Include="img\Service\SellPlatform\爪蛙卡卡\242dd42a2834349b825497abceea15ce36d3be4a.png" />
     <Content Include="img\Service\SellPlatform\爪蛙卡卡\e824b899a9014c082569d18b0d7b02087bf4f44a.jpg" />
+    <Content Include="img\Service\SellPlatform\爪蛙卡卡\zwkk-small1.jpg" />
+    <Content Include="img\Service\SellPlatform\爪蛙卡卡\zwkk-small2.jpg" />
+    <Content Include="img\Service\SellPlatform\爪蛙卡卡\zwkk-small3.jpg" />
     <Content Include="img\Service\SellPlatform\爪蛙卡卡\爪蛙卡卡.png" />
     <Content Include="img\Service\SellPlatform\美承\b58f8c5494eef01f3ffba721e6fe9925bd317d62.jpg" />
     <Content Include="img\Service\SellPlatform\美承\d439b6003af33a8724e6bffec05c10385243b54f.jpg" />
+    <Content Include="img\Service\SellPlatform\美承\mc-small1.jpg" />
+    <Content Include="img\Service\SellPlatform\美承\mc-small2.jpg" />
     <Content Include="img\Service\SellPlatform\零号门\IMG_20151227_102821.jpg" />
     <Content Include="img\Service\SellPlatform\零号门\IMG_20151227_102825.jpg" />
     <Content Include="img\Service\SellPlatform\零号门\IMG_20151227_103915.jpg" />
+    <Content Include="img\Service\SellPlatform\零号门\lhm-small1.jpg" />
+    <Content Include="img\Service\SellPlatform\零号门\lhm-small2.jpg" />
+    <Content Include="img\Service\SellPlatform\零号门\lhm-small3.jpg" />
     <Content Include="img\Service\SellPlatform\龙翔\IMG_20160421_131527.jpg" />
     <Content Include="img\Service\SellPlatform\龙翔\IMG_20160421_131535.jpg" />
     <Content Include="img\Service\SellPlatform\龙翔\IMG_20160421_131623.jpg" />
+    <Content Include="img\Service\SellPlatform\龙翔\lx-small1.jpg" />
+    <Content Include="img\Service\SellPlatform\龙翔\lx-small2.jpg" />
+    <Content Include="img\Service\SellPlatform\龙翔\lx-small3.jpg" />
     <Content Include="img\Service\service-brand.png" />
     <Content Include="img\Service\service-fund.png" />
     <Content Include="img\Service\service-make.png" />
@@ -981,6 +996,7 @@
     <Content Include="fonts\fontawesome.ttf" />
     <Content Include="fonts\fontawesome.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="System.config" />
     <Content Include="ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.eot" />
@@ -1125,6 +1141,7 @@
     <Content Include="Views\Service\SupplyManagement.cshtml" />
     <Content Include="Views\Service\TutorPlatform.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
+    <Content Include="Views\Home\Default2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1173,7 +1190,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9958</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8723/</IISUrl>
+          <IISUrl>http://localhost:8888</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

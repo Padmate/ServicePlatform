@@ -14,13 +14,14 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="~/Content/login-style.css">
-
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.placeholder.js"></script>
 </head>
 
 
 <body>
     <div class="container">
-        <section id="content">
+        <div id="content">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
@@ -59,13 +60,20 @@
                     <a href="/Account/Register">Register</a>
                 </div>
             }
-        </section><!-- content -->
+        </div><!-- content -->
     </div><!-- container -->
     <div class="col-md-4">
-        <section id="socialLoginForm" style="display:none">
+        <div id="socialLoginForm" style="display:none">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel(){ ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        </div>
     </div>
 </body>
 
 </html>
+<script>
+    $(function () {
+        // Invoke the plugin
+        $('input, textarea').placeholder({ customClass: 'my-placeholder' });
+
+    });
+</script>

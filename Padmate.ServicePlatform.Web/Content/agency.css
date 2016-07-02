@@ -1,4 +1,4 @@
-body{overflow-x:hidden;font-family:"Microsoft YaHei","Roboto Slab","Helvetica Neue",Helvetica,Arial,sans-serif}
+﻿body{overflow-x:hidden;font-family:"Microsoft YaHei","Roboto Slab","Helvetica Neue",Helvetica,Arial,sans-serif}
 .text-muted{color:#777}
 .text-primary{color:#fed136}
 p{font-size:14px;line-height:1.75}
@@ -92,7 +92,7 @@ h1,h2,h3,h4,h5,h6
     .navbar-default .navbar-brand{-webkit-transition:all .3s;-moz-transition:all .3s;transition:all .3s}
     .navbar-default .navbar-nav>.active>a{border-radius:3px}
     .navbar-default.navbar-shrink{
-        background-color:#fff;
+        background-color:#333;
         padding:5px 0;
         box-shadow:0 2px 2px rgba(0,0,0,.1);
     }
@@ -110,7 +110,7 @@ h1,h2,h3,h4,h5,h6
 
     }
     .navbar-default.navbar-shrink{
-        background-color:#fff;
+        background-color:#333;
         padding:5px 0;
         box-shadow:0 2px 2px rgba(0,0,0,.1);
     }
@@ -170,7 +170,67 @@ section{padding:50px 0}
 section h2.section-heading{font-size:40px;margin-top:0;margin-bottom:15px}
 section h3.section-subheading{font-size:16px;font-family:"Microsoft YaHei","Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;text-transform:none;font-style:italic;font-weight:400;margin-bottom:75px}
 /*@media (min-width:768px){section{padding:150px 0}}*/
-.portfolioContainer .portfolio-item{margin:0 0 15px;right:0}.portfolioContainer .portfolio-item .portfolio-link{display:block;position:relative;max-width:400px;margin:0 auto}.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover{background:rgba(85, 85, 85, 0.69);position:absolute;width:100%;height:100%;opacity:0;transition:all ease .5s;-webkit-transition:all ease .5s;-moz-transition:all ease .5s}.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover:hover{opacity:1}.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content{position:absolute;width:100%;height:20px;font-size:20px;text-align:center;top:50%;margin-top:-12px;color:#fff}.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content i{margin-top:-12px}.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content h3,.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content h4{margin:0}.portfolioContainer .portfolio-item .portfolio-caption{max-width:400px;margin:0 auto;background-color:#fff;text-align:center;padding:25px}.portfolioContainer .portfolio-item .portfolio-caption h4{text-transform:none;margin:0}.portfolioContainer .portfolio-item .portfolio-caption p{font-family:"Microsoft YaHei","Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;font-style:italic;font-size:16px;margin:0}.portfolioContainer *{z-index:2}@media (min-width:767px){.portfolioContainer .portfolio-item{margin:0 0 30px}}.timeline{list-style:none;padding:0;position:relative}.timeline:before{top:0;bottom:0;position:absolute;content:"";width:2px;background-color:#f1f1f1;left:40px;margin-left:-1.5px}.timeline>li{margin-bottom:50px;position:relative;min-height:50px}.timeline>li:before,.timeline>li:after{content:" ";display:table}.timeline>li:after{clear:both}.timeline>li .timeline-panel{width:100%;float:right;padding:0 20px 0 100px;position:relative;text-align:left}.timeline>li .timeline-panel:before{border-left-width:0;border-right-width:15px;left:-15px;right:auto}.timeline>li .timeline-panel:after{border-left-width:0;border-right-width:14px;left:-14px;right:auto}.timeline>li .timeline-image{left:0;margin-left:0;width:80px;height:80px;position:absolute;z-index:100;background-color:#fed136;color:#fff;border-radius:100%;border:7px solid #f1f1f1;text-align:center}.timeline>li .timeline-image h4{font-size:10px;margin-top:12px;line-height:14px}.timeline>li.timeline-inverted>.timeline-panel{float:right;text-align:left;padding:0 20px 0 100px}.timeline>li.timeline-inverted>.timeline-panel:before{border-left-width:0;border-right-width:15px;left:-15px;right:auto}.timeline>li.timeline-inverted>.timeline-panel:after{border-left-width:0;border-right-width:14px;left:-14px;right:auto}.timeline>li:last-child{margin-bottom:0}.timeline .timeline-heading h4{margin-top:0;color:inherit}.timeline .timeline-heading h4.subheading{text-transform:none}.timeline .timeline-body>p,.timeline .timeline-body>ul{margin-bottom:0}@media (min-width:768px){.timeline:before{left:50%}.timeline>li{margin-bottom:100px;min-height:100px}.timeline>li .timeline-panel{width:41%;float:left;padding:0 20px 20px 30px;text-align:right}.timeline>li .timeline-image{width:100px;height:100px;left:50%;margin-left:-50px}.timeline>li .timeline-image h4{font-size:13px;margin-top:16px;line-height:18px}.timeline>li.timeline-inverted>.timeline-panel{float:right;text-align:left;padding:0 30px 20px 20px}}@media (min-width:992px){.timeline>li{min-height:150px}.timeline>li .timeline-panel{padding:0 20px 20px}.timeline>li .timeline-image{width:150px;height:150px;margin-left:-75px}.timeline>li .timeline-image h4{font-size:18px;margin-top:30px;line-height:26px}.timeline>li.timeline-inverted>.timeline-panel{padding:0 20px 20px}}@media (min-width:1200px){.timeline>li{min-height:170px}.timeline>li .timeline-panel{padding:0 20px 20px 100px}.timeline>li .timeline-image{width:170px;height:170px;margin-left:-85px}.timeline>li .timeline-image h4{margin-top:40px}.timeline>li.timeline-inverted>.timeline-panel{padding:0 100px 20px 20px}}.team-member{text-align:center;margin-bottom:50px}.team-member img{margin:0 auto;border:7px solid #fff}.team-member h4{margin-top:25px;margin-bottom:0;text-transform:none}.team-member p{margin-top:0}
+.portfolioContainer .portfolio-item{margin:0 0 15px;right:0}
+.portfolioContainer .portfolio-item .portfolio-link{display:block;position:relative;max-width:400px;margin:0 auto}
+.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover
+{
+    background:rgba(85, 85, 85, 0.69);
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0); /*IE8*/
+
+    transition:all ease .5s;
+    -webkit-transition:all ease .5s;
+    -moz-transition:all ease .5s
+
+}
+.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover:hover
+{
+    opacity:1;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70)
+    progid:DXImageTransform.Microsoft.gradient(startColorstr=#B2858585,endColorstr=#B2858585); /*IE8*/
+
+
+}
+.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content
+{
+    position:absolute;
+    width:100%;
+    height:20px;
+    font-size:20px;
+    text-align:center;
+    top:50%;
+    margin-top:-12px;
+    color:#fff
+
+}
+.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content i{margin-top:-12px}
+.portfolioContainer .portfolio-item .portfolio-link .portfolio-hover 
+.portfolio-hover-content h3,.portfolioContainer .portfolio-item .portfolio-link 
+.portfolio-hover .portfolio-hover-content h4{margin:0}
+.portfolioContainer .portfolio-item .portfolio-caption
+{
+    max-width:400px;
+    margin:0 auto;
+    background-color:#fff;
+    text-align:center;padding:25px
+
+}
+.portfolioContainer .portfolio-item .portfolio-caption h4{text-transform:none;margin:0}
+.portfolioContainer .portfolio-item .portfolio-caption p
+{
+    font-family:"Microsoft YaHei","Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-style:italic;
+    font-size:16px;
+    margin:0
+
+}
+.portfolioContainer *{z-index:2}
+@media (min-width:767px){.portfolioContainer .portfolio-item{margin:0 0 30px}}
+
+.timeline{list-style:none;padding:0;position:relative}.timeline:before{top:0;bottom:0;position:absolute;content:"";width:2px;background-color:#f1f1f1;left:40px;margin-left:-1.5px}.timeline>li{margin-bottom:50px;position:relative;min-height:50px}.timeline>li:before,.timeline>li:after{content:" ";display:table}.timeline>li:after{clear:both}.timeline>li .timeline-panel{width:100%;float:right;padding:0 20px 0 100px;position:relative;text-align:left}.timeline>li .timeline-panel:before{border-left-width:0;border-right-width:15px;left:-15px;right:auto}.timeline>li .timeline-panel:after{border-left-width:0;border-right-width:14px;left:-14px;right:auto}.timeline>li .timeline-image{left:0;margin-left:0;width:80px;height:80px;position:absolute;z-index:100;background-color:transparent;color:#fff;border-radius:100%;border:7px solid #f1f1f1;text-align:center}.timeline>li .timeline-image h4{font-size:10px;margin-top:12px;line-height:14px}.timeline>li.timeline-inverted>.timeline-panel{float:right;text-align:left;padding:0 20px 0 100px}.timeline>li.timeline-inverted>.timeline-panel:before{border-left-width:0;border-right-width:15px;left:-15px;right:auto}.timeline>li.timeline-inverted>.timeline-panel:after{border-left-width:0;border-right-width:14px;left:-14px;right:auto}.timeline>li:last-child{margin-bottom:0}.timeline .timeline-heading h4{margin-top:0;color:inherit}.timeline .timeline-heading h4.subheading{text-transform:none}.timeline .timeline-body>p,.timeline .timeline-body>ul{margin-bottom:0}@media (min-width:768px){.timeline:before{left:50%}.timeline>li{margin-bottom:100px;min-height:100px}.timeline>li .timeline-panel{width:41%;float:left;padding:0 20px 20px 30px;text-align:right}.timeline>li .timeline-image{width:100px;height:100px;left:50%;margin-left:-50px}.timeline>li .timeline-image h4{font-size:13px;margin-top:16px;line-height:18px}.timeline>li.timeline-inverted>.timeline-panel{float:right;text-align:left;padding:0 30px 20px 20px}}@media (min-width:992px){.timeline>li{min-height:150px}.timeline>li .timeline-panel{padding:0 20px 20px}.timeline>li .timeline-image{width:150px;height:150px;margin-left:-75px}.timeline>li .timeline-image h4{font-size:18px;margin-top:30px;line-height:26px}.timeline>li.timeline-inverted>.timeline-panel{padding:0 20px 20px}}@media (min-width:1200px){.timeline>li{min-height:170px}.timeline>li .timeline-panel{padding:0 20px 20px 100px}.timeline>li .timeline-image{width:170px;height:170px;margin-left:-85px}.timeline>li .timeline-image h4{margin-top:40px}.timeline>li.timeline-inverted>.timeline-panel{padding:0 100px 20px 20px}}.team-member{text-align:center;margin-bottom:50px}.team-member img{margin:0 auto;border:7px solid #fff}.team-member h4{margin-top:25px;margin-bottom:0;text-transform:none}.team-member p{margin-top:0}
 aside.clients img{margin:50px auto}
 section#contact{background-color:#414141;background-image:url(../img/map-image.png);background-position:center;background-repeat:no-repeat}
 section#contact .section-heading{color:#fff}
@@ -204,7 +264,49 @@ footer ul.quicklinks{
     text-transform:uppercase;text-transform:none
 
 }
-ul.social-buttons{margin-bottom:0}ul.social-buttons li a{display:block;background-color:#222;height:40px;width:40px;border-radius:100%;font-size:20px;line-height:40px;color:#fff;outline:0;-webkit-transition:all .3s;-moz-transition:all .3s;transition:all .3s}ul.social-buttons li a:hover,ul.social-buttons li a:focus,ul.social-buttons li a:active{background-color:#fed136}.btn:focus,.btn:active,.btn.active,.btn:active:focus{outline:0}.portfolio-modal .modal-content{border-radius:0;background-clip:border-box;-webkit-box-shadow:none;box-shadow:none;border:0;min-height:100%;padding:100px 0;text-align:center}.portfolio-modal .modal-content h2{margin-bottom:15px;font-size:3em}.portfolio-modal .modal-content p{margin-bottom:30px}.portfolio-modal .modal-content p.item-intro{margin:20px 0 30px;font-family:"Microsoft YaHei","Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;font-style:italic;font-size:16px}.portfolio-modal .modal-content ul.list-inline{margin-bottom:30px;margin-top:0}.portfolio-modal .modal-content img{margin-bottom:30px}.portfolio-modal .close-modal{position:fixed;width:75px;height:75px;background-color:transparent;top:25px;right:25px;cursor:pointer}.portfolio-modal .close-modal:hover{opacity:.3}.portfolio-modal .close-modal .lr{height:75px;width:1px;margin-left:35px;background-color:#222;transform:rotate(45deg);-ms-transform:rotate(45deg);-webkit-transform:rotate(45deg);z-index:1051}.portfolio-modal .close-modal .lr .rl{height:75px;width:1px;background-color:#222;transform:rotate(90deg);-ms-transform:rotate(90deg);-webkit-transform:rotate(90deg);z-index:1052}.portfolio-modal .modal-backdrop{opacity:0;display:none}::-moz-selection{text-shadow:none;background:#fed136}::selection{text-shadow:none;background:#fed136}img::selection{background:0 0}img::-moz-selection{background:0 0}body{webkit-tap-highlight-color:#fed136}
+ul.social-buttons{margin-bottom:0}
+ul.social-buttons li a{display:block;background-color:#222;height:40px;width:40px;border-radius:100%;font-size:20px;line-height:40px;color:#fff;outline:0;-webkit-transition:all .3s;-moz-transition:all .3s;transition:all .3s}
+ul.social-buttons li a:hover,ul.social-buttons li a:focus,ul.social-buttons li a:active{background-color:#fed136}
+.btn:focus,.btn:active,.btn.active,.btn:active:focus{outline:0}
+.portfolio-modal .modal-content{border-radius:0;background-clip:border-box;-webkit-box-shadow:none;box-shadow:none;border:0;min-height:100%;padding:100px 0;text-align:center}
+.portfolio-modal .modal-content h2{margin-bottom:15px;font-size:3em}
+.portfolio-modal .modal-content p{margin-bottom:30px}
+.portfolio-modal .modal-content p.item-intro{
+    margin:20px 0 30px;
+    font-family:"Microsoft YaHei","Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-style:italic;font-size:16px
+
+}
+.portfolio-modal .modal-content ul.list-inline{margin-bottom:30px;margin-top:0}
+.portfolio-modal .modal-content img{margin-bottom:30px}
+.portfolio-modal .close-modal{position:fixed;width:75px;height:75px;background-color:transparent;top:25px;right:25px;cursor:pointer}
+.portfolio-modal .close-modal:hover{opacity:.3}
+.portfolio-modal .close-modal .lr
+{
+    height:75px;
+    width:1px;
+    margin-left:35px;
+    background-color:#222;
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    filter:progid:DXImageTransform.Microsoft.Matrix(M11=0.71,M12=-0.85,M21=0.85,M22=0.71,SizingMethod='auto expand');
+    z-index:1051
+
+}
+.portfolio-modal .close-modal .lr .rl
+{
+    height:75px;
+    width:1px;
+    background-color:#222;
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=0)​;
+    z-index:1052
+
+}
+.portfolio-modal .modal-backdrop{opacity:0;display:none}::-moz-selection{text-shadow:none;background:#fed136}::selection{text-shadow:none;background:#fed136}img::selection{background:0 0}img::-moz-selection{background:0 0}body{webkit-tap-highlight-color:#fed136}
 
 
 
