@@ -286,6 +286,10 @@ header .carousel-indicators li:hover{background-color:gray;}
 	  -moz-box-shadow: 0 5px 10px #999;
 			box-shadow: 0 5px 10px #999;
 }
+.nav-submenu li{
+    height:50px;
+    line-height:50px;
+}
 .navbar-nav .nav-submenu > li > a:hover,
 .navbar-nav .nav-submenu> li > a:focus {
   background-color: #eee;

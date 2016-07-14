@@ -23,22 +23,16 @@ namespace Padmate.ServicePlatform.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ChangePasswordViewModel
+    public class ChangePasswordViewModel:BaseModel
     {
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "当前密码")]
+        [Required(ErrorMessage="请输入当前密码")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} 必须至少包含 {2} 个字符。", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "新密码")]
+        [Required(ErrorMessage="请输入新密码")]
+        [MinLength(6,ErrorMessage="密码不能小于6位")]
         public string NewPassword { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "确认新密码")]
-        [Compare("NewPassword", ErrorMessage = "新密码和确认密码不匹配。")]
+        [Required(ErrorMessage = "请再次输入新密码")]
         public string ConfirmPassword { get; set; }
     }
 

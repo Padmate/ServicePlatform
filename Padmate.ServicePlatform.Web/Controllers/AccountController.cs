@@ -75,6 +75,12 @@ namespace Padmate.ServicePlatform.Web.Controllers
                 return View(model);
             }
 
+            var user = await UserManager.FindByNameAsync(model.UserName);
+            if(user == null)
+            {
+                ModelState.AddModelError("", "用户"+model.UserName+"不存在。");
+                return View(model);
+            }
             // 这不会计入到为执行帐户锁定而统计的登录失败次数中
             // 若要在多次输入错误密码的情况下触发帐户锁定，请更改为 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -88,7 +94,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "无效的登录尝试。");
+                    ModelState.AddModelError("", "密码错误。");
                     return View(model);
             }
         }

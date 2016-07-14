@@ -11,7 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>厦门智能﹢创新创业公共服务平台</title>
+    @{
+        string defaultTitle = "厦门智能﹢创新创业公共服务平台";
+        string title = ViewBag.Title + "-" + defaultTitle;
+    }
+    <title>@title</title>
     <link rel="shortcut icon" href="~/img/logos/favicon.ico" />
     <!-- Bootstrap Core CSS -->
     <link href="~/Content/bootstrap.css" rel="stylesheet">
@@ -156,15 +160,60 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu nav-submenu">
-                                <li><a href="/Service/MarketPlatform?nav=service"> 市场平台</a></li>
-                                <li><a href="/Service/ProductPlatform?nav=service">产品平台</a></li>
-                                <li><a href="/Service/ProjectPlatform?nav=service">工程平台</a></li>
-                                <li><a href="/Service/MakePlatform?nav=service">制造平台</a></li>
-                                <li><a href="/Service/SellPlatform?nav=service">销售平台</a></li>
-                                <li><a href="/Service/SupplyManagement?nav=service">供应链管理</a></li>
-                                <li><a href="/Service/BrandPlatform?nav=service">品牌经营</a></li>
-                                <li><a href="/Service/TutorPlatform?nav=service">导师平台</a></li>
-                                <li><a href="/Service/FundPlatform?nav=service">资金平台</a></li>
+                                <li>
+                                    <a href="/Service/MarketPlatform?nav=service">
+                                        <i class="fa fa-2x fa-shopping-cart"></i>
+                                        市场平台
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/ProductPlatform?nav=service">
+                                        <i class="fa fa-2x fa-cubes"></i>
+                                        产品平台
+                                    </a>
+                                </li>
+                                <li>
+                                <a href="/Service/ProjectPlatform?nav=service">
+                                    <i class="fa fa-2x fa-wordpress"></i>
+                                    工程平台
+                                </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/MakePlatform?nav=service">
+                                        <i class="fa fa-2x fa-wrench"></i>
+                                         制造平台
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/SellPlatform?nav=service">
+                                        <i class="fa fa-tasks fa-2x"></i>
+                                        销售平台
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/SupplyManagement?nav=service">
+                                        <i class="fa fa-line-chart fa-2x"></i>
+                                        供应链管理
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/BrandPlatform?nav=service">
+                                        <i class="fa fa-briefcase fa-2x"></i>
+                                        品牌经营
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/TutorPlatform?nav=service">
+                                        <i class="fa fa-users fa-2x"></i>
+                                        导师平台
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/FundPlatform?nav=service">
+                                        <i class="fa fa-money fa-2x"></i>
+                                        资金平台
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li id="activity"><a href="/Article/Index?nav=activity">活动</a></li>

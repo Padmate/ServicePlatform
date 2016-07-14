@@ -79,16 +79,6 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
-        /// <summary>
-        /// 系统管理
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Roles = "Admin")]
-        public ActionResult SystemManage()
-        {
-
-            return View();
-        }
 
         #region 错误页面
 

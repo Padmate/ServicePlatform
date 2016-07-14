@@ -1,4 +1,7 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@{
+    ViewBag.Title = "活动资讯";
+}
+@using Microsoft.AspNet.Identity
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
 @{
@@ -315,8 +318,10 @@
         {
             
             var pubTime = eval('new ' + eval(articles[i].Pubtime).source);
-            var pubTimeStr = pubTime.getFullYear() + "-" + pubTime.getMonth() + "-" + pubTime.getDay() +" "+
-                            pubTime.getHours()+":"+pubTime.getMinutes();
+
+            var localDate = pubTime.toLocaleDateString();
+            
+
             var contentHref ="/Article/ShowContent?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor="+ _tabType;
             var editHref = "/Article/Edit?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
             var deleteHref = "/Article/Delete?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
@@ -324,7 +329,7 @@
             dynamicHtml += '<div class="row article-row">';
             dynamicHtml += '<div class="col-md-12">';
             dynamicHtml += '<h3 class="customer-h3">' + articles[i].SubTitle + '</h3>';
-            dynamicHtml += '<p class="customer-content-sm text-right">' + pubTimeStr + '</p>';
+            dynamicHtml += '<p class="customer-content-sm text-right">' + localDate + '</p>';
             dynamicHtml += '</div>';
             dynamicHtml += '<div class="col-md-4">';
             dynamicHtml += '<a href="' + contentHref + '">';

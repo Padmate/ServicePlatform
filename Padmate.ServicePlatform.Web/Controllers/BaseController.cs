@@ -1,4 +1,5 @@
 ﻿using Padmate.ServicePlatform.Models;
+using Padmate.ServicePlatform.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +33,14 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 获取当前登录用户信息
         /// </summary>
         /// <returns></returns>
-        public UserInfo GetCurrentUser()
+        public M_User GetCurrentUser()
         {
-            UserInfo user = null;
+            M_User user = null;
             if(User.Identity != null)
             {
-                user = new UserInfo();
-                user.UserName = User.Identity.Name;
+                B_User bUser = new B_User();
+                user = new M_User();
+                user = bUser.GetUserByName(User.Identity.Name);
 
             }
 

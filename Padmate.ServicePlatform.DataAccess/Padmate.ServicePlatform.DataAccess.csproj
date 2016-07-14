@@ -62,6 +62,7 @@
     <Compile Include="DBConfiguration\MailConfiguration.cs" />
     <Compile Include="D_Article.cs" />
     <Compile Include="D_Image.cs" />
+    <Compile Include="D_User.cs" />
     <Compile Include="Migrations\201606280617135_init.cs" />
     <Compile Include="Migrations\201606280617135_init.Designer.cs">
       <DependentUpon>201606280617135_init.cs</DependentUpon>

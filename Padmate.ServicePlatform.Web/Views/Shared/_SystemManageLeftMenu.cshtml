@@ -1,0 +1,54 @@
+﻿
+<link href="~/Content/CustomerMenu.css" rel="stylesheet">
+<script src="~/Scripts/CustomerMenu.js"></script>
+
+<div class="menu-sidebar" id="accordion">
+    <div class="menu-sidebar-nav">
+        <ul>
+            <li>
+                <a class="menu-first" href="/SystemManage/HomeBackground">
+                    <i class="fa fa-image"></i>
+                    首页图片
+                </a>
+            </li>
+            <li>
+                <a data-toggle="collapse" data-parent="#accordion" class="menu-first" href="#servicemanage">
+                    <i class="fa fa-cogs"></i>
+                    服务管理
+                    <span class="fa fa-chevron-left"></span>
+                </a>
+                <ul id="servicemanage" class="panel-collapse collapse menu-second">
+                    <li>
+                        <a href="/SystemManage/ServiceMarket">
+                            <i class="fa fa-cubes"></i>
+                            市场平台
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/SystemManage/ServiceProduct">
+                            <i class="fa fa-cubes"></i>
+                            产品平台
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/SystemManage/ServiceEngineer">
+                            <i class="fa fa-cubes"></i>
+                            工程平台
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="menu-first" href="/SystemManage/UserManage">
+                    <i class="fa fa-user"></i>
+                    用户管理
+                </a>
+            </li>
+        </ul>
+        
+        
+        
+    </div>
+
+
+</div>

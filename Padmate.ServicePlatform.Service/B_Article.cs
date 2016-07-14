@@ -22,15 +22,15 @@ namespace Padmate.ServicePlatform.Service
 
         }
 
-        UserInfo _currentUser;
+        M_User _currentUser;
         string _mapPath;
-        public B_Article(UserInfo currentUser)
+        public B_Article(M_User currentUser)
         {
             _currentUser = currentUser;
 
         }
 
-        public B_Article(UserInfo currentUser,string mapPath)
+        public B_Article(M_User currentUser,string mapPath)
         {
             _currentUser = currentUser;
             _mapPath = mapPath;

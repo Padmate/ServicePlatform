@@ -54,11 +54,11 @@ namespace Padmate.ServicePlatform.Web
             // 配置密码的验证逻辑
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = false,
+                RequiredLength = 6,              //长度至少6位
+                RequireNonLetterOrDigit = false, //必须有非字母非数字字符
+                RequireDigit = true,            //必须有数字
+                RequireLowercase = true,        //必须有小写字符
+                RequireUppercase = false,       //必须有大写字符
             };
 
             // 配置用户锁定默认值

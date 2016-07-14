@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace Padmate.ServicePlatform.Web.Arrtibutes
 {
+    /// <summary>
+    /// 当Action 为异步时无效？
+    /// </summary>
     public class ApplicationHandleErrorAttribute : HandleErrorAttribute
     {
         /// <summary>
@@ -20,6 +23,8 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
             string Url = HttpContext.Current.Request.RawUrl;//错误发生地址
 
             filterContext.ExceptionHandled = true;
+            filterContext.HttpContext.Response.Clear();
+            filterContext.HttpContext.Response.StatusCode = 500;
             filterContext.Result = new RedirectResult("/Home/Error500/?error=" + Message);//跳转至错误提示页面
         }
     }

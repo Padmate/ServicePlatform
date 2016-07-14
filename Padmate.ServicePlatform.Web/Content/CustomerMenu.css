@@ -1,0 +1,81 @@
+﻿.menu-sidebar{
+  display: block;
+  float: left;
+  width: 100%;
+  background: #333;
+}
+.menu-sidebar-nav{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  background-image: -webkit-linear-gradient(left, color-stop(#333333 10px), color-stop(#222222 10px));
+  background-image: linear-gradient(to right, #333333 10px, #222222 10px);
+  background-repeat: repeat-x;
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff333333', endColorstr='#ff222222', GradientType=1);
+}
+.menu-sidebar-nav ul{
+    margin:0px;
+}
+
+.menu-sidebar-nav a{
+   border-top: 1px solid rgba(0, 0, 0, 0.3); 
+   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.05) inset; 
+   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5); 
+}
+/*一级菜单*/
+.menu-first {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: normal;
+    display:block;
+    color:#aaa;
+    position:relative;
+}
+
+.menu-first span.fa-chevron-left,.menu-first span.fa-chevron-down{
+    position:absolute;
+    right:12px;
+    bottom:10px;
+}
+
+/*一级菜单鼠标划过状态*/
+.menu-first:hover{
+    text-decoration: none;
+    color:white;
+}
+   
+/*二级菜单*/
+.menu-second li a {
+    background-color:rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    padding: 8px 30px;
+    display:block;
+    color:#aaa;
+    position:relative;
+}
+/*二级菜单鼠标划过样式*/
+.menu-second li a:hover{
+    text-decoration: none;
+    background-color:rgba(255, 255, 255, 0.2);
+}
+.menu-second, .menu-second li a {
+    margin: 0px;
+}
+
+    /*按钮选中后状态*/
+.menu-selected{
+    background-color:#d6d4d5;
+    font-weight:bold;
+}
+.menu-second > menu-selected{
+    background-color:#66c3ec;
+    font-weight:bold;
+
+}
+
+/*menu选中后的效果*/
+.menu-sidebar-nav a.active {
+  color:#fff;
+}
+.menu-sidebar-nav ul ul a.active{
+  background-color: rgba(255, 255, 255, 0.2);
+}
+/*endregion*/
