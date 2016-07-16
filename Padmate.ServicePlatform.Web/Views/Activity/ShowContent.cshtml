@@ -1,0 +1,52 @@
+﻿
+@using Padmate.ServicePlatform.Models;
+@{
+    M_Article article = (M_Article)ViewData["article"];
+    var returnUrl = @Request["returnUrl"];
+    var anchor = @Request["anchor"];
+    var returnRui = anchor != null && anchor != "" ? returnUrl + "#" + anchor : returnUrl;
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                <a href='@returnRui' class="customer-content-sm" style="text-decoration:none;"><i class="fa fa-arrow-left"></i> 返回</a>
+
+            </h3>
+            
+        </div>
+        <div class="col-md-12">
+            @if (article.IsHref)
+            {
+                <h4><a href="@article.Href"><i class="fa fa-arrow-right"></i>文章链接</a></h4> 
+                <iframe src="@article.Href" id="iframepage" name="iframepage"
+                        frameborder=0 style="width:100%; min-height:1000px" ></iframe>
+
+            }
+            else
+            {
+                @Html.Raw(article.Content)
+                
+            }
+
+        </div>
+    </div>
+    
+    
+</div>
+<script>
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+
+    }
+    function iframeAutoFit(iframeObj) {
+        setTimeout(function () {
+            if (!iframeObj) return; iframeObj.height = (iframeObj.Document ? iframeObj.Document.body.scrollHeight : iframeObj.contentDocument.body.offsetHeight);
+        }, 200)
+    }
+
+
+</script>
+

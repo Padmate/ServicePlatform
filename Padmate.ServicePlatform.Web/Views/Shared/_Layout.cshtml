@@ -9,7 +9,8 @@
     @*<meta http-equiv="X-UA-Compatible" content="E=EmulateIE7">*@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="keywords" content="@ViewBag.Keywords"/>
+    <meta name="description" content="@ViewBag.Description">
     <meta name="author" content="">
     @{
         string defaultTitle = "厦门智能﹢创新创业公共服务平台";
@@ -65,7 +66,7 @@
         {
             navClass += " navbar-shrink";
             bodyPaddingClass = "content-body-padding";
-            contactUs = "/Home/Contact?nav=about";
+            contactUs = "/Home/Contact";
         }
     }
     
@@ -75,7 +76,7 @@
         <ul>
             <!--联系我们-->
             <li>
-                <a class="rightSection page-scroll information-box" href="@contactUs"
+                <a class="rightSection page-scroll information-box" href="@contactUs" rel="nofollow"
                    style="display: block; background-color: rgba(52, 152, 219, 0.78); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088cc,endColorstr=#E50088cc)">
                     <i class=" fa fa-phone-square">
                     </i>
@@ -120,7 +121,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="/Home">厦门智能<sup>+</sup> 创新创业公共服务平台</a>
+                <a class="navbar-brand page-scroll" href="/Home/Default">厦门智能<sup>+</sup> 创新创业公共服务平台</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -140,9 +141,6 @@
                         <li>
                             <a class="page-scroll" href="#information">资讯</a>
                         </li>
-                        @*<li>
-                            <a class="page-scroll" href="#shop">商城</a>
-                        </li>*@
                         <li>
                             <a class="page-scroll" href="#about">关于我们</a>
                         </li>
@@ -150,76 +148,75 @@
                 }
                 else
                 {
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right common-nav">
                         <li>
-                            <a href="/Home">首页</a>
+                            <a href="/Home/Default">首页</a>
                         </li>
-                        <li id="service" class="dropdown fa-dropdown">
-                            <a href="/Service/Index?nav=service">
+                        <li class="dropdown fa-dropdown">
+                            <a href="/Service/Index">
                                 服务
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu nav-submenu">
                                 <li>
-                                    <a href="/Service/MarketPlatform?nav=service">
+                                    <a href="/Service/MarketPlatform">
                                         <i class="fa fa-2x fa-shopping-cart"></i>
                                         市场平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/Service/ProductPlatform?nav=service">
+                                    <a href="/Service/ProductPlatform">
                                         <i class="fa fa-2x fa-cubes"></i>
                                         产品平台
                                     </a>
                                 </li>
                                 <li>
-                                <a href="/Service/ProjectPlatform?nav=service">
-                                    <i class="fa fa-2x fa-wordpress"></i>
-                                    工程平台
-                                </a>
-                                </li>
-                                <li>
-                                    <a href="/Service/MakePlatform?nav=service">
-                                        <i class="fa fa-2x fa-wrench"></i>
-                                         制造平台
+                                    <a href="/Service/ProjectPlatform">
+                                        <i class="fa fa-2x fa-wordpress"></i>
+                                        工程平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/Service/SellPlatform?nav=service">
+                                    <a href="/Service/MakePlatform">
+                                        <i class="fa fa-2x fa-wrench"></i>
+                                        制造平台
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Service/SellPlatform">
                                         <i class="fa fa-tasks fa-2x"></i>
                                         销售平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/Service/SupplyManagement?nav=service">
+                                    <a href="/Service/SupplyManagement">
                                         <i class="fa fa-line-chart fa-2x"></i>
                                         供应链管理
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/Service/BrandPlatform?nav=service">
+                                    <a href="/Service/BrandPlatform">
                                         <i class="fa fa-briefcase fa-2x"></i>
                                         品牌经营
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/Service/TutorPlatform?nav=service">
+                                    <a href="/Service/TutorPlatform">
                                         <i class="fa fa-users fa-2x"></i>
                                         导师平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/Service/FundPlatform?nav=service">
+                                    <a href="/Service/FundPlatform">
                                         <i class="fa fa-money fa-2x"></i>
                                         资金平台
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li id="activity"><a href="/Article/Index?nav=activity">活动</a></li>
-                        <li id="info"><a href="/Article/Index?nav=info&anchor=information">资讯</a></li>
-                        @*<li id="shop"><a href="/Home/Error">商城</a></li>*@
-                        <li id="about"><a href="/Home/About?nav=about">关于我们</a></li>
+                        <li><a href="/Activity/Index">活动</a></li>
+                        <li><a href="/Information/Index">资讯</a></li>
+                        <li><a href="/Home/About">关于我们</a></li>
                     </ul>
 
                 }
@@ -255,39 +252,7 @@
     <script src="~/Scripts/jquery.placeholder.js"></script>
 
     @RenderSection("scripts", required: false)
-    <script>
-        var nav = '@Request["nav"]';
-        $(function () {
 
-            if(nav != null && nav !="")
-            {
-                $("#" + nav).addClass("active");
-            }
-
-
-            $(".fa-dropdown").hover(function () {
-                $(this).find("ul").show();
-            }, function () {
-                $(this).find("ul").hide();
-
-            })
-
-            /*返回顶部*/
-            $(window).scroll(function () {
-                if ($(document).scrollTop() >= 600) {
-                    $("#linavtop").removeClass("navtop");
-                }
-                else {
-                    $("#linavtop").addClass("navtop");
-                }
-            });
-
-            //IE8 placeholder
-            // Invoke the plugin
-            $('input, textarea').placeholder();
-
-        })
-    </script>
     <div class="content-body @bodyPaddingClass">
         @RenderBody()
 
@@ -299,24 +264,35 @@
                     <p class="customer-content-xs whitefont">相关网站</p>
                     <ul>
                         <li>
-                            <a class=" customer-content-xs lightwhitefont" href="http://www.hardagroup.com/">华尔达(厦门)塑胶有限公司</a>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.hardagroup.com/">
+                            华尔达(厦门)塑胶有限公司</a>
                         </li>
                         <li>
-                            <a class=" customer-content-xs lightwhitefont" href="http://www.harda.net/">华尔达(厦门)塑胶有限公司(卫浴)</a>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.harda.net/">
+                                华尔达(厦门)塑胶有限公司(卫浴)
+                            </a>
                         </li>
                         
                         <li>
-                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmate.cn/">派美特科技有限公司(中文网)</a>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmate.cn/">
+                                派美特科技有限公司(中文网)
+                            </a>
                         </li>
                         <li>
-                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmate.co.uk/">派美特科技有限公司(英文网)</a>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmate.co.uk/">
+                                派美特科技有限公司(英文网)
+                            </a>
                         </li>
                         <li>
-                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmatesmart.com/">派美特科技有限公司(OEM/ODM)</a>
+                            <a class=" customer-content-xs lightwhitefont" href="http://www.padmatesmart.com/">
+                                派美特科技有限公司(OEM/ODM)
+                            </a>
                         </li>
 
                         <li>
-                            <a class=" customer-content-xs lightwhitefont" href="http://padmatespace.com/">派美特众创空间</a>
+                            <a class=" customer-content-xs lightwhitefont" href="http://padmatespace.com/">
+                                派美特众创空间
+                            </a>
                         </li>
 
                     </ul>
@@ -326,8 +302,8 @@
                 <div class="col-xs-4 col-sm-2 col-md-2">
                     <p class="customer-content-xs whitefont">智能<sup>+</sup></p>
                     <ul>
-                        <li><a class=" customer-content-xs lightwhitefont" href="/Home/About?nav=about">关于我们</a></li>
-                        <li><a class=" customer-content-xs lightwhitefont" href="/Home/Contact?nav=about">联系我们</a></li>
+                        <li><a class=" customer-content-xs lightwhitefont" href="/Home/About" rel="nofollow">关于我们</a></li>
+                        <li><a class=" customer-content-xs lightwhitefont" href="/Home/Contact" rel="nofollow">联系我们</a></li>
 
                     </ul>
                 </div>
@@ -335,7 +311,7 @@
                     
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-2">
-                    <img src="~/img/logos/weixin.png" class="img-responsive" />
+                    <img src="~/img/logos/weixin.png" class="img-responsive" alt="厦门智能+创新创业公共服务平台-微信"/>
                 </div>
             </div>
         </div>

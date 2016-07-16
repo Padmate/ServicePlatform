@@ -1,6 +1,10 @@
-﻿@{
-    ViewBag.Title = "产品平台";
+﻿@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+@{
+    ViewBag.Title = "资讯管理";
+    ViewBag.ArticleType = @Common.Information;
 }
+
 
 <section>
     <div class="container">
@@ -9,8 +13,7 @@
                 @Html.Partial("_SystemManageLeftMenu")
             </div>
             <div class="col-xs-8 col-is-8 col-sm-10 col-md-10">
-                <!---->
-                产品平台-暂无管理功能
+                @Html.Partial("_ArticleManage");
             </div>
         </div>
 

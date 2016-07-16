@@ -66,10 +66,15 @@ namespace Padmate.ServicePlatform.Service
         /// 获取分页数据总条数
         /// </summary>
         /// <returns></returns>
-        public int GetPageDataTotalCount(string articleType)
+        public int GetPageDataTotalCount(M_Article article)
         {
-            var articles = _dArticle.GetArticlesByType(articleType,null);
-            var totalCount = articles.Count();
+            Article searchModel = new Article()
+            {
+                Type = article.ArticleType,
+                SubTitle = article.SubTitle,
+            };
+
+            var totalCount = _dArticle.GetPageDataTotalCount(searchModel);
             return totalCount;
         }
 

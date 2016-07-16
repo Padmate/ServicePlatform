@@ -955,6 +955,7 @@
     <Content Include="img\team\lidawei.jpg" />
     <Content Include="img\team\zzx.jpg" />
     <Content Include="img\tour-bg.png" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\agency.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.min.js" />
@@ -1130,12 +1131,10 @@
     <Content Include="Views\Home\Default.cshtml" />
     <Content Include="Views\Home\Default1.cshtml" />
     <Content Include="Views\Home\Error404.cshtml" />
-    <Content Include="Views\Activity\Index.cshtml" />
     <Content Include="Views\Article\Add.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\ShowContent.cshtml" />
-    <Content Include="Views\Information\Index.cshtml" />
     <Content Include="Views\Service\BrandPlatform.cshtml" />
     <Content Include="Views\Service\FundPlatform.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
@@ -1155,6 +1154,17 @@
     <Content Include="Views\SystemManage\HomeBackground.cshtml" />
     <Content Include="Views\SystemManage\ServiceProduct.cshtml" />
     <Content Include="Views\SystemManage\UserManage.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Activity\ShowContent.cshtml" />
+    <Content Include="Views\Information\Index.cshtml" />
+    <Content Include="Views\Information\ShowContent.cshtml" />
+    <Content Include="Views\SystemManage\ActivityForecast.cshtml" />
+    <Content Include="Views\SystemManage\Information.cshtml" />
+    <Content Include="Views\SystemManage\ServiceMarket.cshtml" />
+    <Content Include="Views\SystemManage\ServiceEngineer.cshtml" />
+    <Content Include="Views\SystemManage\WonderfulActivity.cshtml" />
+    <Content Include="Views\Shared\_ArticleManage.cshtml" />
+    <Content Include="Views\Shared\_ArticleEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

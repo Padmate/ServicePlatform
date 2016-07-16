@@ -8,15 +8,15 @@ namespace Padmate.ServicePlatform.Models
     public class PageResult<T>
     {
         #region BootStrap Table
-        //public int total { get; set; }
+        public int total { get; set; }
 
-        //public List<T> rows { get; set; }
+        public List<T> rows { get; set; }
 
-        //public PageResult(int totalCount, List<T> pageRows)
-        //{
-        //    total = totalCount;
-        //    rows = pageRows;
-        //}
+        public PageResult(int totalCount, List<T> pageRows)
+        {
+            total = totalCount;
+            rows = pageRows;
+        }
         #endregion
 
         #region BootStrap Paginator
@@ -24,8 +24,9 @@ namespace Padmate.ServicePlatform.Models
 
         public List<T> pageDatas { get; set; }
 
-        public PageResult(Int32 totalpages, List<T> pageResult)
+        public PageResult(Int32 totalCount,Int32 totalpages, List<T> pageResult)
         {
+            total = totalCount;
             totalPages = totalpages;
             pageDatas = pageResult;
         }

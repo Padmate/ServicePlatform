@@ -294,8 +294,13 @@ header .carousel-indicators li:hover{background-color:gray;}
 .navbar-nav .nav-submenu> li > a:focus {
   background-color: #eee;
   color:black;
-    
+}
 
+.nav-submenu > .active > a,
+.nav-submenu > .active > a:hover, 
+.nav-submenu > .active > a:focus
+{
+    background-color: #eee;
 }
 
 

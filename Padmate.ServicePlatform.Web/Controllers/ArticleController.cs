@@ -35,11 +35,11 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
             B_Article bArticle = new B_Article();
             var pageData = bArticle.GetPageData(searchModel);
-            var totalCount = bArticle.GetPageDataTotalCount(searchModel.ArticleType);
+            var totalCount = bArticle.GetPageDataTotalCount(searchModel);
             //总页数
             var totalPages = System.Convert.ToInt32(Math.Ceiling((double)totalCount / limit));
 
-            PageResult<M_Article> result = new PageResult<M_Article>(totalPages, pageData);
+            PageResult<M_Article> result = new PageResult<M_Article>(totalCount,totalPages, pageData);
             return Json(result);
         }
         
@@ -91,10 +91,10 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string ArticleId)
         {
 
-            Int32 articleId = System.Convert.ToInt32(id);
+            Int32 articleId = System.Convert.ToInt32(ArticleId);
 
             B_Article bArticle = new B_Article();
             var article = bArticle.GetArticleById(articleId);
@@ -156,12 +156,13 @@ namespace Padmate.ServicePlatform.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(Int32 id,string returnUrl)
+        public ActionResult Delete(string ArticleId)
         {
+            Int32 articleId = System.Convert.ToInt32(ArticleId);
             B_Article bArticle = new B_Article();
-            Message message = bArticle.DeleteArticle(id);
-           
-            return Redirect(returnUrl); 
+            Message message = bArticle.DeleteArticle(articleId);
+
+            return Json(message); 
         }
 
         [HttpPost]

@@ -1,6 +1,361 @@
-﻿
+﻿@{
+    ViewBag.Title = "活动资讯";
+}
+@using Microsoft.AspNet.Identity
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+@{
+   
+    var returnUrl = "/Information/Index";
+    bool isAdmin = Request.IsAuthenticated && User.IsInRole("Admin") ? true : false;
+}
+<style>
+    .search-section {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    }
+    .searchButton {
+        width:12%;
 
-<div class="headerbg headerbg-article">
+    }
+    .searchInput {
+        display: inline-block;
+        width: 87%;
+        max-width: none;
+        border:none;
+    }
+    /* The tags widget */
+    .tags {
+        list-style: none;
+        margin: 20px auto;
+        padding-left: 0;
+    }
 
-</div>
 
+    .tags li a {
+        color:white;
+        font-weight:bold;
+        text-decoration:none;
+        padding: 10px 15px;
+        margin-right: 16px;
+        margin-bottom: 17px;
+        display: inline-block;
+        background: #505050;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .tags li a:focus,
+    .tags li a:hover {
+        background-color: rgba(0, 136, 204, 0.88);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
+
+    }
+    .tags > li.active > a, .tags > li.active > a:hover, .tags > li.active > a:focus {
+        color: white;
+        cursor: default;
+        background-color: rgba(0, 136, 204, 0.88);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
+    }
+    .pageBar{
+       text-align:center;
+    }
+    .articleBody
+    {
+        min-height:400px;
+    }
+    .article-row {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        margin: 20px 0px;
+        padding: 10px 0px;
+    }
+    .imgSizeW-280
+    {
+        height:200px;
+        width:280px;
+    }
+    .articleBtn{
+        margin:0 10px;
+    }
+    .article-right {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        
+        margin: 20px 0px;
+    }
+    .articlebg {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-image: url("../img/Activity/activitybg.jpg");
+    }
+</style>
+
+<section class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-is-8 col-sm-8 col-md-8" id="left">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="activityforecast">
+                        <h2 class="customer-h2">活动预告</h2>
+                        @if (isAdmin)
+                        {
+                            <a href="/Information/Add?type=@Common.ActivityForecast&returnUrl=@returnUrl?anchor=activityforecast"
+                               class="btn btn-lg btn-warning">发布预告</a>
+                        }
+                        <div class="articleBody" id="activityforecastBody"></div>
+                        <div class="pageBar">
+                            <ul id="activityforecastPaginator"></ul>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="wonderfulactivity">
+                        <h2 class="customer-h2">精彩活动</h2>
+
+                        @if (isAdmin)
+                        {
+                            <a href="/Information/Add?type=@Common.WonderfulActivity&returnUrl=@returnUrl?anchor=wonderfulactivity"
+                               class="btn btn-lg btn-warning">发布活动</a>
+                        }
+                        <div class="articleBody" id="wonderfulactivityBody"></div>
+                        <div class="pageBar">
+                            <ul id="wonderfulactivityPaginator"></ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="information">
+                        <h2 class="customer-h2">资 讯</h2>
+
+                        @if (isAdmin)
+                        {
+                            <a href="/Information/Add?type=@Common.Information&returnUrl=@returnUrl?anchor=information"
+                               class="btn btn-lg btn-warning">发布资讯</a>
+                        }
+                        <div class="articleBody" id="informationBody"></div>
+                        <div class="pageBar">
+                            <ul id="informationPaginator"></ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-is-4 col-sm-4 col-md-4">
+                <fieldset class="search-section">
+                    <input type="text" class="form-control input-lg searchInput" placeholder="Search Titles">
+                    <a href="#javaScript:void(0)" class="searchButton"><i class="fa fa-search fa-2x text-info"></i></a>
+
+                </fieldset>
+
+                <div class="article-right" style="padding-left:20px;" id="right">
+                    
+
+                    <ul class="tags" id="tagTab">
+                        <li class="active"><a class="btn btn-xl" name="activityforecast" href="#activityforecast">活动预告</a></li>
+                        <li><a class="btn btn-lg" name="wonderfulactivity" href="#wonderfulactivity">精彩活动</a></li>
+                        <li><a class="btn btn-lg" name="information" href="#information">资 讯</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+
+    var anchor = '@Request["anchor"]';
+    //当前内容面板类型（即文章类型_tabType）
+    //如果锚点标记不为空，则锚点标记即为当前tab类型，否则默认为“活动预告”
+    var _tabType = anchor != null && anchor != "" ? anchor : "activityforecast";
+
+    $(function () {
+        //初始化显示面板内容
+        $("a[name=" + _tabType + "]").tab("show");
+        //初始化分页数据
+        InitPaging();
+
+        //tab点击事件
+        $('#tagTab a').click(function (e) {
+            //重新设置当前tab类型
+            _tabType = this.name;
+            //切换tab时重新生成分页
+            InitPaging();
+
+            e.preventDefault();//阻止a链接的跳转行为 
+            $(this).tab('show');//显示当前选中的链接及关联的content 
+        });
+
+        //查询按钮事件
+        $(".searchButton").click(function (e) {
+
+            InitPaging();
+        });
+        $('.searchInput').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                InitPaging();
+            }
+        });
+        
+        
+        $(window).resize(SetRightHeight);
+    })
+
+    //设置右边div高度与左边一致
+    function SetRightHeight() {
+        var divHeight = $('#left').height();
+        $('#right').css({ 'height': divHeight/2 });
+    }
+
+    function InitPaging()
+    {
+        //获取总页数及第一页数据
+        var firstResult = GetPageData(1);
+        //加载第一页数据
+        RenderPageData(firstResult.data);
+
+        //重置分页条
+        ResetPaginator();
+        //超过一页才显示分页
+        if (firstResult.totalPages > 1) {
+            InitPaginator(firstResult.totalPages);
+        }
+
+        //重新设置右边div高度
+        SetRightHeight();
+    }
+    //重置分页条
+    function ResetPaginator()
+    {
+        $('#' + _tabType + "Paginator").html("");
+
+    }
+    //配置分页属性
+    function InitPaginator(totalPages)
+    {
+        //重置分页条
+
+        var options = {
+            size: 'large',            //指定分页条的大小
+            bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
+            numberOfPages: 10,         //设置可选分页按钮个数，默认5
+            currentPage: 1,          //当前页
+            totalPages: totalPages,         //总页数（从服务端获取）
+            onPageClicked: function (e, originalEvent, type, page) {
+                //获取分页数据
+                var result = GetPageData(page);
+                //渲染当前页数据
+                RenderPageData(result.data);
+            },
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "前一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                }
+            }
+        }
+
+        $('#' + _tabType + "Paginator").bootstrapPaginator(options);
+    }
+    //获取分页数据
+    function GetPageData(currentPage)
+    {
+
+        var resultData = {
+            totalPages: 0,
+            data: null
+        };
+
+        var params = {
+            "ArticleType": _tabType,
+            "SubTitle": $(".searchInput").val(),
+            "page": currentPage
+        };
+
+        //添加遮罩
+        $(".search-section").showLoading();
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/Information/GetPageData",
+            data: params,
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                resultData.totalPages = result.totalPages;
+                resultData.data = result.pageDatas;
+                //添加遮罩
+                $(".search-section").hideLoading();
+            }
+        });
+
+        return resultData;
+
+    }
+
+    //重新生成Body
+    function RenderPageData(articles)
+    {
+        var dynamicHtml = "";
+        for (var i = 0; i < articles.length;i++)
+        {
+            
+            var pubTime = eval('new ' + eval(articles[i].Pubtime).source);
+
+            var localDate = pubTime.toLocaleDateString();
+            
+
+            var contentHref = "/Information/ShowContent?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
+            var editHref = "/Information/Edit?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
+            var deleteHref = "/Information/Delete?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
+
+            dynamicHtml += '<div class="row article-row">';
+            dynamicHtml += '<div class="col-md-12">';
+            dynamicHtml += '<h3 class="customer-h3">' + articles[i].SubTitle + '</h3>';
+            dynamicHtml += '<p class="customer-content-sm text-right">' + localDate + '</p>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="col-md-4">';
+            dynamicHtml += '<a href="' + contentHref + '">';
+            var imageVirtualPath = "";
+            if (articles[i].Image != null)
+                imageVirtualPath = articles[i].Image.VirtualPath;
+            dynamicHtml += '<img src="' + imageVirtualPath + '" class="img-responsive" alt="无图标"/>';
+            dynamicHtml += '</a>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="col-md-8">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += articles[i].Description ==null ?"":articles[i].Description;
+            dynamicHtml += '</p>';
+            dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>了解更多</strong></a>';
+            
+            var isadmin = '@isAdmin';
+            if(isadmin.toLowerCase() =='true')
+            {
+                dynamicHtml += '<a class="btn btn-lg btn-success articleBtn" href="' + editHref + '">修改</a>';
+                dynamicHtml += '<a class="btn btn-lg btn-danger articleBtn" href="' + deleteHref + '">删除</a>';
+            }
+            dynamicHtml += '</div>';
+            dynamicHtml += '</div>';
+        }
+        $("#" + _tabType + "Body").html(dynamicHtml);
+
+    }
+
+</script>

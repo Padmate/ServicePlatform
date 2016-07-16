@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    ViewBag.Keywords = "智能+创新创业公共服务平台、众创空间、智能+、服务众包";
+    ViewBag.Description = "厦门智能+创新创业公共服务平台定位于为各众创空间助力传统产业升级转型和创新创业团队的智能产品项目提供高效的转化支撑综合服务，弥补短板和不足，提高项目成功率。 ";
+}
 @using Padmate.ServicePlatform.Models;
 @{
     string type = (string)ViewData["type"];
@@ -12,34 +15,6 @@
 
 <script src="~/Scripts/cbpAnimatedHeader.js"></script>
 <script src="~/Scripts/particle/jquery.particleground.min.js"></script>
-
-
-<style>
-  
-    
-</style>    
-
-<!--左侧边栏-->
-<div class="nav-float suspendedList hidden">
-    <h4 class="panel-title" style="width:144px;">
-        <a href="javaScript:void(0)" class="suspendedBtn">
-            <i class="fa fa-lg fa-chevron-left" style="color:white;"></i>
-        </a>
-    </h4>
-    <ul>
-        <li class="nav-float-title"><strong>平台服务</strong></li>
-        <li><a class="page-scroll" href="#services-marketplatform"><strong>市场平台</strong></a></li>
-        <li><a class="page-scroll" href="#services-productplatform"><strong>产品平台</strong></a></li>
-        <li><a class="page-scroll" href="#services-projectplatform"><strong>工程平台</strong></a></li>
-        <li><a class="page-scroll" href="#services-makeplatform"><strong>制造平台</strong></a></li>
-        <li><a class="page-scroll" href="#services-sellplatform"><strong>销售平台</strong></a></li>
-        <li><a class="page-scroll" href="#services-supplymanagement"><strong>供应链管理</strong></a></li>
-        <li><a class="page-scroll" href="#services-brandpaltform"><strong>品牌经营</strong></a></li>
-        <li><a class="page-scroll" href="#services-tutorplatform"><strong>导师平台</strong></a></li>
-        <li><a class="page-scroll" href="#services-fundplatform"><strong>资金平台</strong></a></li>
-    </ul>
-</div>
-
 
 <!-- Header -->
 <header>
@@ -66,7 +41,7 @@
                     activeClass = "active";
                 }
                 <div class="item @activeClass">
-                    <img class="img-responsive" src="@homebgImages[i].VirtualPath">
+                    <img class="img-responsive" src="@homebgImages[i].VirtualPath" alt="@homebgImages[i].Name.Split('.').First()">
 
                 </div>
             }
@@ -97,56 +72,27 @@
         <div class="row">
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/1.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/1.png" alt=""/>
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/2.png" />
-
-                </a>
-
-            </div>
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/3.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/2.png" alt="" />
 
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/4.png" />
-
-                </a>
-
-            </div>
-
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/5.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/3.png" alt="" />
 
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/6.png" />
-
-                </a>
-
-            </div>
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/7.png" />
-
-                </a>
-
-            </div>
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/8.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/4.png" alt="" />
 
                 </a>
 
@@ -154,57 +100,28 @@
 
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/9.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/5.png" alt="" />
 
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/10.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/6.png" alt="" />
 
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/11.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/7.png" alt="" />
 
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/12.png" />
-
-                </a>
-
-            </div>
-
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/13.png" />
-
-                </a>
-
-            </div>
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/14.png" />
-
-                </a>
-
-            </div>
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/15.png" />
-
-                </a>
-
-            </div>
-            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
-                <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/16.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/8.png" alt="" />
 
                 </a>
 
@@ -212,14 +129,72 @@
 
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/17.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/9.png" alt="" />
 
                 </a>
 
             </div>
             <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
                 <a href="javaScript:void(0)">
-                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/18.png" />
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/10.png" alt="" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/11.png" alt="" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/12.png" alt="" />
+
+                </a>
+
+            </div>
+
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/13.png" alt="" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/14.png" alt="" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/15.png" alt="" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/16.png" alt="" />
+
+                </a>
+
+            </div>
+
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/17.png" alt="" />
+
+                </a>
+
+            </div>
+            <div class="col-xs-4 col-is-3 col-sm-2 col-md-2">
+                <a href="javaScript:void(0)">
+                    <img class="img-responsive" src="~/img/Service/BrandPlatform/partner/18.png" alt="" />
 
                 </a>
 
@@ -248,7 +223,7 @@
         </div>
         <div class="row">
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/MarketPlatform?nav=service">
+                <a href="/Service/MarketPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-market.png" class="img-responsive" />
                     </div>
@@ -265,7 +240,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/ProductPlatform?nav=service">
+                <a href="/Service/ProductPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-product.png" class="img-responsive" />
                     </div>
@@ -282,7 +257,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/ProjectPlatform?nav=service">
+                <a href="/Service/ProjectPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-project.png" class="img-responsive" />
                     </div>
@@ -300,7 +275,7 @@
             </div>
 
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/MakePlatform?nav=service">
+                <a href="/Service/MakePlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
 
                         <img src="~/img/Service/service-make.png" class="img-responsive" />
@@ -318,7 +293,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/SellPlatform?nav=service">
+                <a href="/Service/SellPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
 
                         <img src="~/img/Service/service-sell.png" class="img-responsive" />
@@ -337,7 +312,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/SupplyManagement?nav=service">
+                <a href="/Service/SupplyManagement">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-supply.png" class="img-responsive" />
 
@@ -357,7 +332,7 @@
             </div>
 
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/BrandPlatform?nav=service">
+                <a href="/Service/BrandPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-brand.png" class="img-responsive" />
                     </div>
@@ -374,7 +349,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/TutorPlatform?nav=service">
+                <a href="/Service/TutorPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-tutor.png" class="img-responsive" />
 
@@ -392,7 +367,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/FundPlatform?nav=service">
+                <a href="/Service/FundPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
 
                         <img src="~/img/Service/service-fund.png" class="img-responsive" />
@@ -435,7 +410,7 @@
             @{
                 for (int i = 0; i < activityForecastArticles.Count; i++)
                 {
-                    var contentHref = "/Article/ShowContent?id=" + activityForecastArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
+                    var contentHref = "/Activity/ShowContent?id=" + activityForecastArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
                     var aHref = activityForecastArticles[i].IsHref ? activityForecastArticles[i].Href : contentHref;
                     var aTarget = activityForecastArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = activityForecastArticles[i].Image == null ? "../img/small_model.jpg" 
@@ -445,7 +420,7 @@
                     <div class="col-is-6 col-sm-4 col-md-4 text-center">
                         <div class="service-box">
                             <a href="@aHref" class="information-box" target="@aTarget">
-                                <img class="img-responsive" src="@imageVirtualPath" alt="无图标"/>
+                                <img class="img-responsive" src="@imageVirtualPath" alt="@activityForecastArticles[i].SubTitle"/>
                                 <div class="information-box-caption">
                                     <div class="information-box-caption-content">
                                         <!--div文字居中-->
@@ -482,7 +457,7 @@
             @{
                 for (int i = 0; i < wonderfulActivityArticles.Count; i++)
                 {
-                    var contentHref = "/Article/ShowContent?id=" + wonderfulActivityArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
+                    var contentHref = "/Activity/ShowContent?id=" + wonderfulActivityArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
                     var aHref = wonderfulActivityArticles[i].IsHref ? wonderfulActivityArticles[i].Href : contentHref;
                     var aTarget = wonderfulActivityArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = wonderfulActivityArticles[i].Image == null ? "../img/small_model.jpg"
@@ -492,7 +467,7 @@
                     <div class="col-is-6 col-sm-4 col-md-4 text-center" style="padding-right:25px;">
                         <div class="service-box">
                             <a href="@aHref" class="information-box" target="@aTarget">
-                                <img class="img-responsive" src="@imageVirtualPath" alt="无图标" />
+                                <img class="img-responsive" src="@imageVirtualPath" alt="@wonderfulActivityArticles[i].SubTitle" />
                                 <div class="information-box-caption">
                                     <div class="information-box-caption-content">
                                         <!--div文字居中-->
@@ -521,7 +496,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-5 col-md-7">
-                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Article/Index?nav=activity&anchor=activityforecast">
+                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Activity/Index?anchor=activityforecast">
                     <i class="fa fa-refresh"></i>
                     <span class="customer-content-sm whitefont">更多活动</span>
                 </a>
@@ -560,7 +535,7 @@
         @{
             for (int i = 0; i < informationArticles.Count; i++)
             {
-                var contentHref = "/Article/ShowContent?id=" + informationArticles[i].Id + "&returnUrl=/Home/Default&anchor=information";
+                var contentHref = "/Information/ShowContent?id=" + informationArticles[i].Id + "&returnUrl=/Home/Default&anchor=information";
                 var aHref = informationArticles[i].IsHref ? informationArticles[i].Href : contentHref;
                 var aTarget = informationArticles[i].IsHref ? "_blank" : "_self";
                 var imageVirtualPath = informationArticles[i].Image == null ? "../img/medium_model.jpg"
@@ -569,7 +544,7 @@
                 if (i >= 6) { break; };
                 <div class="col-is-6 col-sm-4 col-md-4 ">
                     <a href="@aHref" class="information-box" target="@aTarget">
-                        <img class="img-responsive" src="@imageVirtualPath" alt="无图标" />
+                        <img class="img-responsive" src="@imageVirtualPath" alt="@informationArticles[i].SubTitle" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
                                 <!--div文字居中-->
@@ -588,7 +563,7 @@
     <div class="row bg-black" style="padding:40px 0px;">
         <div class="col-lg-12 text-center">
             <h2 class="customer-h2 whitefont" style="margin: 0px 0px 5px 0px;">最新资讯随时分享</h2>
-            <a class="btn-gelatine btn-gelatine-white-lg" href="/Article/Index?nav=info&anchor=information">
+            <a class="btn-gelatine btn-gelatine-white-lg" href="/Information/Index?anchor=information">
                 <i class="fa fa-refresh"></i>
                 <span class="customer-content-sm">更多资讯</span>
             </a>
@@ -616,7 +591,9 @@
                                 <h4 class="customer-h4">平台简介</h4>
                             </div>
                             <div class="timeline-body">
-                                <span class="customer-content-xs">厦门智能+创新创业公共服务平台由厦门产业技术研究院与英特尔、硅谷高创会、厦门市派美特科技有限公司等共建。平台定位于为各众创空间助力传统产业升级转型和创新创业团队的智能产品项目提供高效的转化支撑综合服务，可以在创新创业各阶段弥补他们的不足和短板并提高项目成功率。平台将创意、创新、创业、市场、资本、孵化和产业化相结合，进行嫁接磨合，快速低成本地验证创新创业产品的市场、完善制造技术（工程化）、管控供应链和成本、对接资本市场等，加速项目的市场化与产业化，同时也为各个众创空间、高校及孵化器、科研院所提供一个低门槛、低成本、专业化、全要素、全流程、开放式的智能产品和智能制造协同创新一站式服务平台。</span>
+
+                                <span class="customer-content-xs">
+                                    厦门智能+创新创业公共服务平台由厦门产业技术研究院与英特尔、硅谷高创会、厦门市派美特科技有限公司等共建。平台定位于为各众创空间助力传统产业升级转型和创新创业团队的智能产品项目提供高效的转化支撑综合服务，可以在创新创业各阶段弥补他们的不足和短板并提高项目成功率。平台将创意、创新、创业、市场、资本、孵化和产业化相结合，进行嫁接磨合，快速低成本地验证创新创业产品的市场、完善制造技术（工程化）、管控供应链和成本、对接资本市场等，加速项目的市场化与产业化，同时也为各个众创空间、高校及孵化器、科研院所提供一个低门槛、低成本、专业化、全要素、全流程、开放式的智能产品和智能制造协同创新一站式服务平台。</span>
                             </div>
                         </div>
                     </li>

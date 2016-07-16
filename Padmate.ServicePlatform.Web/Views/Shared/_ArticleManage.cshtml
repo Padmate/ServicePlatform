@@ -1,0 +1,494 @@
+﻿@{
+    var _articleType = ViewBag.ArticleType;
+    var _articleTypeDes = Common.Dic_ArticleType[_articleType];
+}
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+
+<style>
+    .search-section {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    }
+    .search-result{
+        padding:5px 0px;
+    }
+    .searchButton {
+        width: 12%;
+    }
+
+    .searchInput {
+        display: inline-block;
+        width: 90%;
+        max-width: none;
+        border: none;
+    }
+    
+    .pageBar {
+        text-align: center;
+    }
+
+    .articleBody {
+        min-height: 400px;
+        margin-top:20px;
+    }
+
+    .article-row {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        margin:20px 0px;
+        margin-top: 0px;
+        padding: 10px 0px;
+    }
+
+    .articleBtn {
+        margin: 0 10px;
+    }
+
+    .article-right {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        margin: 20px 0px;
+    }
+
+    .articlebg {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-image: url("../img/Activity/activitybg.jpg");
+    }
+    .curd-model .modal-content{
+        min-height:100%;
+    }
+    .curd-model .close-modal{
+        position:fixed;
+        width:75px;
+        height:75px;
+        background-color:transparent;
+        top:25px;
+        right:25px;
+        cursor:pointer
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-is-4 col-sm-4 col-md-4">
+            <a class="btn btn-lg btn-warning" onclick="Add()">发布@_articleTypeDes</a>
+        </div>
+        <div class="col-is-8 col-sm-8 col-md-8">
+            <fieldset class="search-section">
+                <input type="text" class="form-control input-lg searchInput" placeholder="Search Titles">
+                <a href="#javaScript:void(0)" class="searchButton"><i class="fa fa-search fa-2x text-info"></i></a>
+
+            </fieldset>
+        </div>
+    </div>
+    
+    
+    <div class="row articleBody">
+        <div class="col-is-12 col-sm-12 col-md-12">
+            <div class="text-right customer-content-sm search-result" id="result"></div>
+
+            <div id="content"></div>
+            <div class="pageBar">
+                <ul id="paginator"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+</div>
+
+<!--#region修改-->
+<div class="curd-model modal fade" id="articleedit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div class="close-modal" data-dismiss="modal">
+                <i class="fa fa-3x fa-close"></i>
+            </div>
+            <div class="container">
+
+                <h3 class="customer-h3 text-center" id="editTitle"></h3>
+                <hr />
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">一级标题：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="inputS" id="tbTitle" placeholder="一级标题" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">二级标题：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="inputS" id="tbSubTitle" placeholder="二级标题" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">文章描述：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <textarea class="textareaS" id="taDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">文章图片：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="file" id="thumbnails" name="thumbnails" accept=".jpg,.png,.jpeg,.gif" />
+                        </div>
+                        <div class="col-lg-4 col-md-6" style="margin-top:10px;">
+                            @if (!string.IsNullOrEmpty(_articleType) && _articleType == Common.Information)
+                            {
+                                <img class="image-mediumsize" id="showUploadImage" src="~/img/medium_model.jpg" alt="无图标" />
+                            }
+                            else
+                            {
+                                <img class="image-smallsize" id="showUploadImage" src="~/img/small_model.jpg" alt="无图标" />
+                            }
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">发布时间：</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="PubTime">
+                                <input class="form-control" size="16" type="text" value="@DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="tbPubTime" name="PubTime" value="@DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")" /><br />
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">是否链接：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="radio" value="true" name="IsHref" /><label>是</label>
+                            <input type="radio" value="false" checked="checked" name="IsHref" style="margin-left:50px;" /><label>否</label>
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="divArticleHref" style="display:none;">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">文章链接：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input class="inputS" id="tbHref" placeholder="文章链接" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="divArticleContent">
+                        <div class="col-md-12">
+                            <div class="checkbox">
+                                <textarea id="taContent" name="Content"></textarea>
+                            </div>
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info"
+                        data-dismiss="modal">
+                    退 出
+                </button>
+                <button type="button" class="btn btn-danger" id="btnSave">
+                    保 存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--#endregion 修改-->
+
+<script src="~/ckfinder/ckfinder.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script>
+
+    var editor = CKEDITOR.instances["taContent"];
+    if (editor) { editor.distory(true); }
+    CKEDITOR.replace("taContent", {
+        enterMode: CKEDITOR.ENTER_BR
+    });
+    CKFinder.setupCKEditor(null, '@Url.Content("~/ckfinder/")');
+
+    $(function () {
+
+        //初始化分页数据
+        InitPaging();
+
+        //查询按钮事件
+        $(".searchButton").click(function (e) {
+
+            InitPaging();
+        });
+        $('.searchInput').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                InitPaging();
+            }
+        });
+
+
+        $(window).resize(SetRightHeight);
+
+        $('.form_datetime').datetimepicker({
+            //language:  'fr',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            language: 'zh-CN'
+        });
+
+        $("#thumbnails").change(function (e) {
+            setImagePreview();
+
+        });
+
+        //文章是否链接事件
+        $("[name='IsHref']").change(function () {
+            var isHref = $("input[name='IsHref']:checked").val();
+
+            $("#divArticleHref").toggle();
+            $("#divArticleContent").toggle();
+
+            if (isHref == "true") {
+                //如果是链接，则隐藏并且清空内容编辑框,显示Href输入框
+                CKEDITOR.instances.Content.setData("");
+
+            } else {
+                //如果不是链接，则隐藏并且清空Href输入框,显示内容编辑框
+                $("#Href").val(" ");
+            }
+        });
+    })
+
+    //设置右边div高度与左边一致
+    function SetRightHeight() {
+        var divHeight = $('#left').height();
+        $('#right').css({ 'height': divHeight/2 });
+    }
+
+    function InitPaging()
+    {
+        //获取总页数,总条数及第一页数据
+        var firstResult = GetPageData(1);
+        //加载第一页数据
+        RenderPageData(firstResult.data);
+
+        //重置分页条
+        ResetPaginator();
+        //超过一页才显示分页
+        if (firstResult.totalPages > 1) {
+            InitPaginator(firstResult.totalPages);
+        }
+
+        //重新设置右边div高度
+        SetRightHeight();
+    }
+    //重置分页条
+    function ResetPaginator()
+    {
+        $("#paginator").html("");
+
+    }
+    //配置分页属性
+    function InitPaginator(totalPages)
+    {
+        //重置分页条
+
+        var options = {
+            size: 'large',            //指定分页条的大小
+            bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
+            numberOfPages: 10,         //设置可选分页按钮个数，默认5
+            currentPage: 1,          //当前页
+            totalPages: totalPages,         //总页数（从服务端获取）
+            onPageClicked: function (e, originalEvent, type, page) {
+                //获取分页数据
+                var result = GetPageData(page);
+                //渲染当前页数据
+                RenderPageData(result.data);
+            },
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "前一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                }
+            }
+        }
+
+        $("#paginator").bootstrapPaginator(options);
+    }
+    //获取分页数据
+    function GetPageData(currentPage)
+    {
+
+        var resultData = {
+            totalPages: 0,
+            data: null
+        };
+
+        var params = {
+            "ArticleType": '@_articleType',
+            "SubTitle": $(".searchInput").val(),
+            "page": currentPage
+        };
+
+        //添加遮罩
+        $(".search-section").showLoading();
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/Article/GetPageData",
+            data: params,
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                resultData.totalPages = result.totalPages;
+                resultData.data = result.pageDatas;
+                //添加遮罩
+                $(".search-section").hideLoading();
+
+                $("#result").html("共 " + result.totalPages + " 页/" + result.total + " 条数据");
+            }
+        });
+
+        return resultData;
+
+    }
+
+    //重新生成Body
+    function RenderPageData(articles) {
+        var dynamicHtml = "";
+        for (var i = 0; i < articles.length; i++) {
+
+            var pubTime = eval('new ' + eval(articles[i].Pubtime).source);
+
+            var localDate = pubTime.toLocaleDateString();
+
+
+            var contentHref = "/Article/ShowContent?id=" + articles[i].Id;
+
+            dynamicHtml += '<div class="row article-row">';
+            dynamicHtml += '<div class="col-md-12">';
+            dynamicHtml += '<h3 class="customer-h3">' + articles[i].SubTitle + '</h3>';
+            dynamicHtml += '<p class="customer-content-sm text-right">' + localDate + '</p>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="col-md-4">';
+            dynamicHtml += '<a href="' + contentHref + '">';
+            var imageVirtualPath = "";
+            if (articles[i].Image != null)
+                imageVirtualPath = articles[i].Image.VirtualPath;
+            dynamicHtml += '<img src="' + imageVirtualPath + '" class="img-responsive" alt="无图标"/>';
+            dynamicHtml += '</a>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="col-md-8">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += articles[i].Description == null ? "" : articles[i].Description;
+            dynamicHtml += '</p>';
+            dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>了解更多</strong></a>';
+
+            dynamicHtml += '<a class="btn btn-lg btn-success articleBtn" onclick="Edit(' + articles[i].Id + ')">修改</a>';
+            dynamicHtml += '<a class="btn btn-lg btn-danger articleBtn" onclick="Delete(' + articles[i].Id + ')">删除</a>';
+
+            dynamicHtml += '</div>';
+            dynamicHtml += '</div>';
+        }
+        $("#content").html(dynamicHtml);
+    }
+
+    function Add() {
+        $('#articleedit').on('show.bs.modal', function () {
+            $("#editTitle").html("新 增");
+        });
+        $('#articleedit').modal('show');
+
+
+    }
+    function Edit(id) {
+        if (id == null || id == "") {
+            layer.alert('未获取到id,请刷新重新尝试。', {
+                skin: 'layui-layer-molv' //样式类名
+              , closeBtn: 0
+            });
+            return;
+        }
+
+        $('#articleedit').on('show.bs.modal', function () {
+            $("#editTitle").html("修 改");
+        });
+        $('#articleedit').modal('show');
+
+    }
+
+    //删除文章
+    function Delete(id) {
+        if (id == null || id == "") {
+            layer.alert('未获取到id,请刷新重新尝试。', {
+                skin: 'layui-layer-molv' //样式类名
+              , closeBtn: 0
+            });
+            return;
+        }
+
+
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/Article/Delete",
+            data: { ArticleId: id },
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                if (result.Success) {
+                    InitPaging();
+                } else {
+                    layer.alert(result.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                }
+            }
+        });
+
+        return resultData;
+
+    }
+
+</script>
+

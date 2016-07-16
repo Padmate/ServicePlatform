@@ -1,0 +1,7 @@
+﻿User-agent: *
+Disallow:
+Disallow: /bin/
+Disallow: /Account/
+Disallow: /Manage/
+Disallow:/Setting/
+Disallow:/SystemManage/

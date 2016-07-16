@@ -61,6 +61,23 @@ namespace Padmate.ServicePlatform.DataAccess
             return result;
         }
 
+        public int GetPageDataTotalCount(Article article)
+        {
+            var query = _dbContext.Atricles.Where(a => 1 == 1);
+
+            #region　条件过滤
+            if (!string.IsNullOrEmpty(article.Type))
+                query = query.Where(a => a.Type == article.Type);
+
+            if (!string.IsNullOrEmpty(article.SubTitle))
+                query = query.Where(a => a.SubTitle.Contains(article.SubTitle));
+            #endregion
+
+            var result = query.ToList().Count();
+
+            return result;
+        }
+
         /// <summary>
         /// 根据ID查找
         /// </summary>
