@@ -1134,7 +1134,7 @@
     <Content Include="Views\Article\Add.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
-    <Content Include="Views\Article\ShowContent.cshtml" />
+    <Content Include="Views\Article\Detail.cshtml" />
     <Content Include="Views\Service\BrandPlatform.cshtml" />
     <Content Include="Views\Service\FundPlatform.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
@@ -1155,9 +1155,9 @@
     <Content Include="Views\SystemManage\ServiceProduct.cshtml" />
     <Content Include="Views\SystemManage\UserManage.cshtml" />
     <Content Include="Views\Activity\Index.cshtml" />
-    <Content Include="Views\Activity\ShowContent.cshtml" />
+    <Content Include="Views\Activity\Detail.cshtml" />
     <Content Include="Views\Information\Index.cshtml" />
-    <Content Include="Views\Information\ShowContent.cshtml" />
+    <Content Include="Views\Information\Detail.cshtml" />
     <Content Include="Views\SystemManage\ActivityForecast.cshtml" />
     <Content Include="Views\SystemManage\Information.cshtml" />
     <Content Include="Views\SystemManage\ServiceMarket.cshtml" />

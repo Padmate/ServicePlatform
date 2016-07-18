@@ -12,13 +12,13 @@ namespace Padmate.ServicePlatform.Web.Controllers
 {
     public class ArticleController:BaseController
     {
+        string _imageVirtualDirectory = SystemConfig.Init.PathConfiguration["articleThumbnailsVirtualDirectory"].ToString();
+
        
         public ActionResult Index()
         {
             return View();
         }
-
-
 
         /// <summary>
         /// 
@@ -43,8 +43,17 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return Json(result);
         }
         
+        [HttpPost]
+        public ActionResult GetArticleById(string articleid)
+        {
+            B_Article bArticle = new B_Article();
 
-        public ActionResult ShowContent(string id)
+            Int32 articleId = System.Convert.ToInt32(articleid);
+            var article = bArticle.GetArticleById(articleId); ;
+            return Json(article);
+        }
+
+        public ActionResult Detail(string id)
         {
             B_Article bArticle = new B_Article();
 
@@ -56,48 +65,82 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Authorize(Roles="Admin")]
+        /// <summary>
+        /// 上传缩略图
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="thumbnails"></param>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult UploadThumbnailsImage(string articleId, HttpPostedFileBase file)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "图片上传成功";
+          
+            //如果上传文件不为空
+            if (file != null)
+            {
+                Int32 id = System.Convert.ToInt32(articleId);
+                B_Article bArticle = new B_Article();
+                B_Image bImage = new B_Image();
+                var article = bArticle.GetArticleById(id);
+                    
+                if(article.Image != null)
+                {
+                    //删除原来的图片
+                    message = bImage.DeleteImage(System.Convert.ToInt32(article.Image.Id));
+                    if (!message.Success) return Json(message);
+                }
+                //上传新图标
+                message = bImage.AddImage(file, _imageVirtualDirectory, Common.Article_Thumbnails);
+                if (!message.Success) return Json(message);
+                int imageId =System.Convert.ToInt32(message.ReturnId);
+                //更新新图标id到数据库
+                message =  bArticle.UpdateImageId(id,imageId);
+
+            }
+
+            return Json(message);
+        }
+
         public ActionResult Add()
         {
             return View();
+
         }
 
          // POST:
         [HttpPost]
         [ValidateInput(false)]
         [Authorize(Roles="Admin")]
-        public ActionResult Add(M_Article model, HttpPostedFileBase thumbnails, string ReturnUrl)
+        public ActionResult SaveAdd()
         {
-            if (ModelState.IsValid && ValideData(model))
-            {
-                var currentUser = this.GetCurrentUser();
-                B_Article bArticle = new B_Article(currentUser);
-                Message message = bArticle.AddArticle(model,thumbnails);
-                if (!message.Success)
-                {
-                    ModelState.AddModelError("", message.Content);
-                    return View(model);
-                }
-                    
-                //返回文章显示页面
-                return Redirect("/Article/ShowContent?id=" + message.ReturnId + "&returnUrl=" + ReturnUrl);
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_Article model = JsonHandler.DeserializeJsonToObject<M_Article>(strReqStream);
 
-            }
-            // 如果我们进行到这一步时某个地方出错，则重新显示表单
-            return View(model);
+            Message message = new Message();
+            //校验model
+            message = ValideData(model);
+            if (!message.Success) return Json(message);
+               
+            var currentUser = this.GetCurrentUser();
+            B_Article bArticle = new B_Article(currentUser);
+            message = bArticle.AddArticle(model);
+
+            return Json(message);
         }
 
-
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Edit(string ArticleId)
+        public ActionResult Edit(string articleId)
         {
 
-            Int32 articleId = System.Convert.ToInt32(ArticleId);
+            Int32 id = System.Convert.ToInt32(articleId);
 
             B_Article bArticle = new B_Article();
-            var article = bArticle.GetArticleById(articleId);
+            var article = bArticle.GetArticleById(id);
             ViewData["article"] = article;
 
             return View();
@@ -107,52 +150,47 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(M_Article model, HttpPostedFileBase thumbnails, string ReturnUrl)
+        public ActionResult SaveEdit()
         {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_Article model = JsonHandler.DeserializeJsonToObject<M_Article>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = ValideData(model);
+            if (!message.Success) return Json(message);
+
             var currentUser = this.GetCurrentUser();
             B_Article bArticle = new B_Article(currentUser);
-            var article = bArticle.GetArticleById(model.Id);
-            ViewData["article"] = article;
+            message = bArticle.EditArticle(model);
 
-            if (ModelState.IsValid && ValideData(model))
-            {
-                try
-                {
-                    Message message = bArticle.EditArticle(model,thumbnails);
-                    if (!message.Success)
-                    {
-                        ModelState.AddModelError("", message.Content);
-                        return View(model);
-                    }
-                    //返回文章显示页面
-                    return Redirect("/Article/ShowContent?id=" + article.Id.ToString() + "&returnUrl=" + ReturnUrl);
+            return Json(message);
 
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", "发布异常:" + e.Message);
-                    return View(model);
-                }
-
-            }
-            // 如果我们进行到这一步时某个地方出错，则重新显示表单
-            return View(model);
         }
 
 
-        private bool ValideData(M_Article model)
+        private Message ValideData(M_Article model)
         {
+            Message message = new Message();
+            message.Success = true;
+
+            message = model.validate();
+            if (!message.Success) return message;
+
             if (model.IsHref && string.IsNullOrEmpty(model.Href))
             {
-                ModelState.AddModelError("", "文章链接不能为空");
-                return false;
+                message.Success = false;
+                message.Content = "文章链接不能为空";
+                return message;
             }
             else if (!model.IsHref && string.IsNullOrEmpty(model.Content))
             {
-                ModelState.AddModelError("", "文章内容不能为空");
-                return false;
+                message.Success = false;
+                message.Content = "文章内容不能为空";
+                return message;
             }
-            return true;
+            return message;
         }
 
         [Authorize(Roles = "Admin")]

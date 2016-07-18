@@ -410,7 +410,7 @@
             @{
                 for (int i = 0; i < activityForecastArticles.Count; i++)
                 {
-                    var contentHref = "/Activity/ShowContent?id=" + activityForecastArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
+                    var contentHref = "/Activity/Detail?id=" + activityForecastArticles[i].Id;
                     var aHref = activityForecastArticles[i].IsHref ? activityForecastArticles[i].Href : contentHref;
                     var aTarget = activityForecastArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = activityForecastArticles[i].Image == null ? "../img/small_model.jpg" 
@@ -457,7 +457,7 @@
             @{
                 for (int i = 0; i < wonderfulActivityArticles.Count; i++)
                 {
-                    var contentHref = "/Activity/ShowContent?id=" + wonderfulActivityArticles[i].Id + "&returnUrl=/Home/Default&anchor=activity";
+                    var contentHref = "/Activity/Detail?id=" + wonderfulActivityArticles[i].Id;
                     var aHref = wonderfulActivityArticles[i].IsHref ? wonderfulActivityArticles[i].Href : contentHref;
                     var aTarget = wonderfulActivityArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = wonderfulActivityArticles[i].Image == null ? "../img/small_model.jpg"
@@ -535,7 +535,7 @@
         @{
             for (int i = 0; i < informationArticles.Count; i++)
             {
-                var contentHref = "/Information/ShowContent?id=" + informationArticles[i].Id + "&returnUrl=/Home/Default&anchor=information";
+                var contentHref = "/Information/Detail?id=" + informationArticles[i].Id;
                 var aHref = informationArticles[i].IsHref ? informationArticles[i].Href : contentHref;
                 var aTarget = informationArticles[i].IsHref ? "_blank" : "_self";
                 var imageVirtualPath = informationArticles[i].Image == null ? "../img/medium_model.jpg"

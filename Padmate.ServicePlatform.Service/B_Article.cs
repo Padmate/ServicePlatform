@@ -15,7 +15,6 @@ namespace Padmate.ServicePlatform.Service
     public class B_Article
     {
         D_Article _dArticle = new D_Article();
-        string _imageVirtualDirectory = SystemConfig.Init.PathConfiguration["articleThumbnailsVirtualDirectory"].ToString();
 
         public B_Article()
         {
@@ -167,9 +166,9 @@ namespace Padmate.ServicePlatform.Service
         /// 新增文章
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="file"></param>
+        /// 
         /// <returns></returns>
-        public Message AddArticle(M_Article model,HttpPostedFileBase file)
+        public Message AddArticle(M_Article model)
         {
             Message message = new Message();
             message.Success = true;
@@ -177,18 +176,12 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
-                B_Image bImage = new B_Image();
-                message = bImage.AddImage(file, _imageVirtualDirectory, Common.Article_Thumbnails);
-                if (!message.Success)
-                    return message;
-                
                 //新增文章
                 var article = new Article()
                 {
                     Title = model.Title,
                     SubTitle = model.SubTitle,
                     Description = model.Description,
-                    ImageId = message.ReturnId,
                     Content = model.Content,
                     CreateDate = DateTime.Now,
                     Creator = _currentUser.UserName,
@@ -208,7 +201,12 @@ namespace Padmate.ServicePlatform.Service
             return message;
         }
 
-        public Message EditArticle(M_Article model,HttpPostedFileBase file)
+        /// <summary>
+        /// 修改文章
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Message EditArticle(M_Article model)
         {
             Message message = new Message();
             message.Success = true;
@@ -216,30 +214,11 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
-                B_Image bImage = new B_Image();
-                var articleEntity = _dArticle.GetArticleById(model.Id);
-                int? newImageId = articleEntity.ImageId;
-                if(file != null)
-                {
-                    //删除原来的图标
-                    if (articleEntity.ImageId != null)
-                    {
-                        message = bImage.DeleteImage(System.Convert.ToInt32(articleEntity.ImageId));
-                        if (!message.Success) return message;
-                    }
-                    //上传新图标
-                    message = bImage.AddImage(file, _imageVirtualDirectory, Common.Article_Thumbnails);
-                    if (!message.Success)
-                        return message;
-                    newImageId = message.ReturnId;
-                }
-
                 var article = new Article()
                 {
                     Title = model.Title,
                     SubTitle = model.SubTitle,
                     Description = model.Description,
-                    ImageId = newImageId,
                     Content = model.Content,
                     CreateDate = DateTime.Now,
                     Creator = _currentUser.UserName,
@@ -260,8 +239,29 @@ namespace Padmate.ServicePlatform.Service
             return message;
         }
 
-        
 
+        /// <summary>
+        /// 修改文章图片id
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Message UpdateImageId(int id,int imageId)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "图片更新成功";
+            try
+            {
+                message.ReturnId = _dArticle.EditImageId(id, imageId);
+
+            }catch(Exception e)
+            {
+                message.Success = false;
+                message.Content = "图片更新失败:"+e.Message;
+            }
+
+            return message;
+        }
         
 
         public Message DeleteArticle(int id)

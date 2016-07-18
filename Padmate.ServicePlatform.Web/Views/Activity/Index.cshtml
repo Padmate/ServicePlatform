@@ -1,14 +1,9 @@
 ﻿@{
-    ViewBag.Title = "活动资讯";
+    ViewBag.Title = "活动";
 }
-@using Microsoft.AspNet.Identity
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
-@{
-   
-    var returnUrl = "/Activity/Index";
-    bool isAdmin = Request.IsAuthenticated && User.IsInRole("Admin") ? true : false;
-}
+
 <style>
     .search-section {
         background-color: #fff;
@@ -106,11 +101,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="activityforecast">
                         <h2 class="customer-h2">活动预告</h2>
-                        @if (isAdmin)
-                        {
-                            <a href="/Activity/Add?type=@Common.ActivityForecast&returnUrl=@returnUrl?anchor=activityforecast"
-                               class="btn btn-lg btn-warning">发布预告</a>
-                        }
+                        
                         <div class="articleBody" id="activityforecastBody"></div>
                         <div class="pageBar">
                             <ul id="activityforecastPaginator"></ul>
@@ -120,28 +111,9 @@
                     <div class="tab-pane" id="wonderfulactivity">
                         <h2 class="customer-h2">精彩活动</h2>
 
-                        @if (isAdmin)
-                        {
-                            <a href="/Activity/Add?type=@Common.WonderfulActivity&returnUrl=@returnUrl?anchor=wonderfulactivity"
-                               class="btn btn-lg btn-warning">发布活动</a>
-                        }
                         <div class="articleBody" id="wonderfulactivityBody"></div>
                         <div class="pageBar">
                             <ul id="wonderfulactivityPaginator"></ul>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="information">
-                        <h2 class="customer-h2">资 讯</h2>
-
-                        @if (isAdmin)
-                        {
-                            <a href="/Activity/Add?type=@Common.Information&returnUrl=@returnUrl?anchor=information"
-                               class="btn btn-lg btn-warning">发布资讯</a>
-                        }
-                        <div class="articleBody" id="informationBody"></div>
-                        <div class="pageBar">
-                            <ul id="informationPaginator"></ul>
-
                         </div>
                     </div>
                 </div>
@@ -160,7 +132,7 @@
                     <ul class="tags" id="tagTab">
                         <li class="active"><a class="btn btn-xl" name="activityforecast" href="#activityforecast">活动预告</a></li>
                         <li><a class="btn btn-lg" name="wonderfulactivity" href="#wonderfulactivity">精彩活动</a></li>
-                        <li><a class="btn btn-lg" name="information" href="#information">资 讯</a></li>
+                        
                     </ul>
                 </div>
                 
@@ -293,7 +265,7 @@
         //获取数据总页数
         $.ajax({
             type: "POST",
-            url: "/Activity/GetPageData",
+            url: "/Article/GetPageData",
             data: params,
             dataType: "json",
             async: false,   //同步
@@ -322,10 +294,8 @@
             var localDate = pubTime.toLocaleDateString();
             
 
-            var contentHref = "/Activity/ShowContent?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
-            var editHref = "/Activity/Edit?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
-            var deleteHref = "/Activity/Delete?id=" + articles[i].Id + "&returnUrl=@returnUrl?anchor=" + _tabType;
-
+            var contentHref = "/Activity/Detail?id=" + articles[i].Id;
+           
             dynamicHtml += '<div class="row article-row">';
             dynamicHtml += '<div class="col-md-12">';
             dynamicHtml += '<h3 class="customer-h3">' + articles[i].SubTitle + '</h3>';
@@ -345,12 +315,6 @@
             dynamicHtml += '</p>';
             dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>了解更多</strong></a>';
             
-            var isadmin = '@isAdmin';
-            if(isadmin.toLowerCase() =='true')
-            {
-                dynamicHtml += '<a class="btn btn-lg btn-success articleBtn" href="' + editHref + '">修改</a>';
-                dynamicHtml += '<a class="btn btn-lg btn-danger articleBtn" href="' + deleteHref + '">删除</a>';
-            }
             dynamicHtml += '</div>';
             dynamicHtml += '</div>';
         }

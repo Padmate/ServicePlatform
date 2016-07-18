@@ -108,13 +108,22 @@ namespace Padmate.ServicePlatform.DataAccess
             article.Title = model.Title;
             article.SubTitle = model.SubTitle;
             article.Description = model.Description;
-            article.ImageId = model.ImageId;
             article.Content = model.Content;
             article.ModifiedDate = model.ModifiedDate;
             article.Modifier = model.Modifier;
             article.Pubtime = model.Pubtime;
             article.IsHref = model.IsHref;
             article.Href = model.Href;
+
+            _dbContext.SaveChanges();
+            return article.Id;
+        }
+
+        public int EditImageId(int id, int imageId)
+        {
+            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+
+            article.ImageId = imageId;
 
             _dbContext.SaveChanges();
             return article.Id;
