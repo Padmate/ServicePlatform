@@ -441,3 +441,108 @@ header .carousel-indicators li:hover{background-color:gray;}
 .product-smallsection{
     margin-bottom:30px;
 }
+
+/***************#region 活动资讯****************/
+.article-search-section {
+    background-color: #fff;
+    border: solid 1px lightgray;
+    -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+}
+.articleSearchButton {
+    width:12%;
+
+}
+.articleBtn{margin:0px 10px;}
+.articleSearchInput {
+    display: inline-block;
+    width: 87%;
+    max-width: none;
+    border:none;
+}
+/* The articleTag widget */
+.articleTag {
+    list-style: none;
+    margin: 20px auto;
+    padding-left: 0;
+}
+
+
+.articleTag li a {
+    color:white;
+    font-weight:bold;
+    text-decoration:none;
+    padding: 10px 15px;
+    margin-right: 16px;
+    margin-bottom: 17px;
+    display: inline-block;
+    background: #505050;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.articleTag li a:focus,
+.articleTag li a:hover {
+    background-color: rgba(0, 136, 204, 0.88);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
+
+}
+.articleTag > li.active > a, .articleTag > li.active > a:hover, .articleTag > li.active > a:focus {
+    color: white;
+    cursor: default;
+    padding:15px 30px;
+    background-color: rgba(0, 136, 204, 0.88);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
+}
+.articlePageBar{
+    text-align:center;
+}
+.articleBody
+{
+    min-height:400px;
+}
+.article-row {
+    background-color: #fff;
+    border: solid 1px lightgray;
+    -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    margin: 20px 0px;
+    padding: 10px 0px;
+}
+
+.article-right {
+    background-color: #fff;
+    border: solid 1px lightgray;
+    margin: 20px 0px;
+}
+.article-search-result{
+    padding:5px 0px;
+}
+.curd-model .modal-content{
+    min-height:100%;
+}
+.curd-model .close-modal{
+    position:fixed;
+    width:75px;
+    height:75px;
+    background-color:transparent;
+    top:25px;
+    right:25px;
+    cursor:pointer
+}
+.inputS {
+    width: 50%;
+    max-width: 50%;
+    line-height: 35px;
+    height: 35px;
+}
+
+.textareaS {
+    height: 150px;
+    width: 50%;
+    max-width: 50%;
+}
+/***************#endregion 活动资讯****************/

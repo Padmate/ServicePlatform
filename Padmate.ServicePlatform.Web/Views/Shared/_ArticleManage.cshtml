@@ -5,89 +5,8 @@
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
 
-<style>
-    .search-section {
-        background-color: #fff;
-        border: solid 1px lightgray;
-        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-    }
-    .search-result{
-        padding:5px 0px;
-    }
-    .searchButton {
-        width: 12%;
-    }
-
-    .searchInput {
-        display: inline-block;
-        width: 90%;
-        max-width: none;
-        border: none;
-    }
-    
-    .pageBar {
-        text-align: center;
-    }
-
-    .articleBody {
-        min-height: 400px;
-        margin-top:20px;
-    }
-
-    .article-row {
-        background-color: #fff;
-        border: solid 1px lightgray;
-        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        margin:20px 0px;
-        margin-top: 0px;
-        padding: 10px 0px;
-    }
-
-    .articleBtn {
-        margin: 0 10px;
-    }
-
-    .article-right {
-        background-color: #fff;
-        border: solid 1px lightgray;
-        margin: 20px 0px;
-    }
-
-    .articlebg {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
-        background-image: url("../img/Activity/activitybg.jpg");
-    }
-    .curd-model .modal-content{
-        min-height:100%;
-    }
-    .curd-model .close-modal{
-        position:fixed;
-        width:75px;
-        height:75px;
-        background-color:transparent;
-        top:25px;
-        right:25px;
-        cursor:pointer
-    }
-    .inputS {
-        width: 50%;
-        max-width: 50%;
-        line-height: 35px;
-        height: 35px;
-    }
-
-    .textareaS {
-        height: 150px;
-        width: 50%;
-        max-width: 50%;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
 
 <div>
     <div class="row">
@@ -95,9 +14,9 @@
             <a class="btn btn-lg btn-warning" onclick="OpenAddScreen()">发布@_articleTypeDes</a>
         </div>
         <div class="col-is-8 col-sm-8 col-md-8">
-            <fieldset class="search-section">
-                <input type="text" class="form-control input-lg searchInput" placeholder="Search Titles">
-                <a href="#javaScript:void(0)" class="searchButton"><i class="fa fa-search fa-2x text-info"></i></a>
+            <fieldset class="article-search-section">
+                <input type="text" class="form-control input-lg articleSearchInput" placeholder="Search Titles">
+                <a href="#javaScript:void(0)" class="articleSearchButton"><i class="fa fa-search fa-2x text-info"></i></a>
 
             </fieldset>
         </div>
@@ -106,10 +25,10 @@
     
     <div class="row articleBody">
         <div class="col-is-12 col-sm-12 col-md-12">
-            <div class="text-right customer-content-sm search-result" id="result"></div>
+            <div class="text-right customer-content-sm article-search-result" id="result"></div>
 
             <div id="content"></div>
-            <div class="pageBar">
+            <div class="articlePageBar">
                 <ul id="paginator"></ul>
             </div>
         </div>
@@ -146,6 +65,9 @@
 </div>
 <!--#endregion 修改-->
 
+<script src="~/ckfinder/ckfinder.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+
 <script>
 
     
@@ -156,11 +78,11 @@
         InitPaging();
 
         //查询按钮事件
-        $(".searchButton").click(function (e) {
+        $(".articleSearchButton").click(function (e) {
 
             InitPaging();
         });
-        $('.searchInput').bind('keypress', function (event) {
+        $('.articleSearchInput').bind('keypress', function (event) {
             if (event.keyCode == "13") {
                 InitPaging();
             }
@@ -168,7 +90,8 @@
 
 
         $(window).resize(SetRightHeight);
-
+        
+        InitAddOrEditScreen();
     })
 
     //设置右边div高度与左边一致
@@ -242,12 +165,12 @@
 
         var params = {
             "ArticleType": articleType,
-            "SubTitle": $(".searchInput").val(),
+            "SubTitle": $(".articleSearchInput").val(),
             "page": currentPage
         };
 
         //添加遮罩
-        $(".search-section").showLoading();
+        $(".article-search-section").showLoading();
         //获取数据总页数
         $.ajax({
             type: "POST",
@@ -260,7 +183,7 @@
                 resultData.totalPages = result.totalPages;
                 resultData.data = result.pageDatas;
                 //添加遮罩
-                $(".search-section").hideLoading();
+                $(".article-search-section").hideLoading();
 
                 $("#result").html("共 " + result.totalPages + " 页/" + result.total + " 条数据");
             }
@@ -317,13 +240,23 @@
 
     function InitAddOrEditScreen()
     {
+        $('#articleadd').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#articleadd').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divAddContainer").html("");
+
+        })
+
         $('#articleedit').on('show.bs.modal', function () {
             //打开事件
         });
 
         $('#articleedit').on('hide.bs.modal', function () {
             // 关闭事件
-            EmptyAddOrEditScreen();
+            $("#divEditContainer").html("");
 
         })
     }

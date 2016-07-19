@@ -774,6 +774,7 @@
     <Content Include="img\logos\microlancer.jpg" />
     <Content Include="img\logos\padmate.png" />
     <Content Include="img\logos\padmate_zc.png" />
+    <Content Include="img\logos\share.gif" />
     <Content Include="img\logos\themeforest.jpg" />
     <Content Include="img\logos\weixin.png" />
     <Content Include="img\logos\wordpress.jpg" />
@@ -1164,6 +1165,7 @@
     <Content Include="Views\SystemManage\ServiceEngineer.cshtml" />
     <Content Include="Views\SystemManage\WonderfulActivity.cshtml" />
     <Content Include="Views\Shared\_ArticleManage.cshtml" />
+    <Content Include="Views\Shared\_Share.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

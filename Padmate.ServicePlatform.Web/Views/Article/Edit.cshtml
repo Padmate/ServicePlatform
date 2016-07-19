@@ -7,8 +7,6 @@
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
 
-<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
-<script src="~/Scripts/webuploader/webuploader.js"></script>
 
 <!--#region修改-->
 <div class="close-modal" data-dismiss="modal">
@@ -130,8 +128,6 @@
 </div>
 <!--#endregion 修改-->
 
-<script src="~/ckfinder/ckfinder.js"></script>
-<script src="~/ckeditor/ckeditor.js"></script>
 <script>
     
     var editor = CKEDITOR.instances["tbEditContent"];
@@ -174,7 +170,7 @@
     var uploader;
     function InitWebUploader() {
 
-
+    
         // 初始化Web Uploader
         uploader = WebUploader.create({
             auto: false,   // 选完文件后，是否自动上传。
@@ -253,7 +249,7 @@
         });
 
         // 完成上传完了，成功或者失败，先删除进度条。
-        uploader.on('uploadComplete', function (file) {debugger
+        uploader.on('uploadComplete', function (file) {
             //$('#' + file.id).find('.progress').remove();
             //隐藏遮罩
             //$("body").hideLoading();

@@ -4,96 +4,6 @@
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
 
-<style>
-    .search-section {
-        background-color: #fff;
-        border: solid 1px lightgray;
-        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-    }
-    .searchButton {
-        width:12%;
-
-    }
-    .searchInput {
-        display: inline-block;
-        width: 87%;
-        max-width: none;
-        border:none;
-    }
-    /* The tags widget */
-    .tags {
-        list-style: none;
-        margin: 20px auto;
-        padding-left: 0;
-    }
-
-
-    .tags li a {
-        color:white;
-        font-weight:bold;
-        text-decoration:none;
-        padding: 10px 15px;
-        margin-right: 16px;
-        margin-bottom: 17px;
-        display: inline-block;
-        background: #505050;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-    }
-
-    .tags li a:focus,
-    .tags li a:hover {
-        background-color: rgba(0, 136, 204, 0.88);
-        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
-
-    }
-    .tags > li.active > a, .tags > li.active > a:hover, .tags > li.active > a:focus {
-        color: white;
-        cursor: default;
-        background-color: rgba(0, 136, 204, 0.88);
-        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088CC,endColorstr=#E50088CC); /*IE8*/
-    }
-    .pageBar{
-       text-align:center;
-    }
-    .articleBody
-    {
-        min-height:400px;
-    }
-    .article-row {
-        background-color: #fff;
-        border: solid 1px lightgray;
-        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
-        margin: 20px 0px;
-        padding: 10px 0px;
-    }
-    .imgSizeW-280
-    {
-        height:200px;
-        width:280px;
-    }
-    .articleBtn{
-        margin:0 10px;
-    }
-    .article-right {
-        background-color: #fff;
-        border: solid 1px lightgray;
-        
-        margin: 20px 0px;
-    }
-    .articlebg {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
-        background-image: url("../img/Activity/activitybg.jpg");
-    }
-</style>
-
 <section class="bg-light-gray">
     <div class="container">
         <div class="row">
@@ -103,7 +13,7 @@
                         <h2 class="customer-h2">活动预告</h2>
                         
                         <div class="articleBody" id="activityforecastBody"></div>
-                        <div class="pageBar">
+                        <div class="articlePageBar">
                             <ul id="activityforecastPaginator"></ul>
                         </div>
 
@@ -112,7 +22,7 @@
                         <h2 class="customer-h2">精彩活动</h2>
 
                         <div class="articleBody" id="wonderfulactivityBody"></div>
-                        <div class="pageBar">
+                        <div class="articlePageBar">
                             <ul id="wonderfulactivityPaginator"></ul>
                         </div>
                     </div>
@@ -120,16 +30,16 @@
 
             </div>
             <div class="col-is-4 col-sm-4 col-md-4">
-                <fieldset class="search-section">
-                    <input type="text" class="form-control input-lg searchInput" placeholder="Search Titles">
-                    <a href="#javaScript:void(0)" class="searchButton"><i class="fa fa-search fa-2x text-info"></i></a>
+                <fieldset class="article-search-section">
+                    <input type="text" class="form-control input-lg articleSearchInput" placeholder="Search Titles">
+                    <a href="#javaScript:void(0)" class="articleSearchButton"><i class="fa fa-search fa-2x text-info"></i></a>
 
                 </fieldset>
 
                 <div class="article-right" style="padding-left:20px;" id="right">
                     
 
-                    <ul class="tags" id="tagTab">
+                    <ul class="articleTag" id="tagTab">
                         <li class="active"><a class="btn btn-xl" name="activityforecast" href="#activityforecast">活动预告</a></li>
                         <li><a class="btn btn-lg" name="wonderfulactivity" href="#wonderfulactivity">精彩活动</a></li>
                         
@@ -167,11 +77,11 @@
         });
 
         //查询按钮事件
-        $(".searchButton").click(function (e) {
+        $(".articleSearchButton").click(function (e) {
 
             InitPaging();
         });
-        $('.searchInput').bind('keypress', function (event) {
+        $('.articleSearchInput').bind('keypress', function (event) {
             if (event.keyCode == "13") {
                 InitPaging();
             }
@@ -256,12 +166,12 @@
 
         var params = {
             "ArticleType": _tabType,
-            "SubTitle": $(".searchInput").val(),
+            "SubTitle": $(".articleSearchInput").val(),
             "page": currentPage
         };
 
         //添加遮罩
-        $(".search-section").showLoading();
+        $(".article-search-section").showLoading();
         //获取数据总页数
         $.ajax({
             type: "POST",
@@ -274,7 +184,7 @@
                 resultData.totalPages = result.totalPages;
                 resultData.data = result.pageDatas;
                 //添加遮罩
-                $(".search-section").hideLoading();
+                $(".article-search-section").hideLoading();
             }
         });
 
