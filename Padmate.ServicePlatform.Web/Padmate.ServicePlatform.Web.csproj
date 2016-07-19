@@ -1001,6 +1001,8 @@
     <Content Include="fonts\fontawesome.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\CustomerMenu.js" />
+    <Content Include="Scripts\jiathis\jiathis-share.css" />
+    <Content Include="Scripts\jiathis\jiathis-share.js" />
     <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="Scripts\metisMenu\common.js" />
     <Content Include="Scripts\metisMenu\demo-default.css" />
@@ -1165,7 +1167,6 @@
     <Content Include="Views\SystemManage\ServiceEngineer.cshtml" />
     <Content Include="Views\SystemManage\WonderfulActivity.cshtml" />
     <Content Include="Views\Shared\_ArticleManage.cshtml" />
-    <Content Include="Views\Shared\_Share.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

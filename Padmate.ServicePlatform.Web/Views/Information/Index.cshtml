@@ -5,6 +5,10 @@
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
 
+<link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
+<script type="text/javascript" src="../Scripts/jiathis/jiathis-share.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2107415" charset="utf-8"></script>
+
 <section class="bg-light-gray">
     <div class="container">
         <div class="row">
@@ -175,10 +179,22 @@
             
 
             var contentHref = "/Information/Detail?id=" + articles[i].Id;
-           
+            var shareHref = window.location.host + contentHref;
+
             dynamicHtml += '<div class="row article-row">';
             dynamicHtml += '<div class="col-md-12">';
             dynamicHtml += '<h3 class="customer-h3">' + articles[i].SubTitle + '</h3>';
+
+            //一键分享
+            dynamicHtml += '<div onmouseover=setShare("' + articles[i].Id+ '","' + shareHref + '")>';
+            dynamicHtml += '<div class="jiathis_style">';
+            dynamicHtml += '<a href="http://www.jiathis.com/share?uid=2107415" class="jiathis jiathis_txt" target="_blank">';
+            dynamicHtml += '<img src="../img/logos/share.gif" border="0" />';
+            dynamicHtml += '</a>';
+            dynamicHtml += '<a class="jiathis_counter_style_margin:3px 0 0 2px"></a>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '</div>';
+
             dynamicHtml += '<p class="customer-content-sm text-right">' + localDate + '</p>';
             dynamicHtml += '</div>';
             dynamicHtml += '<div class="col-md-4">';

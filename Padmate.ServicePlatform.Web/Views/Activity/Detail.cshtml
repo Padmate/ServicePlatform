@@ -2,12 +2,12 @@
 @using Padmate.ServicePlatform.Models;
 @{
     M_Article article = (M_Article)ViewData["article"];
-    var returnUrl = @Request["returnUrl"];
-    var anchor = @Request["anchor"];
-    var returnRui = anchor != null && anchor != "" ? returnUrl + "#" + anchor : returnUrl;
+    
 }
 
-
+<link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
+<script type="text/javascript" src="../Scripts/jiathis/jiathis-share.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2107415" charset="utf-8"></script>
 
 <div class="container">
     <div class="row">
@@ -18,9 +18,18 @@
                 <a class="customer-content-xs" href="/Activity/Detail?id=@article.Id">@article.SubTitle</a>
 
             </h3>
-            @Html.Partial("_Share")
+            <!-- share -->
+            <div onmouseover="setShare('@article.Id')">
 
+                <div class="jiathis_style">
+                    <a href="http://www.jiathis.com/share?uid=2107415" class="jiathis jiathis_txt" target="_blank">
+                        <img src="../img/logos/share.gif" border="0" />
+                    </a>
+                    <a class="jiathis_counter_style_margin:3px 0 0 2px"></a>
+                </div>
+            </div>
             
+
         </div>
         <div class="col-md-12">
             @if (article.IsHref)
