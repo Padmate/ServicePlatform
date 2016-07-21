@@ -12,5 +12,7 @@ namespace Padmate.ServicePlatform.Models
         public string Content { get; set; }
 
         public int? ReturnId { get; set; }
+
+        public string ReturnStrId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Padmate.ServicePlatform.Models;
+using Padmate.ServicePlatform.Service;
 using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,113 @@ namespace Padmate.ServicePlatform.Web.Controllers
             }
 
 
+            return Json(message);
+        }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult GetPageData()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_Mail model = JsonHandler.UnJson<M_Mail>(strReqStream);
+
+            B_Mail bMail = new B_Mail();
+            var pageData = bMail.GetPageData(model);
+            var totalCount = bMail.GetPageDataTotalCount(model);
+
+            PageResult<M_Mail> pageResult = new PageResult<M_Mail>(totalCount, pageData);
+            return Json(pageResult);
+        }
+
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        // POST:
+        [HttpPost]
+        public ActionResult SaveAdd()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_Mail model = JsonHandler.DeserializeJsonToObject<M_Mail>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            B_Mail bMail = new B_Mail();
+            message = bMail.AddMail(model);
+
+            return Json(message);
+        }
+
+
+        public ActionResult Edit(string id)
+        {
+            B_Mail bMail = new B_Mail();
+
+            Int32 mailId = System.Convert.ToInt32(id);
+            var mail = bMail.GetMailById(mailId);
+
+            ViewData["Mail"] = mail;
+
+
+            return View();
+        }
+
+        // POST:
+        [HttpPost]
+        public ActionResult SaveEdit()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_Mail model = JsonHandler.DeserializeJsonToObject<M_Mail>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            B_Mail bMail = new B_Mail();
+            message = bMail.EditMail(model);
+
+            return Json(message);
+        }
+
+        public ActionResult Detail(string id)
+        {
+            B_Mail bMail = new B_Mail();
+
+            Int32 mailId = System.Convert.ToInt32(id);
+            var mail = bMail.GetMailById(mailId);
+
+            ViewData["Mail"] = mail;
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult BachDeleteById()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            List<string> mailIds = JsonHandler.DeserializeJsonToObject<List<string>>(strReqStream);
+
+            List<int> ids = new List<int>();
+            foreach (var mailid in mailIds)
+            {
+                ids.Add(System.Convert.ToInt32(mailid));
+            }
+            Message message = new Message();
+            B_Mail bMail = new B_Mail();
+            message = bMail.BatchDeleteByIds(ids);
             return Json(message);
         }
 

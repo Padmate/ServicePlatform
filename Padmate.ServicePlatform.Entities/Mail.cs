@@ -35,10 +35,26 @@ namespace Padmate.ServicePlatform.Entities
         public string Body { get; set; }
 
         /// <summary>
+        /// 邮件创建人
+        /// </summary>
+        public string Creator { get; set; }
+
+        /// <summary>
         /// 邮件创建时间
         /// </summary>
         public DateTime CreateDate { get; set; }
 
+        /// <summary>
+        /// 邮件修改者
+        /// </summary>
+        public string Modifier { get; set; }
+
+        /// <summary>
+        /// 邮件修改时间
+        /// </summary>
+        public DateTime? ModifiedDate { get; set; }
+
+       
         /// <summary>
         /// 邮件发送时间
         /// </summary>

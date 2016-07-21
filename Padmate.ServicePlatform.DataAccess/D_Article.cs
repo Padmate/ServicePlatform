@@ -94,7 +94,7 @@ namespace Padmate.ServicePlatform.DataAccess
         /// </summary>
         /// <param name="article"></param>
         /// <returns></returns>
-        public int AddAtricle(Article article)
+        public int AddArticle(Article article)
         {
             _dbContext.Atricles.Add(article);
             _dbContext.SaveChanges();

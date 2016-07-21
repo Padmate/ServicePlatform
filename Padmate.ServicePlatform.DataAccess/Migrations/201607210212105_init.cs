@@ -29,6 +29,32 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Contacts",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 50),
+                        Email = c.String(),
+                        PhoneNumber = c.String(),
+                        Description = c.String(maxLength: 200),
+                        Sequence = c.Int(nullable: false),
+                        ContactScopeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ContactScopes", t => t.ContactScopeId, cascadeDelete: true)
+                .Index(t => t.ContactScopeId);
+            
+            CreateTable(
+                "dbo.ContactScopes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Scope = c.String(maxLength: 50),
+                        Sequence = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Images",
                 c => new
                     {
@@ -148,6 +174,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.MailAttachments", "MailId", "dbo.Mails");
+            DropForeignKey("dbo.Contacts", "ContactScopeId", "dbo.ContactScopes");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -155,6 +182,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.MailAttachments", new[] { "MailId" });
+            DropIndex("dbo.Contacts", new[] { "ContactScopeId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
@@ -163,6 +191,8 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
             DropTable("dbo.Mails");
             DropTable("dbo.MailAttachments");
             DropTable("dbo.Images");
+            DropTable("dbo.ContactScopes");
+            DropTable("dbo.Contacts");
             DropTable("dbo.Articles");
         }
     }

@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Article.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="ContactScope.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="MailAttachment.cs" />

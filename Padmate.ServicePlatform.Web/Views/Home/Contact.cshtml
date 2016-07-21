@@ -1,4 +1,10 @@
-﻿<style>
+﻿@using Padmate.ServicePlatform.Models;
+@{
+    List<M_Contact> contacts = (List<M_Contact>)ViewData["Contacts"];
+    List<M_ContactScope> contactScopes = (List<M_ContactScope>)ViewData["ContactScopes"];
+}
+
+<style>
     .mailbg {
         position:relative;
         max-width: 100%;
@@ -8,8 +14,10 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
-        background-image: url("../img/servicebg.jpg");
+        background-image: url("../img/map-image.png");
         margin:50px auto;
+        margin-bottom:100px;
+        background-color:#333;
     }
     .mail-intro{
         padding:5% 10%;
@@ -30,90 +38,146 @@
     #sendmail textarea {
         height: 300px;
     }
+    .content-body-padding,.contact{
+        padding:0px 0px;
+    }
+    #emailContent {
+        height:200px;
+    }
+    .map-address{
+        padding:50px 0px;
+    }
 </style>
 
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2 class="customer-h2">联系我们</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-is-6 col-sm-6 col-md-5 col-md-offset-1">
-                <div class="contactus-section">
-                    <h4>产品开发</h4>
-                    <p class="contactusFont">	陈先生，邮箱：cwm@hardagroup.com</p>
-                </div>
-                <div class="contactus-section">
-                    <h4>供应链</h4>
-                    <p class="contactusFont">杜先生，邮箱：dxb@hardagroup.com</p>
-                </div>
-                <div class="contactus-section">
-                    <h4>投融资</h4>
-                    <p class="contactusFont">
-                        黄先生，邮箱：hxh@padmate.cn，联系电话：15160022892<br />
-                        陈先生，邮箱：cyc@padmate.cn，联系电话：15805915836
-                    </p>
-
-                </div>
-            </div>
-            <div class="col-is-6 col-sm-6 col-md-6">
-                <div class="contactus-section">
-                    <h4>工程制作、检测</h4>
-                    <p class="contactusFont">郑先生，邮箱：zhe@padmate.cn</p>
-                </div>
-                <div class="contactus-section">
-                    <h4>市场</h4>
-                    <p class="contactusFont">
-                        董先生，邮箱：dongliang@padmate.cn（国内线下）<br />
-                        柯先生，邮箱：knj@padmate.cn（国内电商）<br />
-                        李小姐，邮箱：plum@hardagroup.com（国内大客户）<br />
-                        熊先生，邮箱：rickey@padmate.cn（国际贸易）
-                    </p>
-
-                </div>
-
-            </div>
-        </div>
-        
-    </div>
+<section class="contact">
     <div class="mailbg">
         <div class="mail-intro">
-            <a href="#sendmail"><img class="image-smallsize mail" src="~/img/about/mail.png" /></a>
-            <h2 class="customer-h2 whitefont">现在就发送邮件</h2>
+            <img class="image-smallsize mail" src="~/img/about/mail.png" />
+            <h2 class="customer-h2 whitefont">联&nbsp;系&nbsp;我&nbsp;们</h2>
 
         </div>
     </div>
-    <div id="sendmail">
-        <div class="container">
-
-            <div class="row">
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="你的邮箱" id="name">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="邮件主题" id="email">
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="邮件内容" id="message" ></textarea>
-                    </div>
-                    <div class="text-right">
-                        <a class="btn-gelatine btn-gelatine-website" href="javaScript:void(0);">发送邮件</a>
-
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <select class="form-control" id="emailto">
+                        <option value="" selected="selected">请选择收件人</option>
+                        @foreach (var contact in contacts)
+                        {
+                            var description = string.IsNullOrEmpty(contact.Description) ? "" : "(" + contact.Description + ")";                            
+                            <option value="@contact.Email">@contact.Scope - @contact.Name @description</option>
+                        }
+                    </select>
                 </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="您的姓名" id="fromname">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="您的邮箱" id="fromemail">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="邮件主题" id="emailsubject">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="邮件内容" id="emailContent"></textarea>
+                </div>
+                <div class="text-right">
+                    <a class="btn-gelatine btn-gelatine-info" href="javaScript:void(0);" id="btn-sendmail">发送邮件</a>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+                @foreach (var scope in contactScopes)
+                {
+                    <div>
+                        <h4 class="customer-h4">@scope.Scope</h4>
+                        <p class="customer-content-sm">
+                            @{
+                    var currentScopeContacts = contacts.Where(c => c.ContactScopeId == scope.Id)
+                        .OrderBy(c => c.Sequence).ToList();
+                    foreach (var contact in currentScopeContacts)
+                    {
+                        var description = string.IsNullOrEmpty(contact.Description) ? "" : "(" + contact.Description + ")";
+                        <span>@contact.Name，邮箱：@contact.Email @description</span>
+                        if (!string.IsNullOrEmpty(contact.PhoneNumber))
+                        {
+                            <br />
+                                <span style="padding-left:65px;">联系电话：@contact.PhoneNumber</span>
+                        }
+                        <br />
+                    }
+                            }
+                        </p>
+                    </div>
+                }
+
+
             </div>
 
         </div>
     </div>
+
+    <div class="container map-address">
+        <div class="row">
+            <div class="col-md-8">
+                @Html.Partial("_map")
+
+            </div>
+            <div class="col-md-4">
+                <h3 class="customer-h3">地址：</h3>
+                <p class="customer-content-sm">福建省厦门市集美区集美大道1300号产业技术研究院创新大厦6楼</p>
+            </div>
+        </div>
+    </div>
+    
 </section>
 
 <script>
     $(function () {
-
+        SendMail();
     })
 
+    //发送邮件
+    function SendMail() {
+        $("#btn-sendmail").click(function () {
+
+            var obj = {
+                Creator: $("#fromname").val(),
+                From: $("#fromemail").val(),
+                To: $("#emailto").val(),
+                Subject: $("#emailsubject").val(),
+                Body: $("#emailContent").val()
+            };
+
+            var jsonParam = JSON.stringify(obj);
+            $.ajax({
+                type: "POST",
+                url: "/Contact/SendMail",
+                dataType: "json",
+                data: jsonParam,
+                async: false,   //同步
+                success: function (message) {
+                    //图片更新后不做任何操作
+                    if(message.Success)
+                    {
+                        document.getElementById("emailto").options[0].selected = true;
+                        $("#fromname").val("");
+                        $("#fromemail").val("");
+                        $("#emailsubject").val("");
+                        $("#emailContent").val("");
+
+                    }
+                    //tips层
+                    layer.tips(message.Content, "#btn-sendmail", {
+                        tips: [1, '#78BA32'] //提示位置：上,还可配置颜色
+                    });
+                }
+            });
+
+
+
+        });
+    }
 </script>

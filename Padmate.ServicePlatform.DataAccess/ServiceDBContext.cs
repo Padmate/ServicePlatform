@@ -36,6 +36,9 @@ namespace Padmate.ServicePlatform.DataAccess
         public DbSet<Mail> Mails { get; set; }
         public DbSet<MailAttachment> MailAttachments { get; set; }
 
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactScope> ContactScopes { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,6 +46,9 @@ namespace Padmate.ServicePlatform.DataAccess
             modelBuilder.Configurations.Add(new ImageConfiguration());
             modelBuilder.Configurations.Add(new MailConfiguration());
             modelBuilder.Configurations.Add(new MailAttachmentConfiguration());
+            modelBuilder.Configurations.Add(new ContactConfiguration());
+            modelBuilder.Configurations.Add(new ContactScopeConfiguration());
+
 
         }
 

@@ -57,15 +57,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBConfiguration\AtricleConfiguration.cs" />
+    <Compile Include="DBConfiguration\ContactConfiguration.cs" />
+    <Compile Include="DBConfiguration\ContactScopeConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
     <Compile Include="DBConfiguration\MailAttachmentConfiguration.cs" />
     <Compile Include="DBConfiguration\MailConfiguration.cs" />
     <Compile Include="D_Article.cs" />
+    <Compile Include="D_Contact.cs" />
+    <Compile Include="D_ContactScope.cs" />
     <Compile Include="D_Image.cs" />
+    <Compile Include="D_Mail.cs" />
     <Compile Include="D_User.cs" />
-    <Compile Include="Migrations\201606280617135_init.cs" />
-    <Compile Include="Migrations\201606280617135_init.Designer.cs">
-      <DependentUpon>201606280617135_init.cs</DependentUpon>
+    <Compile Include="Migrations\201607210212105_init.cs" />
+    <Compile Include="Migrations\201607210212105_init.Designer.cs">
+      <DependentUpon>201607210212105_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607210531167_updateMail.cs" />
+    <Compile Include="Migrations\201607210531167_updateMail.Designer.cs">
+      <DependentUpon>201607210531167_updateMail.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,8 +91,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606280617135_init.resx">
-      <DependentUpon>201606280617135_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607210212105_init.resx">
+      <DependentUpon>201607210212105_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607210531167_updateMail.resx">
+      <DependentUpon>201607210531167_updateMail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -191,7 +191,7 @@ namespace Padmate.ServicePlatform.Service
                     Href = model.Href
                 };
 
-                message.ReturnId= _dArticle.AddAtricle(article);
+                message.ReturnId= _dArticle.AddArticle(article);
 
             }catch(Exception e)
             {
@@ -290,6 +290,8 @@ namespace Padmate.ServicePlatform.Service
 
         private M_Article ConverEntityToModel(Article article)
         {
+            if (article == null) return null;
+
             B_Image bImage = new B_Image();
 
             var model = new M_Article()

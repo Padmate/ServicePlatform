@@ -1,7 +1,20 @@
-﻿
+﻿@using Padmate.ServicePlatform.Service;
+@using Padmate.ServicePlatform.Models;
+@{
+    B_Mail bMail = new B_Mail();
+    int unSendMailNum = bMail.GetAllUnSendMail().Count();
+}
+
 <link href="~/Content/CustomerMenu.css" rel="stylesheet">
 <script src="~/Scripts/CustomerMenu.js"></script>
-
+<style>
+    .systemtip{
+        color:red;
+        font-size:medium;
+        font-weight:bold;
+        padding:3px;
+    }
+</style>
 <div class="menu-sidebar" id="accordion">
     <div class="menu-sidebar-nav">
         <ul>
@@ -69,6 +82,37 @@
                 <a class="menu-first" href="/SystemManage/UserManage">
                     <i class="fa fa-user"></i>
                     用户管理
+                </a>
+            </li>
+            <li>
+                <a data-toggle="collapse" data-parent="#accordion" class="menu-first" href="#contactmanage">
+                    <i class="fa fa-cogs"></i>
+                    联系人管理
+                    <span class="fa fa-chevron-left"></span>
+                </a>
+                <ul id="contactmanage" class="panel-collapse collapse menu-second">
+                    <li>
+                        <a href="/Contact/Scope">
+                            <i class="fa fa-angle-double-up"></i>
+                            职责范围
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Contact/Info">
+                            <i class="fa fa-user-md"></i>
+                            联系人信息
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="menu-first" href="/Mail/Index">
+                    <i class="fa fa-envelope"></i>
+                    系统邮件
+                    @if (unSendMailNum > 0)
+                    {
+                        <sup class="systemtip">@unSendMailNum</sup>
+                    }
                 </a>
             </li>
         </ul>

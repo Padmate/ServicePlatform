@@ -23,7 +23,6 @@ function setShare(articleId, url) {
         dataType: "json",
         async: false,   //同步
         success: function (result) {
-            debugger;
             jiathis_config.title = result.SubTitle;
             jiathis_config.url = url;
         }

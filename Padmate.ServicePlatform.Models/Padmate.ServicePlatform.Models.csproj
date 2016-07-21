@@ -43,7 +43,8 @@
     <Compile Include="AccountViewModels.cs" />
     <Compile Include="M_Article.cs" />
     <Compile Include="BaseModel.cs" />
-    <Compile Include="ContactUs.cs" />
+    <Compile Include="M_Contact.cs" />
+    <Compile Include="M_ContactScope.cs" />
     <Compile Include="M_Image.cs" />
     <Compile Include="M_Mail.cs" />
     <Compile Include="ManageViewModels.cs" />

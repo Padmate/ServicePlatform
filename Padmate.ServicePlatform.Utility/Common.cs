@@ -32,7 +32,6 @@ namespace Padmate.ServicePlatform.Utility
             {Information,"资讯"}
         };
         #endregion
-
         #region 图片类型
 
         public const string Image_HomeBG = "homebg";
@@ -45,10 +44,14 @@ namespace Padmate.ServicePlatform.Utility
 
         };
         #endregion
+
+        
     }
 
     public static class SystemRole
     {
         public const string Admin = "Admin";
     }
+
+    
 }

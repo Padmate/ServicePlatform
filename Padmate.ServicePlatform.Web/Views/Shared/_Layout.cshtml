@@ -20,6 +20,8 @@
     <link rel="shortcut icon" href="~/img/logos/favicon.ico" />
     <!-- Bootstrap Core CSS -->
     <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link href="~/Content/animate.css" rel="stylesheet">
     <link href="~/Content/creative.css" rel="stylesheet">
@@ -59,12 +61,10 @@
     @{
         var navClass = "navbar navbar-default navbar-fixed-top";
         var bodyPaddingClass = "";
-        var contactUs = "#contact";
         if (ViewBag.From != "Default")
         {
             navClass += " navbar-shrink";
             bodyPaddingClass = "content-body-padding";
-            contactUs = "/Home/Contact";
         }
     }
     
@@ -74,7 +74,7 @@
         <ul>
             <!--联系我们-->
             <li>
-                <a class="rightSection page-scroll information-box" href="@contactUs" rel="nofollow"
+                <a class="rightSection page-scroll information-box" href="/Home/Contact" rel="nofollow"
                    style="display: block; background-color: rgba(52, 152, 219, 0.78); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088cc,endColorstr=#E50088cc)">
                     <i class=" fa fa-phone-square">
                     </i>
@@ -229,6 +229,7 @@
     <script src="~/Scripts/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-table.js"></script>
     <!-- Plugin JavaScript -->
     <script src="~/Scripts/jquery.easing.1.3.js"></script>
     <script src="~/Scripts/classie.js"></script>

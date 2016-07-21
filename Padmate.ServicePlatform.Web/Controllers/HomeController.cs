@@ -20,31 +20,9 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
-        public ActionResult Default1()
-        {
-            ViewBag.From = "Default";
-
-            B_Article _bArticle = new B_Article();
-            B_Image _bImage = new B_Image();
-
-            List<M_Article> activityForecastArticles = _bArticle.GetFirstThreeActivityForecast();
-            List<M_Article> wonderfulActivityArticles = _bArticle.GetFirstThreeWonderfulActivity();
-            List<M_Article> informationArticles = _bArticle.GetFirstSixInformation();
-
-            ViewData["activityForecastArticles"] = activityForecastArticles;
-            ViewData["wonderfulActivityArticles"] = wonderfulActivityArticles;
-            ViewData["informationArticles"] = informationArticles;
-
-            //首页图片
-            List<M_Image> homebgImages = _bImage.GetHomeBGImages();
-            ViewData["homebgImages"] = homebgImages;
-
-            return View();
-        }
 
         public ActionResult Default()
         {
-          
             ViewBag.From = "Default";
 
             B_Article _bArticle = new B_Article();
@@ -74,8 +52,14 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            B_Contact bContact = new B_Contact();
+            B_ContactScope bContactScope = new B_ContactScope();
 
+            var contactScopes = bContactScope.GetAllData();
+            var contacts = bContact.GetAllData();
+            ViewData["Contacts"] = contacts;
+            ViewData["ContactScopes"] = contactScopes;
+            
             return View();
         }
 

@@ -108,7 +108,7 @@ namespace Padmate.ServicePlatform.Utility
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Mail MailConfiguration(string type)
+        public MailConfig MailConfiguration(string type)
         {
 
             var configuration = _doc.Descendants("configuration").FirstOrDefault();
@@ -128,7 +128,7 @@ namespace Padmate.ServicePlatform.Utility
                 return null;
 
 
-            Mail model = new Mail();
+            MailConfig model = new MailConfig();
             model.To = mail.Attribute("to").Value;
             model.Cc = mail.Attribute("cc").Value;
 
@@ -157,5 +157,6 @@ namespace Padmate.ServicePlatform.Utility
 
             }
         }
+
     }
 }
