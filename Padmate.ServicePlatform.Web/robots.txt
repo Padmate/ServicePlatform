@@ -5,3 +5,4 @@ Disallow: /Account/
 Disallow: /Manage/
 Disallow:/Setting/
 Disallow:/SystemManage/
+Sitemap: http://xiamenip.cn/sitemap.xml

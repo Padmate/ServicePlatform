@@ -1141,6 +1141,7 @@
     <Content Include="Scripts\metisMenu\demo-default.css" />
     <Content Include="Scripts\metisMenu\metisMenu.css" />
     <Content Include="Scripts\metisMenu\metisMenu.js" />
+    <Content Include="sitemap.xml" />
     <Content Include="System.config" />
     <Content Include="ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.eot" />
@@ -1265,7 +1266,6 @@
     <Content Include="Scripts\slick\slick\fonts\slick.woff" />
     <Content Include="Scripts\slick\slick\slick.scss" />
     <Content Include="Views\Home\Default.cshtml" />
-    <Content Include="Views\Home\Default1.cshtml" />
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Article\Add.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
@@ -1282,7 +1282,6 @@
     <Content Include="Views\Service\SupplyManagement.cshtml" />
     <Content Include="Views\Service\TutorPlatform.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
-    <Content Include="Views\Home\Default2.cshtml" />
     <Content Include="Views\Setting\UserInfo.cshtml" />
     <Content Include="Views\Shared\_SettingLeftMenu.cshtml" />
     <Content Include="Views\Setting\ChangePassword.cshtml" />
