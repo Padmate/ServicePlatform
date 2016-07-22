@@ -236,8 +236,9 @@
                 $("#imageList").html("");
                 var dynamicHtml = ""
                 for (var i = 0; i < bgImages.length; i++) {
-                    dynamicHtml += '<li id="' + bgImages[i].Id + '">';
+                    dynamicHtml += '<li class="text-center" id="' + bgImages[i].Id + '">';
                     dynamicHtml += '<img src="' + bgImages[i].VirtualPath + '" class="imageSmall">';
+                    dynamicHtml += '<label>'+bgImages[i].Name+'</label>';
                     dynamicHtml += '<div class="imageButtonPanel">';
                     dynamicHtml += '<a href="javaScript:void(0)" class="deleteImage"><i class="fa fa-lg fa-remove"></i></a>';
                     dynamicHtml += '</div>';

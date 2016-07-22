@@ -2,7 +2,7 @@
 @using Padmate.ServicePlatform.Models;
 @{
     M_Article article = (M_Article)ViewData["article"];
-    
+    ViewBag.Title = article.SubTitle;
 }
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">

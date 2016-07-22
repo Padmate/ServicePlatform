@@ -14,7 +14,12 @@
     <meta name="author" content="">
     @{
         string defaultTitle = "厦门智能﹢创新创业公共服务平台";
-        string title = ViewBag.Title + "-" + defaultTitle;
+        string title = ViewBag.Title;
+        if (!string.IsNullOrEmpty(title)){
+            title += "-";
+        } 
+           
+        title += defaultTitle;
     }
     <title>@title</title>
     <link rel="shortcut icon" href="~/img/logos/favicon.ico" />
@@ -68,47 +73,6 @@
         }
     }
     
-    <!--右侧边栏-->
-    <div class="nav-right-float">
-
-        <ul>
-            <!--联系我们-->
-            <li>
-                <a class="rightSection page-scroll information-box" href="/Home/Contact" rel="nofollow"
-                   style="display: block; background-color: rgba(52, 152, 219, 0.78); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088cc,endColorstr=#E50088cc)">
-                    <i class=" fa fa-phone-square">
-                    </i>
-                    <div class="information-box-caption">
-                        <div class="information-box-caption-content">
-
-                            <div style="font-size:medium;height:50px;">
-                                联系<br />我们
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-            </li>
-            <!--返回顶部-->
-            <li id="linavtop" class="navtop">
-                <a class="rightSection page-scroll information-box" href="#page-top"
-                   style="display: block; background-color: #8EC31E">
-                    <i class=" fa fa-angle-up">
-                    </i>
-                    <div class="information-box-caption">
-                        <div class="information-box-caption-content">
-
-                            <div style="font-size:medium;height:50px;">
-                                返回<br />顶部
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-            </li>
-        </ul>
-    </div>
-
     <nav class="@navClass">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -119,7 +83,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="/">厦门智能<sup>+</sup> 创新创业公共服务平台</a>
+                <a class="navbar-brand page-scroll" style="padding:0px;" href="/">
+                    
+                    <img class="img-responsive" src="../img/intelligentplus_logo.png"
+                         style="width:400px;height:auto;" alt="厦门智能+创新创业公共服务平台" title="厦门智能+创新创业公共服务平台" />
+                </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -127,9 +95,7 @@
                 @if (ViewBag.From == "Default")
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden">
-                            <a href="#page-top">首页</a>
-                        </li>
+                        
                         <li>
                             <a class="page-scroll" href="#services">服务</a>
                         </li>
@@ -150,7 +116,7 @@
                         <li>
                             <a href="/">首页</a>
                         </li>
-                        <li class="dropdown fa-dropdown">
+                        <li class="dropdown fa-dropdown checkmenu">
                             <a href="/Service/Index">
                                 服务
                                 <b class="caret"></b>
@@ -212,9 +178,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="/Activity/Index">活动</a></li>
-                        <li><a href="/Information/Index">资讯</a></li>
-                        <li><a href="/Home/About">关于我们</a></li>
+                        <li class="checkmenu"><a href="/Activity/Index">活动</a></li>
+                        <li class="checkmenu"><a href="/Information/Index">资讯</a></li>
+                        <li class="checkmenu"><a href="/Home/About">关于我们</a></li>
                     </ul>
 
                 }
@@ -224,6 +190,47 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+
+    <!--右侧边栏-->
+    <div class="nav-right-float">
+
+        <ul>
+            <!--联系我们-->
+            <li>
+                <a class="rightSection page-scroll information-box" href="/Home/Contact" rel="nofollow"
+                   style="display: block; background-color: rgba(52, 152, 219, 0.78); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088cc,endColorstr=#E50088cc)">
+                    <i class=" fa fa-phone-square">
+                    </i>
+                    <div class="information-box-caption">
+                        <div class="information-box-caption-content">
+
+                            <div style="font-size:medium;height:50px;">
+                                联系<br />我们
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </li>
+            <!--返回顶部-->
+            <li id="linavtop" class="navtop">
+                <a class="rightSection page-scroll information-box" href="#page-top"
+                   style="display: block; background-color: #8EC31E">
+                    <i class=" fa fa-angle-up">
+                    </i>
+                    <div class="information-box-caption">
+                        <div class="information-box-caption-content">
+
+                            <div style="font-size:medium;height:50px;">
+                                返回<br />顶部
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </li>
+        </ul>
+    </div>
 
     <!-- jQuery -->
     <script src="~/Scripts/jquery.js"></script>
@@ -298,7 +305,7 @@
 
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-2">
-                    <p class="customer-content-xs whitefont">智能<sup>+</sup></p>
+                    <p class="customer-content-xs whitefont">智能+</p>
                     <ul>
                         <li><a class=" customer-content-xs lightwhitefont" href="/Home/About" rel="nofollow">关于我们</a></li>
                         <li><a class=" customer-content-xs lightwhitefont" href="/Home/Contact" rel="nofollow">联系我们</a></li>

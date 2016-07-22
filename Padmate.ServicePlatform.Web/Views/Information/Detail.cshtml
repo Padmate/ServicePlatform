@@ -5,6 +5,8 @@
     var returnUrl = @Request["returnUrl"];
     var anchor = @Request["anchor"];
     var returnRui = anchor != null && anchor != "" ? returnUrl + "#" + anchor : returnUrl;
+    ViewBag.Title = article.SubTitle;
+    
 }
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
