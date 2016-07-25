@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "资讯";
-    ViewBag.Description = "智能+创新创业服务平台》资讯";    
+    ViewBag.Description = "智能+创新创业服务平台》资讯";
+    List<M_Article> firstSixInformations = (List<M_Article>)ViewData["FirstSixInformations"];
 }
 
 @using Padmate.ServicePlatform.Utility;
@@ -33,8 +34,21 @@
 
                 </fieldset>
 
-                <div class="article-right" style="padding-left:20px;" id="right">
+                <div class="article-right" id="right">
                     
+                    <div id="recentInformations">
+                        <h3 class="customer-h3">最新资讯</h3>
+                        @foreach (var article in firstSixInformations)
+                        {
+                            <p>
+                                <a class="customer-content-sm" href="/Information/Detail?id=@article.Id" style="cursor:pointer">
+                                    @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
+                                </a>
+                            </p>
+                        }
+
+                    </div>
+
                 </div>
                 
             </div>
@@ -63,7 +77,6 @@
         });
         
         
-        $(window).resize(SetRightHeight);
     })
 
     //设置右边div高度与左边一致
@@ -86,8 +99,6 @@
             InitPaginator(firstResult.totalPages);
         }
 
-        //重新设置右边div高度
-        SetRightHeight();
     }
     //重置分页条
     function ResetPaginator()
@@ -209,7 +220,7 @@
             dynamicHtml += '<p class="customer-content-sm">';
             dynamicHtml += articles[i].Description ==null ?"":articles[i].Description;
             dynamicHtml += '</p>';
-            dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>了解更多</strong></a>';
+            dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>阅读全文</strong></a>';
             
             dynamicHtml += '</div>';
             dynamicHtml += '</div>';

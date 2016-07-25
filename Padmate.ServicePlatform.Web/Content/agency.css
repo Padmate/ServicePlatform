@@ -246,9 +246,12 @@ section#contact ::-moz-placeholder{font-family:"Microsoft YaHei",Montserrat,"Hel
 section#contact :-ms-input-placeholder{font-family:"Microsoft YaHei",Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;text-transform:uppercase;font-weight:700;color:#bbb}
 section#contact .text-danger{color:#e74c3c}
 footer{
+    background-image:url("../img/footer-bg.png");
     padding:25px 0;
-    text-align:center;
     color:white;
+}
+footer hr{
+    margin-top:0px;
 }
 footer span.copyright{
     line-height:40px;

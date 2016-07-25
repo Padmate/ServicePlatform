@@ -1,7 +1,8 @@
 ﻿@{
     ViewBag.Title = "活动";
     ViewBag.Description = "智能+创新创业服务平台》活动";
-
+    List<M_Article> firstThreeActivitiyForecast = (List<M_Article>)ViewData["FirstThreeActivitiyForecast"];
+    List<M_Article> firstThreeWonderfulActivies = (List<M_Article>)ViewData["FirstThreeWonderfulActivies"];
 }
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
@@ -42,14 +43,34 @@
 
                 </fieldset>
 
-                <div class="article-right" style="padding-left:20px;" id="right">
-                    
-
+                <div class="article-right" id="right">
                     <ul class="articleTag" id="tagTab">
                         <li class="active"><a class="btn btn-xl" name="activityforecast" href="#activityforecast">活动预告</a></li>
                         <li><a class="btn btn-lg" name="wonderfulactivity" href="#wonderfulactivity">精彩活动</a></li>
                         
                     </ul>
+                    <div id="recentActivities">
+                        <h3 class="customer-h3">最新预告</h3>
+                        @foreach (var article in firstThreeActivitiyForecast)
+                        {
+                            <p>
+                                <a class="customer-content-sm" href="/Activity/Detail?id=@article.Id" style="cursor:pointer">
+                                    @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
+                                </a>
+                            </p>
+                        }
+
+                        <h3 class="customer-h3">最新活动</h3>
+                        @foreach (var article in firstThreeWonderfulActivies)
+                        {
+                            <p>
+                                <a class="customer-content-sm" href="/Activity/Detail?id=@article.Id" style="cursor:pointer">
+                                    @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
+                                </a>
+                            </p>
+                        }
+                        
+                    </div>
                 </div>
                 
             </div>
@@ -93,14 +114,12 @@
             }
         });
 
-
-        $(window).resize(SetRightHeight);
     })
 
     //设置右边div高度与左边一致
     function SetRightHeight() {
         var divHeight = $('#left').height();
-        $('#right').css({ 'height': divHeight/2 });
+        $('#right').css({ 'height': divHeight});
     }
 
     function InitPaging()
@@ -117,8 +136,6 @@
             InitPaginator(firstResult.totalPages);
         }
 
-        //重新设置右边div高度
-        SetRightHeight();
     }
     //重置分页条
     function ResetPaginator()
@@ -241,7 +258,7 @@
             dynamicHtml += '<p class="customer-content-sm">';
             dynamicHtml += articles[i].Description ==null ?"":articles[i].Description;
             dynamicHtml += '</p>';
-            dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>了解更多</strong></a>';
+            dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>阅读全文</strong></a>';
 
             dynamicHtml += '</strong></a>';
             dynamicHtml += '</div>';

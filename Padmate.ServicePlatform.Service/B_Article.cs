@@ -101,6 +101,35 @@ namespace Padmate.ServicePlatform.Service
         }
 
         /// <summary>
+        /// 根据当前id获取上一条数据的id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public M_Article GetPreviousIdByCurrentId(int id)
+        {
+            B_Image bImage = new B_Image();
+
+            string previousId = string.Empty;
+            var previousArticle = _dArticle.GetPreviousDataById(id);
+            var result = ConverEntityToModel(previousArticle);
+            return result;
+        }
+
+        /// <summary>
+        /// 根据当前id获取下一条数据的id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public M_Article GetNextIdByCurrentId(int id)
+        {
+            B_Image bImage = new B_Image();
+            string nextId = string.Empty;
+            var nextArticle = _dArticle.GetNextDataById(id);
+            var result = ConverEntityToModel(nextArticle);
+            return result;
+        }
+
+        /// <summary>
         /// 获取最新的前三条活动预告
         /// </summary>
         /// <returns></returns>

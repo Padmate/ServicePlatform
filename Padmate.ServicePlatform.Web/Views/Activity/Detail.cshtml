@@ -2,6 +2,9 @@
 @using Padmate.ServicePlatform.Models;
 @{
     M_Article article = (M_Article)ViewData["article"];
+    M_Article previousArticle = (M_Article)ViewData["PreviousArticle"];
+    M_Article nextArticle = (M_Article)ViewData["NextArticle"];
+    
     ViewBag.Title = article.SubTitle;
 }
 
@@ -45,6 +48,24 @@
                 
             }
 
+        </div>
+        <div style="padding:50px 0px;">
+            @if (previousArticle != null)
+            {
+                <div>上一篇：
+                    <a class="customer-content-xs" href="/Activity/Detail?id=@previousArticle.Id">@previousArticle.SubTitle</a>
+                </div>
+                
+            }
+            
+            @if (nextArticle != null)
+            {
+                <div>
+                    下一篇：
+                    <a class="customer-content-xs" href="/Activity/Detail?id=@nextArticle.Id">@nextArticle.SubTitle</a>
+                </div>
+
+            }
         </div>
     </div>
     

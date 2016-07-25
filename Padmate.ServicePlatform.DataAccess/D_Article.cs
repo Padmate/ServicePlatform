@@ -11,6 +11,37 @@ namespace Padmate.ServicePlatform.DataAccess
     {
         ServiceDbContext _dbContext = new ServiceDbContext();
 
+        /// <summary>
+        /// 根据id找找上一条数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Article GetPreviousDataById(int id)
+        {
+            var currentData = _dbContext.Atricles.FirstOrDefault(a=>a.Id == id);
+            var previousData = _dbContext.Atricles
+                .Where(a => a.Type == currentData.Type && a.Pubtime > currentData.Pubtime)
+                .OrderBy(a => a.Pubtime)
+                .FirstOrDefault();
+            
+            return previousData;
+        }
+
+        /// <summary>
+        /// 根据id查找下一条数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Article GetNextDataById(int id)
+        {
+            var currentData = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+            var nextData = _dbContext.Atricles
+                .Where(a => a.Type == currentData.Type && a.Pubtime < currentData.Pubtime)
+                .OrderByDescending(a => a.Pubtime)
+                .FirstOrDefault();
+            
+            return nextData;
+        }
         
         /// <summary>
         /// 根据类型获取文章，返回前limit条数据

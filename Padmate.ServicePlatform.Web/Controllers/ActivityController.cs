@@ -14,6 +14,14 @@ namespace Padmate.ServicePlatform.Web.Controllers
     {
         public ActionResult Index()
         {
+            //查询最新的前3条活动预告
+            B_Article bArticle = new B_Article();
+            var firstThreeActivities = bArticle.GetFirstThreeActivityForecast();
+            ViewData["FirstThreeActivitiyForecast"] = firstThreeActivities;
+
+            //查询最新的前3条精彩活动
+            var firstThreeWonderfulActivies = bArticle.GetFirstThreeWonderfulActivity();
+            ViewData["FirstThreeWonderfulActivies"] = firstThreeWonderfulActivies;
             return View();
         }
 
@@ -26,6 +34,12 @@ namespace Padmate.ServicePlatform.Web.Controllers
             var article = bArticle.GetArticleById(articleId); ;
 
             ViewData["article"] = article;
+
+            //根据id查找上一篇，下一篇记录
+            M_Article previousArticle = bArticle.GetPreviousIdByCurrentId(articleId);
+            M_Article nextArticle = bArticle.GetNextIdByCurrentId(articleId);
+            ViewData["PreviousArticle"] = previousArticle;
+            ViewData["NextArticle"] = nextArticle;
 
             return View();
         }
