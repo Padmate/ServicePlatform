@@ -517,7 +517,7 @@ header .carousel-indicators li:hover{background-color:gray;}
     background-color: #fff;
     border: solid 1px lightgray;
     margin: 20px 0px;
-    padding-left:20px;
+    padding:0px 20px;
     padding-bottom:50px;
 }
 .article-search-result{

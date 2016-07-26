@@ -53,21 +53,23 @@
                         <h3 class="customer-h3">最新预告</h3>
                         @foreach (var article in firstThreeActivitiyForecast)
                         {
-                            <p>
+                            <span>
                                 <a class="customer-content-sm" href="/Activity/Detail?id=@article.Id" style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
                                 </a>
-                            </p>
+                            </span>
+                            <br/><br/>
                         }
 
                         <h3 class="customer-h3">最新活动</h3>
                         @foreach (var article in firstThreeWonderfulActivies)
                         {
-                            <p>
+                            <span>
                                 <a class="customer-content-sm" href="/Activity/Detail?id=@article.Id" style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
                                 </a>
-                            </p>
+                            </span>
+    <br /><br />
                         }
                         
                     </div>

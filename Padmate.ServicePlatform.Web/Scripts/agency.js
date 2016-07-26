@@ -26,11 +26,12 @@ $('.navbar-collapse ul li a').click(function() {
 });
 
 $(function () {
-
+    
     //点击导航菜单时选中所点的按钮
     var clickedUrl = window.location;
+
     //过滤一级导航菜单是否与点击的链接匹配
-    var element = $('.common-nav>li>a.checkmenu').filter(function () {
+    var element = $('.common-nav>li.checkmenu>a').filter(function () {
         
         return this.href == clickedUrl || clickedUrl.href.indexOf(this.href) == 0;
     }); 
@@ -38,7 +39,7 @@ $(function () {
     if (element.length == 0) {
         //匹配二级菜单
         var secondNavelement = $('.common-nav>li>ul a').filter(function () {
-            
+
             return this.href == clickedUrl || clickedUrl.href.indexOf(this.href) == 0;
         });
         //选中二级菜单，及对应的一级菜单

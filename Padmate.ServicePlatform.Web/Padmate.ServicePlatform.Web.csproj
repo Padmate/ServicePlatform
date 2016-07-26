@@ -758,6 +758,7 @@
     <Content Include="img\header-bg2.jpg" />
     <Content Include="img\header.jpg" />
     <Content Include="img\intelligentplus_logo.png" />
+    <Content Include="img\iplogo.png" />
     <Content Include="img\Loading\loading-red.gif" />
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logos\16X16.jpg" />

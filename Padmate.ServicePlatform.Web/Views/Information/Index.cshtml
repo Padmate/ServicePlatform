@@ -40,11 +40,12 @@
                         <h3 class="customer-h3">最新资讯</h3>
                         @foreach (var article in firstSixInformations)
                         {
-                            <p>
+                            <span>
                                 <a class="customer-content-sm" href="/Information/Detail?id=@article.Id" style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
                                 </a>
-                            </p>
+                            </span>
+                            <br /><br />    
                         }
 
                     </div>
