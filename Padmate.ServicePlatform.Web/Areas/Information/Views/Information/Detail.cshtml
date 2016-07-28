@@ -1,0 +1,76 @@
+﻿
+@using Padmate.ServicePlatform.Models;
+@{
+    M_Article article = (M_Article)ViewData["article"];
+    M_Article previousArticle = (M_Article)ViewData["PreviousArticle"];
+    M_Article nextArticle = (M_Article)ViewData["NextArticle"];
+    ViewBag.Title = article.SubTitle;
+    
+}
+
+<link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
+<script type="text/javascript" src="~/Scripts/jiathis/jiathis-share.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2107415" charset="utf-8"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                <a class="customer-content-xs" href="/">首页</a> »
+                <a class="customer-content-xs" href="/Information/Information/Index">资讯</a> »
+                <a class="customer-content-xs" href="/Information/Information/Detail?id=@article.Id">@article.SubTitle</a>
+                
+            </h3>
+            <!-- share -->
+            <div onmouseover="setShare('@article.Id')">
+
+                <div class="jiathis_style">
+                    <a href="http://www.jiathis.com/share?uid=2107415" class="jiathis jiathis_txt" target="_blank">
+                        <img src="~/img/logos/share.gif" border="0" />
+                    </a>
+                    <a class="jiathis_counter_style_margin:3px 0 0 2px"></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            @if (article.IsHref)
+            {
+                <h4><a href="@article.Href"><i class="fa fa-arrow-right"></i>文章链接</a></h4> 
+                <iframe src="@article.Href" id="iframepage" name="iframepage"
+                        frameborder=0 style="width:100%; min-height:1000px" ></iframe>
+
+            }
+            else
+            {
+                @Html.Raw(article.Content)
+                
+            }
+
+        </div>
+        <div style="padding:50px 0px;">
+            @if (previousArticle != null)
+            {
+                <div>
+                    上一篇：
+                    <a class="customer-content-xs" href="/Information/Information/Detail?id=@previousArticle.Id">@previousArticle.SubTitle</a>
+                </div>
+
+            }
+
+            @if (nextArticle != null)
+            {
+                <div>
+                    下一篇：
+                    <a class="customer-content-xs" href="/Information/Information/Detail?id=@nextArticle.Id">@nextArticle.SubTitle</a>
+                </div>
+
+            }
+        </div>
+    </div>
+    
+    
+</div>
+<script>
+</script>
+

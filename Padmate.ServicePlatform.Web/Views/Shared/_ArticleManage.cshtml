@@ -174,7 +174,7 @@
         //获取数据总页数
         $.ajax({
             type: "POST",
-            url: "/Article/GetPageData",
+            url: "/Infra/Article/GetPageData",
             data: params,
             dataType: "json",
             async: false,   //同步
@@ -203,10 +203,10 @@
             var localDate = pubTime.toLocaleDateString();
 
 
-            var contentHref = "/Activity/Detail?id=" + articles[i].Id;
+            var contentHref = "/Activity/Activity/Detail?id=" + articles[i].Id;
             if (articleType == '@Common.Information')
             {
-                var contentHref = "/Information/Detail?id=" + articles[i].Id;
+                var contentHref = "/Information/Information/Detail?id=" + articles[i].Id;
 
             }
 
@@ -264,7 +264,7 @@
     //打开新增界面
     function OpenAddScreen() {
         $('#articleadd').modal('show');
-        $("#divAddContainer").load("/Article/Add?articleType="+articleType);
+        $("#divAddContainer").load("/Infra/Article/Add?articleType="+articleType);
 
     }
 
@@ -283,7 +283,7 @@
             return;
         }
         $('#articleedit').modal('show');
-        $("#divEditContainer").load("/Article/Edit?articleId="+id+"&articleType=" + articleType);
+        $("#divEditContainer").load("/Infra/Article/Edit?articleId="+id+"&articleType=" + articleType);
        
     }
 
@@ -306,7 +306,7 @@
         //获取数据总页数
         $.ajax({
             type: "POST",
-            url: "/Article/Delete",
+            url: "/Infra/Article/Delete",
             data: { ArticleId: id },
             dataType: "json",
             async: false,   //同步

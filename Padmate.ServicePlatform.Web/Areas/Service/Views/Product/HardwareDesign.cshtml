@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "硬件设计";
+}
+
+<div class="bg-light-gray text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <h3>
+                    <a class="customer-content-xs" href="/">首页</a> »
+                    <a class="customer-content-xs" href="/Service/Service/Index">服务</a> »
+                    <a class="customer-content-xs" href="/Service/Service/ProductPlatform">产品平台</a> »
+                    <a class="customer-content-xs" href="/Service/Product/HardwareDesign">硬件设计</a>
+
+                </h3>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="modal-body">
+                    <!-- Project Details Go Here -->
+                    <h2 class="customer-h2">硬件设计</h2>
+                    <ul class="text-left">
+                        <li>
+                            <span class="customer-content-sm">
+                                根据产品的需求，进行硬件的原理图设计，器件选型，堆叠设计，PCB板layout设计
+                            </span>
+                        </li>
+                        <li>
+                            <span class="customer-content-sm">
+                                对客户的硬件功能模块，进行产品硬件设计的优化
+                            </span>
+                        </li>
+
+                    </ul>
+
+                    <div id="product-yjsj-img" class="carousel slide">
+                        <!-- 轮播（Carousel）指标 -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#product-yjsj-img" data-slide-to="0" class="active" style="background-color:lightgray"></li>
+                            <li data-target="#product-yjsj-img" data-slide-to="1" style="background-color:lightgray"></li>
+                            <li data-target="#product-yjsj-img" data-slide-to="2" style="background-color:lightgray"></li>
+                        </ol>
+                        <!-- 轮播（Carousel）项目 -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img class="img-responsive" style="margin:20px auto;" src="~/img/Service/ProductPlatform/09-喷雾仪 Padmate-MS-01.bmp">
+                            </div>
+                            <div class="item">
+                                <img class="img-responsive" style="margin:20px auto;" src="~/img/Service/ProductPlatform/09-书沙台 P-M01.bmp">
+                            </div>
+                            <div class="item">
+                                <img class="img-responsive" style="margin:20px auto;" src="~/img/Service/ProductPlatform/09-智能雨伞 Padmate-SUN-01.bmp">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        InitCarousel();
+    });
+
+    //初始化轮播图片
+    function InitCarousel() {
+        $('#product-yjsj-img').carousel({
+            interval: 6000,
+            pause: 'cycle'
+        });
+
+
+    }
+</script>

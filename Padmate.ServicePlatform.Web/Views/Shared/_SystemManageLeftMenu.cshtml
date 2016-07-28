@@ -3,6 +3,7 @@
 @{
     B_Mail bMail = new B_Mail();
     int unSendMailNum = bMail.GetAllUnSendMail().Count();
+    string href = "/Manage/";
 }
 
 <link href="~/Content/CustomerMenu.css" rel="stylesheet">
@@ -19,7 +20,7 @@
     <div class="menu-sidebar-nav">
         <ul>
             <li>
-                <a class="menu-first" href="/SystemManage/HomeBackground">
+                <a class="menu-first" href="@Path.Combine(href, "HomeBackground")">
                     <i class="fa fa-image"></i>
                     首页图片
                 </a>
@@ -32,19 +33,19 @@
                 </a>
                 <ul id="servicemanage" class="panel-collapse collapse menu-second">
                     <li>
-                        <a href="/SystemManage/ServiceMarket">
+                        <a href="@Path.Combine(href, "ServiceMarket")">
                             <i class="fa fa-cubes"></i>
                             市场平台
                         </a>
                     </li>
                     <li>
-                        <a href="/SystemManage/ServiceProduct">
+                        <a href="@Path.Combine(href, "ServiceProduct")">
                             <i class="fa fa-cubes"></i>
                             产品平台
                         </a>
                     </li>
                     <li>
-                        <a href="/SystemManage/ServiceEngineer">
+                        <a href="@Path.Combine(href, "ServiceEngineer")">
                             <i class="fa fa-cubes"></i>
                             工程平台
                         </a>
@@ -59,13 +60,13 @@
                 </a>
                 <ul id="activitymanage" class="panel-collapse collapse menu-second">
                     <li>
-                        <a href="/SystemManage/ActivityForecast">
+                        <a href="@Path.Combine(href, "ActivityForecast")">
                             <i class="fa fa-cubes"></i>
                             活动预告
                         </a>
                     </li>
                     <li>
-                        <a href="/SystemManage/WonderfulActivity">
+                        <a href="@Path.Combine(href, "WonderfulActivity")">
                             <i class="fa fa-cubes"></i>
                             精彩活动
                         </a>
@@ -73,13 +74,13 @@
                 </ul>
             </li>
             <li>
-                <a class="menu-first" href="/SystemManage/Information">
+                <a class="menu-first" href="@Path.Combine(href, "Information")">
                     <i class="fa fa-info"></i>
                     资讯管理
                 </a>
             </li>
             <li>
-                <a class="menu-first" href="/SystemManage/UserManage">
+                <a class="menu-first" href="@Path.Combine(href, "UserManage")">
                     <i class="fa fa-user"></i>
                     用户管理
                 </a>
@@ -92,13 +93,13 @@
                 </a>
                 <ul id="contactmanage" class="panel-collapse collapse menu-second">
                     <li>
-                        <a href="/Contact/Scope">
+                        <a href="@Path.Combine(href, "ContactScope")">
                             <i class="fa fa-angle-double-up"></i>
                             职责范围
                         </a>
                     </li>
                     <li>
-                        <a href="/Contact/Info">
+                        <a href="@Path.Combine(href, "ContactInfo")">
                             <i class="fa fa-user-md"></i>
                             联系人信息
                         </a>
@@ -106,7 +107,7 @@
                 </ul>
             </li>
             <li>
-                <a class="menu-first" href="/Mail/Index">
+                <a class="menu-first" href="@Path.Combine(href, "Mail")">
                     <i class="fa fa-envelope"></i>
                     系统邮件
                     @if (unSendMailNum > 0)

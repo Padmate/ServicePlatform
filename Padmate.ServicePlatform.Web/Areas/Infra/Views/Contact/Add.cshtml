@@ -1,0 +1,132 @@
+﻿@using Padmate.ServicePlatform.Models;
+@{
+    Layout = null;
+    List<M_ContactScope> scopes = (List<M_ContactScope>)ViewData["Scopes"];
+}
+<!--#region修改-->
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center">新 增</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">名 称：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbName" placeholder="联系人名称" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">邮件地址：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbEmail" placeholder="邮件地址" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">电 话：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbPhoneNumber" placeholder="电 话" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">负责范围：</label>
+            </div>
+            <div class="col-md-10">
+                <select id="selScope" class="inputS">
+                    @foreach (var scope in scopes)
+                    {
+                        <option value="@scope.Id">@scope.Scope</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">描 述：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textareaS" id="taDescription"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">显示顺序：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbSequence" placeholder="显示顺序" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
+        保 存
+    </button>
+</div>
+<!--#endregion 修改-->
+
+<script>
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/Infra/Contact/SaveAdd",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+                    $("body").hideLoading();
+
+                    CloseAddScreen();
+                    RefreshTable();
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+        var obj = {
+            ContactScopeId:$("#selScope").val(),
+            Name: $("#tbName").val(),
+            Email: $("#tbEmail").val(),
+            PhoneNumber: $("#tbPhoneNumber").val(),
+            Description: $("#taDescription").val(),
+            Sequence: $("#tbSequence").val()
+
+        };
+        return obj;
+    }
+</script>

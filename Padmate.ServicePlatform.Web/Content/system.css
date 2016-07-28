@@ -413,11 +413,14 @@ header .carousel-indicators li:hover{background-color:gray;}
 }
 
 .service-box{
-    margin-bottom:20px;
+   margin-bottom:20px;
+   border: 1px solid #e2e2e2;
+   box-shadow: 0 2px 0 0 #e2e2e2;
+   border-radius: 6px;
 }
 .service-information-caption{
    min-height:125px;
-   padding:10px 0px;
+   padding:10px 5px;
    background-color:#fff;
 }
 

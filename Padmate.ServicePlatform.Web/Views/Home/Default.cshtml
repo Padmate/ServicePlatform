@@ -225,7 +225,7 @@
         </div>
         <div class="row">
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/MarketPlatform">
+                <a href="/Service/Service/MarketPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-market.png" class="img-responsive" alt="智能+市场平台提供市场调研、举办论坛讲座和创意创新创业大赛等服务" />
                     </div>
@@ -242,7 +242,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/ProductPlatform">
+                <a href="/Service/Service/ProductPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-product.png" class="img-responsive" alt="智能plus产品平台提供设计-方案、客户需求、产品众筹、ODM/OEM等服务" />
                     </div>
@@ -259,7 +259,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/ProjectPlatform">
+                <a href="/Service/Service/ProjectPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-project.png" class="img-responsive" alt="智能plus工程平台提供样板制作、模治检量工具、试做试产、产品认证等服务" />
                     </div>
@@ -277,7 +277,7 @@
             </div>
 
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/MakePlatform">
+                <a href="/Service/Service/MakePlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
 
                         <img src="~/img/Service/service-make.png" class="img-responsive" alt="智能plus制造平台可进行大批量生产和专业化制造" />
@@ -295,7 +295,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/SellPlatform">
+                <a href="/Service/Service/SellPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
 
                         <img src="~/img/Service/service-sell.png" class="img-responsive" alt="智能plus销售平台通过国内电商、跨境电商、B2B、B2C等进行销售" />
@@ -314,7 +314,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/SupplyManagement">
+                <a href="/Service/Service/SupplyManagement">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-supply.png" class="img-responsive" alt="智能加供应链管理提供仓储物流、分发配送、采购外发、精益管理等服务" />
 
@@ -334,7 +334,7 @@
             </div>
 
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/BrandPlatform">
+                <a href="/Service/Service/BrandPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-brand.png" class="img-responsive" alt="智能加品牌经营进行品牌策划、品牌管理、品牌开发、品牌规划等" />
                     </div>
@@ -351,7 +351,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/TutorPlatform">
+                <a href="/Service/Service/TutorPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
                         <img src="~/img/Service/service-tutor.png" class="img-responsive" alt="智能加导师平台可提供战略规划、企业教练、顾问培训、产学研、协会、人力资源开发" />
 
@@ -369,7 +369,7 @@
 
             </div>
             <div class="col-xs-6 col-is-6 col-sm-6 col-md-4 service-col ribbon">
-                <a href="/Service/FundPlatform">
+                <a href="/Service/Service/FundPlatform">
                     <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 image-section">
 
                         <img src="~/img/Service/service-fund.png" class="img-responsive" alt="智能加资金平台能够发起种子基金、进行股权投资、对接股权众筹、基金、PE、VC、股权交易结构和保险、银行等金融机构" />
@@ -412,7 +412,7 @@
             @{
                 for (int i = 0; i < activityForecastArticles.Count; i++)
                 {
-                    var contentHref = "/Activity/Detail?id=" + activityForecastArticles[i].Id;
+                    var contentHref = "/Activity/Activity/Detail?id=" + activityForecastArticles[i].Id;
                     var aHref = activityForecastArticles[i].IsHref ? activityForecastArticles[i].Href : contentHref;
                     var aTarget = activityForecastArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = activityForecastArticles[i].Image == null ? "../img/small_model.jpg" 
@@ -459,7 +459,7 @@
             @{
                 for (int i = 0; i < wonderfulActivityArticles.Count; i++)
                 {
-                    var contentHref = "/Activity/Detail?id=" + wonderfulActivityArticles[i].Id;
+                    var contentHref = "/Activity/Activity/Detail?id=" + wonderfulActivityArticles[i].Id;
                     var aHref = wonderfulActivityArticles[i].IsHref ? wonderfulActivityArticles[i].Href : contentHref;
                     var aTarget = wonderfulActivityArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = wonderfulActivityArticles[i].Image == null ? "../img/small_model.jpg"
@@ -498,7 +498,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-5 col-md-7">
-                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Activity/Index">
+                <a class="btn-gelatine btn-gelatine-gray-lg" href="/Activity/Activity/Index">
                     <i class="fa fa-refresh"></i>
                     <span class="customer-content-sm whitefont">更多活动</span>
                 </a>
@@ -537,7 +537,7 @@
         @{
             for (int i = 0; i < informationArticles.Count; i++)
             {
-                var contentHref = "/Information/Detail?id=" + informationArticles[i].Id;
+                var contentHref = "/Information/Information/Detail?id=" + informationArticles[i].Id;
                 var aHref = informationArticles[i].IsHref ? informationArticles[i].Href : contentHref;
                 var aTarget = informationArticles[i].IsHref ? "_blank" : "_self";
                 var imageVirtualPath = informationArticles[i].Image == null ? "../img/medium_model.jpg"
@@ -565,7 +565,7 @@
     <div class="row bg-black" style="padding:40px 0px;">
         <div class="col-lg-12 text-center">
             <h2 class="customer-h2 whitefont" style="margin: 0px 0px 5px 0px;">最新资讯随时分享</h2>
-            <a class="btn-gelatine btn-gelatine-white-lg" href="/Information/Index">
+            <a class="btn-gelatine btn-gelatine-white-lg" href="/Information/Information/Index">
                 <i class="fa fa-refresh"></i>
                 <span class="customer-content-sm">更多资讯</span>
             </a>
