@@ -20,13 +20,12 @@
                     if (User.IsInRole("Admin"))
                     {
                         <li>
-                            @Html.ActionLink("系统管理", "HomeBackground", "Manage", new { area = "" }, null)
+                            <a href="/manage/homebackground.html">系统管理</a>
                         </li>
                     }
                 }
                 <li>
-                    @Html.ActionLink("设置", "UserInfo", "Manage", new { area="" },null)
-
+                    <a href="/manage/userinfo.html">设置</a>
 
                 </li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()" >注销</a></li>

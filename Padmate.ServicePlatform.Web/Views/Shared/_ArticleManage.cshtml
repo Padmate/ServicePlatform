@@ -203,10 +203,10 @@
             var localDate = pubTime.toLocaleDateString();
 
 
-            var contentHref = "/Activity/Activity/Detail?id=" + articles[i].Id;
+            var contentHref = "/activity/"+ articles[i].Id+".html";
             if (articleType == '@Common.Information')
             {
-                var contentHref = "/Information/Information/Detail?id=" + articles[i].Id;
+                var contentHref = "/information/" + articles[i].Id+".html";
 
             }
 

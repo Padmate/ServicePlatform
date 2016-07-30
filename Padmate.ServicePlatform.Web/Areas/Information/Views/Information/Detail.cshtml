@@ -5,7 +5,7 @@
     M_Article previousArticle = (M_Article)ViewData["PreviousArticle"];
     M_Article nextArticle = (M_Article)ViewData["NextArticle"];
     ViewBag.Title = article.SubTitle;
-    
+    var currentArticle = article.Id + ".html";
 }
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
@@ -17,8 +17,8 @@
         <div class="col-md-12">
             <h3>
                 <a class="customer-content-xs" href="/">首页</a> »
-                <a class="customer-content-xs" href="/Information/Information/Index">资讯</a> »
-                <a class="customer-content-xs" href="/Information/Information/Detail?id=@article.Id">@article.SubTitle</a>
+                <a class="customer-content-xs" href="/information.html">资讯</a> »
+                <a class="customer-content-xs" href="/information/@currentArticle">@article.SubTitle</a>
                 
             </h3>
             <!-- share -->
@@ -51,18 +51,20 @@
         <div style="padding:50px 0px;">
             @if (previousArticle != null)
             {
+                var preArticle = previousArticle.Id+".html";
                 <div>
                     上一篇：
-                    <a class="customer-content-xs" href="/Information/Information/Detail?id=@previousArticle.Id">@previousArticle.SubTitle</a>
+                    <a class="customer-content-xs" href="/information/@preArticle">@previousArticle.SubTitle</a>
                 </div>
 
             }
 
             @if (nextArticle != null)
             {
+                var nexArticle = nextArticle.Id + ".html";
                 <div>
                     下一篇：
-                    <a class="customer-content-xs" href="/Information/Information/Detail?id=@nextArticle.Id">@nextArticle.SubTitle</a>
+                    <a class="customer-content-xs" href="/information/@nexArticle">@nextArticle.SubTitle</a>
                 </div>
 
             }

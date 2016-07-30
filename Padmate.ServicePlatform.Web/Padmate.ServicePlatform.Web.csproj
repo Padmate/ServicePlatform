@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActionlessForm">
+      <HintPath>..\RefBin\ActionlessForm.dll</HintPath>
+    </Reference>
     <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ckfinder\bin\Debug\CKFinder.dll</HintPath>
@@ -108,6 +111,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="URLRewriter">
+      <HintPath>..\RefBin\URLRewriter.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -1036,16 +1042,16 @@
     <Content Include="Areas\Service\Views\Product\ZZProject.cshtml" />
     <Content Include="Areas\Activity\Views\web.config" />
     <Content Include="Areas\Service\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Service\Views\Service\BrandPlatform.cshtml" />
-    <Content Include="Areas\Service\Views\Service\FundPlatform.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Brand.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Fund.cshtml" />
     <Content Include="Areas\Service\Views\Service\Index.cshtml" />
-    <Content Include="Areas\Service\Views\Service\MakePlatform.cshtml" />
-    <Content Include="Areas\Service\Views\Service\MarketPlatform.cshtml" />
-    <Content Include="Areas\Service\Views\Service\ProductPlatform.cshtml" />
-    <Content Include="Areas\Service\Views\Service\ProjectPlatform.cshtml" />
-    <Content Include="Areas\Service\Views\Service\SellPlatform.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Make.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Market.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Product.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Engineer.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Sale.cshtml" />
     <Content Include="Areas\Service\Views\Service\SupplyManagement.cshtml" />
-    <Content Include="Areas\Service\Views\Service\TutorPlatform.cshtml" />
+    <Content Include="Areas\Service\Views\Service\Tutor.cshtml" />
     <Content Include="Areas\Activity\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Activity\Views\Activity\Detail.cshtml" />
     <Content Include="Areas\Activity\Views\Activity\Index.cshtml" />
@@ -1075,6 +1081,7 @@
     <Content Include="Areas\Infra\Views\web.config" />
     <Content Include="Areas\Infra\Views\Article\Add.cshtml" />
     <Content Include="Areas\Infra\Views\Article\Edit.cshtml" />
+    <Content Include="Areas\Service\Views\Shared\_nav.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />

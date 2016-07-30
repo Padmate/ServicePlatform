@@ -1,0 +1,11 @@
+﻿@{
+    
+    var currentHref = "/service/product/" + ViewBag.Current + ".html" ;
+}
+<h3>
+    <a class="customer-content-xs" href="/">首页</a> »
+    <a class="customer-content-xs" href="/service.html">服务</a> »
+    <a class="customer-content-xs" href="/service/product.html">产品平台</a> »
+    <a class="customer-content-xs" href="@currentHref">@ViewBag.Title</a>
+
+</h3>

@@ -1,18 +1,13 @@
 ﻿@{
     ViewBag.Title = "众创项目";
+    ViewBag.Current = "zzproject";
 }
 
 <div class="bg-light-gray text-center">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-left">
-                <h3>
-                    <a class="customer-content-xs" href="/">首页</a> »
-                    <a class="customer-content-xs" href="/Service/Service/Index">服务</a> »
-                    <a class="customer-content-xs" href="/Service/Service/ProductPlatform">产品平台</a> »
-                    <a class="customer-content-xs" href="/Service/Product/ZZProject">众创项目</a>
-
-                </h3>
+                @Html.Partial("_nav")
             </div>
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="modal-body">

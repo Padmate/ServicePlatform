@@ -20,7 +20,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 市场平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult MarketPlatform()
+        public ActionResult Market()
         {
             return View();
         }
@@ -29,7 +29,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 产品平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult ProductPlatform()
+        public ActionResult Product()
         {
             return View();
         }
@@ -38,7 +38,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 工程平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult ProjectPlatform()
+        public ActionResult Engineer()
         {
             return View();
         }
@@ -47,7 +47,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 制造平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult MakePlatform()
+        public ActionResult Make()
         {
             return View();
         }
@@ -56,7 +56,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 销售平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult SellPlatform()
+        public ActionResult Sale()
         {
             return View();
         }
@@ -74,7 +74,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 品牌经营
         /// </summary>
         /// <returns></returns>
-        public ActionResult BrandPlatform()
+        public ActionResult Brand()
         {
             return View();
         }
@@ -83,7 +83,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 导师平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult TutorPlatform()
+        public ActionResult Tutor()
         {
             return View();
         }
@@ -92,7 +92,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 资金平台
         /// </summary>
         /// <returns></returns>
-        public ActionResult FundPlatform()
+        public ActionResult Fund()
         {
             return View();
         }
