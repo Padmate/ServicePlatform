@@ -43,8 +43,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         {
             B_Article bArticle = new B_Article();
 
-            Int32 articleId = System.Convert.ToInt32(articleid);
-            var article = bArticle.GetArticleById(articleId); ;
+            var article = bArticle.GetArticleById(articleid); ;
             return Json(article);
         }
 
@@ -52,8 +51,11 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         {
             B_Article bArticle = new B_Article();
 
-            Int32 articleId = System.Convert.ToInt32(id);
-            var article = bArticle.GetArticleById(articleId); ;
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new Exception("找不到id为空的数据信息");
+            }
+            var article = bArticle.GetArticleById(id); ;
 
             ViewData["article"] = article;
 
@@ -78,10 +80,9 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
             //如果上传文件不为空
             if (file != null)
             {
-                Int32 id = System.Convert.ToInt32(articleId);
                 B_Article bArticle = new B_Article();
                 B_Image bImage = new B_Image();
-                var article = bArticle.GetArticleById(id);
+                var article = bArticle.GetArticleById(articleId);
 
                 if (article.Image != null)
                 {
@@ -94,7 +95,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
                 if (!message.Success) return Json(message);
                 int imageId = System.Convert.ToInt32(message.ReturnId);
                 //更新新图标id到数据库
-                message = bArticle.UpdateImageId(id, imageId);
+                message = bArticle.UpdateImageId(articleId, imageId);
 
             }
 
@@ -132,10 +133,8 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         public ActionResult Edit(string articleId)
         {
 
-            Int32 id = System.Convert.ToInt32(articleId);
-
             B_Article bArticle = new B_Article();
-            var article = bArticle.GetArticleById(id);
+            var article = bArticle.GetArticleById(articleId);
             ViewData["article"] = article;
 
             return View();
@@ -191,9 +190,8 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(string ArticleId)
         {
-            Int32 articleId = System.Convert.ToInt32(ArticleId);
             B_Article bArticle = new B_Article();
-            Message message = bArticle.DeleteArticle(articleId);
+            Message message = bArticle.DeleteArticle(ArticleId);
 
             return Json(message);
         }

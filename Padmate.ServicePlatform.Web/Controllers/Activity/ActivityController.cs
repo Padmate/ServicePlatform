@@ -27,15 +27,18 @@ namespace Padmate.ServicePlatform.Web.Controllers.Activity
         public ActionResult Detail(string id)
         {
             B_Article bArticle = new B_Article();
+            if(string.IsNullOrEmpty(id))
+            {
+                throw new Exception("找不到id为空的数据信息");
+            }
 
-            Int32 articleId = System.Convert.ToInt32(id);
-            var article = bArticle.GetArticleById(articleId); ;
+            var article = bArticle.GetArticleById(id); ;
 
             ViewData["article"] = article;
 
             //根据id查找上一篇，下一篇记录
-            M_Article previousArticle = bArticle.GetPreviousIdByCurrentId(articleId);
-            M_Article nextArticle = bArticle.GetNextIdByCurrentId(articleId);
+            M_Article previousArticle = bArticle.GetPreviousIdByCurrentId(id);
+            M_Article nextArticle = bArticle.GetNextIdByCurrentId(id);
             ViewData["PreviousArticle"] = previousArticle;
             ViewData["NextArticle"] = nextArticle;
 

@@ -91,7 +91,7 @@ namespace Padmate.ServicePlatform.Service
             return result ;
         }
 
-        public M_Article GetArticleById(int id)
+        public M_Article GetArticleById(string id)
         {
             B_Image bImage = new B_Image();
 
@@ -105,7 +105,7 @@ namespace Padmate.ServicePlatform.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public M_Article GetPreviousIdByCurrentId(int id)
+        public M_Article GetPreviousIdByCurrentId(string id)
         {
             B_Image bImage = new B_Image();
 
@@ -120,7 +120,7 @@ namespace Padmate.ServicePlatform.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public M_Article GetNextIdByCurrentId(int id)
+        public M_Article GetNextIdByCurrentId(string id)
         {
             B_Image bImage = new B_Image();
             string nextId = string.Empty;
@@ -220,7 +220,7 @@ namespace Padmate.ServicePlatform.Service
                     Href = model.Href
                 };
 
-                message.ReturnId= _dArticle.AddArticle(article);
+                message.ReturnStrId = _dArticle.AddArticle(article);
 
             }catch(Exception e)
             {
@@ -257,7 +257,7 @@ namespace Padmate.ServicePlatform.Service
                     Href = model.Href
                 };
 
-                message.ReturnId = _dArticle.EditArticle(model.Id, article);
+                message.ReturnStrId = _dArticle.EditArticle(model.Id, article);
 
             }
             catch (Exception e)
@@ -274,14 +274,14 @@ namespace Padmate.ServicePlatform.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Message UpdateImageId(int id,int imageId)
+        public Message UpdateImageId(string id,int imageId)
         {
             Message message = new Message();
             message.Success = true;
             message.Content = "图片更新成功";
             try
             {
-                message.ReturnId = _dArticle.EditImageId(id, imageId);
+                message.ReturnStrId = _dArticle.EditImageId(id, imageId);
 
             }catch(Exception e)
             {
@@ -293,7 +293,7 @@ namespace Padmate.ServicePlatform.Service
         }
         
 
-        public Message DeleteArticle(int id)
+        public Message DeleteArticle(string id)
         {
             Message message = new Message();
             message.Success = true;
@@ -325,7 +325,7 @@ namespace Padmate.ServicePlatform.Service
 
             var model = new M_Article()
             {
-                Id = article.Id,
+                Id = article.Id.ToString(),
                 Title = article.Title,
                 SubTitle = article.SubTitle,
                 Description = article.Description,

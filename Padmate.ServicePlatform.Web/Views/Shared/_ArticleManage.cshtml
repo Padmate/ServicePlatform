@@ -229,8 +229,8 @@
             dynamicHtml += '</p>';
             dynamicHtml += '<a class="btn-gelatine btn-gelatine-info" href="' + contentHref + '"><strong>了解更多</strong></a>';
 
-            dynamicHtml += '<a class="btn btn-lg btn-success articleBtn" onclick="OpenEditScreen(' + articles[i].Id + ')">修改</a>';
-            dynamicHtml += '<a class="btn btn-lg btn-danger articleBtn" onclick="Delete(' + articles[i].Id + ')">删除</a>';
+            dynamicHtml += '<a class="btn btn-lg btn-success articleBtn" onclick="OpenEditScreen(&apos;' + articles[i].Id + '&apos;)">修改</a>';
+            dynamicHtml += '<a class="btn btn-lg btn-danger articleBtn" onclick="Delete(&apos;' + articles[i].Id + '&apos;)">删除</a>';
 
             dynamicHtml += '</div>';
             dynamicHtml += '</div>';
@@ -274,7 +274,7 @@
     }
 
     //打开修改界面
-    function OpenEditScreen(id) {;
+    function OpenEditScreen(id) {debugger
         if (id == null || id == "") {
             layer.alert('未获取到id,请刷新重新尝试。', {
                 skin: 'layui-layer-molv' //样式类名

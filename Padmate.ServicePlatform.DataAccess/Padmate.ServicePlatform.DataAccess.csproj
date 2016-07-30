@@ -68,13 +68,9 @@
     <Compile Include="D_Image.cs" />
     <Compile Include="D_Mail.cs" />
     <Compile Include="D_User.cs" />
-    <Compile Include="Migrations\201607210212105_init.cs" />
-    <Compile Include="Migrations\201607210212105_init.Designer.cs">
-      <DependentUpon>201607210212105_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607210531167_updateMail.cs" />
-    <Compile Include="Migrations\201607210531167_updateMail.Designer.cs">
-      <DependentUpon>201607210531167_updateMail.cs</DependentUpon>
+    <Compile Include="Migrations\201607300128541_init.cs" />
+    <Compile Include="Migrations\201607300128541_init.Designer.cs">
+      <DependentUpon>201607300128541_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,11 +87,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607210212105_init.resx">
-      <DependentUpon>201607210212105_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607210531167_updateMail.resx">
-      <DependentUpon>201607210531167_updateMail.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607300128541_init.resx">
+      <DependentUpon>201607300128541_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

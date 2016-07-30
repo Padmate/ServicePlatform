@@ -11,7 +11,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                 "dbo.Articles",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false, identity: true),
                         Title = c.String(),
                         SubTitle = c.String(),
                         Description = c.String(),
@@ -88,10 +88,13 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         From = c.String(),
                         To = c.String(),
-                        Subject = c.String(),
+                        Subject = c.String(maxLength: 2000),
                         Cc = c.String(),
                         Body = c.String(storeType: "ntext"),
+                        Creator = c.String(maxLength: 50),
                         CreateDate = c.DateTime(nullable: false),
+                        Modifier = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
                         SendDate = c.DateTime(),
                         SendTag = c.Boolean(nullable: false),
                     })

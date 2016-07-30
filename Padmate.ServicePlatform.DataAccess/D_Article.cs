@@ -16,9 +16,9 @@ namespace Padmate.ServicePlatform.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Article GetPreviousDataById(int id)
+        public Article GetPreviousDataById(string id)
         {
-            var currentData = _dbContext.Atricles.FirstOrDefault(a=>a.Id == id);
+            var currentData = _dbContext.Atricles.FirstOrDefault(a=>a.Id.ToString() == id);
             var previousData = _dbContext.Atricles
                 .Where(a => a.Type == currentData.Type && a.Pubtime > currentData.Pubtime)
                 .OrderBy(a => a.Pubtime)
@@ -32,9 +32,9 @@ namespace Padmate.ServicePlatform.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Article GetNextDataById(int id)
+        public Article GetNextDataById(string id)
         {
-            var currentData = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+            var currentData = _dbContext.Atricles.FirstOrDefault(a => a.Id.ToString() == id);
             var nextData = _dbContext.Atricles
                 .Where(a => a.Type == currentData.Type && a.Pubtime < currentData.Pubtime)
                 .OrderByDescending(a => a.Pubtime)
@@ -114,9 +114,9 @@ namespace Padmate.ServicePlatform.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Article GetArticleById(int id)
+        public Article GetArticleById(string id)
         {
-            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id.ToString() == id);
             return article;
         }
 
@@ -125,16 +125,16 @@ namespace Padmate.ServicePlatform.DataAccess
         /// </summary>
         /// <param name="article"></param>
         /// <returns></returns>
-        public int AddArticle(Article article)
+        public string AddArticle(Article article)
         {
             _dbContext.Atricles.Add(article);
             _dbContext.SaveChanges();
-            return article.Id;
+            return article.Id.ToString();
         }
 
-        public int EditArticle(int id,Article model)
+        public string EditArticle(string id,Article model)
         {
-            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id.ToString() == id);
 
             article.Title = model.Title;
             article.SubTitle = model.SubTitle;
@@ -147,22 +147,22 @@ namespace Padmate.ServicePlatform.DataAccess
             article.Href = model.Href;
 
             _dbContext.SaveChanges();
-            return article.Id;
+            return article.Id.ToString();
         }
 
-        public int EditImageId(int id, int imageId)
+        public string EditImageId(string id, int imageId)
         {
-            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id == id);
+            var article = _dbContext.Atricles.FirstOrDefault(a => a.Id.ToString() == id);
 
             article.ImageId = imageId;
 
             _dbContext.SaveChanges();
-            return article.Id;
+            return article.Id.ToString();
         }
 
-        public void DeleteArticle(int id)
+        public void DeleteArticle(string id)
         {
-            var article = _dbContext.Atricles.Where(i => i.Id == id).FirstOrDefault();
+            var article = _dbContext.Atricles.Where(i => i.Id.ToString() == id).FirstOrDefault();
             if (article != null)
             {
                 _dbContext.Atricles.Remove(article);

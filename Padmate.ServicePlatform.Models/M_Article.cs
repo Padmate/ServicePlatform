@@ -8,7 +8,7 @@ namespace Padmate.ServicePlatform.Models
 {
     public class M_Article:BaseModel
     {
-        public Int32 Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 文章标题
