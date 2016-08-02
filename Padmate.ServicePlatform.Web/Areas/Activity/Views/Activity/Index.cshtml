@@ -3,9 +3,12 @@
     ViewBag.Description = "智能+创新创业服务平台》活动";
     List<M_Article> firstThreeActivitiyForecast = (List<M_Article>)ViewData["FirstThreeActivitiyForecast"];
     List<M_Article> firstThreeWonderfulActivies = (List<M_Article>)ViewData["FirstThreeWonderfulActivies"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
 }
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
+@using System.Configuration;
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
 <script type="text/javascript" src="~/Scripts/jiathis/jiathis-share.js" charset="utf-8"></script>
@@ -53,9 +56,9 @@
                         <h3 class="customer-h3">最新预告</h3>
                         @foreach (var article in firstThreeActivitiyForecast)
                         {
-                            var html = article.Id + ".html";
+                            var activityHref ="/activity/"+ article.Id + urlRewriteExtension;
                             <span>
-                                <a class="customer-content-sm" href='/activity/@html' style="cursor:pointer">
+                                <a class="customer-content-sm" href='@activityHref' style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
                                 </a>
                             </span>
@@ -65,9 +68,9 @@
                         <h3 class="customer-h3">最新活动</h3>
                         @foreach (var article in firstThreeWonderfulActivies)
                         {
-                            var html = article.Id + ".html";                            
+                            var activityHref = "/activity/" + article.Id + urlRewriteExtension;                       
                             <span>
-                                <a class="customer-content-sm" href="/activity/@html" style="cursor:pointer">
+                                <a class="customer-content-sm" href="@activityHref" style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
                                 </a>
                             </span>
@@ -231,7 +234,7 @@
             var localDate = pubTime.toLocaleDateString();
 
 
-            var contentHref = "/activity/" + articles[i].Id+".html";
+            var contentHref = "/activity/" + articles[i].Id+ '@urlRewriteExtension';
             var shareHref = window.location.host + contentHref;
 
             

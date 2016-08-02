@@ -1,5 +1,8 @@
-﻿@{
+﻿@using System.Configuration;
+@{
     ViewBag.Title = "产品平台";
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    
 }
 <!--产品平台-->
 <section id="services-productplatform" class="bg-light-gray portfolioContainer">
@@ -14,7 +17,7 @@
         <div class="row">
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/zzproject.html" class="information-box">
+                    <a href="@string.Format("/service/product/zzproject{0}",urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/zzxm.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -41,7 +44,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/iar.html" class="information-box">
+                    <a href="@string.Format("/service/product/iar{0}",urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/cxyy-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -68,7 +71,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/culturalcreative.html" class="information-box">
+                    <a href="@string.Format("/service/product/culturalcreative{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/whcy-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -94,7 +97,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/idmd.html" class="information-box">
+                    <a href="@string.Format("/service/product/idmd{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/idmd-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -120,7 +123,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/hardwaredesign.html" class="information-box">
+                    <a href="@string.Format("/service/product/hardwaredesign{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/yjsj-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -146,7 +149,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/softwaredesign.html" class="information-box">
+                    <a href="@string.Format("/service/product/softwaredesign{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/rjkf-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -172,7 +175,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/customerrequirement.html" class="information-box">
+                    <a href="@string.Format("/service/product/customerrequirement{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/khxq-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -198,7 +201,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/productcrowdfunding.html" class="information-box">
+                    <a href="@string.Format("/service/product/productcrowdfunding{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/cpzc-bg.png" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">
@@ -224,7 +227,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4 text-center">
                 <div class="service-box">
-                    <a href="/service/product/odmoem.html" class="information-box">
+                    <a href="@string.Format("/service/product/odmoem{0}", urlRewriteExtension)" class="information-box">
                         <img class="img-responsive" src="~/img/Service/ProductPlatform/odmoem-bg.jpg" />
                         <div class="information-box-caption">
                             <div class="information-box-caption-content">

@@ -2,10 +2,13 @@
     ViewBag.Title = "资讯";
     ViewBag.Description = "智能+创新创业服务平台》资讯";
     List<M_Article> firstSixInformations = (List<M_Article>)ViewData["FirstSixInformations"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    
 }
 
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
+@using System.Configuration;
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
 <script type="text/javascript" src="~/Scripts/jiathis/jiathis-share.js" charset="utf-8"></script>
@@ -40,7 +43,7 @@
                         <h3 class="customer-h3">最新资讯</h3>
                         @foreach (var article in firstSixInformations)
                         {
-                            var html = article.Id+".html";
+                            var html = article.Id+ urlRewriteExtension;
                             <span>
                                 <a class="customer-content-sm" href="/information/@html" style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
@@ -192,7 +195,7 @@
             var localDate = pubTime.toLocaleDateString();
             
 
-            var contentHref = "/information/"+ articles[i].Id+".html";
+            var contentHref = "/information/"+ articles[i].Id+'@urlRewriteExtension';
             var shareHref = window.location.host + contentHref;
 
             dynamicHtml += '<div class="row article-row">';

@@ -46,6 +46,8 @@
     <Compile Include="Image.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="MailAttachment.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="ProjectDownload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Padmate.ServicePlatform.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,14 +9,28 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
 {
     public class ProductController:BaseController
     {
+        #region
         /// <summary>
         /// 众创项目
         /// </summary>
         /// <returns></returns>
         public ActionResult ZZProject()
         {
+
             return View();
         }
+
+        /// <summary>
+        /// 众创项目详细
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ZZProjectDetail()
+        {
+            return View();
+        }
+
+
+        #endregion
 
         /// <summary>
         /// 产学研 industrial-academic-research

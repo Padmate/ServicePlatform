@@ -1,11 +1,12 @@
-﻿
+﻿@using System.Configuration;
 @using Padmate.ServicePlatform.Models;
 @{
     M_Article article = (M_Article)ViewData["article"];
     M_Article previousArticle = (M_Article)ViewData["PreviousArticle"];
     M_Article nextArticle = (M_Article)ViewData["NextArticle"];
     ViewBag.Title = article.SubTitle;
-    var currentArticle = article.Id + ".html";
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    var currentArticle = article.Id + urlRewriteExtension;
 }
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
@@ -17,8 +18,8 @@
         <div class="col-md-12">
             <h3>
                 <a class="customer-content-xs" href="/">首页</a> »
-                <a class="customer-content-xs" href="/information.html">资讯</a> »
-                <a class="customer-content-xs" href="/information/@currentArticle">@article.SubTitle</a>
+                <a class="customer-content-xs" href="@string.Format("/information{0}",urlRewriteExtension)">资讯</a> »
+                <a class="customer-content-xs" href="@string.Format("/information/{0}",currentArticle)">@article.SubTitle</a>
                 
             </h3>
             <!-- share -->
@@ -51,7 +52,7 @@
         <div style="padding:50px 0px;">
             @if (previousArticle != null)
             {
-                var preArticle = previousArticle.Id+".html";
+                var preArticle = previousArticle.Id+urlRewriteExtension;
                 <div>
                     上一篇：
                     <a class="customer-content-xs" href="/information/@preArticle">@previousArticle.SubTitle</a>
@@ -61,7 +62,7 @@
 
             @if (nextArticle != null)
             {
-                var nexArticle = nextArticle.Id + ".html";
+                var nexArticle = nextArticle.Id + urlRewriteExtension;
                 <div>
                     下一篇：
                     <a class="customer-content-xs" href="/information/@nexArticle">@nextArticle.SubTitle</a>

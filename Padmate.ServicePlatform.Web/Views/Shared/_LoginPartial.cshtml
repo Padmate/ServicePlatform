@@ -1,4 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
+@using System.Configuration;
+@{
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+}
+
 
 <style>
     
@@ -20,12 +25,12 @@
                     if (User.IsInRole("Admin"))
                     {
                         <li>
-                            <a href="/manage/homebackground.html">系统管理</a>
+                            <a href="@string.Format("/manage/homebackground{0}", urlRewriteExtension)">系统管理</a>
                         </li>
                     }
                 }
                 <li>
-                    <a href="/manage/userinfo.html">设置</a>
+                    <a href="@string.Format("/manage/userinfo{0}", urlRewriteExtension)">设置</a>
 
                 </li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()" >注销</a></li>

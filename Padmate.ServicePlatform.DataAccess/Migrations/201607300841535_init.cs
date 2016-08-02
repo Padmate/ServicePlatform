@@ -101,6 +101,42 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.ProjectDownloads",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        ProjectId = c.Guid(nullable: false),
+                        Description = c.String(maxLength: 2000),
+                        VirtualPath = c.String(),
+                        PhysicalPath = c.String(),
+                        SaveName = c.String(maxLength: 50),
+                        Extension = c.String(maxLength: 10),
+                        Sequence = c.Int(nullable: false),
+                        ImageId = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
+                .Index(t => t.ProjectId);
+            
+            CreateTable(
+                "dbo.Projects",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        Name = c.String(),
+                        Description = c.String(maxLength: 2000),
+                        Content = c.String(storeType: "ntext"),
+                        Type = c.String(maxLength: 50),
+                        Sequence = c.Int(nullable: false),
+                        ImageId = c.Int(),
+                        Creator = c.String(maxLength: 50),
+                        CreateDate = c.DateTime(nullable: false),
+                        Modifier = c.String(maxLength: 50),
+                        ModifiedDate = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -176,6 +212,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.ProjectDownloads", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.MailAttachments", "MailId", "dbo.Mails");
             DropForeignKey("dbo.Contacts", "ContactScopeId", "dbo.ContactScopes");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -184,6 +221,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.ProjectDownloads", new[] { "ProjectId" });
             DropIndex("dbo.MailAttachments", new[] { "MailId" });
             DropIndex("dbo.Contacts", new[] { "ContactScopeId" });
             DropTable("dbo.AspNetUserLogins");
@@ -191,6 +229,8 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Projects");
+            DropTable("dbo.ProjectDownloads");
             DropTable("dbo.Mails");
             DropTable("dbo.MailAttachments");
             DropTable("dbo.Images");

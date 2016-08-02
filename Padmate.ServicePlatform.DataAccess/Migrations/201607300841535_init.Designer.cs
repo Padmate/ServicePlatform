@@ -13,7 +13,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201607300128541_init"; }
+            get { return "201607300841535_init"; }
         }
         
         string IMigrationMetadata.Source

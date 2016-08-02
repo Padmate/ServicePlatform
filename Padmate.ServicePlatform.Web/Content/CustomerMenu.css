@@ -60,6 +60,16 @@
     margin: 0px;
 }
 
+.menu-second span.fa-chevron-left, .menu-second span.fa-chevron-down
+{
+    position:absolute;
+    right:12px;
+    bottom:10px;
+}
+
+.menu-third li a{
+    padding-left:40px;
+} 
     /*按钮选中后状态*/
 .menu-selected{
     background-color:#d6d4d5;

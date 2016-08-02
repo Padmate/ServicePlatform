@@ -1,4 +1,8 @@
-﻿
+﻿@using System.Configuration;
+@{
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+}
+
 <link href="~/Content/CustomerMenu.css" rel="stylesheet">
 <script src="~/Scripts/CustomerMenu.js"></script>
 
@@ -6,14 +10,14 @@
     <div class="menu-sidebar-nav">
         <ul>
             <li>
-                <a class="menu-first" href="/manage/userinfo.html">
+                <a class="menu-first" href="@string.Format("/manage/userinfo{0}", urlRewriteExtension)">
                     <i class="fa fa-user"></i>
                     用户信息
                 </a>
             </li>
             
             <li>
-                <a class="menu-first" href="/manage/changepassword.html">
+                <a class="menu-first" href="@string.Format("/manage/changepassword{0}", urlRewriteExtension)">
                     <i class="fa fa-edit"></i>
                     密码修改
                 </a>

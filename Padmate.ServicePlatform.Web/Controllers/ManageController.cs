@@ -29,6 +29,30 @@ namespace Padmate.ServicePlatform.Web.Controllers
             SignInManager = signInManager;
         }
 
+        [HttpPost]
+        public ActionResult CKEditorUpload(HttpPostedFileBase upload)
+        {
+            var viirtualPath = SystemConfig.Init.PathConfiguration["editContentImageVirtualDirectory"].ToString();
+            var fileName = System.IO.Path.GetFileName(upload.FileName);
+            var filePhysicalDirectory = Server.MapPath("~" + viirtualPath);
+            var filePhysicalPath = Path.Combine(filePhysicalDirectory, fileName); ;//我把它保存在网站根目录的 upload 文件夹
+
+            //如果没有文件夹，则先新建文件夹
+            if (!System.IO.Directory.Exists(filePhysicalDirectory))
+            {
+                System.IO.Directory.CreateDirectory(filePhysicalDirectory);
+
+            }
+
+            upload.SaveAs(filePhysicalPath);
+
+            var url = Path.Combine(viirtualPath, fileName);
+            var CKEditorFuncNum = System.Web.HttpContext.Current.Request["CKEditorFuncNum"];
+
+            //上传成功后，我们还需要通过以下的一个脚本把图片返回到第一个tab选项
+            return Content("<script>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", \"" + url + "\");</script>");
+        }
+
         public ApplicationSignInManager SignInManager
         {
             get
@@ -146,15 +170,18 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
+        #region 产品平台
+       
         /// <summary>
-        /// 产品平台
+        /// 众创项目
         /// </summary>
         /// <returns></returns>
-        public ActionResult ServiceProduct()
+        public ActionResult ZZProject()
         {
 
             return View();
         }
+        #endregion
 
         /// <summary>
         /// 工程平台

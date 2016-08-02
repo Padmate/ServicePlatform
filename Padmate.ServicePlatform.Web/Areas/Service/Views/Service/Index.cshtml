@@ -1,6 +1,8 @@
-﻿@{
+﻿@using System.Configuration;
+@{
     ViewBag.Title = "服务";
     ViewBag.Description = "智能+创新创业服务平台》服务";
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     
 }
 <section id="services" class="bg-light-gray">
@@ -16,7 +18,7 @@
         <div class="row text-center">
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/market.html">
+                    <a href="@string.Format("/service/market{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-primary"></i>
                             <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
@@ -30,7 +32,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/product.html">
+                    <a href="@string.Format("/service/product{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-info"></i>
                             <i class="fa fa-cubes fa-stack-1x fa-inverse"></i>
@@ -44,7 +46,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/engineer.html">
+                    <a href="@string.Format("/service/engineer{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-success"></i>
                             <i class="fa fa-wordpress fa-stack-1x fa-inverse"></i>
@@ -59,7 +61,7 @@
 
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/make.html">
+                    <a href="@string.Format("/service/make{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-warning"></i>
                             <i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
@@ -73,7 +75,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/sale.html">
+                    <a href="@string.Format("/service/sale{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-danger"></i>
                             <i class="fa fa-tasks fa-stack-1x fa-inverse"></i>
@@ -88,7 +90,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/supplymanagement.html">
+                    <a href="@string.Format("/service/supplymanagement{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-primary"></i>
                             <i class="fa fa-line-chart  fa-stack-1x fa-inverse"></i>
@@ -103,7 +105,7 @@
 
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/brand.html">
+                    <a href="@string.Format("/service/brand{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-danger"></i>
                             <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
@@ -118,7 +120,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/tutor.html">
+                    <a href="@string.Format("/service/tutor{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-primary"></i>
                             <i class="fa fa-users fa-stack-1x fa-inverse"></i>
@@ -132,7 +134,7 @@
             </div>
             <div class="col-is-6 col-sm-4 col-md-4">
                 <div class="service-item">
-                    <a href="/service/fund.html">
+                    <a href="@string.Format("/service/fund{0}",urlRewriteExtension)">
                         <span class="fa-stack fa-4x">
                             <i class="fa fa-circle fa-stack-2x text-danger"></i>
                             <i class="fa fa-money fa-stack-1x fa-inverse"></i>

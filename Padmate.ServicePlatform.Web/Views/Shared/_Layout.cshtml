@@ -1,7 +1,9 @@
-﻿@{
-    var nav =  @Request["nav"];
-    
+﻿@using System.Configuration;
+@{
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 }
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +24,7 @@
         title += defaultTitle;
     }
     <title>@title</title>
-    <link rel="shortcut icon" href="~~/img/logos/favicon.ico" />
+    <link rel="shortcut icon" href="~/img/logos/favicon.ico" />
     <!-- Bootstrap Core CSS -->
     <link href="~/Content/bootstrap.css" rel="stylesheet">
     <link href="~/Content/bootstrap-table.css" rel="stylesheet">
@@ -117,70 +119,70 @@
                             <a href="/">首页</a>
                         </li>
                         <li class="dropdown fa-dropdown checkmenu">
-                            <a href="/service.html">
+                            <a href="@string.Format("/service{0}",urlRewriteExtension)">
                                 服务
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu nav-submenu">
                                 <li>
-                                    <a href="/service/market.html">
+                                    <a href="@string.Format("/service/market{0}",urlRewriteExtension)">
                                         <i class="fa fa-2x fa-shopping-cart"></i>
                                         市场平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/product.html">
+                                    <a href="@string.Format("/service/product{0}",urlRewriteExtension)">
                                         <i class="fa fa-2x fa-cubes"></i>
                                         产品平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/engineer.html">
+                                    <a href="@string.Format("/service/engineer{0}",urlRewriteExtension)">
                                         <i class="fa fa-2x fa-wordpress"></i>
                                         工程平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/make.html">
+                                    <a href="@string.Format("/service/make{0}",urlRewriteExtension)">
                                         <i class="fa fa-2x fa-wrench"></i>
                                         制造平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/sale.html">
+                                    <a href="@string.Format("/service/sale{0}",urlRewriteExtension)">
                                         <i class="fa fa-tasks fa-2x"></i>
                                         销售平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/supplymanagement.html">
+                                    <a href="@string.Format("/service/supplymanagement{0}", urlRewriteExtension)">
                                         <i class="fa fa-line-chart fa-2x"></i>
                                         供应链管理
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/brand.html">
+                                    <a href="@string.Format("/service/brand{0}", urlRewriteExtension)">
                                         <i class="fa fa-briefcase fa-2x"></i>
                                         品牌经营
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/tutor.html">
+                                    <a href="@string.Format("/service/tutor{0}", urlRewriteExtension)">
                                         <i class="fa fa-users fa-2x"></i>
                                         导师平台
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/service/fund.html">
+                                    <a href="@string.Format("/service/fund{0}", urlRewriteExtension)">
                                         <i class="fa fa-money fa-2x"></i>
                                         资金平台
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="checkmenu"><a href="/activity.html">活动</a></li>
-                        <li class="checkmenu"><a href="/information.html">资讯</a></li>
-                        <li class="checkmenu"><a href="/about.html">关于我们</a></li>
+                        <li class="checkmenu"><a href="@string.Format("/activity{0}", urlRewriteExtension)">活动</a></li>
+                        <li class="checkmenu"><a href="@string.Format("/information{0}", urlRewriteExtension)">资讯</a></li>
+                        <li class="checkmenu"><a href="@string.Format("/about{0}", urlRewriteExtension)">关于我们</a></li>
                     </ul>
 
                 }
@@ -197,7 +199,7 @@
         <ul>
             <!--联系我们-->
             <li>
-                <a class="rightSection page-scroll information-box" href="/contact.html" rel="nofollow"
+                <a class="rightSection page-scroll information-box" href="@string.Format("/contact{0}", urlRewriteExtension)" rel="nofollow"
                    style="display: block; background-color: rgba(52, 152, 219, 0.78); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E50088cc,endColorstr=#E50088cc)">
                     <i class=" fa fa-phone-square">
                     </i>
@@ -307,17 +309,23 @@
 
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-2">
-                    <label class="customer-content-xs whitefont">智能+</label>
+                    <label class="customer-content-xs whitefont">下载中心</label>
                     <hr />
                     <ul>
-                        <li><a class=" customer-content-xs lightwhitefont" href="/about.html" rel="nofollow">关于我们</a></li>
-                        <li><a class=" customer-content-xs lightwhitefont" href="/contact.html" rel="nofollow">联系我们</a></li>
+                        <li><a class=" customer-content-xs lightwhitefont" href="@string.Format("/SmartPhoneShell{0}", urlRewriteExtension)">智能手机皮套</a></li>
 
                     </ul>
                 </div>
                 <div class="col-xs-4 col-sm-2 col-md-2">
+                    <label class="customer-content-xs whitefont">智能+</label>
+                    <hr />
+                    <ul>
+                        <li><a class=" customer-content-xs lightwhitefont" href="@string.Format("/about{0}", urlRewriteExtension)" rel="nofollow">关于我们</a></li>
+                        <li><a class=" customer-content-xs lightwhitefont" href="@string.Format("/contact{0}", urlRewriteExtension)" rel="nofollow">联系我们</a></li>
 
+                    </ul>
                 </div>
+                
                 <div class="col-xs-4 col-sm-2 col-md-2">
                     <img src="~/img/logos/weixin.png" class="img-responsive" alt="厦门智能+创新创业公共服务平台-微信" />
                 </div>

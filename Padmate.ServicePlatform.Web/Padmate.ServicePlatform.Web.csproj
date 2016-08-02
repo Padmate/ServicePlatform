@@ -62,12 +62,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefBin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefBin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefBin\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -180,6 +192,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Activity\ActivityAreaRegistration.cs" />
     <Compile Include="Areas\Information\InformationAreaRegistration.cs" />
     <Compile Include="Areas\Infra\InfraAreaRegistration.cs" />
@@ -196,6 +209,7 @@
     <Compile Include="Controllers\Infra\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Service\ProductController.cs" />
+    <Compile Include="Controllers\Service\ProjectController.cs" />
     <Compile Include="Controllers\Service\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1022,6 +1036,7 @@
     <Content Include="Scripts\metisMenu\demo-default.css" />
     <Content Include="Scripts\metisMenu\metisMenu.css" />
     <Content Include="Scripts\metisMenu\metisMenu.js" />
+    <Content Include="Scripts\product-nav.js" />
     <Content Include="sitemap.xml" />
     <Content Include="System.config" />
     <Content Include="ckfinder\plugins\fileeditor\codemirror\LICENSE" />
@@ -1064,7 +1079,6 @@
     <Content Include="Views\Manage\Information.cshtml" />
     <Content Include="Views\Manage\ServiceEngineer.cshtml" />
     <Content Include="Views\Manage\ServiceMarket.cshtml" />
-    <Content Include="Views\Manage\ServiceProduct.cshtml" />
     <Content Include="Views\Manage\UserManage.cshtml" />
     <Content Include="Views\Manage\WonderfulActivity.cshtml" />
     <Content Include="Views\Shared\_ArticleManage.cshtml" />
@@ -1082,6 +1096,9 @@
     <Content Include="Areas\Infra\Views\Article\Add.cshtml" />
     <Content Include="Areas\Infra\Views\Article\Edit.cshtml" />
     <Content Include="Areas\Service\Views\Shared\_nav.cshtml" />
+    <Content Include="Areas\Service\Views\Product\ZZProjectDetail.cshtml" />
+    <Content Include="Areas\Service\Views\Project\Add.cshtml" />
+    <Content Include="Areas\Service\Views\Project\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />
@@ -1198,6 +1215,7 @@
     <Content Include="Views\Shared\_map.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\UserInfo.cshtml" />
+    <Content Include="Views\Manage\ZZProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1211,6 +1229,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Padmate.ServicePlatform.API\Padmate.ServicePlatform.API.csproj">
+      <Project>{10121562-a992-4a7b-a948-22fd8fb3db1c}</Project>
+      <Name>Padmate.ServicePlatform.API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Padmate.ServicePlatform.DataAccess\Padmate.ServicePlatform.DataAccess.csproj">
       <Project>{a296064d-c8c2-48e5-ac8c-c6852c9cd6f5}</Project>
       <Name>Padmate.ServicePlatform.DataAccess</Name>
