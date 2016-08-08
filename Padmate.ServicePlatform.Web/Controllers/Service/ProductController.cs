@@ -1,4 +1,5 @@
-﻿using Padmate.ServicePlatform.Utility;
+﻿using Padmate.ServicePlatform.Service;
+using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,15 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// <returns></returns>
         public ActionResult ZZProject()
         {
+            //查找众创项目
+            B_Project bProject = new B_Project();
+            var zzProjects = bProject.GetProjectByType(Common.ZZ_Project);
+
+            //查找其它项目
+            var otherProjects = bProject.GetProjectByType(Common.Other_Project);
+
+            ViewData["zzprojects"] = zzProjects;
+            ViewData["otherprojcets"] = otherProjects;
 
             return View();
         }
@@ -24,8 +34,12 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// 众创项目详细
         /// </summary>
         /// <returns></returns>
-        public ActionResult ZZProjectDetail()
+        public ActionResult ZZProjectDetail(string id)
         {
+            B_Project bProject = new B_Project();
+            var project = bProject.GetProjectById(id);
+            ViewData["project"] = project;
+
             return View();
         }
 

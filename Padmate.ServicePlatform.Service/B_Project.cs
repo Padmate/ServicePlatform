@@ -33,6 +33,19 @@ namespace Padmate.ServicePlatform.Service
             return result;
         }
 
+        public List<M_Project> GetProjectByType(string type)
+        {
+            List<M_Project> result = new List<M_Project>();
+            if(!string.IsNullOrEmpty(type))
+            {
+                var projects = _dProject.GetProjectByType(type);
+                result = projects.Select(a => ConverEntityToModel(a)).ToList();
+
+
+            }
+            return result;
+        }
+
         public List<M_Project> GetAllData()
         {
             var projects = _dProject.GetAll();

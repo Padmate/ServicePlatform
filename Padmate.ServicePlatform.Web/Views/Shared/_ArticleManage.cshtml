@@ -1,9 +1,11 @@
 ﻿@{
     var _articleType = ViewBag.ArticleType;
     var _articleTypeDes = Common.Dic_ArticleType[_articleType];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 }
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
+@using System.Configuration;
 
 
 
@@ -199,10 +201,10 @@
             var localDate = pubTime.toLocaleDateString();
 
 
-            var contentHref = "/activity/"+ articles[i].Id+".html";
+            var contentHref = "/activity/"+ articles[i].Id+"@urlRewriteExtension";
             if (articleType == '@Common.Information')
             {
-                var contentHref = "/information/" + articles[i].Id+".html";
+                var contentHref = "/information/" + articles[i].Id+"@urlRewriteExtension";
 
             }
 

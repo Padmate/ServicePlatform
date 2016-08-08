@@ -19,13 +19,16 @@
 
                 <div id="toolbar">
                     <button id="btnAdd" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-plus"></i>Add
+                        <i class="glyphicon glyphicon-plus"></i>新 增
                     </button>
                     <button id="btnEdit" class="btn btn-success">
-                        <i class="glyphicon glyphicon-plus"></i>Edit
+                        <i class="glyphicon glyphicon-plus"></i>修 改
                     </button>
                     <button id="btnDelete" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-remove"></i> Delete
+                        <i class="glyphicon glyphicon-remove"></i> 删 除
+                    </button>
+                    <button id="btnAttachment" class="btn btn-default">
+                        <i class="glyphicon glyphicon-file"></i> 附件管理
                     </button>
                 </div>
                 <table id="table"></table>
@@ -60,6 +63,28 @@
         </div>
     </div>
 </div>
+<!--#region详细-->
+<div class="curd-model modal fade" id="zzprojectdetail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divDetailContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#region添加附件-->
+<div class="curd-model modal fade" id="zzprojectattachment" tabindex="-1" role="dialog"
+     data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog mediu-modal">
+        <div class="modal-content mediu-modal-content">
+            <div id="divAttachmentContainer"></div>
+        </div>
+    </div>
+
+</div>
+
 
 <!--Script要放在HTML标签后，才能将值绑定到标签-->
 <script type="text/javascript">
@@ -73,7 +98,7 @@
     function InitTable()
     {
         $('#table').bootstrapTable({
-            height:500,
+            height:1000,
             method: 'post',                 //The method type to request remote data.
             url: '/Service/Project/GetPageData',
             dataType: "json",               //The type of data that you are expecting back from the server.
@@ -122,12 +147,16 @@
             {
                 field: 'Description',
                 title: '产品介绍',
+                width: '25%',
                 formatter: function (value, row, index) {
 
                     var result = row.Description;
-                    if (result.length > 10) {
-                        result = result.substr(0, 10) + "...";
+                    if (result.length > 50) {
+                        result = '<a class="custooltip" href="#">' + result.substr(0, 50) + '......<span class="classic">' + row.Description + '</span></a>';
+
                     }
+
+
                     return result;
                 }
 
@@ -136,7 +165,8 @@
                 field: 'Content',
                 title: '项目内容',
                 formatter: function (value, row, index) {
-                    return "产品内容";
+                    var result = '<a href="javaScript:void(0)" onclick="Detail(&apos;' + row.Id + '&apos;)">点击查看</a>';
+                    return result;
                 }
 
             },
@@ -185,6 +215,24 @@
             $("#divEditContainer").html("");
 
         })
+        $('#zzprojectdetail').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#zzprojectdetail').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divDetailContainer").html("");
+
+        });
+        $('#zzprojectattachment').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#zzprojectattachment').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divAttachmentContainer").html("");
+
+        })
     }
 
     function CloseAddScreen() {
@@ -226,8 +274,32 @@
 
             var id = selections[0].Id;
             $('#zzprojectedit').modal('show');
-            $("#divEditContainer").load("/Service/Project/Edit?id=" + id);
+            $("#divEditContainer").load("/Service/Project/Edit?projectId=" + id);
 
+        });
+
+        $("#btnAttachment").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要管理附件的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#zzprojectattachment').modal('show');
+            $("#divAttachmentContainer").load("/Service/Project/Attachment?projectId=" + id);
         });
 
         $("#btnDelete").click(function(){
@@ -270,6 +342,12 @@
                 }
             });
         });
+    }
+
+    function Detail(id)
+    {
+        $('#zzprojectdetail').modal('show');
+        $("#divDetailContainer").load("/Service/Project/Detail?id=" + id);
     }
 
     function RefreshTable()

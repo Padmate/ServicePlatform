@@ -70,6 +70,7 @@
     <Compile Include="D_Image.cs" />
     <Compile Include="D_Mail.cs" />
     <Compile Include="D_Project.cs" />
+    <Compile Include="D_ProjectDownload.cs" />
     <Compile Include="D_User.cs" />
     <Compile Include="Migrations\201607300841535_init.cs" />
     <Compile Include="Migrations\201607300841535_init.Designer.cs">

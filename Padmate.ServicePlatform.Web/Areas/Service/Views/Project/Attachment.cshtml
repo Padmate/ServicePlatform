@@ -1,0 +1,259 @@
+﻿@{
+    Layout = null;
+    var projectId = @Request["projectId"];
+}
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+
+<style>
+    .textareaS{
+        width:100%;
+        height:50px;
+    }
+</style>
+<div class="modal-body">
+
+    <h3 class="customer-h3 text-center">新 增
+        <button type="button" class="btn btn-info" style="float:right"
+                data-dismiss="modal">
+            退 出
+        </button>
+    </h3>
+    <hr />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">附件描述：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textareaS" id="taDescription"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">顺 序：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbSequence" placeholder="显示顺序" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">附 件：</label>
+            </div>
+            <div class="col-md-10">
+                <div id="uploadFiles">上传附件</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row-md-12">
+        <table id="attachmentTable"></table>
+
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        InitAttachmentTable();
+        InitFileUploader();
+    });
+    function InitAttachmentTable() {
+        $('#attachmentTable').bootstrapTable({
+            height: 320,
+            method: 'post',                 //The method type to request remote data.
+            url: '/Service/Project/GetProjectDownloadPageData',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType: 'application/json',
+            pagination: true,               //True to show a pagination attachmentToolbar on attachmentTable bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber: 1,                   //初始化在第几页
+            pageList: [10, 25, 50, 100, 200, 'All'],
+            sidePagination: "server",       //服务端请求
+            idField: 'Id',
+            showRefresh: false,
+            search: false,
+            queryParams: ConstructAttachmentParams,
+            //queryParamsType: "limit",
+            locale: 'en-US',
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'Id',
+                title: 'Id',
+                visible: false
+            },
+            {
+                field: 'Description',
+                title: '附件描述',
+                width: '25%',
+                formatter: function (value, row, index) {
+
+                    var result = row.Description;
+                    if (result.length > 50) {
+                        result = '<a class="custooltip" href="#">' + result.substr(0, 50) + '......<span class="classic">' + row.Description + '</span></a>';
+
+                    }
+
+
+                    return result;
+                }
+
+            },
+            {
+                field: 'VirtualPath',
+                title: '虚拟路径',
+                formatter: function (value, row, index) {
+
+                    var result = '<a class="custooltip" href="#">' + row.VirtualPath + '<span class="classic">物理路径：' + row.PhysicalPath + '</span></a>';
+
+                    return result;
+                }
+
+            },
+            {
+                field: 'Sequence',
+                title: '排列顺序',
+                sortable: true,
+                width: '10px'
+            },
+            {
+                field: '',
+                title: '删除',
+                formatter: function (value, row, index) {
+
+                    var result = '<a href="javaScript:void(0);" onclick="DeleteFile(&apos;'+row.Id+'&apos;)"><i class="fa fa-2x fa-remove"></i></a>';
+                    
+                    return result;
+                },
+                width: '10%'
+            }
+            ]
+        });
+    }
+    function ConstructAttachmentParams(param) {
+        var params = {
+            limit: param.limit, //页面大小
+            offset: param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            ProjectId: '@projectId'
+        };
+        return params;
+    }
+
+    function RefreshAttachmentTable() {
+        $('#attachmentTable').bootstrapTable('refresh');
+
+    }
+
+    function DeleteFile(projectDownloadId) {
+        $.ajax({
+            type: "POST",
+            url: "/Service/Project/DeleteAttachment",
+            dataType: "json",
+            data: { Id: projectDownloadId },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success == false || message.Success == "false") {
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                    });
+                    return;
+                } else {
+                    //重新加载
+                    RefreshAttachmentTable();
+                }
+
+            }
+        });
+    }
+
+
+    var fileUploader;
+    function InitFileUploader() {
+
+        // 初始化Web Uploader
+        fileUploader = WebUploader.create({
+            auto: true,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/Service/Project/UploadAttachment',
+            duplicate: true, //可重复上传同一文件
+            pick: '#uploadFiles',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
+            compress: false, //图片不压缩
+            multiple: false,
+            fileSingleSizeLimit: 10 * 1024 * 1024 // 单个文件最大不能超过10 M
+        });
+        fileUploader.on('fileQueued', function (file) {
+
+            fileUploader.options.formData.ProjectId = '@projectId';
+            fileUploader.options.formData.Description = $("#taDescription").val();
+            fileUploader.options.formData.Sequence = $("#tbSequence").val();
+        });
+
+        fileUploader.on('startUpload', function () {
+
+            //开始上传，添加遮罩
+            //$("body").showLoading();
+        });
+        fileUploader.on('uploadFinished', function () {
+
+            //清空
+            $("#taDescription").val("")
+            $("#tbSequence").val("");
+            $("body").hideLoading();
+        });
+
+        fileUploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("超出最大张数");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("文件重复");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+
+                layer.alert("图片大小不能超过10M", {
+                    skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                });
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        fileUploader.on('uploadSuccess', function (file, response) {
+
+            if (response.Success == false || response.Success == "false") {
+                layer.alert(response.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                });
+            } else {
+                //上传成功，则重新加载图片
+                RefreshAttachmentTable();
+            }
+
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        fileUploader.on('uploadComplete', function (file) {
+            //$('#' + file.id).find('.progress').remove();
+            //隐藏遮罩
+            //$("body").hideLoading();
+        });
+    }
+
+
+</script>

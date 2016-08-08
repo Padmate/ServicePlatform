@@ -748,6 +748,7 @@
     <Content Include="Content\SuspendedNavMac.css" />
     <Content Include="Content\system-IE8.css" />
     <Content Include="Content\system.css" />
+    <Content Include="Content\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -983,6 +984,10 @@
     <Content Include="img\team\gl.jpg" />
     <Content Include="img\team\lidawei.jpg" />
     <Content Include="img\team\zzx.jpg" />
+    <Content Include="img\tip\Critical.png" />
+    <Content Include="img\tip\Help.png" />
+    <Content Include="img\tip\Info.png" />
+    <Content Include="img\tip\Warning.png" />
     <Content Include="img\tour-bg.png" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\agency.js" />
@@ -1099,6 +1104,8 @@
     <Content Include="Areas\Service\Views\Product\ZZProjectDetail.cshtml" />
     <Content Include="Areas\Service\Views\Project\Add.cshtml" />
     <Content Include="Areas\Service\Views\Project\Edit.cshtml" />
+    <Content Include="Areas\Service\Views\Project\Detail.cshtml" />
+    <Content Include="Areas\Service\Views\Project\Attachment.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />

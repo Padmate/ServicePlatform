@@ -1,17 +1,21 @@
-﻿@{
-    Layout = null;
+﻿@using Padmate.ServicePlatform.Models;
+@using System.Configuration;
+@{
+    var project = (M_Project)ViewData["project"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    var currentHref = "/product/" + project.Id + urlRewriteExtension;
+    ViewBag.Title = project.Name;
 }
 
-<!DOCTYPE html>
+<div class="container">
+    <h3>
+        <a class="customer-content-xs" href="/">首页</a> »
+        <a class="customer-content-xs" href="@string.Format("/service{0}",urlRewriteExtension)">服务</a> »
+        <a class="customer-content-xs" href="@string.Format("/service/product{0}",urlRewriteExtension)">产品平台</a> »
+        <a class="customer-content-xs" href="@string.Format("/service/product/zzproject{0}",urlRewriteExtension)">众创项目</a> »
+        <a class="customer-content-xs" href="@currentHref">@project.Name</a>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+    </h3>
+    <hr />
+    @Html.Raw(project.Content)
+</div>

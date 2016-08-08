@@ -94,6 +94,8 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
             return Json(message);
         }
 
+
+
         public ActionResult Add()
         {
             return View();
@@ -179,5 +181,88 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
             message = bProject.BatchDeleteByIds(contactIds);
             return Json(message);
         }
+
+        #region 附件
+        public ActionResult Attachment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetProjectDownloadPageData()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_ProjectDownload model = JsonHandler.UnJson<M_ProjectDownload>(strReqStream);
+
+            B_ProjectDownload bProjectDownload = new B_ProjectDownload();
+            var pageData = bProjectDownload.GetPageData(model);
+            var totalCount = bProjectDownload.GetPageDataTotalCount(model);
+
+            PageResult<M_ProjectDownload> pageResult = new PageResult<M_ProjectDownload>(totalCount, pageData);
+            return Json(pageResult);
+        }
+
+
+        /// <summary>
+        /// 上传附件
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult UploadAttachment(HttpPostedFileBase file,M_ProjectDownload model)
+        {
+            //背景图片虚拟目录
+            string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["projectAttachmentVirtualDirectory"].ToString();
+
+            Message message = new Message();
+            message.Success = true;
+
+            #region 校验
+            if (file == null)
+            {
+                message.Success = false;
+                message.Content = "未获取到文件信息,请重新尝试";
+                return Json(message);
+            }
+
+            if (string.IsNullOrEmpty(model.ProjectId))
+            {
+                message.Success = false;
+                message.Content = "未获取项目ID，请重新尝试";
+                return Json(message);
+            }
+
+            message = model.validate();
+            if (!message.Success) return Json(message);
+            #endregion
+
+            FileInfo fileInfo = new FileInfo(file.FileName);
+            var extension = fileInfo.Extension;
+            B_ProjectDownload bProjectDownload = new B_ProjectDownload();
+            message = bProjectDownload.AddFile(file, attachmentVirtualDirectory,model);
+
+            return Json(message);
+
+        }
+
+        /// <summary>
+        /// 删除图片
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteAttachment(string Id)
+        {
+            Message message = new Message();
+            B_ProjectDownload bProjectDownload = new B_ProjectDownload();
+
+            message = bProjectDownload.DeleteById(Id);
+
+            return Json(message);
+        }
+        #endregion
     }
 }

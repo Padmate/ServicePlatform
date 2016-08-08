@@ -62,6 +62,21 @@ namespace Padmate.ServicePlatform.DataAccess
             return projcet;
         }
 
+        /// <summary>
+        /// 根据项目类型查找
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public List<Project> GetProjectByType(string type)
+        {
+            var projcets = _dbContext.Projects
+                .Include("ProjectDownloads")
+                .Where(a => a.Type == type)
+                .OrderBy(a=>a.Sequence)
+                .ToList();
+
+            return projcets;
+        }
 
         public List<Project> GetAll()
         {
@@ -91,7 +106,6 @@ namespace Padmate.ServicePlatform.DataAccess
             projcet.Description = model.Description;
             projcet.Content = model.Content;
             projcet.Type = model.Type;
-            projcet.Sequence = model.Sequence;
             projcet.Sequence = model.Sequence;
             projcet.Modifier = model.Modifier;
             projcet.ModifiedDate = model.ModifiedDate;

@@ -20,8 +20,8 @@ namespace Padmate.ServicePlatform.Models
         /// <summary>
         /// 下载描述
         /// </summary>
-        [Required(ErrorMessage = "下载介绍不能为空")]        
-        [MaxLength(2000, ErrorMessage = "下载介绍不能超过2000个字符")]        
+        [Required(ErrorMessage = "附件描述不能为空")]        
+        [MaxLength(2000, ErrorMessage = "附件描述不能超过2000个字符")]        
         public string Description { get; set; }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Padmate.ServicePlatform.Models
         /// 顺序
         /// </summary>
         [RegularExpression(@"^[1-9]\d*|0$", ErrorMessage = "顺序只能是0或正整数")]
-        public string Sequenct { get; set; }
+        public string Sequence { get; set; }
 
         /// <summary>
         /// 缩略图

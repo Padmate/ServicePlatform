@@ -1,14 +1,11 @@
 ﻿@{
     Layout = null;
-    var _articleType = Request["articleType"];
-    var _articleId = Request["articleId"];
-    M_Article article = (M_Article)ViewData["article"];
+    var project = (M_Project)ViewData["project"];
 }
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
 
 
-<!--#region修改-->
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
 </div>
@@ -19,98 +16,58 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-2 control-label">
-                <label class="customer-content-sm">一级标题：</label>
+                <label class="customer-content-sm">项目名称：</label>
             </div>
             <div class="col-md-10">
-                <input class="inputS" id="tbTitle" placeholder="一级标题" value="@article.Title" />
+                <input class="inputS" id="tbName" placeholder="项目名称"  value="@project.Name"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-2 control-label">
-                <label class="customer-content-sm">二级标题：</label>
+                <label class="customer-content-sm">排列顺序：</label>
             </div>
             <div class="col-md-10">
-                <input class="inputS" id="tbSubTitle" placeholder="二级标题" value="@article.SubTitle" />
+                <input class="inputS" id="tbSequence" placeholder="排列顺序" value="@project.Sequence"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">项目简介：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textareaS" id="taDescription">@project.Description</textarea>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-2 control-label">
-                <label class="customer-content-sm">文章描述：</label>
-            </div>
-            <div class="col-md-10">
-                <textarea class="textareaS" id="taDescription">@article.Description</textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-2 control-label">
-                <label class="customer-content-sm">文章图片：</label>
+                <label class="customer-content-sm">项目图标：</label>
             </div>
             <div class="col-md-10">
                 <div id="uploadThumbnailsImage">选择图片</div>
                 <span class="customer-content-sm" id="status"></span>
-            </div>    
+            </div>
             <div class="col-lg-4 col-md-6 col-md-offset-2" style="margin-top:10px;">
-              
-                @if (!string.IsNullOrEmpty(article.ArticleType) && article.ArticleType == Common.Information)
+            
+                @if (project.Image != null && !string.IsNullOrEmpty(project.Image.VirtualPath))
                 {
-                    var imgSrc = "../img/medium_model.jpg";
-                    if (article.Image != null)
-                    {
-                        imgSrc = article.Image.VirtualPath;
-                    }
-                    <img class="image-mediumsize" id="showUploadImage" src="@imgSrc" />
+                    <img class="image-smallsize" id="showUploadImage" src="@project.Image.VirtualPath"/>
+
                 }
                 else
                 {
-                    var imgSrc = "../img/small_model.jpg";
-                    if (article.Image != null)
-                    {
-                        imgSrc = article.Image.VirtualPath;
-                    }
-                    <img class="image-smallsize" id="showUploadImage" src="@imgSrc" />
-
+                    <img class="image-smallsize" id="showUploadImage" src="~/img/small_model.jpg" alt="无图标" />
                 }
+
             </div>
 
         </div>
+
         <div class="form-group">
-            <div class="col-md-2 control-label">
-                <label class="customer-content-sm">发布时间：</label>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group date form_datetime" data-date=""
-                     data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="tbPubTime">
-                    <input class="form-control" size="16" type="text" value="@article.Pubtime.ToString("yyyy-MM-dd hh:mm:ss")" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                </div>
-                <input type="hidden" id="tbPubTime" name="PubTime" value="@article.Pubtime.ToString("yyyy-MM-dd hh:mm:ss")" /><br />
-            </div>
-
-
-        </div>
-        <div class="form-group">
-            <div class="col-md-2 control-label">
-                <label class="customer-content-sm">是否链接：</label>
-            </div>
-            <div class="col-md-10">
-                <input type="radio" value="true" name="IsHref" /><label>是</label>
-                <input type="radio" value="false" checked="checked" name="IsHref" style="margin-left:50px;" /><label>否</label>
-
-            </div>
-        </div>
-        <div class="form-group" id="divArticleHref" style="display:none;">
-            <div class="col-md-2 control-label">
-                <label class="customer-content-sm">文章链接：</label>
-            </div>
-            <div class="col-md-10">
-                <input class="inputS" id="tbHref" placeholder="文章链接" value="@article.Href" />
-            </div>
-        </div>
-
-        <div class="form-group" id="divArticleContent">
             <div class="col-md-12">
                 <div class="checkbox">
-                    <textarea id="tbEditContent" name="tbEditContent">@article.Content</textarea>
+                    <textarea id="taProjectContent" name="taProjectContent">@project.Content</textarea>
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -123,60 +80,36 @@
             data-dismiss="modal">
         退 出
     </button>
-    <button type="button" class="btn btn-lg btn-danger" onclick="SaveEdit()">
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
         保 存
     </button>
 </div>
-<!--#endregion 修改-->
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
 
 <script>
-    
-    var editor = CKEDITOR.instances["tbEditContent"];
+
+    var editor = CKEDITOR.instances["taProjectContent"];
     if (editor) { editor.destroy(true); }
-    CKEDITOR.replace("tbEditContent", {
+    CKEDITOR.replace("taProjectContent", {
         enterMode: CKEDITOR.ENTER_BR
     });
     CKFinder.setupCKEditor(null, '@Url.Content("~/ckfinder/")');
 
     $(function () {
-
-        $('.form_datetime').datetimepicker({
-            //language:  'fr',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1,
-            language: 'zh-CN'
-        });
-
-
-        //文章是否链接事件
-        $("[name='IsHref']").change(function () {
-            ChangeHrefRadio();
-        });
-
-        //如果文章是链接，则选中链接选项
-        var isHref = '@article.IsHref';
-        if (isHref.toLowerCase() == "true") {
-            $("input[type=radio][value=true]").attr("checked", 'checked');
-            ChangeHrefRadio();
-        }
-
         InitWebUploader();
     })
 
     var uploader;
     function InitWebUploader() {
 
-    
+
         // 初始化Web Uploader
         uploader = WebUploader.create({
             auto: false,   // 选完文件后，是否自动上传。
             swf: '../Scripts/webuploader/Uploader.swf',
-            server: '/Infra/Article/UploadThumbnailsImage',
+            server: '/Service/Project/UploadThumbnailsImage',
             duplicate: true, //可重复上传同一文件
             pick: '#uploadThumbnailsImage',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
             compress: false, //图片不压缩
@@ -195,7 +128,7 @@
             }
         });
         uploader.on('fileQueued', function (file) {
-            
+            debugger
             //生成预览图片
             uploader.makeThumb(file, function (error, src) {
                 if (error) {
@@ -207,17 +140,16 @@
         });
 
         uploader.on('startUpload', function () {
-            
+
             //开始上传，添加遮罩
             //$("body").showLoading();
         });
-        
         uploader.on('uploadFinished', function () {
-            
+
             //图片上传成功后关闭对话框，刷新表格
             CloseEditScreen();
             //刷新
-            InitPaging();
+            RefreshTable();
             $("body").hideLoading();
         });
 
@@ -240,11 +172,11 @@
 
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
         uploader.on('uploadSuccess', function (file, response) {
-            
+
             if (response.Success == false || response.Success == "false") {
 
             } else {
-                
+
             }
 
         });
@@ -257,38 +189,22 @@
         });
     }
 
-    function UploadImage(articleId) {
+    function UploadImage(projectId) {
 
-        uploader.options.formData.articleId = articleId;
+        uploader.options.formData.projectId = projectId;
         uploader.upload();
     }
 
-    function ChangeHrefRadio() {
-        var isHref = $("input[name='IsHref']:checked").val();
-
-        $("#divArticleHref").toggle();
-        $("#divArticleContent").toggle();
-
-        if (isHref == "true") {
-            //如果是链接，则隐藏并且清空内容编辑框,显示Href输入框
-            //CKEDITOR.instances.Content.setData("");
-            CKEDITOR.instances["tbEditContent"].setData("");
-
-        } else {
-            //如果不是链接，则隐藏并且清空Href输入框,显示内容编辑框
-            $("#Href").val(" ");
-        }
-    }
 
     //修改或新增保存
-    function SaveEdit() {
+    function SaveAdd() {
 
         $("body").showLoading();
         var saveObj = ConstructSaveObj();
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/Infra/Article/SaveEdit",
+            url: "/Service/Project/SaveEdit",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步
@@ -298,8 +214,10 @@
                     //上传图片
                     UploadImage(message.ReturnStrId);
 
+
                 } else {
                     $("body").hideLoading();
+
                     layer.alert(message.Content, {
                         skin: 'layui-layer-molv' //样式类名
                       , closeBtn: 0
@@ -313,19 +231,18 @@
 
     //构造保存对象
     function ConstructSaveObj() {
-        var editor = CKEDITOR.instances["tbEditContent"];
+        var editor = CKEDITOR.instances["taProjectContent"];
         var obj = {
-            Id:'@_articleId',
-            Title: $("#tbTitle").val(),
-            SubTitle: $("#tbSubTitle").val(),
+            Id:'@project.Id',
+            Name: $("#tbName").val(),
             Description: $("#taDescription").val(),
-            PubTime: $("#tbPubTime").val(),
-            IsHref: $("input[name='IsHref']:checked").val(),
-            Href: $("#tbHref").val(),
-            Content: editor.getData(),
-            ArticleType: '@_articleType'
+            Type: '@Common.ZZ_Project',
+            Sequence: $("#tbSequence").val(),
+            Content: editor.getData()
 
         };
         return obj;
     }
+
+
 </script>

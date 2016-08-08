@@ -37,13 +37,13 @@ namespace Padmate.ServicePlatform.Utility
         public const string Image_HomeBG = "homebg";
         public const string Article_Thumbnails = "article_thumbnails";
         public const string Project_Thumbnails = "project_thumbnails";
-
+        public const string ProjectAttachment_Thumbnails = "projectattachment_thumbnails";
 
         public static Dictionary<string, string> Dic_ImageType = new Dictionary<string, string>(){
             {Image_HomeBG,"首页背景图片"},
             {Article_Thumbnails,"文章缩略图"},
-            {Project_Thumbnails,"项目缩略图"}
-
+            {Project_Thumbnails,"项目缩略图"},
+            {ProjectAttachment_Thumbnails,"项目附件缩略图"}
 
         };
         #endregion
@@ -51,10 +51,11 @@ namespace Padmate.ServicePlatform.Utility
         #region 项目类型
 
         public const string ZZ_Project = "zz_project";
-
+        public const string Other_Project = "other_project";
 
         public static Dictionary<string, string> Dic_ProjectType = new Dictionary<string, string>(){
-            {ZZ_Project,"众创项目"}
+            {ZZ_Project,"众创项目"},
+            {Other_Project,"其它项目"}
 
 
         };

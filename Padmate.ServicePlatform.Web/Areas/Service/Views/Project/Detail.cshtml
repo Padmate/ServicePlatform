@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+    var project = (M_Project)ViewData["project"];
+}
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+
+
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center">详 细</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">项目名称：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@project.Name</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">排列顺序：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@project.Sequence</label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">项目简介：</label>
+            </div>
+            <div class="col-md-10">
+                <span class="customer-content-sm">@project.Description</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">项目图标：</label>
+            </div>
+            <div class="col-md-4">
+                <img class="img-responsive" src="@project.Image.VirtualPath" alt="无图标" />
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">项目内容：</label>
+            </div>
+            <div class="col-md-12">
+                @Html.Raw(project.Content)
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+</div>
+
+
