@@ -67,7 +67,7 @@ namespace Padmate.ServicePlatform.Service
             return totalCount;
         }
 
-        private M_ProjectDownload ConverEntityToModel(ProjectDownload project)
+        public M_ProjectDownload ConverEntityToModel(ProjectDownload project)
         {
             if (project == null) return null;
 
@@ -109,8 +109,8 @@ namespace Padmate.ServicePlatform.Service
                     PhysicalPath = model.PhysicalPath,
                     SaveName = model.SaveName,
                     Extension = model.Extension,
-                    Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence)
-
+                    Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence),
+                    ProjectId = new Guid(model.ProjectId)
                 };
 
                 message.ReturnStrId = _dProjectDownload.AddProjectDownload(project);

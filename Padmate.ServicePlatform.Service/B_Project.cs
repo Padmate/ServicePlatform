@@ -95,7 +95,9 @@ namespace Padmate.ServicePlatform.Service
         {
             if (project == null) return null;
 
-             B_Image bImage = new B_Image();
+            B_Image bImage = new B_Image();
+            B_ProjectDownload bProjectDownload = new B_ProjectDownload();
+
             var model = new M_Project()
             {
                 Id = project.Id.ToString(),
@@ -109,7 +111,7 @@ namespace Padmate.ServicePlatform.Service
                 ModifiedDate = project.ModifiedDate,
                 Type = project.Type,
                 Image = project.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(project.ImageId)),
-                //ProjectDownloads = project.ProjectDownloads
+                ProjectDownloads = project.ProjectDownloads.Select(p => bProjectDownload.ConverEntityToModel(p)).ToList()
 
             };
             return model;

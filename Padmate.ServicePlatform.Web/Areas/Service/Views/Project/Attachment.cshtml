@@ -44,6 +44,14 @@
             </div>
             <div class="col-md-10">
                 <div id="uploadFiles">上传附件</div>
+                <label class="progress"></label>
+            </div>
+            <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span class="sr-only">40% Complete (success)</span>
+                    
+                </div>
+                
             </div>
 
         </div>
@@ -180,22 +188,57 @@
     var fileUploader;
     function InitFileUploader() {
 
+        var GUID = WebUploader.Base.guid();//一个GUID
         // 初始化Web Uploader
         fileUploader = WebUploader.create({
             auto: true,   // 选完文件后，是否自动上传。
             swf: '../Scripts/webuploader/Uploader.swf',
-            server: '/Service/Project/UploadAttachment',
+            server: '/Service/Project/ChunkedUploadAttachment',
             duplicate: true, //可重复上传同一文件
             pick: '#uploadFiles',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
             compress: false, //图片不压缩
             multiple: false,
-            fileSingleSizeLimit: 10 * 1024 * 1024 // 单个文件最大不能超过10 M
-        });
-        fileUploader.on('fileQueued', function (file) {
+            //fileSingleSizeLimit: 200 * 1024 * 1024, // 单个文件最大不能超过200 M
+            chunked: true,//开始分片上传
+            chunkSize: 2 * 1024 * 1024,//每一片的大小为2M
+            formData: {
+               guid: GUID //自定义参数，待会儿解释
+            }
 
-            fileUploader.options.formData.ProjectId = '@projectId';
+
+        }); 
+
+        fileUploader.on('beforeFileQueued', function (file) {
+            
+            var desc = $("#taDescription").val();
+            var seq = $("#tbSequence").val();
+            if(desc == null || desc =="")
+            {
+                layer.alert("附件描述不能为空", {
+                    skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                });
+                return false;
+            }
+            if (seq == null || seq == "") {
+                layer.alert("附件顺序不能为空", {
+                    skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                });
+                return false;
+            }
+            return true;
+
+        });
+
+        fileUploader.on('fileQueued', function (file) {
+            
+            @*fileUploader.options.formData.ProjectId = '@projectId';
             fileUploader.options.formData.Description = $("#taDescription").val();
-            fileUploader.options.formData.Sequence = $("#tbSequence").val();
+            fileUploader.options.formData.Sequence = $("#tbSequence").val();*@
+            
+            $("#uploadFiles").showLoading();
+
         });
 
         fileUploader.on('startUpload', function () {
@@ -203,18 +246,25 @@
             //开始上传，添加遮罩
             //$("body").showLoading();
         });
+
+        fileUploader.on('uploadProgress', function (file, percentage) {
+            $(".progress").html(percentage * 100 + '%');
+        });
+
+
         fileUploader.on('uploadFinished', function () {
 
             //清空
             $("#taDescription").val("")
             $("#tbSequence").val("");
-            $("body").hideLoading();
+            $(".progress").html("");
+            $("#uploadFiles").hideLoading();
         });
 
         fileUploader.on('error', function (handler) {
 
             //隐藏遮罩
-            $("body").hideLoading();
+            $("uploadFiles").hideLoading();
 
             if (handler == "Q_EXCEED_NUM_LIMIT") {
                 alert("超出最大张数");
@@ -224,7 +274,7 @@
             }
             if (handler == "F_EXCEED_SIZE") {
 
-                layer.alert("图片大小不能超过10M", {
+                layer.alert("图片大小不能超过200M", {
                     skin: 'layui-layer-molv' //样式类名
                        , closeBtn: 0
                 });
@@ -241,8 +291,22 @@
                       , closeBtn: 0
                 });
             } else {
-                //上传成功，则重新加载图片
-                RefreshAttachmentTable();
+                ;
+                var obj = {
+                    ProjectId: '@projectId',
+                    Description: $("#taDescription").val(),
+                    Sequence: $("#tbSequence").val(),
+                    guid: GUID,
+                    fileName: file.name,
+                    extension: file.ext
+                };
+
+                $.post('/Service/Project/MergeFile', obj, function (data) {
+                    //上传成功，则重新加载图片
+                    RefreshAttachmentTable();
+                });
+
+                
             }
 
         });
@@ -251,7 +315,7 @@
         fileUploader.on('uploadComplete', function (file) {
             //$('#' + file.id).find('.progress').remove();
             //隐藏遮罩
-            //$("body").hideLoading();
+            //$("#uploadFiles").hideLoading();
         });
     }
 

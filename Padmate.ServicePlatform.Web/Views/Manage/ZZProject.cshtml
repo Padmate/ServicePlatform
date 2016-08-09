@@ -167,7 +167,8 @@
                 formatter: function (value, row, index) {
                     var result = '<a href="javaScript:void(0)" onclick="Detail(&apos;' + row.Id + '&apos;)">点击查看</a>';
                     return result;
-                }
+                },
+                align:'center'
 
             },
             {
@@ -176,10 +177,25 @@
 
             },
             {
+                field: '',
+                title: '附件数量',
+                formatter: function (value, row, index) {
+                    var result = row.ProjectDownloads.length;
+                    if (result > 0)
+                    {
+                        return "<label style='color:red;'>"+result+"</label>";
+                    }
+                    return result;
+                },
+                width: '5%',
+                align: 'center'
+            },
+            {
                 field: 'Sequence',
                 title: '排列顺序',
                 sortable: true,
-                width:'10px'
+                width: '5%',
+                align: 'center'
             }
             ]
         });

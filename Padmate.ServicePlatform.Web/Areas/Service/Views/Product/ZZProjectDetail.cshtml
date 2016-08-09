@@ -6,7 +6,12 @@
     var currentHref = "/product/" + project.Id + urlRewriteExtension;
     ViewBag.Title = project.Name;
 }
-
+<style>
+    .projectdownload{
+        margin:10px auto;
+        margin-bottom:50px;
+    }
+</style>
 <div class="container">
     <h3>
         <a class="customer-content-xs" href="/">首页</a> »
@@ -18,4 +23,19 @@
     </h3>
     <hr />
     @Html.Raw(project.Content)
+
+    @if(project.ProjectDownloads.Count >0)
+    {
+        <div class="projectdownload">
+            <hr />
+            @foreach (var attachment in project.ProjectDownloads)
+            {
+                <label class="customer-content-sm">@attachment.Description：</label>
+                <a class="customer-content-sm" href="@attachment.VirtualPath">点此下载</a>
+                <br />
+            }
+        </div>
+    }
+    
+
 </div>

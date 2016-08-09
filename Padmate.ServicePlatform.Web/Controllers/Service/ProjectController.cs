@@ -249,6 +249,119 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         }
 
         /// <summary>
+        /// 分片上传附件
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ChunkedUploadAttachment(HttpPostedFileBase file)
+        {
+            //虚拟目录
+            string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["projectAttachmentVirtualDirectory"].ToString();
+
+            Message message = new Message();
+            message.Success = true;
+
+            if (file == null)
+            {
+                message.Success = false;
+                message.Content = "未获取到文件信息,请重新尝试";
+                return Json(message);
+            }
+
+            try
+            {
+                FileInfo fileInfo = new FileInfo(file.FileName);
+                
+                int index = Convert.ToInt32(Request["chunk"]);//当前分块序号
+                var guid = Request["guid"];//前端传来的GUID号
+                var dir = Server.MapPath("~" + attachmentVirtualDirectory);//文件上传目录
+                dir = Path.Combine(dir, guid);//临时保存分块的目录
+
+                if (!System.IO.Directory.Exists(dir))
+                    System.IO.Directory.CreateDirectory(dir);
+
+                //分块文件名为索引名，更严谨一些可以加上是否存在的判断，防止多线程时并发冲突
+                string filePath = Path.Combine(dir, index.ToString());
+
+                if(!System.IO.File.Exists(filePath))
+                {
+                    file.SaveAs(filePath);
+                }
+
+                message.Success = true;
+
+            }catch(Exception e){
+
+                message.Success = false;
+                message.Content = e.Message;
+
+            }
+
+             return Json(message);
+
+        }
+
+        /// <summary>
+        /// 合并分片上传的文件
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult MergeFile(M_ProjectDownload model)
+         {
+            Message message = new Message();
+            message.Success = true;
+
+            string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["projectAttachmentVirtualDirectory"].ToString();
+
+            #region 校验
+            if (string.IsNullOrEmpty(model.ProjectId))
+            {
+                message.Success = false;
+                message.Content = "未获取项目ID，请重新尝试";
+                return Json(message);
+            }
+
+            message = model.validate();
+            if (!message.Success) return Json(message);
+            #endregion
+
+             var guid = Request["guid"];//GUID
+             var uploadDir = Server.MapPath("~"+attachmentVirtualDirectory);//Upload 文件夹
+             var dir = Path.Combine(uploadDir, guid);//临时文件夹
+             var fileName = Request["fileName"];//文件名
+             var extension = Request["extension"];
+             var saveName = Guid.NewGuid().ToString() +"."+ extension; //新的文件保存名称
+
+
+             var files = System.IO.Directory.GetFiles(dir);//获得下面的所有分片文件
+             var finalPath = Path.Combine(uploadDir, saveName);
+             var fs = new FileStream(finalPath, FileMode.Create);
+             foreach (var part in files.OrderBy(x => x))//排一下序，保证从0-N Write
+             {
+                 var bytes = System.IO.File.ReadAllBytes(part);
+                 fs.Write(bytes, 0, bytes.Length);
+                 bytes = null;
+                 System.IO.File.Delete(part);//删除分块
+             }
+             fs.Close();
+             System.IO.Directory.Delete(dir);//删除文件夹
+
+             B_ProjectDownload bProjectDownload = new B_ProjectDownload();
+             model.Extension = extension;
+             model.SaveName = saveName;
+             model.VirtualPath = Path.Combine(attachmentVirtualDirectory,saveName) ;
+             message = bProjectDownload.AddProjectDownload(model); 
+
+             return Json(message);
+         }
+     
+
+
+
+        /// <summary>
         /// 删除图片
         /// </summary>
         /// <param name="Id"></param>
