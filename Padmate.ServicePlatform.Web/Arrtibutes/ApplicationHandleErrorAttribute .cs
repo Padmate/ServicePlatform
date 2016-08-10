@@ -12,7 +12,7 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
     /// </summary>
     public class ApplicationHandleErrorAttribute : HandleErrorAttribute
     {
-        readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        readonly ILog logger = LogManager.GetLogger("MVCLog");
       
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
             string Url = HttpContext.Current.Request.RawUrl;//错误发生地址
 
             //修改日志存放路径
-            LogHelp.ChangeLoggerFile(LogHelp.MVCLogDirectory);
+            //LogHelp.ChangeLoggerFile(LogHelp.MVCLogDirectory);
             //日志记录
             logger.Error("URL:"+HttpContext.Current.Request.Url,filterContext.Exception);
 

@@ -24,7 +24,7 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
     /// </summary>
     public class WebApiGlobalExceptionHandler : ExceptionHandler
     {
-        readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        readonly log4net.ILog logger = log4net.LogManager.GetLogger("APILog");
        
 
         public override void Handle(ExceptionHandlerContext context)
@@ -34,7 +34,7 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
             response.Message = "对不起，服务器发生错误。";
 
             //修改日志存放路径
-            LogHelp.ChangeLoggerFile(LogHelp.APILogDirectory);
+            //LogHelp.ChangeLoggerFile(LogHelp.APILogDirectory);
             //日志记录
             logger.Error("URL:"+context.Request.RequestUri,context.Exception);
             
