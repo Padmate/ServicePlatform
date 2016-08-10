@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Padmate.ServicePlatform.API.Arrtibutes;
 using Padmate.ServicePlatform.Web.Arrtibutes;
 using System;
 using System.Collections.Generic;

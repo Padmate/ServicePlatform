@@ -76,7 +76,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\WebApiGlobalExceptionHandler.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\PhoneShellsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -111,6 +110,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_Start\" />
+    <Folder Include="Attributes\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

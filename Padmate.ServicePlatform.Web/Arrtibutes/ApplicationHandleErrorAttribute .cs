@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,9 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
     /// </summary>
     public class ApplicationHandleErrorAttribute : HandleErrorAttribute
     {
+        readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+      
+
         /// <summary>
         /// 异常
         /// </summary>
@@ -21,6 +25,11 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
             Exception Error = filterContext.Exception;
             string Message = Error.Message;//错误信息
             string Url = HttpContext.Current.Request.RawUrl;//错误发生地址
+
+            //修改日志存放路径
+            LogHelp.ChangeLoggerFile(LogHelp.MVCLogDirectory);
+            //日志记录
+            logger.Error("URL:"+HttpContext.Current.Request.Url,filterContext.Exception);
 
             filterContext.ExceptionHandled = true;
             filterContext.HttpContext.Response.Clear();
