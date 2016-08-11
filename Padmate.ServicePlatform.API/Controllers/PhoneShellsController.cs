@@ -41,7 +41,6 @@ namespace Padmate.ServicePlatform.API.Controllers
         [Route("api/PhoneShells/{id}",Name="GetById")]
         public IHttpActionResult GetById(string id)
         {
-            var BB = System.Convert.ToInt16(id);
             var result = phoneShell.FirstOrDefault((p) => p.Id == id);
             if (result == null)
             {
