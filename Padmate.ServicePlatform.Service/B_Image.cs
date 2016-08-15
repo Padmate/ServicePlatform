@@ -46,6 +46,7 @@ namespace Padmate.ServicePlatform.Service
         public M_Image GetImageById(int id)
         {
             var image = _dImage.GetImageById(id);
+            if (image == null) return null;
             var result = new M_Image()
             {
                 Id = image.Id,
