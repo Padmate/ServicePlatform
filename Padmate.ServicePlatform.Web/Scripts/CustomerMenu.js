@@ -18,6 +18,8 @@
 
     });
 
+
+    //点击选项时改变右侧箭头样式
     $(".menu-sidebar-nav a").click(function () {
 
         ChangeMenuCollapseStyle(this);
