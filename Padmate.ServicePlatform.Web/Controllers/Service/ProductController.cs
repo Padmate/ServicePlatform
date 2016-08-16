@@ -38,6 +38,10 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         {
             B_Project bProject = new B_Project();
             var project = bProject.GetProjectById(id);
+
+            //如果为空，则返回404
+            if (project == null) throw new HttpException(404, "");
+
             ViewData["project"] = project;
 
             return View();

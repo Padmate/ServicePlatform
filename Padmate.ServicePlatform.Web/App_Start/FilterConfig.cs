@@ -10,7 +10,7 @@ namespace Padmate.ServicePlatform.Web
         {
 
             //filters.Add(new HandleErrorAttribute());
-            filters.Add(new ApplicationHandleErrorAttribute());
+            //filters.Add(new ApplicationHandleErrorAttribute());
         }
     }
 }

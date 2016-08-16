@@ -30,6 +30,9 @@ namespace Padmate.ServicePlatform.Web.Controllers.Information
             }
             var article = bArticle.GetArticleById(id); ;
 
+            //如果为空，则返回404
+            if (article == null) throw new HttpException(404, "");
+
             ViewData["article"] = article;
 
             //根据id查找上一篇，下一篇记录
