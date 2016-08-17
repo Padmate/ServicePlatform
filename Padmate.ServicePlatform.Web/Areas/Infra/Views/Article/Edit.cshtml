@@ -143,19 +143,8 @@
 
     $(function () {
 
-        $('.form_datetime').datetimepicker({
-            //language:  'fr',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1,
-            language: 'zh-CN'
-        });
-
-
+        //时间控件
+        InitDatetimepicker(".form_datetime");
         //文章是否链接事件
         $("[name='IsHref']").change(function () {
             ChangeHrefRadio();
