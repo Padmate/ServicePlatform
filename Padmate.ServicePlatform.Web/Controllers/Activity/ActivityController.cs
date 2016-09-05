@@ -11,7 +11,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Activity
 {
     public class ActivityController:BaseController
     {
-        public ActionResult Index(string page)
+        public ActionResult Index()
         {
             //查询最新的前3条活动预告
             B_Article bArticle = new B_Article();

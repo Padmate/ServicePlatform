@@ -64,6 +64,8 @@
 
 <script>
 
+    var currentPage = '@Request["page"]';
+    var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
     var _tabType = '@Common.Information';
     $(function () {
 
@@ -92,16 +94,16 @@
 
     function InitPaging()
     {
-        //获取总页数及第一页数据
-        var firstResult = GetPageData(1);
-        //加载第一页数据
-        RenderPageData(firstResult.data);
+        //获取总页数及当前页数据
+        var pageResult = GetPageData(_currentPage);
+        //加载当前页数据
+        RenderPageData(pageResult.data);
 
         //重置分页条
         ResetPaginator();
         //超过一页才显示分页
-        if (firstResult.totalPages > 1) {
-            InitPaginator(firstResult.totalPages);
+        if (pageResult.totalPages > 1) {
+            InitPaginator(pageResult.totalPages);
         }
 
     }
@@ -120,13 +122,22 @@
             size: 'large',            //指定分页条的大小
             bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
             numberOfPages: 10,         //设置可选分页按钮个数，默认5
-            currentPage: 1,          //当前页
+            currentPage: _currentPage,          //当前页
             totalPages: totalPages,         //总页数（从服务端获取）
-            onPageClicked: function (e, originalEvent, type, page) {
-                //获取分页数据
-                var result = GetPageData(page);
-                //渲染当前页数据
-                RenderPageData(result.data);
+            //onPageClicked: function (e, originalEvent, type, page) {
+            //    //获取分页数据
+            //    var result = GetPageData(page);
+            //    //渲染当前页数据
+            //    RenderPageData(result.data);
+            //},
+            pageUrl: function (type, page, current) {
+                var url = '@string.Format("/information{0}", @urlRewriteExtension)';
+                if (page != 1) {
+                    url = url + "?page=" + page;
+                }
+
+                return url;
+
             },
             itemTexts: function (type, page, current) {
                 switch (type) {
