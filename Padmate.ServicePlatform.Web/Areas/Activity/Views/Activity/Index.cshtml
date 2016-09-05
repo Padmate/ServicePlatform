@@ -5,6 +5,8 @@
     List<M_Article> firstThreeWonderfulActivies = (List<M_Article>)ViewData["FirstThreeWonderfulActivies"];
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
+    var type = Request["type"];
+    type = string.IsNullOrEmpty(type) ? Common.ActivityForecast : type;
 }
 @using Padmate.ServicePlatform.Utility;
 @using Padmate.ServicePlatform.Models;
@@ -19,22 +21,14 @@
         <div class="row">
             <div class="col-is-8 col-sm-8 col-md-8" id="left">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="activityforecast">
-                        <h2 class="customer-h2">活动预告</h2>
+                    <div class="tab-pane active">
+                        <h2 class="customer-h2">@Common.Dic_ArticleType[type.ToLower()]</h2>
                         
-                        <div class="articleBody" id="activityforecastBody"></div>
+                        <div class="articleBody" id="articleBody"></div>
                         <div class="articlePageBar">
-                            <ul id="activityforecastPaginator"></ul>
+                            <ul id="articlePaginator"></ul>
                         </div>
 
-                    </div>
-                    <div class="tab-pane" id="wonderfulactivity">
-                        <h2 class="customer-h2">精彩活动</h2>
-
-                        <div class="articleBody" id="wonderfulactivityBody"></div>
-                        <div class="articlePageBar">
-                            <ul id="wonderfulactivityPaginator"></ul>
-                        </div>
                     </div>
                 </div>
 
@@ -48,15 +42,19 @@
 
                 <div class="article-right" id="right">
                     <ul class="articleTag" id="tagTab">
-                        <li class="active"><a class="btn btn-xl" name="activityforecast" href="#activityforecast">活动预告</a></li>
-                        <li><a class="btn btn-lg" name="wonderfulactivity" href="#wonderfulactivity">精彩活动</a></li>
+                        <li>
+                            <a class="btn btn-xl" id="@Common.ActivityForecast" href="@string.Format("/activity/{0}{1}",Common.ActivityForecast ,urlRewriteExtension)">活动预告</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-lg" id="@Common.WonderfulActivity" href="@string.Format("/activity/{0}{1}",Common.WonderfulActivity ,urlRewriteExtension)">精彩活动</a>
+                        </li>
                         
                     </ul>
                     <div id="recentActivities">
                         <h3 class="customer-h3">最新预告</h3>
                         @foreach (var article in firstThreeActivitiyForecast)
                         {
-                            var activityHref ="/activity/"+ article.Id + urlRewriteExtension;
+                            var activityHref ="/activity/"+Common.ActivityForecast+"/"+ article.Id + urlRewriteExtension;
                             <span>
                                 <a class="customer-content-sm" href='@activityHref' style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
@@ -68,7 +66,7 @@
                         <h3 class="customer-h3">最新活动</h3>
                         @foreach (var article in firstThreeWonderfulActivies)
                         {
-                            var activityHref = "/activity/" + article.Id + urlRewriteExtension;                       
+                            var activityHref = "/activity/" + Common.WonderfulActivity + "/" + article.Id + urlRewriteExtension;                       
                             <span>
                                 <a class="customer-content-sm" href="@activityHref" style="cursor:pointer">
                                     @article.SubTitle - @article.Pubtime.ToString("yyyy/MM/dd")
@@ -87,28 +85,19 @@
 </section>
 
 <script>
+    var currentPage = '@Request["page"]';
+    var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
 
-    var anchor = '@Request["anchor"]';
+    var type = '@Request["type"]';
     //当前内容面板类型（即文章类型_tabType）
     //如果锚点标记不为空，则锚点标记即为当前tab类型，否则默认为“活动预告”
-    var _tabType = anchor != null && anchor != "" ? anchor : "activityforecast";
+    var _tabType = type != null && type != "" ? type : @Common.ActivityForecast;
 
     $(function () {
-        //初始化显示面板内容
-        $("a[name=" + _tabType + "]").tab("show");
+
+        $("#"+_tabType).parent().addClass("active");
         //初始化分页数据
         InitPaging();
-
-        //tab点击事件
-        $('#tagTab a').click(function (e) {
-            //重新设置当前tab类型
-            _tabType = this.name;
-            //切换tab时重新生成分页
-            InitPaging();
-
-            e.preventDefault();//阻止a链接的跳转行为
-            $(this).tab('show');//显示当前选中的链接及关联的content
-        });
 
         //查询按钮事件
         $(".articleSearchButton").click(function (e) {
@@ -131,23 +120,23 @@
 
     function InitPaging()
     {
-        //获取总页数及第一页数据
-        var firstResult = GetPageData(1);
-        //加载第一页数据
-        RenderPageData(firstResult.data);
+        //获取总页数及当前页数据
+        var pageResult = GetPageData(_currentPage);
+        //加载当前页数据
+        RenderPageData(pageResult.data);
 
         //重置分页条
         ResetPaginator();
         //超过一页才显示分页
-        if (firstResult.totalPages > 1) {
-            InitPaginator(firstResult.totalPages);
+        if (pageResult.totalPages > 1) {
+            InitPaginator(pageResult.totalPages);
         }
 
     }
     //重置分页条
     function ResetPaginator()
     {
-        $('#' + _tabType + "Paginator").html("");
+        $("#articlePaginator").html("");
 
     }
     //配置分页属性
@@ -159,13 +148,23 @@
             size: 'large',            //指定分页条的大小
             bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
             numberOfPages: 10,         //设置可选分页按钮个数，默认5
-            currentPage: 1,          //当前页
+            currentPage: _currentPage,          //当前页
             totalPages: totalPages,         //总页数（从服务端获取）
-            onPageClicked: function (e, originalEvent, type, page) {
-                //获取分页数据
-                var result = GetPageData(page);
-                //渲染当前页数据
-                RenderPageData(result.data);
+            //onPageClicked: function (e, originalEvent, type, page) {
+            //    //获取分页数据
+            //    var result = GetPageData(page);
+            //    //渲染当前页数据
+            //    RenderPageData(result.data);
+            //},
+            pageUrl: function(type, page, current){
+                var url = '@string.Format("/activity/{0}{1}",type, @urlRewriteExtension)';
+                if(page !=1)
+                {
+                    url = url+"?page="+page;
+                }
+
+                return url;
+
             },
             itemTexts: function (type, page, current) {
                 switch (type) {
@@ -183,7 +182,7 @@
             }
         }
 
-        $('#' + _tabType + "Paginator").bootstrapPaginator(options);
+        $("#articlePaginator").bootstrapPaginator(options);
     }
     //获取分页数据
     function GetPageData(currentPage)
@@ -234,10 +233,10 @@
             var localDate = pubTime.toLocaleDateString();
 
 
-            var contentHref = "/activity/" + articles[i].Id+ '@urlRewriteExtension';
+            var contentHref = "/activity/"+_tabType+"/" + articles[i].Id+ '@urlRewriteExtension';
             var shareHref = window.location.host + contentHref;
 
-            
+
             dynamicHtml += '<div class="row article-row">';
             dynamicHtml += '<div class="col-md-12">';
             dynamicHtml += '<h3 class="customer-h3">' + articles[i].SubTitle + '</h3>';
@@ -271,7 +270,7 @@
             dynamicHtml += '</div>';
             dynamicHtml += '</div>';
         }
-        $("#" + _tabType + "Body").html(dynamicHtml);
+        $("#articleBody").html(dynamicHtml);
 
     }
 

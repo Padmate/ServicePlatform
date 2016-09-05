@@ -1,4 +1,5 @@
 ﻿@using System.Configuration;
+@using Padmate.ServicePlatform.Utility;
 @{
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 }
@@ -181,7 +182,20 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="checkmenu"><a href="@string.Format("/activity{0}", urlRewriteExtension)">活动</a></li>
+                        <li class="dropdown fa-dropdown checkmenu">
+                            <a href="@string.Format("/activity/{0}{1}",Common.ActivityForecast ,urlRewriteExtension)">
+                                活动
+                            </a>
+                            <ul class="dropdown-menu nav-submenu hidden">
+                                <li>
+                                    <a href="@string.Format("/activity/{0}{1}",Common.WonderfulActivity ,urlRewriteExtension)">
+                                        <i class="fa fa-2x fa-shopping-cart"></i>
+                                        精彩活动
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li class="checkmenu"><a href="@string.Format("/information{0}", urlRewriteExtension)">资讯</a></li>
                         <li class="checkmenu"><a href="@string.Format("/about{0}", urlRewriteExtension)">关于我们</a></li>
                     </ul>

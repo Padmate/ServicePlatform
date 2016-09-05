@@ -1,5 +1,6 @@
 ﻿@using System.Configuration;
 @using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
 @{
     M_Article article = (M_Article)ViewData["article"];
     M_Article previousArticle = (M_Article)ViewData["PreviousArticle"];
@@ -9,6 +10,7 @@
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     
     var currentArticle = article.Id + urlRewriteExtension;
+    var activityType = Request["type"];
 }
 
 <link href="~/Scripts/jiathis/jiathis-share.css" rel="stylesheet">
@@ -20,8 +22,8 @@
         <div class="col-md-12">
             <h3>
                 <a class="customer-content-xs" href="/">首页</a> » 
-                <a class="customer-content-xs" href="@string.Format("/activity{0}",urlRewriteExtension)">活动</a> » 
-                <a class="customer-content-xs" href="@string.Format("/activity/{0}",currentArticle)">@article.SubTitle</a>
+                <a class="customer-content-xs" href="@string.Format("/activity/{0}{1}",activityType,urlRewriteExtension)">@Common.Dic_ArticleType[activityType.ToLower()]</a> » 
+                <a class="customer-content-xs" href="@string.Format("/activity/{0}/{1}",activityType,currentArticle)">@article.SubTitle</a>
 
             </h3>
             <!-- share -->
@@ -57,7 +59,7 @@
             {
                 var preArticle = previousArticle.Id + urlRewriteExtension;
                 <div>上一篇：
-                    <a class="customer-content-xs" href="/activity/@preArticle">@previousArticle.SubTitle</a>
+                    <a class="customer-content-xs" href="/activity/@activityType/@preArticle">@previousArticle.SubTitle</a>
                 </div>
                 
             }
@@ -67,7 +69,7 @@
                 var nexArticle = nextArticle.Id + urlRewriteExtension;
                 <div>
                     下一篇：
-                    <a class="customer-content-xs" href="/activity/@nexArticle">@nextArticle.SubTitle</a>
+                    <a class="customer-content-xs" href="/activity/@activityType/@nexArticle">@nextArticle.SubTitle</a>
                 </div>
 
             }

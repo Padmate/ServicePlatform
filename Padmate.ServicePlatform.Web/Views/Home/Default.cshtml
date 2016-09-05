@@ -5,6 +5,7 @@
 }
 @using Padmate.ServicePlatform.Models;
 @using System.Configuration;
+@using Padmate.ServicePlatform.Utility;
 @{
     string type = (string)ViewData["type"];
     List<M_Article> activityForecastArticles = (List<M_Article>)ViewData["activityForecastArticles"];
@@ -415,7 +416,7 @@
             @{
                 for (int i = 0; i < activityForecastArticles.Count; i++)
                 {
-                    var contentHref = "/activity/" + activityForecastArticles[i].Id+urlRewriteExtension;
+                    var contentHref = "/activity/"+Common.ActivityForecast+"/" + activityForecastArticles[i].Id+urlRewriteExtension;
                     var aHref = activityForecastArticles[i].IsHref ? activityForecastArticles[i].Href : contentHref;
                     var aTarget = activityForecastArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = activityForecastArticles[i].Image == null ? "../img/small_model.jpg" 
@@ -455,6 +456,17 @@
 
         </div>
         <div class="row">
+            <div class="col-md-offset-5 col-md-7">
+                <a class="btn-gelatine btn-gelatine-website-lg" href="@string.Format("/activity/{0}{1}",Common.ActivityForecast ,urlRewriteExtension)">
+                    <i class="fa fa-refresh"></i>
+                    <span class="customer-content-sm whitefont">更多预告</span>
+                </a>
+
+
+            </div>
+        </div>
+
+        <div class="row">
             <h3 class="customer-h3">
                 <i class="fa fa-play" aria-hidden="true"></i>
                 精彩活动
@@ -462,7 +474,7 @@
             @{
                 for (int i = 0; i < wonderfulActivityArticles.Count; i++)
                 {
-                    var contentHref = "/activity/" + wonderfulActivityArticles[i].Id+urlRewriteExtension;
+                    var contentHref = "/activity/"+Common.WonderfulActivity +"/"+ wonderfulActivityArticles[i].Id+urlRewriteExtension;
                     var aHref = wonderfulActivityArticles[i].IsHref ? wonderfulActivityArticles[i].Href : contentHref;
                     var aTarget = wonderfulActivityArticles[i].IsHref ? "_blank" : "_self";
                     var imageVirtualPath = wonderfulActivityArticles[i].Image == null ? "../img/small_model.jpg"
@@ -501,7 +513,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-5 col-md-7">
-                <a class="btn-gelatine btn-gelatine-gray-lg" href="@string.Format("/activity{0}",urlRewriteExtension)">
+                <a class="btn-gelatine btn-gelatine-website-lg" href="@string.Format("/activity/{0}{1}",Common.WonderfulActivity ,urlRewriteExtension)">
                     <i class="fa fa-refresh"></i>
                     <span class="customer-content-sm whitefont">更多活动</span>
                 </a>
