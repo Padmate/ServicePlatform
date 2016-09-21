@@ -71,10 +71,11 @@
     <Compile Include="D_Mail.cs" />
     <Compile Include="D_Project.cs" />
     <Compile Include="D_ProjectDownload.cs" />
+    <Compile Include="D_Role.cs" />
     <Compile Include="D_User.cs" />
-    <Compile Include="Migrations\201607300841535_init.cs" />
-    <Compile Include="Migrations\201607300841535_init.Designer.cs">
-      <DependentUpon>201607300841535_init.cs</DependentUpon>
+    <Compile Include="Migrations\201609210555053_initdatabase.cs" />
+    <Compile Include="Migrations\201609210555053_initdatabase.Designer.cs">
+      <DependentUpon>201609210555053_initdatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,8 +92,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607300841535_init.resx">
-      <DependentUpon>201607300841535_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609210555053_initdatabase.resx">
+      <DependentUpon>201609210555053_initdatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

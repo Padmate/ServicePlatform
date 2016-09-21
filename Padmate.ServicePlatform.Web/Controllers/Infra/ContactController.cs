@@ -39,7 +39,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveAddScope()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -81,7 +81,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveEditScope()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -161,7 +161,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -198,7 +198,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);

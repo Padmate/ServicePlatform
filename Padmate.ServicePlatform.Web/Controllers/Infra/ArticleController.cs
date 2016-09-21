@@ -70,7 +70,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         /// <param name="ReturnUrl"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult UploadThumbnailsImage(string articleId, HttpPostedFileBase file)
         {
             Message message = new Message();
@@ -111,7 +111,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -143,7 +143,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -187,7 +187,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
             return message;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult Delete(string ArticleId)
         {
             B_Article bArticle = new B_Article();

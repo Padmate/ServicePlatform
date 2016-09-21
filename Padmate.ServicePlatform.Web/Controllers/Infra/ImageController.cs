@@ -1,6 +1,7 @@
 ﻿using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.Service;
 using Padmate.ServicePlatform.Utility;
+using Padmate.ServicePlatform.Web.Arrtibutes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [CustomAuthorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult UploadHomeBGImage(HttpPostedFileBase file)
         {
             //背景图片虚拟目录

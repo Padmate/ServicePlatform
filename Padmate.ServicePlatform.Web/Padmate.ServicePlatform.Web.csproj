@@ -201,7 +201,9 @@
     <Compile Include="Areas\Information\InformationAreaRegistration.cs" />
     <Compile Include="Areas\Infra\InfraAreaRegistration.cs" />
     <Compile Include="Areas\Service\ServiceAreaRegistration.cs" />
+    <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Arrtibutes\ApplicationHandleErrorAttribute .cs" />
+    <Compile Include="Arrtibutes\CustomAuthorize.cs" />
     <Compile Include="Arrtibutes\LogHelp.cs" />
     <Compile Include="Arrtibutes\WebApiGlobalExceptionHandler.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -217,6 +219,8 @@
     <Compile Include="Controllers\Service\ProductController.cs" />
     <Compile Include="Controllers\Service\ProjectController.cs" />
     <Compile Include="Controllers\Service\ServiceController.cs" />
+    <Compile Include="Controllers\User\RoleController.cs" />
+    <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1115,6 +1119,12 @@
     <Content Include="Areas\Service\Views\Project\Edit.cshtml" />
     <Content Include="Areas\Service\Views\Project\Detail.cshtml" />
     <Content Include="Areas\Service\Views\Project\Attachment.cshtml" />
+    <Content Include="Areas\User\Views\web.config" />
+    <Content Include="Areas\User\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\User\Views\Role\Add.cshtml" />
+    <Content Include="Areas\User\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\User\Views\User\Add.cshtml" />
+    <Content Include="Areas\User\Views\User\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />
@@ -1232,10 +1242,12 @@
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\UserInfo.cshtml" />
     <Content Include="Views\Manage\ZZProject.cshtml" />
+    <Content Include="Views\Manage\RoleManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Infra\Views\Shared\" />
+    <Folder Include="Areas\User\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

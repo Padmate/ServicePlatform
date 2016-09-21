@@ -33,7 +33,6 @@ $(function () {
 
     //过滤一级导航菜单是否与点击的链接匹配
     var element = $('.common-nav>li.checkmenu>a').filter(function () {
-        debugger;
         var thisPathName = this.pathname.toLowerCase();
         var clickPathName = clickedUrl.pathname.toLowerCase();
         //URL后缀分割，获取导航URL 如：/about.html

@@ -8,198 +8,238 @@
 
   <url>
     <loc>http://www.xiamenip.cn/</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/market.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/engineer.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/make.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/sale.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/supplymanagement.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/brand.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/tutor.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/fund.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/57b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/activityforecast/57b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/5eb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/activityforecast/5eb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/5db395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/activityforecast/5db395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/c54e51e9-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/activityforecast.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/5bb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/dd7c68bc-966e-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/59b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/a7ca1a63-906e-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/620ab7c8-8f6e-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information/61b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information/5fb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information/60b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/about.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/zzproject.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/iar.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/culturalcreative.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/idmd.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/hardwaredesign.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/softwaredesign.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/customerrequirement.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/productcrowdfunding.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/service/product/odmoem.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/58b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/d88e78df-cf6d-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information/62b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information/64b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/information/63b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/00b8e021-e45d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/5f374f5a-e45d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/cb771992-e45d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/843babce-e45d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/f2057205-e55d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/ee0a902e-e55d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/fd702c56-e55d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/fd8d9d81-e55d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/63ab01b7-e55d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/772f78e7-e55d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>http://www.xiamenip.cn/product/0fe45449-f35d-e611-8a9c-1418775b817d.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/5ab395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/107a8c45-616b-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.xiamenip.cn/activity/5cb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
-    <changefreq>weekly</changefreq>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/83473295-606b-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/041f2703-5e6b-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/69821a89-da68-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/3a3a4abe-5d64-e611-8a9c-1418775b817d.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/c54e51e9-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/5bb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/59b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/58b395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/5ab395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://www.xiamenip.cn/activity/wonderfulactivity/5cb395f7-f755-e611-bbaf-acb57d5dac35.html</loc>
+    <changefreq>monthly</changefreq>
   </url>
 </urlset>

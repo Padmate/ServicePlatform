@@ -62,7 +62,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// <param name="ReturnUrl"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult UploadThumbnailsImage(string projectId, HttpPostedFileBase file)
         {
             Message message = new Message();
@@ -105,7 +105,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -137,7 +137,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult SaveEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -158,7 +158,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult Delete(string ProjectId)
         {
             B_Project bProject = new B_Project();
@@ -167,7 +167,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
             return Json(message);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         [HttpPost]
         public ActionResult BachDeleteById()
         {
@@ -211,7 +211,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult UploadAttachment(HttpPostedFileBase file,M_ProjectDownload model)
         {
             //背景图片虚拟目录
@@ -255,7 +255,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.Service
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
         public ActionResult ChunkedUploadAttachment(HttpPostedFileBase file)
         {
             //虚拟目录

@@ -209,7 +209,7 @@
         uploader.on('uploadSuccess', function (file, response) {
             if (response.Success == false || response.Success == "false") {
                 $("#status").html("<lable style='color:red;'>" + response.Content + "</lable>");
-            } else {
+            } else {debugger
                 //上传成功，则重新加载图片
                 LoadHomeBGImage();
             }

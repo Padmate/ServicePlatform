@@ -16,9 +16,10 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
 
         protected override void Seed(Padmate.ServicePlatform.DataAccess.ServiceDbContext context)
         {
+            //默认添加系统管理员用户
             #region Add Admin Role
             string adminRoleId = string.Empty;
-            string admin = "Admin";
+            string admin = "SystemAdmin";
             var adminRole = context.Roles.FirstOrDefault(r => r.Name == admin);
             if (adminRole == null)
             {
@@ -36,7 +37,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
 
             #endregion
             #region Init Admin User
-            string userName = "Admin";
+            string userName = "SystemAdmin";
             string password = "admin123";
             var user = context.Users.FirstOrDefault(u => u.UserName == userName);
             if (user == null)
@@ -48,7 +49,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
                 {
                     UserName = userName,
                     PasswordHash = passwordHash,
-                    Email = "123@qq.com",
+                    Email = "SystemAdmin@qq.com",
                     EmailConfirmed = true,
                     SecurityStamp = Guid.NewGuid().ToString()
                 };

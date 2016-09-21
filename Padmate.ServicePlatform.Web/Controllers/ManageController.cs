@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.Utility;
 using System.IO;
+using Padmate.ServicePlatform.Web.Arrtibutes;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -249,6 +250,11 @@ namespace Padmate.ServicePlatform.Web.Controllers
         }
 
         public ActionResult Mail()
+        {
+            return View();
+        }
+
+        public ActionResult RoleManage()
         {
             return View();
         }

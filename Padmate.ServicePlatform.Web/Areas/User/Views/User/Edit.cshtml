@@ -1,0 +1,162 @@
+﻿@{
+    Layout = null;
+    var user = (M_User)ViewData["user"];
+    var roles = (List<M_Role>)ViewData["roles"];
+    
+}
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+
+
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center">修 改</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">用户名称：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbUserName" placeholder="用户名称" value="@user.UserName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">所属角色：</label>
+            </div>
+            <div class="col-md-10">
+                @{
+                    foreach (var role in roles)
+                    {
+                        var currentRoleIds = user.Roles.Select(r => r.Id).ToList(); ;
+                        
+                        if(currentRoleIds.Contains(role.Id))
+                        {
+                            <input name="ckRole" id='@role.Id' checked="checked" class="rolecheck" value=@role.Name type="checkbox" />
+
+
+                        }else{
+                            <input name="ckRole" id='@role.Id' class="rolecheck" value=@role.Name type="checkbox" />
+
+                        }
+                        <label for='@role.Id' style="font-weight:bold">@role.Name</label>
+                        <br />
+                    }
+
+                    
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">邮 箱：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbEmail" placeholder="邮 箱" value="@user.Email"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">联系电话：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbPhoneNumber" placeholder="联系电话" value="@user.PhoneNumber"/>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
+        保 存
+    </button>
+</div>
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
+<script>
+
+   
+    $(function () {
+    })
+
+
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/User/User/SaveEdit",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+                    //图片上传成功后关闭对话框，刷新表格
+                    CloseEditScreen();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var roles = [];
+
+        $("[name = ckRole]:checkbox").each(function () {
+            if ($(this).is(":checked")) {
+
+                var roleId = $(this).attr('id');
+                var role = {
+                    Id: roleId
+                };
+                roles.push(role);
+            }
+
+        });
+
+        var obj = {
+            Id: '@user.Id',
+            UserName: $("#tbUserName").val(),
+            Email: $("#tbEmail").val(),
+            PhoneNumber: $("#tbPhoneNumber").val(),
+            Roles: roles
+
+        };
+
+        return obj;
+
+    }
+
+
+</script>

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using System.Configuration;
+@using Padmate.ServicePlatform.Utility;
 @{
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 }
@@ -22,10 +23,10 @@
             </a>
             <ul class="dropdown-menu login-li-bg">
                 @{
-                    if (User.IsInRole("Admin"))
+                    if (User.IsInRole(SystemRole.BackstageAdmin) || User.IsInRole(SystemRole.SystemAdmin))
                     {
                         <li>
-                            <a href="@string.Format("/manage/homebackground{0}", urlRewriteExtension)">系统管理</a>
+                            <a href="@string.Format("/manage/homebackground{0}", urlRewriteExtension)">后台管理</a>
                         </li>
                     }
                 }
