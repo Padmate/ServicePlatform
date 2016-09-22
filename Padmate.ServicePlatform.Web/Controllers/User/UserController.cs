@@ -11,10 +11,11 @@ using System.Web.Mvc;
 
 namespace Padmate.ServicePlatform.Web.Controllers.User
 {
-    [Authorize(Roles=SystemRole.SystemAdmin+","+SystemRole.BackstageAdmin)]
+    [Authorize]
     public class UserController:BaseController
     {
         [HttpPost]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult GetPageData()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -31,6 +32,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
 
 
         [HttpPost]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult GetUserById(string userid)
         {
             B_User bUser = new B_User();
@@ -39,6 +41,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
             return Json(user);
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Detail(string id)
         {
             B_User bUser = new B_User();
@@ -54,6 +57,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Add()
         {
             //找出所有角色
@@ -69,6 +73,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
         // POST:
         [HttpPost]
         [ValidateInput(false)]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -91,6 +96,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
             return Json(message);
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Edit(string userId)
         {
 
@@ -110,6 +116,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
         // POST:
         [HttpPost]
         [ValidateInput(false)]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -129,6 +136,27 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
         }
 
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult SetUserInfo()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            SetUserInfoModel model = JsonHandler.DeserializeJsonToObject<SetUserInfoModel>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            B_User bUser = new B_User();
+            message = bUser.SetUserInfo(model);
+
+            return Json(message);
+
+        }
+
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Delete(string UserId)
         {
             B_User bUser = new B_User();
@@ -138,6 +166,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
         }
 
         [HttpPost]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult BachDeleteById()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);

@@ -15,19 +15,11 @@ namespace Padmate.ServicePlatform.Service
 
         public M_User GetUserByName(string userName)
         {
-            M_User mUser = null;
-            User user = _dUser.GetUserByName(userName);
-            
-            if(user != null)
-            {
-                mUser = new M_User();
-                mUser.UserName = user.UserName;
-                mUser.Email = user.Email;
-                mUser.PhoneNumber = user.PhoneNumber;
-                
-            }
 
-            return mUser;
+            User user = _dUser.GetUserByName(userName);
+            var result = ConverEntityToModel(user);
+
+            return result;
         }
 
         public M_User GetUserById(string id)
@@ -149,7 +141,7 @@ namespace Padmate.ServicePlatform.Service
         }
 
         /// <summary>
-        /// 修改文章
+        /// 修改用户
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -157,7 +149,7 @@ namespace Padmate.ServicePlatform.Service
         {
             Message message = new Message();
             message.Success = true;
-            message.Content = "用户修改成功";
+            message.Content = "用户信息修改成功";
 
             try
             {
@@ -190,11 +182,36 @@ namespace Padmate.ServicePlatform.Service
             catch (Exception e)
             {
                 message.Success = false;
-                message.Content = "用户修改失败，异常：" + e.Message;
+                message.Content = "用户信息修改失败，异常：" + e.Message;
             }
             return message;
         }
 
+        public Message SetUserInfo(SetUserInfoModel model)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "用户信息修改成功";
+
+            try
+            {
+                
+                var user = new User()
+                {
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber
+                };
+
+                message.ReturnStrId = _dUser.SetUserInfo(model.Id, user);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "用户信息修改失败。";
+            }
+            return message;
+        }
 
 
         public Message DeleteById(string id)

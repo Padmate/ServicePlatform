@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Padmate.ServicePlatform.DataAccess;
 using System.Collections.Generic;
 using Padmate.ServicePlatform.Models;
+using System.Configuration;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -165,13 +166,18 @@ namespace Padmate.ServicePlatform.Web.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    await SignInManager.UserManager.AddToRolesAsync(user.Id, new string[] { model.UserType });
+                    
                     // 有关如何启用帐户确认和密码重置的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=320771
                     // 发送包含此链接的电子邮件
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
-                    return RedirectToAction("Default", "Home");
+                    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+                    string returnUrl = string.Format("/manage/userinfo{0}{1}", urlRewriteExtension, "?from=register");
+                    return Redirect(returnUrl);
+                    //return RedirectToAction("Default", "Home",new {CompleteUserInfo = true});
                 }
                 AddErrors(result);
             }

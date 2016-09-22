@@ -134,6 +134,12 @@ namespace Padmate.ServicePlatform.DataAccess
             return applicationUser.Id;
         }
 
+        /// <summary>
+        /// 更改用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public string EditUser(string id, User model)
         {
             var user = _dbContext.Users.FirstOrDefault(a => a.Id.ToString() == id);
@@ -161,7 +167,23 @@ namespace Padmate.ServicePlatform.DataAccess
             return user.Id.ToString();
         }
 
+        /// <summary>
+        /// 更改用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public string SetUserInfo(string id, User model)
+        {
+            var user = _dbContext.Users.FirstOrDefault(a => a.Id.ToString() == id);
 
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+
+            
+            _dbContext.SaveChanges();
+            return user.Id.ToString();
+        }
 
         public void DeleteUser(string id)
         {

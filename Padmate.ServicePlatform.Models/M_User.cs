@@ -25,4 +25,15 @@ namespace Padmate.ServicePlatform.Models
 
         public IList<M_Role> Roles { get; set; }
     }
+
+    public class SetUserInfoModel:BaseModel
+    {
+        public string Id { get; set; }
+
+        [Required(ErrorMessage = "邮箱不能为空")]
+        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "邮箱格式不正确")]
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+
+    }
 }

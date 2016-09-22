@@ -2,6 +2,7 @@
     Layout = null;
 }
 @using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
 @model RegisterViewModel
 
 
@@ -29,6 +30,16 @@
                 <div class="form-group">
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.UserName, new { @placeholder = "用户名", @class = "username" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <select name="UserType"  id="UserType" class="username">
+                            @foreach(var key in SystemRole.UserTypes.Keys)
+                            {
+                                <option value="@key">@SystemRole.UserTypes[key]</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

@@ -1,10 +1,24 @@
-﻿@{
-    ViewBag.Title = "用户信息";
-}
-@using Padmate.ServicePlatform.Models;
+﻿@using Padmate.ServicePlatform.Models;
 @{
     M_User user = (M_User)ViewData["UserInfo"];
+    ViewBag.Title = "用户信息";
+    var from = Request["from"];
+
+    var tipMsg = string.Empty;
+    if (from == "register")
+    {
+        tipMsg += "用户注册成功，请尽快完善用户资料。";
+    }
+    
+    
 }
+<style>
+    .tip{
+        color:red;
+        font-size:18px;
+        padding:10px 20px;
+    }
+</style>
 <section>
     <div class="container">
         <div class="row">
@@ -12,14 +26,50 @@
                 @Html.Partial("_SettingLeftMenu")
             </div>
             <div class="col-xs-8 col-is-8 col-sm-10 col-md-10">
+
                 <!--用户信息-->
-                <div class="form-group">
-                    <label class="col-md-2 control-label text-right">用户名：</label>
-                    <label class="col-md-10">@user.UserName</label>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label text-right">邮箱：</label>
-                    <label class="col-md-10">@user.Email</label>
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+                            <label class="customer-content-sm tip">@tipMsg</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-is-4 col-sm-3 col-md-2 text-right">
+                            <label class="customer-content-sm">用户名称：</label>
+                        </div>
+                        <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
+                            <label class="customer-content-sm">@user.UserName</label>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <div class="col-xs-12 col-is-4 col-sm-3 col-md-2 control-label">
+                            <label class="customer-content-sm">邮 箱：</label>
+                        </div>
+                        <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
+                            <input class="input-large-full" id="tbEmail" placeholder="邮 箱" value="@user.Email" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-is-4 col-sm-3 col-md-2 control-label">
+                            <label class="customer-content-sm">联系电话：</label>
+                        </div>
+                        <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
+                            <input class="input-large-full" id="tbPhoneNumber" placeholder="联系电话" value="@user.PhoneNumber" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-is-12 col-sm-8 col-md-6 text-right">
+                            <input type="button" class="btn btn-success" onclick="SaveEdit()" value="保存更改"/>
+                        </div>
+                        
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -27,3 +77,45 @@
 
     </div>
 </section>
+
+<script>
+
+
+    //修改或新增保存
+    function SaveEdit() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/User/User/SetUserInfo",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                $("body").hideLoading();
+
+                layer.alert(message.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                  , closeBtn: 0
+                });
+            }
+        });
+    }
+
+    //构造保存对象
+    function ConstructSaveObj() {
+        
+        
+
+        var obj = {
+            Id: '@user.Id',
+            Email: $("#tbEmail").val(),
+            PhoneNumber: $("#tbPhoneNumber").val()
+        };
+
+        return obj;
+    }
+</script>

@@ -91,6 +91,11 @@ namespace Padmate.ServicePlatform.Utility
             {EnterpriseUser,"企业用户"},
             {PersonalUser,"个人用户"}
         };
+
+        public static Dictionary<string, string> UserTypes = new Dictionary<string, string>(){
+            {PersonalUser,"个人用户"},    
+            {EnterpriseUser,"企业用户"}
+        };
     }
 
 

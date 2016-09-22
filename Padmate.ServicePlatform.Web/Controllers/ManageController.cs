@@ -11,6 +11,7 @@ using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.Utility;
 using System.IO;
 using Padmate.ServicePlatform.Web.Arrtibutes;
+using Padmate.ServicePlatform.Service;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -82,8 +83,12 @@ namespace Padmate.ServicePlatform.Web.Controllers
         public ActionResult UserInfo()
         {
 
-            ViewData["UserInfo"] = this.GetCurrentUser(); ;
-
+            //获取当前登录用户
+            var loginUser = this.GetCurrentUser();
+            B_User bUser = new B_User();
+            var user = bUser.GetUserByName(loginUser.UserName);
+            ViewData["UserInfo"] = user;
+            ViewData["JsonUserInfo"] = JsonHandler.ToJson(user);
             return View();
         }
         #endregion

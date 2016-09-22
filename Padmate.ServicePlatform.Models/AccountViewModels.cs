@@ -61,6 +61,11 @@ namespace Padmate.ServicePlatform.Models
         [Display(Name = "用户名")]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// 用户类型:个人用户；企业用户
+        /// </summary>
+        public string UserType { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "{0} 必须至少包含 {2} 个字符。", MinimumLength = 6)]
         [DataType(DataType.Password)]
