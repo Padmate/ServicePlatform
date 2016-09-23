@@ -82,6 +82,28 @@ namespace Padmate.ServicePlatform.Utility
             {UserType_Enterprise,"企业"}
         };
         #endregion
+        #region 审核状态
+        /// <summary>
+        /// 审核中
+        /// </summary>
+        public const string Audit_Waiting = "0";
+
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        public const string Audit_Success = "1";
+
+        /// <summary>
+        /// 审核失败
+        /// </summary>
+        public const string Audit_Failue = "3";
+
+        public static Dictionary<string, string> Dic_Audit = new Dictionary<string, string>(){
+            {Audit_Waiting,"等待审核"},
+            {Audit_Success,"审核通过"},
+            {Audit_Failue,"审核失败"}
+        };
+        #endregion
     }
 
     public static class SystemRole

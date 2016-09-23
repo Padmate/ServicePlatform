@@ -1130,6 +1130,8 @@
     <Content Include="Areas\ProjectApply\Views\web.config" />
     <Content Include="Areas\ProjectApply\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Index.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\_Edit.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\_Detail.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />

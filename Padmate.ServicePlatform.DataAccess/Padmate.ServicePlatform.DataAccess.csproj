@@ -62,6 +62,7 @@
     <Compile Include="DBConfiguration\ContactScopeConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
     <Compile Include="DBConfiguration\IntelInnovationProjectApplyConfiguration.cs" />
+    <Compile Include="DBConfiguration\IntelInnovationProjectApplyQueConfiguration.cs" />
     <Compile Include="DBConfiguration\MailAttachmentConfiguration.cs" />
     <Compile Include="DBConfiguration\MailConfiguration.cs" />
     <Compile Include="DBConfiguration\ProjectConfiguration.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="D_Image.cs" />
     <Compile Include="D_IntelInnovationProjectApply.cs" />
     <Compile Include="D_IntelInnovationProjectApplyAttachment.cs" />
+    <Compile Include="D_IntelInnovationProjectApplyQue.cs" />
     <Compile Include="D_Mail.cs" />
     <Compile Include="D_Project.cs" />
     <Compile Include="D_ProjectDownload.cs" />
@@ -81,6 +83,10 @@
     <Compile Include="Migrations\201609220721116_init.cs" />
     <Compile Include="Migrations\201609220721116_init.Designer.cs">
       <DependentUpon>201609220721116_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609230644000_addIntelInnovationProjectApplyQue.cs" />
+    <Compile Include="Migrations\201609230644000_addIntelInnovationProjectApplyQue.Designer.cs">
+      <DependentUpon>201609230644000_addIntelInnovationProjectApplyQue.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +105,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201609220721116_init.resx">
       <DependentUpon>201609220721116_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609230644000_addIntelInnovationProjectApplyQue.resx">
+      <DependentUpon>201609230644000_addIntelInnovationProjectApplyQue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -74,6 +74,7 @@ namespace Padmate.ServicePlatform.DataAccess
         {
             var projcets = _dbContext.IntelInnovationProjectApplies
                 .Include("Attachments")
+                .Include("Ques")
                 .Where(a => a.UserId == UserId)
                 .ToList();
 

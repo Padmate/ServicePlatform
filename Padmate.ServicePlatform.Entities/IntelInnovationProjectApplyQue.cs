@@ -11,38 +11,39 @@ namespace Padmate.ServicePlatform.Entities
         public int Id { get; set; }
 
         /// <summary>
-        /// 审核状态:审核中\审核通过\拒绝
+        /// 审核状态:审核中\审核通过\审核失败
         /// </summary>
         public string AuditStatus { get; set; }
 
         /// <summary>
         /// 审核日期
         /// </summary>
-        public string AuditDate { get; set; }
+        public DateTime? AuditDate { get; set; }
+
+        /// <summary>
+        /// 审核人
+        /// </summary>
+        public string Auditor { get; set; }
 
         /// <summary>
         /// 审核备注
         /// </summary>
         public string AuditRemark { get; set; }
 
-        /// <summary>
-        /// 创建者
-        /// </summary>
-        public string Creator { get; set; }
 
         /// <summary>
-        /// 创建时间
+        /// 申请人
         /// </summary>
-        public DateTime CreateDate { get; set; }
+        public string Application { get; set; }
 
         /// <summary>
-        /// 修改者
+        /// 申请日期
         /// </summary>
-        public string Modifier { get; set; }
+        public DateTime ApplicationDate { get; set; }
 
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime? ModifiedDate { get; set; }
+        public int IntelInnovationProjectApplyId { get; set; }
+
+        public virtual IntelInnovationProjectApply IntelInnovationProjectApply { get; set; }
+       
     }
 }

@@ -51,5 +51,12 @@ namespace Padmate.ServicePlatform.Models
         /// 附件列表
         /// </summary>
         public List<M_IntelInnovationProjectApplyAttachment> Attachments { get; set; }
+
+        public List<M_IntelInnovationProjectApplyQue> Ques { get; set; }
+
+        /// <summary>
+        /// 最新的队列
+        /// </summary>
+        public M_IntelInnovationProjectApplyQue LatestQue { get; set; }
     }
 }

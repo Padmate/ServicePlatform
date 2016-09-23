@@ -46,10 +46,12 @@ namespace Padmate.ServicePlatform.Entities
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
+        public virtual ICollection<IntelInnovationProjectApplyQue> Ques { get; set; }
         public virtual ICollection<IntelInnovationProjectApplyAttachment> Attachments { get; set; }
 
         public IntelInnovationProjectApply()
         {
+            Ques = new List<IntelInnovationProjectApplyQue>();
             Attachments = new List<IntelInnovationProjectApplyAttachment>();
         }
 

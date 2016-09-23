@@ -38,14 +38,22 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
             //重新查找数据
             var projects = bProject.GetIntelInnovationProjectApplyByUserId(user.Id);
-            ViewData["project"] = projects.FirstOrDefault();
+            var project = projects.First();
+            //找出最新的队列
+            if (project.Ques != null && project.Ques.Count > 0)
+            {
+                project.LatestQue = project.Ques.OrderByDescending(q => q.ApplicationDate).First();
+            }
+            ViewData["project"] = project;
 
+            //审核状态
+            ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
 
             return View();
         }
 
         /// <summary>
-        /// 修改
+        /// 保存
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -63,6 +71,47 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             var currentUser = this.GetCurrentUser();
             B_IntelInnovationProjectApply bIntelInnovationProjectApply = new B_IntelInnovationProjectApply();
             message = bIntelInnovationProjectApply.EditIntelInnovationProjectApply(model);
+            
+
+            if (message.Success) message.Content = "保存成功";
+            return Json(message);
+
+        }
+
+        /// <summary>
+        /// 提交申请
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Apply()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_IntelInnovationProjectApply model = JsonHandler.DeserializeJsonToObject<M_IntelInnovationProjectApply>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            var currentUser = this.GetCurrentUser();
+            B_IntelInnovationProjectApply bIntelInnovationProjectApply = new B_IntelInnovationProjectApply();
+            message = bIntelInnovationProjectApply.EditIntelInnovationProjectApply(model);
+            //新增一条提交申请的队列
+            if(message.Success)
+            {
+                var projectId = message.ReturnId;
+                B_IntelInnovationProjectApplyQue bQue = new B_IntelInnovationProjectApplyQue();
+                M_IntelInnovationProjectApplyQue mQue = new M_IntelInnovationProjectApplyQue()
+                {
+                    IntelInnovationProjectApplyId = projectId.ToString(),
+                    AuditStatus = Common.Audit_Waiting,  //等待审核
+                    Application = currentUser.UserName,
+                    ApplicationDate = DateTime.Now
+                };
+
+                message = bQue.AddIntelInnovationProjectApplyQue(mQue);
+            }
 
             if (message.Success) message.Content = "申请成功";
             return Json(message);
@@ -87,6 +136,13 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                 message.Success = false;
                 message.Content = "加载项目数据失败";
                 return Json(message);
+            }
+
+            var project = projects.First();
+            //找出最新的队列
+            if(project.Ques != null && project.Ques.Count >0)
+            {
+                project.LatestQue = project.Ques.OrderByDescending(q => q.ApplicationDate).First();
             }
 
             message.Content = JsonHandler.ToJson(projects.First());

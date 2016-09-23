@@ -91,6 +91,7 @@ namespace Padmate.ServicePlatform.Service
 
             B_Image bImage = new B_Image();
             B_IntelInnovationProjectApplyAttachment bAttachment = new B_IntelInnovationProjectApplyAttachment();
+            B_IntelInnovationProjectApplyQue bQue = new B_IntelInnovationProjectApplyQue();
 
             var model = new M_IntelInnovationProjectApply()
             {
@@ -102,7 +103,8 @@ namespace Padmate.ServicePlatform.Service
                 InnovationPoint = string.IsNullOrEmpty(project.InnovationPoint) ? string.Empty : project.InnovationPoint,
                 Contact = string.IsNullOrEmpty(project.Contact) ? string.Empty : project.Contact,
                 ContactPhone = string.IsNullOrEmpty(project.ContactPhone) ? string.Empty : project.ContactPhone,
-                Attachments = project.Attachments.Select(p => bAttachment.ConverEntityToModel(p)).ToList()
+                Attachments = project.Attachments.Select(p => bAttachment.ConverEntityToModel(p)).ToList(),
+                Ques = project.Ques.Select(p => bQue.ConverEntityToModel(p)).ToList()
 
             };
             return model;
