@@ -200,6 +200,7 @@
     <Compile Include="Areas\Activity\ActivityAreaRegistration.cs" />
     <Compile Include="Areas\Information\InformationAreaRegistration.cs" />
     <Compile Include="Areas\Infra\InfraAreaRegistration.cs" />
+    <Compile Include="Areas\ProjectApply\ProjectApplyAreaRegistration.cs" />
     <Compile Include="Areas\Service\ServiceAreaRegistration.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Arrtibutes\ApplicationHandleErrorAttribute .cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Controllers\Infra\ImageController.cs" />
     <Compile Include="Controllers\Infra\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProjectApply\IntelInnovationProjectApplyController.cs" />
     <Compile Include="Controllers\Service\ProductController.cs" />
     <Compile Include="Controllers\Service\ProjectController.cs" />
     <Compile Include="Controllers\Service\ServiceController.cs" />
@@ -1125,6 +1127,9 @@
     <Content Include="Areas\User\Views\Role\Edit.cshtml" />
     <Content Include="Areas\User\Views\User\Add.cshtml" />
     <Content Include="Areas\User\Views\User\Edit.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\web.config" />
+    <Content Include="Areas\ProjectApply\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Index.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />
@@ -1247,6 +1252,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Infra\Views\Shared\" />
+    <Folder Include="Areas\ProjectApply\Views\Shared\" />
     <Folder Include="Areas\User\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -1264,6 +1270,10 @@
     <ProjectReference Include="..\Padmate.ServicePlatform.DataAccess\Padmate.ServicePlatform.DataAccess.csproj">
       <Project>{a296064d-c8c2-48e5-ac8c-c6852c9cd6f5}</Project>
       <Name>Padmate.ServicePlatform.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Padmate.ServicePlatform.Entities\Padmate.ServicePlatform.Entities.csproj">
+      <Project>{1e66d616-276a-421a-b8c0-ac82a0c8c23d}</Project>
+      <Name>Padmate.ServicePlatform.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Padmate.ServicePlatform.Models\Padmate.ServicePlatform.Models.csproj">
       <Project>{2a069975-6c63-449c-b549-4878c426dee2}</Project>

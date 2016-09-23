@@ -35,9 +35,9 @@
                 <div class="form-group">
                     <div class="col-md-10">
                         <select name="UserType"  id="UserType" class="username">
-                            @foreach(var key in SystemRole.UserTypes.Keys)
+                            @foreach(var key in Common.Dic_UserTypes.Keys)
                             {
-                                <option value="@key">@SystemRole.UserTypes[key]</option>
+                                <option value="@key">@Common.Dic_UserTypes[key]</option>
                             }
                         </select>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <input type="submit" value="注册" />
                     <a href="/">回到首页</a>
-                    <a href="/Account/Login">Login</a>
+                    <a href="/Account/Login">登 录</a>
 
                 </div>
             }

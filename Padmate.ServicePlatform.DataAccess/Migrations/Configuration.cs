@@ -2,6 +2,7 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Padmate.ServicePlatform.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

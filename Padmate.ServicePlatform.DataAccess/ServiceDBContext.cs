@@ -12,17 +12,7 @@ using System.Threading.Tasks;
 
 namespace Padmate.ServicePlatform.DataAccess
 {
-    // 可以通过向 ApplicationUser 类添加更多属性来为用户添加配置文件数据。若要了解详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=317594。
-    public class ApplicationUser : IdentityUser
-    {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
-        {
-            // 请注意，authenticationType 必须与 CookieAuthenticationOptions.AuthenticationType 中定义的相应项匹配
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // 在此处添加自定义用户声明
-            return userIdentity;
-        }
-    }
+
 
     public class ServiceDbContext:IdentityDbContext<ApplicationUser>
     {
@@ -42,6 +32,12 @@ namespace Padmate.ServicePlatform.DataAccess
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectDownload> ProjectDownloads { get; set; }
 
+        public DbSet<UserProfile> UserProfile { get; set; }
+
+        public DbSet<IntelInnovationProjectApply> IntelInnovationProjectApplies { get; set; }
+        public DbSet<IntelInnovationProjectApplyAttachment> IntelInnovationProjectApplyAttachments { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -53,6 +49,9 @@ namespace Padmate.ServicePlatform.DataAccess
             modelBuilder.Configurations.Add(new ContactScopeConfiguration());
             modelBuilder.Configurations.Add(new ProjectConfiguration());
             modelBuilder.Configurations.Add(new ProjectDownloadConfiguration());
+            modelBuilder.Configurations.Add(new UserProfileConfiguration());
+            modelBuilder.Configurations.Add(new IntelInnovationProjectApplyConfiguration());
+            modelBuilder.Configurations.Add(new IntelInnovationProjectApplyAttachmentConfiguration());
 
         }
 

@@ -45,7 +45,7 @@ namespace Padmate.ServicePlatform.Web.Arrtibutes
             };
         }
 
-        public virtual bool ShouldHandle(ExceptionHandlerContext context)
+        public override bool ShouldHandle(ExceptionHandlerContext context)
         {
             return true;
         }

@@ -57,12 +57,13 @@ namespace Padmate.ServicePlatform.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "用户名不能为空")]
         [Display(Name = "用户名")]
         public string UserName { get; set; }
 
         /// <summary>
         /// 用户类型:个人用户；企业用户
+        [Required(ErrorMessage="用户类型不能为空")]
         /// </summary>
         public string UserType { get; set; }
 

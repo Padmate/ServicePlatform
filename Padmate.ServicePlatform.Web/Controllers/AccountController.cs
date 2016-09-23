@@ -12,6 +12,7 @@ using Padmate.ServicePlatform.DataAccess;
 using System.Collections.Generic;
 using Padmate.ServicePlatform.Models;
 using System.Configuration;
+using Padmate.ServicePlatform.Entities;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -160,13 +161,14 @@ namespace Padmate.ServicePlatform.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailAddress };
+                var user = new ApplicationUser { UserName = model.UserName,UserType = model.UserType, Email = model.EmailAddress };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    await SignInManager.UserManager.AddToRolesAsync(user.Id, new string[] { model.UserType });
+                    //添加角色
+                    //await SignInManager.UserManager.AddToRolesAsync(user.Id, new string[] { model.UserType });
                     
                     // 有关如何启用帐户确认和密码重置的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=320771
                     // 发送包含此链接的电子邮件

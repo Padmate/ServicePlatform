@@ -43,7 +43,7 @@ namespace Padmate.ServicePlatform.DataAccess
 
             #endregion
 
-            var applicationUser = query.OrderBy(r => r.UserName)
+            var applicationUser = query.OrderBy(r => r.Id)
             .Skip(skip)
             .Take(limit)
             .ToList();
@@ -111,6 +111,7 @@ namespace Padmate.ServicePlatform.DataAccess
             var applicationUser = new ApplicationUser()
             {
                 UserName = user.UserName,
+                UserType = user.UserType,
                 PasswordHash = user.PasswordHash,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -145,6 +146,7 @@ namespace Padmate.ServicePlatform.DataAccess
             var user = _dbContext.Users.FirstOrDefault(a => a.Id.ToString() == id);
 
             user.UserName = model.UserName;
+            user.UserType = model.UserType;
             user.Email = model.Email;
             user.PhoneNumber = model.PhoneNumber;
 
@@ -187,6 +189,7 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public void DeleteUser(string id)
         {
+            
             var user = _dbContext.Users.Where(i => i.Id == id).FirstOrDefault();
             if (user != null)
             {
@@ -217,9 +220,17 @@ namespace Padmate.ServicePlatform.DataAccess
             {
                 result.Id = user.Id;
                 result.UserName = user.UserName;
+                result.UserType = user.UserType;
                 result.PasswordHash = user.PasswordHash;
                 result.Email = user.Email;
+                result.EmailConfirmed = user.EmailConfirmed;
                 result.PhoneNumber = user.PhoneNumber;
+                result.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+                result.SecurityStamp = user.SecurityStamp;
+                result.TwoFactorEnabled = user.TwoFactorEnabled;
+                result.AccessFailedCount = user.AccessFailedCount;
+                result.LockoutEnabled = user.LockoutEnabled;
+                result.LockoutEndDateUtc = user.LockoutEndDateUtc;
             }
             return result;
         }
@@ -239,10 +250,20 @@ namespace Padmate.ServicePlatform.DataAccess
             {
                 result.Id = applicationUser.Id;
                 result.UserName = applicationUser.UserName;
+                result.UserType = applicationUser.UserType;
                 result.PasswordHash = applicationUser.PasswordHash;
                 result.Email = applicationUser.Email;
                 result.PhoneNumber = applicationUser.PhoneNumber;
+                result.EmailConfirmed = applicationUser.EmailConfirmed;
+                result.PhoneNumberConfirmed = applicationUser.PhoneNumberConfirmed;
+                result.SecurityStamp = applicationUser.SecurityStamp;
+                result.TwoFactorEnabled = applicationUser.TwoFactorEnabled;
+                result.AccessFailedCount = applicationUser.AccessFailedCount;
+                result.LockoutEnabled = applicationUser.LockoutEnabled;
+                result.LockoutEndDateUtc = applicationUser.LockoutEndDateUtc;
+
                 result.Roles = roles.Select(r => dRole.ConverIdentityRoleToRole(r)).ToList();
+
             }
             return result;
         }

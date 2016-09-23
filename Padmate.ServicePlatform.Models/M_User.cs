@@ -23,6 +23,8 @@ namespace Padmate.ServicePlatform.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
+        public string UserType { get; set; }
+
         public IList<M_Role> Roles { get; set; }
     }
 

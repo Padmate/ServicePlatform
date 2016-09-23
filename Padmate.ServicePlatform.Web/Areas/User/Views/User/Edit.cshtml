@@ -34,22 +34,45 @@
                     foreach (var role in roles)
                     {
                         var currentRoleIds = user.Roles.Select(r => r.Id).ToList(); ;
+                        var roleName = SystemRole.Roles.ContainsKey(role.Name) ? SystemRole.Roles[role.Name] : role.Name;
                         
                         if(currentRoleIds.Contains(role.Id))
                         {
-                            <input name="ckRole" id='@role.Id' checked="checked" class="rolecheck" value=@role.Name type="checkbox" />
+                            <input name="ckRole" id='@role.Id' checked="checked" class="rolecheck" value=@role.Id type="checkbox" />
 
 
                         }else{
-                            <input name="ckRole" id='@role.Id' class="rolecheck" value=@role.Name type="checkbox" />
+                            <input name="ckRole" id='@role.Id' class="rolecheck" value=@role.Id type="checkbox" />
 
                         }
-                        <label for='@role.Id' style="font-weight:bold">@role.Name</label>
+                        <label for='@role.Id' style="font-weight:bold">@roleName</label>
                         <br />
                     }
 
                     
                 }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">用户类型：</label>
+            </div>
+            <div class="col-md-10">
+                <select class="select-large" id="selUserType">
+                    @foreach (var key in Common.Dic_UserTypes.Keys)
+                    {
+                        if (key == user.UserType)
+                        {
+                            <option value="@key" selected="selected">@Common.Dic_UserTypes[key]</option>
+
+                        }
+                        else
+                        {
+                            <option value="@key">@Common.Dic_UserTypes[key]</option>
+
+                        }
+                    }
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -148,6 +171,7 @@
         var obj = {
             Id: '@user.Id',
             UserName: $("#tbUserName").val(),
+            UserType:$("#selUserType").val(),
             Email: $("#tbEmail").val(),
             PhoneNumber: $("#tbPhoneNumber").val(),
             Roles: roles

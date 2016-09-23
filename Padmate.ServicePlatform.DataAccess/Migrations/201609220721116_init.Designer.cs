@@ -7,13 +7,13 @@ namespace Padmate.ServicePlatform.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class initdatabase : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initdatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201609210555053_initdatabase"; }
+            get { return "201609220721116_init"; }
         }
         
         string IMigrationMetadata.Source

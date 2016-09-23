@@ -1,0 +1,569 @@
+﻿@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@{
+    ViewBag.Title = "2016英特尔创新创业大赛海峡赛区";
+    var user = (M_User)ViewData["UserInfo"];
+
+    var userType = string.Empty;
+    if (!string.IsNullOrEmpty(user.UserType))
+    {
+        userType = Common.Dic_UserTypes.ContainsKey(user.UserType) ?
+        Common.Dic_UserTypes[user.UserType] : user.UserType;
+    }
+    
+    //项目内容
+    var project = (M_IntelInnovationProjectApply)ViewData["project"];
+ }
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
+
+<style>
+    .projectapplybg {
+        position: relative;
+        max-width: 100%;
+        height: 0;
+        padding-bottom: 15%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-image: url("../img/map-image.png");
+        margin: 50px auto;
+        margin-bottom: 100px;
+        background-color: #333;
+    }
+
+    .projectapply-intro {
+        padding: 5% 10%;
+        text-align: center;
+    }
+
+    .projectapply {
+        position: absolute;
+        bottom: -100px;
+        left: 35%;
+        z-index: 309;
+    }
+
+    #sendprojectapply {
+        padding: 80px 0px;
+    }
+
+        #sendprojectapply input {
+            width: 50%;
+        }
+
+        #sendprojectapply textarea {
+            height: 300px;
+        }
+
+    .content-body-padding, .contact {
+        padding: 0px 0px;
+    }
+
+    #eprojectapplyContent {
+        height: 200px;
+    }
+
+    .map-address {
+        padding: 50px 0px;
+    }
+    .attachment-delete
+    {
+        float:right
+    }
+    .projectArea{
+        margin-bottom:100px;
+    }
+    #thelist
+    {
+        margin-bottom:10px;
+    }
+</style>
+
+
+
+<section class="contact">
+    <div class="projectapplybg">
+        <div class="projectapply-intro">
+            <h2 class="customer-h2 whitefont">2016英特尔创新创业大赛海峡赛区</h2>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row projectArea">
+            <div class="col-sm-8 col-md-8">
+                <div class="form-horizontal">
+
+
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">项目名称：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="input-large-full" id="tbName" placeholder="项目名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label class="customer-content-sm">所属组别：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <label class="customer-content-sm">@userType</label>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">是否有样机：</label>
+                        </div>
+                        <div class="col-md-9">
+
+                            <input type="radio" value="true" name="HasExample" id="hasExampleTrue" />
+                            <label for="hasExampleTrue">是</label>
+
+                            <input type="radio" value="false" name="HasExample" id="hasExampleFalse" style="margin-left:50px;" />
+                            <label for="hasExampleFalse">否</label>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">上传商业计划书：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div id="uploadFiles">上传附件</div>
+                            
+                            <div id="thelist" class="uploader-list"></div>  
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">项目简介：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <textarea id="taDescription" class="textarea-large-full"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">创新点：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <textarea id="taInnovationPoint" class="textarea-large-full"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">联系人：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="input-large-full" id="tbContact" placeholder="联系人" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                            <label class="customer-content-sm">联系电话：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="input-large-full" id="tbContactPhone" placeholder="联系电话" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12 text-right">
+
+                            <a class="btn-gelatine btn-gelatine-info" href="javaScript:void(0);" id="btn-sendprojectapply">提交申请</a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+
+
+            </div>
+
+        </div>
+    </div>
+
+    
+
+</section>
+
+<script>
+    $(function () {
+        Apply();
+        InitFileUploader();
+        var userId = '@user.Id';
+        LoadProjectByUserId(userId);
+    });
+
+    //根据用户ID加载项目数据
+    function LoadProjectByUserId(userId) {
+
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectApply/LoadProjectDataByUserId",
+            dataType: "json",
+            data: { UserId: userId },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success) {
+
+                    //先清空
+                    $("#tbName").val("");
+                    $("#taDescription").val("");
+                    $("#taInnovationPoint").val("");
+                    $("#tbContact").val("");
+                    $("#tbContactPhone").val("");
+
+
+                    var project = $.parseJSON(message.Content);
+                    //赋值
+                    $("#tbName").val(project.Name);
+                    $("#taDescription").val(project.Description);
+                    $("#taInnovationPoint").val(project.InnovationPoint);
+                    $("#tbContact").val(project.Contact);
+                    $("#tbContactPhone").val(project.ContactPhone);
+                    CheckHasExample(project.HasExample);
+                    RefreshFileQueueList(project.Attachments);
+
+                } else {
+
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+
+            }
+        });
+
+    }
+
+    function LoadProjectAttachmentsByProjectId(projectId) {
+        var result = null;
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectApply/LoadProjectAttachmentDataByProjectId",
+            dataType: "json",
+            data: { ProjectId: projectId },
+            async: false,   //同步
+            success: function (data) {
+
+                result = data;
+            }
+        });
+        return result;
+
+    }
+
+    function CheckHasExample(value) {
+
+        if (value != null && value) {
+            $("input[name='HasExample'][value=true]").attr('checked', true);
+
+        } else {
+            $("input[name='HasExample'][value=false]").attr('checked', true);
+
+        }
+    }
+
+    //提交申请
+    function Apply() {
+        $("#btn-sendprojectapply").click(function () {
+
+            var obj = {
+                Id: '@project.Id',
+                Name: $("#tbName").val(),
+                Description: $("#taDescription").val(),
+                HasExample: $("input[name='HasExample']:checked").val(),
+                InnovationPoint: $("#taInnovationPoint").val(),
+                Contact: $("#tbContact").val(),
+                ContactPhone: $("#tbContactPhone").val()
+            };
+
+            $("body").showLoading();
+
+            var jsonParam = JSON.stringify(obj);
+            $.ajax({
+                type: "POST",
+                url: "/ProjectApply/IntelInnovationProjectApply/SaveEdit",
+                dataType: "json",
+                data: jsonParam,
+                async: false,   //同步
+                success: function (message) {
+
+
+                    if (message.Success) {
+                        //上传文件
+                        
+                        var files = fileUploader.getFiles("inited");//初始状态
+                        if(files.length >0)
+                        {
+                            UploadFiles();
+
+
+                        } else {
+                            $("body").hideLoading();
+                            //tips层
+                            var tip = '<font class="customer-content-md whitefont">申请成功</font>';
+                            layer.tips(tip, "#btn-sendprojectapply", {
+                                tips: [1, '#78BA32'], //提示位置：上,还可配置颜色
+                                area: ['150px', '80px']
+                            });
+                        }
+
+                        
+
+                    } else {
+
+                        $("body").hideLoading();
+                        //tips层
+                        layer.tips(message.Content, "#btn-sendprojectapply", {
+                            tips: [1, '#78BA32'] //提示位置：上,还可配置颜色
+                        });
+                    }
+
+                }
+            });
+
+
+
+        });
+    }
+
+    var fileUploader;
+    function InitFileUploader() {
+
+        var GUID = WebUploader.Base.guid();//一个GUID
+        // 初始化Web Uploader
+        fileUploader = WebUploader.create({
+            auto: false,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/ProjectApply/IntelInnovationProjectApply/ChunkedUploadAttachment',
+            duplicate: false, //可重复上传同一文件
+            pick: '#uploadFiles',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
+            compress: false, //图片不压缩
+            multiple: true,
+            fileSingleSizeLimit: 200 * 1024 * 1024, // 单个文件最大不能超过200 M
+            chunked: true,//开始分片上传
+            chunkSize: 2 * 1024 * 1024,//每一片的大小为2M
+            formData: {
+                guid: GUID //自定义参数
+            }
+
+
+        });
+
+        fileUploader.on('beforeFileQueued', function (file) {
+
+
+        });
+
+        fileUploader.on('fileQueued', function (file) {
+            AddFileQueueData(file);
+
+        });
+
+        fileUploader.on('uploadStart', function (file) {
+
+        });
+
+        fileUploader.on('uploadProgress', function (file, percentage) {
+
+
+        });
+
+
+        fileUploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("超出最大张数");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("不能重复上传同一文件");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+
+                layer.alert("文件大小不能超过200M", {
+                    skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                });
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        fileUploader.on('uploadSuccess', function (file, response) {
+
+            
+            if (response.Success == false || response.Success == "false") {
+                layer.alert(response.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                });
+            } else {
+                ;
+                var obj = {
+                    IntelInnovationProjectApplyId: '@project.Id',
+                    guid: GUID,
+                    fileName: file.name,
+                    extension: file.ext
+                };
+
+                $.post('/ProjectApply/IntelInnovationProjectApply/MergeFile', obj, function (data) {
+                    //上传成功
+                    //重新加载
+
+                    $("body").hideLoading();
+                    LoadProjectByUserId('@user.Id');
+                    
+                    //删除队列中当前上传完的文件
+                    fileUploader.removeFile(file, true);
+
+                    //tips层
+                    var tip = '<font class="customer-content-md whitefont">申请成功</font>';
+                    layer.tips(tip, "#btn-sendprojectapply", {
+                        tips: [1, '#78BA32'], //提示位置：上,还可配置颜色
+                        area: ['150px', '80px']
+                    });
+                });
+
+            }
+
+        });
+
+        fileUploader.on('uploadFinished', function () {
+            //无论有没有要上传的文件都会进入
+            $("body").hideLoading();
+           
+
+        });
+
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        fileUploader.on('uploadComplete', function (file) {
+            
+        });
+    }
+
+    function UploadFiles() {
+
+        //fileUploader.options.formData.articleId = articleId;
+        fileUploader.upload();
+    }
+
+    //添加文件队列
+    function AddFileQueueData(file)
+    {
+
+        var dynamicHtml = "";
+
+        dynamicHtml += '<div id="'+file.id+'">';
+        dynamicHtml += '<a class="customer-content-sm" href="javaScript:void(0)">' + file.name + '</a>';
+        dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="RemoveFileQueueData(' + file.id + ')">';
+        dynamicHtml += '<i class="fa fa-remove"></i>删除';
+        dynamicHtml += '</a>';
+        dynamicHtml += '<div class="clearfix"></div>';
+        dynamicHtml += '</div>';
+
+        $("#thelist").append(dynamicHtml);
+    }
+
+    function RemoveFileQueueData(div)
+    {
+
+        //删除文件显示信息
+        $("#" + div.id).remove();
+
+
+        var file = fileUploader.getFile(div.id);
+        //删除队列中的文件
+        fileUploader.removeFile(file,true);
+
+    }
+
+   
+
+    //清空文件上传队列
+    function EmptyFileQueue()
+    {
+        var files = fileUploader.getFiles();
+        for (var i = 0; i < files.length;i++)
+        {
+            //删除队列中的文件
+            fileUploader.removeFile(files[i], true);
+        }
+        
+    }
+
+    //重新刷新附件表格
+    function RefreshFileQueueList(attachments) {
+
+        //先清空
+        $("#thelist").html("");
+
+        var dynamicHtml = "";
+        if (attachments != null && attachments.length > 0) {
+            for (var i = 0; i < attachments.length; i++) {
+                dynamicHtml += '<div>';
+                dynamicHtml += '<a class="customer-content-sm" href="' + attachments[i].VirtualPath + '">' + attachments[i].Name + '</a>';
+                dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="DeleteFile(' + attachments[i].Id + ')">';
+                dynamicHtml += '<i class="fa fa-remove"></i>删除';
+                dynamicHtml += '</a>';
+                dynamicHtml += '<div class="clearfix"></div>';
+                dynamicHtml += '</div>';
+            }
+        }
+
+
+        $("#thelist").html(dynamicHtml);
+
+    }
+
+    function DeleteFile(attachmentId) {
+
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectApply/DeleteAttachment",
+            dataType: "json",
+            data: { Id: attachmentId },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success == false || message.Success == "false") {
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                    });
+                    return;
+                } else {
+                    //重新加载
+                    var attachments = LoadProjectAttachmentsByProjectId('@project.Id');
+                    RefreshFileQueueList(attachments);
+                }
+
+            }
+        });
+    }
+
+
+
+
+</script>

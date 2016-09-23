@@ -240,6 +240,12 @@ namespace Padmate.ServicePlatform.Web.Controllers
         #region 用户管理
         public ActionResult UserManage()
         {
+            //用户类别
+            ViewData["UserType"] = JsonHandler.ToJson(Common.Dic_UserTypes);
+
+            //角色
+            ViewData["Roles"] = JsonHandler.ToJson(SystemRole.Roles);
+
             return View();
         }
         #endregion
@@ -261,6 +267,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
         public ActionResult RoleManage()
         {
+            //角色
+            ViewData["Roles"] = JsonHandler.ToJson(SystemRole.Roles);
             return View();
         }
     }

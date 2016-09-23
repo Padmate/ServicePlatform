@@ -50,7 +50,10 @@
                     activeClass = "active";
                 }
                 <div class="item @activeClass">
-                    <img class="img-responsive" src="@homebgImages[i].VirtualPath" alt="@homebgImages[i].Name.Split('.').First()">
+                    <a href="@string.Format("/intel-innovation-project-apply{0}", urlRewriteExtension)">
+                        <img class="img-responsive" src="@homebgImages[i].VirtualPath" alt="@homebgImages[i].Name.Split('.').First()">
+
+                    </a>
 
                 </div>
             }

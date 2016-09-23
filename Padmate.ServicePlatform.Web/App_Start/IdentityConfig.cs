@@ -12,6 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.DataAccess;
+using Padmate.ServicePlatform.Entities;
 
 namespace Padmate.ServicePlatform.Web
 {

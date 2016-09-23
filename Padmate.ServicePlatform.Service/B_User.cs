@@ -84,6 +84,7 @@ namespace Padmate.ServicePlatform.Service
             {
                 Id = user.Id.ToString(),
                 UserName = user.UserName,
+                UserType = user.UserType,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Roles = user.Roles.Select(r=>bRole.ConverEntityToModel(r)).ToList()
@@ -119,6 +120,7 @@ namespace Padmate.ServicePlatform.Service
                 var user = new User()
                 {
                     UserName = model.UserName,
+                    UserType = model.UserType,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
                     PasswordHash = model.PasswordHash,
@@ -166,6 +168,7 @@ namespace Padmate.ServicePlatform.Service
                 var user = new User()
                 {
                     UserName = model.UserName,
+                    UserType = model.UserType,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
                     PasswordHash = model.PasswordHash,

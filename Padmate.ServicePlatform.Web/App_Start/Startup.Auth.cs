@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.DataAccess;
+using Padmate.ServicePlatform.Entities;
 
 namespace Padmate.ServicePlatform.Web
 {

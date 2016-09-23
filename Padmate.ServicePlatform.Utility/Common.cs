@@ -47,7 +47,6 @@ namespace Padmate.ServicePlatform.Utility
 
         };
         #endregion
-
         #region 项目类型
 
         public const string ZZ_Project = "zz_project";
@@ -60,7 +59,29 @@ namespace Padmate.ServicePlatform.Utility
 
         };
         #endregion
-        
+        #region 用户类型
+
+        /// <summary>
+        /// 个人用户
+        /// </summary>
+        public const string UserType_Personal = "personal";
+
+        /// <summary>
+        /// 团队用户
+        /// </summary>
+        public const string UserType_Team = "team";
+
+        /// <summary>
+        /// 企业级用户
+        /// </summary>
+        public const string UserType_Enterprise = "enterprise";
+
+        public static Dictionary<string, string> Dic_UserTypes = new Dictionary<string, string>(){
+            {UserType_Personal,"个人"},    
+            {UserType_Team,"团队"},
+            {UserType_Enterprise,"企业"}
+        };
+        #endregion
     }
 
     public static class SystemRole
@@ -75,27 +96,12 @@ namespace Padmate.ServicePlatform.Utility
         /// </summary>
         public const string BackstageAdmin = "BackstageAdmin";
 
-        /// <summary>
-        /// 企业级用户
-        /// </summary>
-        public const string EnterpriseUser = "EnterpriseUser";
-
-        /// <summary>
-        /// 个人用户
-        /// </summary>
-        public const string PersonalUser = "PersonalUser";
 
         public static Dictionary<string, string> Roles = new Dictionary<string, string>(){
             {SystemAdmin,"系统管理员"},
-            {BackstageAdmin,"后台管理员"},
-            {EnterpriseUser,"企业用户"},
-            {PersonalUser,"个人用户"}
+            {BackstageAdmin,"后台管理员"}
         };
 
-        public static Dictionary<string, string> UserTypes = new Dictionary<string, string>(){
-            {PersonalUser,"个人用户"},    
-            {EnterpriseUser,"企业用户"}
-        };
     }
 
 

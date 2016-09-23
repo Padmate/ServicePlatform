@@ -56,6 +56,10 @@
 
 <!--Script要放在HTML标签后，才能将值绑定到标签-->
 <script type="text/javascript">
+
+    var dicRoles = $.parseJSON('@Html.Raw(ViewData["Roles"])');
+
+
     $(document).ready(function () {
         InitTable();
         InitToolBarButton();
@@ -93,7 +97,11 @@
             {
                 field: 'Name',
                 title: '角色名称',
-                sortable: true
+                sortable: true,
+                formatter: function (value, row, index) {
+
+                    return DicRoles(value);;
+                },
 
             }
             ]
@@ -221,5 +229,15 @@
     {
         $('#table').bootstrapTable('refresh');
 
+    }
+
+    function DicRoles(key) {
+        var result = key;
+        for (var i = 0; i < dicRoles.length; i++) {
+            if (key == dicRoles[i].Key) {
+                result = dicRoles[i].Value;
+            }
+        }
+        return result;
     }
 </script>    

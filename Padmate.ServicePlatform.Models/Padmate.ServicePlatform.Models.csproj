@@ -47,6 +47,8 @@
     <Compile Include="M_Contact.cs" />
     <Compile Include="M_ContactScope.cs" />
     <Compile Include="M_Image.cs" />
+    <Compile Include="M_IntelInnovationProjectApply.cs" />
+    <Compile Include="M_IntelInnovationProjectApplyAttachment.cs" />
     <Compile Include="M_Mail.cs" />
     <Compile Include="ManageViewModels.cs" />
     <Compile Include="Message.cs" />

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Padmate.ServicePlatform.Utility;
+@{
     ViewBag.Title = "用户管理";
 }
 
@@ -56,39 +57,42 @@
 
 <!--Script要放在HTML标签后，才能将值绑定到标签-->
 <script type="text/javascript">
+
+    var dicUserType = $.parseJSON('@Html.Raw(ViewData["UserType"])');
+    var dicRoles = $.parseJSON('@Html.Raw(ViewData["Roles"])');
+
     $(document).ready(function () {
         InitTable();
         InitToolBarButton();
         InitModalEvent();
     });
-    function InitTable()
-    {
+    function InitTable() {
         $('#table').bootstrapTable({
-            height:500,
+            height: 500,
             method: 'post',                 //The method type to request remote data.
             url: '/User/User/GetPageData',
             dataType: "json",               //The type of data that you are expecting back from the server.
-            contentType:'application/json',
+            contentType: 'application/json',
             pagination: true,               //True to show a pagination toolbar on table bottom.
             pageSize: 10,                   //初始化每页显示几条
-            pageNumber:1,                   //初始化在第几页
-            pageList: [10,25,50,100,200,'All'],
+            pageNumber: 1,                   //初始化在第几页
+            pageList: [10, 25, 50, 100, 200, 'All'],
             sidePagination: "server",       //服务端请求
-            idField:'Id',
-            toolbar:'#toolbar',
-            showRefresh:true,
+            idField: 'Id',
+            toolbar: '#toolbar',
+            showRefresh: true,
             search: true,
             clickToSelect: true,     //单击行选中数据
             queryParams: ConstructQueryParams,
             //queryParamsType: "limit",
-            locale:'en-US',
+            locale: 'en-US',
             columns: [{
                 checkbox: true
             },
             {
                 field: 'Id',
                 title: 'Id',
-                visible:false,
+                visible: false,
             },
             {
                 field: 'UserName',
@@ -100,18 +104,28 @@
                 field: 'Roles',
                 title: '所属角色',
                 formatter: function (value, row, index) {
-                    
-                    var rolesHtml="";
+
+                    var rolesHtml = "";
                     var roles = row.Roles;
-                    if (roles != null && roles.length >0) {
-                        for (var i = 0; i < roles.length;i++)
-                        {
-                            rolesHtml += roles[i].Name + "<br/>";
+                    if (roles != null && roles.length > 0) {
+                        for (var i = 0; i < roles.length; i++) {
+
+                            var roleName = DicRoles(roles[i].Name);
+                            rolesHtml += roleName + "<br/>";
 
                         }
 
                     }
                     return rolesHtml;
+                },
+
+            },
+            {
+                field: 'UserType',
+                title: '用户类型',
+                formatter: function (value, row, index) {
+
+                    return DicUserType(value);;
                 },
 
             },
@@ -129,13 +143,12 @@
             ]
         });
     }
-    function ConstructQueryParams(param)
-    {
+    function ConstructQueryParams(param) {
         var params = {
             limit: param.limit, //页面大小
-            offset:param.offset,//偏移数量
+            offset: param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            UserName:param.search
+            UserName: param.search
         };
         return params;
     }
@@ -171,10 +184,9 @@
 
     }
 
-    function InitToolBarButton()
-    {
+    function InitToolBarButton() {
 
-        $("#btnAdd").click(function(){
+        $("#btnAdd").click(function () {
             $('#useradd').modal('show');
             $("#divAddContainer").load("/User/User/Add");
         });
@@ -189,8 +201,7 @@
                             , shift: 5 //动画类型
                 });
                 return;
-            } else if (selections.length != 1)
-            {
+            } else if (selections.length != 1) {
                 layer.alert("只能选择一条数据进行修改", {
                     skin: 'layui-layer-molv'
                             , closeBtn: 0
@@ -205,20 +216,18 @@
 
         });
 
-        $("#btnDelete").click(function(){
+        $("#btnDelete").click(function () {
             var selections = $('#table').bootstrapTable('getSelections');
-            if(selections.length == 0)
-            {
+            if (selections.length == 0) {
                 layer.alert("请选择要将要删除的数据", {
                     skin: 'layui-layer-molv'
-                            ,closeBtn: 0
-                            ,shift: 5 //动画类型
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
                 });
-                return ;
+                return;
             }
-            var contactIds =[];
-            for(var i=0;i<selections.length;i++)
-            {
+            var contactIds = [];
+            for (var i = 0; i < selections.length; i++) {
                 var id = selections[i].Id;
                 contactIds.push(id);
             }
@@ -229,16 +238,15 @@
                 dataType: "json",//返回json格式的数据
                 url: "/User/User/BachDeleteById",
                 data: jsonUserId,
-                async:false,
-                success: function(message){
-                    if(message.Success)
-                    {
+                async: false,
+                success: function (message) {
+                    if (message.Success) {
                         RefreshTable();
-                    }else{
+                    } else {
                         layer.alert(message.Content, {
                             skin: 'layui-layer-molv'
-                            ,closeBtn: 0
-                            ,shift: 5 //动画类型
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
                         });
                     }
 
@@ -247,9 +255,29 @@
         });
     }
 
-    function RefreshTable()
-    {
+    function RefreshTable() {
         $('#table').bootstrapTable('refresh');
 
+    }
+
+    function DicUserType(key)
+    {
+        var result = key;
+        for (var i = 0; i < dicUserType.length; i++) {
+            if (key == dicUserType[i].Key) {
+                result = dicUserType[i].Value;
+            }
+        }
+        return result;
+    }
+
+    function DicRoles(key) {
+        var result = key;
+        for (var i = 0; i < dicRoles.length; i++) {
+            if (key == dicRoles[i].Key) {
+                result = dicRoles[i].Value;
+            }
+        }
+        return result;
     }
 </script>    
