@@ -17,7 +17,12 @@ namespace Padmate.ServicePlatform.Service
         {
 
         }
+        M_User _currentUser;
+        public B_IntelInnovationProjectApply(M_User currentUser)
+        {
+            _currentUser = currentUser;
 
+        }
 
         public M_IntelInnovationProjectApply GetIntelInnovationProjectApplyById(string id)
         {
@@ -71,6 +76,43 @@ namespace Padmate.ServicePlatform.Service
         }
 
         /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        public List<M_IntelInnovationProjectApplySearch> GetPageDataForAudit(M_IntelInnovationProjectApplySearch project)
+        {
+            IntelInnovationProjectApplySearch searchModel = new IntelInnovationProjectApplySearch()
+            {
+                Name = project.Name
+            };
+
+            var offset = project.offset;
+            var limit = project.limit;
+
+
+            var pageResult = _dProject.GetPageDataForAudit(searchModel, offset, limit);
+            var result = pageResult.Select(a => ConverSearchEntityToModel(a)).ToList();
+
+            return result;
+        }
+
+        /// <summary>
+        /// 获取分页数据总条数
+        /// </summary>
+        /// <returns></returns>
+        public int GetPageDataTotalCountForAudit(M_IntelInnovationProjectApplySearch project)
+        {
+            IntelInnovationProjectApplySearch searchModel = new IntelInnovationProjectApplySearch()
+            {
+                Name = project.Name
+            };
+
+            var totalCount = _dProject.GetPageDataTotalCountForAudit(searchModel);
+            return totalCount;
+        }
+
+        /// <summary>
         /// 获取分页数据总条数
         /// </summary>
         /// <returns></returns>
@@ -105,6 +147,32 @@ namespace Padmate.ServicePlatform.Service
                 ContactPhone = string.IsNullOrEmpty(project.ContactPhone) ? string.Empty : project.ContactPhone,
                 Attachments = project.Attachments.Select(p => bAttachment.ConverEntityToModel(p)).ToList(),
                 Ques = project.Ques.Select(p => bQue.ConverEntityToModel(p)).ToList()
+
+            };
+            return model;
+        }
+
+
+        private M_IntelInnovationProjectApplySearch ConverSearchEntityToModel(IntelInnovationProjectApplySearch project)
+        {
+            if (project == null) return null;
+
+
+            var model = new M_IntelInnovationProjectApplySearch()
+            {
+                Id = project.Id.ToString(),
+                Name = string.IsNullOrEmpty(project.Name) ? string.Empty : project.Name,
+                Description = string.IsNullOrEmpty(project.Description) ? string.Empty : project.Description,
+                HasExample = project.HasExample,
+                InnovationPoint = string.IsNullOrEmpty(project.InnovationPoint) ? string.Empty : project.InnovationPoint,
+                Contact = string.IsNullOrEmpty(project.Contact) ? string.Empty : project.Contact,
+                ContactPhone = string.IsNullOrEmpty(project.ContactPhone) ? string.Empty : project.ContactPhone,
+                Auditor = string.IsNullOrEmpty(project.Auditor) ? string.Empty : project.Auditor,
+                AuditDate = project.AuditDate,
+                AuditRemark = project.AuditRemark,
+                AuditStatus = project.AuditStatus,
+                Application = project.Application,
+                ApplicationDate = project.ApplicationDate
 
             };
             return model;
@@ -245,6 +313,37 @@ namespace Padmate.ServicePlatform.Service
                 message.Success = false;
                 message.Content = "项目删除失败：" + e.Message;
             }
+
+            return message;
+        }
+
+        /// <summary>
+        /// 审核
+        /// </summary>
+        /// <param name="que"></param>
+        /// <returns></returns>
+        public Message Audit(string projectId,string AuditStatus,string AuditRemark)
+        {
+            Message message = new Message();
+            //根据ProjectId找出最新的队列
+            B_IntelInnovationProjectApplyQue bQue = new B_IntelInnovationProjectApplyQue();
+            var ques = bQue.GetIntelInnovationProjectApplyQueByProjectId(projectId);
+            var latestQue = ques.OrderByDescending(q => q.CreateDate).First();
+
+            //构造新增数据
+            M_IntelInnovationProjectApplyQue mQue = new M_IntelInnovationProjectApplyQue()
+            {
+                IntelInnovationProjectApplyId = projectId,
+                Auditor = _currentUser.UserName,
+                AuditDate = DateTime.Now,
+                AuditRemark = AuditRemark,
+                AuditStatus = AuditStatus,
+                Application = latestQue.Application,
+                ApplicationDate = latestQue.ApplicationDate,
+                CreateDate = DateTime.Now,
+                Creator = _currentUser.UserName
+            };
+            message = bQue.AddIntelInnovationProjectApplyQue(mQue);
 
             return message;
         }

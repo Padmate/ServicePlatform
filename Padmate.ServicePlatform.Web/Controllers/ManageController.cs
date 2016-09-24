@@ -159,6 +159,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 首页图片管理
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult HomeBackground()
         {
 
@@ -170,6 +171,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 市场平台
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ServiceMarket()
         {
 
@@ -182,6 +184,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 众创项目
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ZZProject()
         {
 
@@ -193,6 +196,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 工程平台
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ServiceEngineer()
         {
 
@@ -207,6 +211,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 精彩活动
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ActivityForecast()
         {
 
@@ -217,6 +222,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 活动预告
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult WonderfulActivity()
         {
 
@@ -230,6 +236,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
         /// 资讯管理
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Information()
         {
 
@@ -238,6 +245,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
         #endregion
 
         #region 用户管理
+
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult UserManage()
         {
             //用户类别
@@ -250,25 +259,37 @@ namespace Padmate.ServicePlatform.Web.Controllers
         }
         #endregion
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ContactInfo()
         {
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ContactScope()
         {
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Mail()
         {
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult RoleManage()
         {
             //角色
             ViewData["Roles"] = JsonHandler.ToJson(SystemRole.Roles);
+            return View();
+        }
+
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
+        public ActionResult IntelInnovationProjectApply()
+        {
+            //审核状态
+            ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
             return View();
         }
     }

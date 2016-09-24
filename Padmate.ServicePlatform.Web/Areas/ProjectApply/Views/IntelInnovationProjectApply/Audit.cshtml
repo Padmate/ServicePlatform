@@ -1,0 +1,260 @@
+﻿@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+@{
+    Layout = null;
+    var project = (M_IntelInnovationProjectApply)ViewData["project"];
+    
+    var user = (M_User)ViewData["user"];
+    var userType = string.Empty ;
+    if(!string.IsNullOrEmpty(user.UserType) && Common.Dic_UserTypes.ContainsKey(user.UserType))
+    {
+        userType = Common.Dic_UserTypes[user.UserType];
+    }
+    
+}
+
+
+<style>
+    .attachmen-list
+     {
+         padding-bottom:10px;
+     }
+     .attachmen-list a
+     {
+        text-decoration:underline;
+     }
+     .que-list{
+         margin-top:10px;
+         margin-bottom:20px;
+     }
+</style>
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center">审 核</h3>
+    <div class="modal-footer">
+        <button id="btnConfirm" class="btn btn-lg btn-success">
+            <i class="glyphicon glyphicon-check"></i> 确 认
+        </button>
+        <button id="btnReject" class="btn btn-lg btn-danger">
+            <i class="glyphicon glyphicon-check"></i> 拒 绝
+        </button>
+        <button type="button" class="btn btn-lg btn-info"
+                data-dismiss="modal">
+            退 出
+        </button>
+    </div>
+    <div class="col-sm-8 col-md-8">
+        <div class="form-horizontal" style="padding-bottom:100px;">
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <label class="customer-content-sm">项目名称：</label>
+                </div>
+                <div class="col-md-9">
+                    <label class="customer-content-sm">@project.Name</label>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <label class="customer-content-sm">所属组别：</label>
+                </div>
+                <div class="col-md-9">
+                    <label class="customer-content-sm">@userType</label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <label class="customer-content-sm">是否有样机：</label>
+                </div>
+                <div class="col-md-9">
+
+                    <label class="customer-content-sm">
+                        @{
+                            var hasExample = "否";
+                            if (project.HasExample)
+                            {
+                                hasExample = "是";
+                            }
+
+                        }
+                        @hasExample
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <label class="customer-content-sm">商业计划书：</label>
+                </div>
+                <div class="col-md-9">
+                    @if (project.Attachments != null && project.Attachments.Count > 0)
+                    {
+                        foreach (var attachment in project.Attachments)
+                        {
+                            <div class="attachmen-list">
+                                <a class="customer-content-sm" href="@attachment.VirtualPath">@attachment.Name</a>
+
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 control-label">
+                    <label class="customer-content-sm">项目简介：</label>
+                </div>
+                <div class="col-md-9">
+                    <textarea id="taDescription" disabled="disabled" class="textarea-large-full hidden">@project.Description</textarea>
+                    <div id="divDescription">
+                        <span id="spDescription"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 control-label">
+                    <label class="customer-content-sm">创新点：</label>
+                </div>
+                <div class="col-md-9">
+                    <textarea id="taInnovationPoint" disabled="disabled" class="textarea-large-full hidden">@project.InnovationPoint</textarea>
+                    <div id="divInnovationPoint">
+                        <span id="spInnovationPoint"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <label class="customer-content-sm">联系人：</label>
+                </div>
+                <div class="col-md-9">
+                    <label class="customer-content-sm">@project.Contact</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <label class="customer-content-sm">联系电话：</label>
+                </div>
+                <div class="col-md-9">
+                    <label class="customer-content-sm">@project.ContactPhone</label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <div class="form-horizontal" style="padding-bottom:100px;">
+            
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="customer-content-sm">审核备注：</label>
+                </div>
+                <div class="col-md-12">
+                    <textarea id="taAuditRemark" class="textarea-large-full"></textarea>
+                    
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="customer-content-sm">审核历史记录：</label>
+                </div>
+                <div class="col-md-12">
+                    @{
+                        var ques = project.Ques
+                            .Where(q=>q.AuditStatus != Common.Audit_Waiting)
+                            .OrderByDescending(q => q.CreateDate).ToList();
+                        foreach (var que in ques)
+                        {
+                            <div class="customer-content-sm que-list">
+                                <div>@que.CreateDate</div>
+                                <div>@Common.Dic_Audit[que.AuditStatus]</div>
+                                <div>
+                                    <textarea class="textarea-large-full" disabled="disabled">@que.AuditRemark</textarea>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script>
+    $(function () {
+        var description = $("#taDescription").val();
+        document.getElementById("spDescription").innerText = description;
+
+        var description = $("#taInnovationPoint").val();
+        document.getElementById("spInnovationPoint").innerText = description;
+
+        $("#btnConfirm").click(function () {
+            Audit('@Common.Audit_Success');
+
+        });
+
+        $("#btnReject").click(function () {
+
+            Audit('@Common.Audit_Failue');
+        });
+
+    });
+
+    function Audit(auditstatus)
+    {
+        var auditRemark = $("#taAuditRemark").val();
+        if(auditstatus =='@Common.Audit_Failue' && (auditRemark == null || auditRemark ==""))
+        {
+            layer.alert("拒绝时审核备注不能为空。", {
+                skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+            });
+            return;
+        }
+
+        var obj = {
+            ProjectId: '@project.Id',
+            AuditStatus: auditstatus,
+            AuditRemark: auditRemark
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectApply/DoAudit",
+            dataType: "json",
+            data: obj,
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success) {
+                    $("body").hideLoading();
+
+                    CloseAuditScreen();
+                    RefreshTable();
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+
+    }
+</script>
+
+

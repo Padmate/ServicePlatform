@@ -59,4 +59,74 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         public M_IntelInnovationProjectApplyQue LatestQue { get; set; }
     }
+
+    public class M_IntelInnovationProjectApplySearch:BaseModel
+    {
+        public string Id { get; set; }
+
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 项目简介
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// 是否有样机
+        /// </summary>
+        public bool HasExample { get; set; }
+
+        /// <summary>
+        /// 创新点
+        /// </summary>
+        public string InnovationPoint { get; set; }
+
+        /// <summary>
+        /// 联系人
+        /// </summary>
+        public string Contact { get; set; }
+
+        /// <summary>
+        /// 联系电话
+        /// </summary>
+        public string ContactPhone { get; set; }
+
+        public string QueId { get; set; }
+
+        /// <summary>
+        /// 审核状态:审核中\审核通过\审核失败
+        /// </summary>
+        public string AuditStatus { get; set; }
+
+        /// <summary>
+        /// 审核日期
+        /// </summary>
+        public DateTime? AuditDate { get; set; }
+
+        /// <summary>
+        /// 审核人
+        /// </summary>
+        public string Auditor { get; set; }
+
+        /// <summary>
+        /// 审核备注
+        /// </summary>
+        public string AuditRemark { get; set; }
+
+
+        /// <summary>
+        /// 申请人
+        /// </summary>
+        public string Application { get; set; }
+
+        /// <summary>
+        /// 申请日期
+        /// </summary>
+        public DateTime ApplicationDate { get; set; }
+
+
+    }
 }

@@ -66,6 +66,7 @@ namespace Padmate.ServicePlatform.DataAccess
         {
             var attachments = _dbContext.IntelInnovationProjectApplyQues
                 .Where(a => a.IntelInnovationProjectApplyId == intelInnovationProjectApplyId)
+                .OrderByDescending(i=>i.CreateDate)
                 .ToList();
             return attachments;
         }

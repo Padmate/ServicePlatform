@@ -1,0 +1,323 @@
+﻿@using Padmate.ServicePlatform.Utility;
+@{
+    ViewBag.Title = "2016英特尔创新创业大赛海峡赛区";
+}
+
+<style>
+    .failue-audit
+    {
+        color:red;
+    }
+    .waiting-audit
+    {
+        color:#0088cc;
+    }
+</style>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 col-is-4 col-sm-2 col-md-2 setting-left">
+                @Html.Partial("_SystemManageLeftMenu")
+            </div>
+            <div class="col-xs-8 col-is-8 col-sm-10 col-md-10">
+                <div id="toolbar">
+                    <button id="btnAudit" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-check"></i> 审核
+                    </button>
+                    <button id="btnDetail" class="btn btn-default">
+                        <i class="glyphicon glyphicon-record"></i>详细
+                    </button>
+                    
+                </div>
+                <table id="table"></table>
+
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<!--#region审核-->
+<div class="curd-model modal fade" id="intelProjectAudit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divAuditContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--详细-->
+<div class="curd-model modal fade" id="intelProjectAuditDetail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divAuditDetailContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--#endregion 详细-->
+<!--Script要放在HTML标签后，才能将值绑定到标签-->
+<script type="text/javascript">
+
+    var dicAuditStatus = $.parseJSON('@Html.Raw(ViewData["AuditStatus"])');
+
+    $(document).ready(function () {
+        InitTable();
+        InitModalEvent();
+        InitToolBarButton();
+    });
+
+    function DicAuditStatus(key) {
+        var result = key;
+        for (var i = 0; i < dicAuditStatus.length; i++) {
+            if (key == dicAuditStatus[i].Key) {
+                result = dicAuditStatus[i].Value;
+            }
+        }
+        return result;
+    }
+
+    function InitTable()
+    {
+        $('#table').bootstrapTable({
+            height:500,
+            method: 'post',                 //The method type to request remote data.
+            url: '/ProjectApply/IntelInnovationProjectApply/GetPageDataForAudit',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType:'application/json',
+            pagination: true,               //True to show a pagination toolbar on table bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber:1,                   //初始化在第几页
+            pageList: [10,25,50,100,200,'All'],
+            sidePagination: "server",       //服务端请求
+            idField:'Id',
+            toolbar:'#toolbar',
+            showRefresh:true,
+            search:true,
+            queryParams: ConstructQueryParams,
+            clickToSelect: true,     //单击行选中数据
+            //queryParamsType: "limit",
+            locale:'en-US',
+            columns: [{
+                checkbox: true
+                },
+                {
+                    field: 'Id',
+                    title: 'Id',
+                    visible:false,
+                },
+                {
+                    field: 'Name',
+                    title: '项目名称',
+                    sortable: true
+
+                },
+                {
+                    field: 'AuditStatus',
+                    title: '审核状态',
+                    formatter: function (value, row, index) {
+
+                        var fontClass =""
+                        if(value == '@Common.Audit_Waiting')
+                        {
+                            fontClass = "waiting-audit";
+                        } else if (value == '@Common.Audit_Failue')
+                        {
+                            fontClass = "failue-audit"
+                        }
+                        var result = DicAuditStatus(value);
+
+                        return '<label class='+fontClass+'>'+result+'</label>';
+                    }
+
+                },
+                {
+                    field: 'AuditRemark',
+                    title: '审核备注',
+                    width: '15%',
+                    formatter: function (value, row, index) {
+
+                        var result = value;
+                        if (result !=null && result != "" && result.length > 50) {
+                            result = '<a class="custooltip" href="#">' + result.substr(0, 50) + '......<span class="classic">' + row.Description + '</span></a>';
+
+                        }
+
+
+                        return result;
+                    }
+
+                },
+                {
+                    field: 'Auditor',
+                    title: '审核人',
+                    formatter: function (value, row, index) {
+
+                        var result = DicAuditStatus(value);
+
+                        return result;
+                    }
+
+                },
+                {
+                    field: 'AuditDate',
+                    title: '审核时间',
+                    formatter: function (value, row, index) {
+                        var result = value;
+                        if (value != null)
+                        {
+                            result = JsonDateFormat2(value);
+                        }
+                        
+
+                        return result;
+                    }
+
+                },
+                {
+                    field: 'Contact',
+                    title: '联系人',
+                    sortable: true
+
+                },
+                {
+                    field: 'ContactPhone',
+                    title: '联系电话',
+                    sortable: true
+
+                }, {
+                    field: 'Application',
+                    title: '申请人',
+                    sortable: true
+
+                }, {
+                    field: 'ApplicationDate',
+                    title: '申请时间',
+                    formatter: function (value, row, index) {
+
+                        var result = JsonDateFormat2(value);
+
+                        return result;
+                    }
+
+                }
+
+
+            ]
+        });
+    }
+    function ConstructQueryParams(param)
+    {
+        var params = {
+            limit: param.limit, //页面大小
+            offset:param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            Name:param.search
+        };
+        return params;
+    }
+
+    function CloseAuditScreen() {
+        $('#intelProjectAudit').modal('hide');
+
+    }
+
+    function InitModalEvent() {
+
+
+        $('#intelProjectAudit').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#intelProjectAudit').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divAuditContainer").html("");
+
+        });
+        $('#intelProjectAuditDetail').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#intelProjectAuditDetail').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divAuditDetailContainer").html("");
+
+        })
+    }
+
+
+    function InitToolBarButton() {
+
+        $("#btnDetail").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#intelProjectAuditDetail').modal('show');
+            $("#divAuditDetailContainer").load("/ProjectApply/IntelInnovationProjectApply/AuditDetail?projectId=" + id);
+
+        });
+
+        $("#btnAudit").click(function () {
+            var selections = $('#table').bootstrapTable('getSelections');
+
+            if (selections.length == 0) {
+                layer.alert("请选择数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            //只有审核状态为："等待审核"才允许审核
+            var auditStatus = selections[0].AuditStatus;
+            if(auditStatus != '@Common.Audit_Waiting')
+            {
+                layer.alert("只有'等待审核'的数据才能进行审核", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#intelProjectAudit').modal('show');
+            $("#divAuditContainer").load("/ProjectApply/IntelInnovationProjectApply/Audit?projectId=" + id);
+        });
+    }
+
+    function RefreshTable()
+    {
+        $('#table').bootstrapTable('refresh');
+
+    }
+</script>    

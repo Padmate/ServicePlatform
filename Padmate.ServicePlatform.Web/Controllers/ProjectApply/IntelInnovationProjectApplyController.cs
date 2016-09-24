@@ -42,7 +42,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             //找出最新的队列
             if (project.Ques != null && project.Ques.Count > 0)
             {
-                project.LatestQue = project.Ques.OrderByDescending(q => q.ApplicationDate).First();
+                project.LatestQue = project.Ques.OrderByDescending(q => q.CreateDate).First();
             }
             ViewData["project"] = project;
 
@@ -107,7 +107,9 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                     IntelInnovationProjectApplyId = projectId.ToString(),
                     AuditStatus = Common.Audit_Waiting,  //等待审核
                     Application = currentUser.UserName,
-                    ApplicationDate = DateTime.Now
+                    ApplicationDate = DateTime.Now,
+                    Creator = currentUser.UserName,
+                    CreateDate = DateTime.Now
                 };
 
                 message = bQue.AddIntelInnovationProjectApplyQue(mQue);
@@ -142,7 +144,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             //找出最新的队列
             if(project.Ques != null && project.Ques.Count >0)
             {
-                project.LatestQue = project.Ques.OrderByDescending(q => q.ApplicationDate).First();
+                project.LatestQue = project.Ques.OrderByDescending(q => q.CreateDate).First();
             }
 
             message.Content = JsonHandler.ToJson(projects.First());
@@ -293,6 +295,103 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             message = bAttachment.DeleteById(Id);
 
             return Json(message);
+        }
+
+        /// <summary>
+        /// 获取审核分页数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetPageDataForAudit()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_IntelInnovationProjectApplySearch model = JsonHandler.UnJson<M_IntelInnovationProjectApplySearch>(strReqStream);
+
+            B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply();
+            var pageData = bProject.GetPageDataForAudit(model);
+            var totalCount = bProject.GetPageDataTotalCountForAudit(model);
+
+            PageResult<M_IntelInnovationProjectApplySearch> pageResult = new PageResult<M_IntelInnovationProjectApplySearch>(totalCount, pageData);
+            return Json(pageResult);
+        }
+
+        /// <summary>
+        /// 审核
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Audit(string projectId)
+        {
+            //重新查找数据
+            B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply();
+            var project = bProject.GetIntelInnovationProjectApplyById(projectId);
+            //找出最新的队列
+            if (project.Ques != null && project.Ques.Count > 0)
+            {
+                project.LatestQue = project.Ques.OrderByDescending(q => q.CreateDate).First();
+            }
+            ViewData["project"] = project;
+
+            B_User bUser = new B_User();
+            var user = bUser.GetUserById(project.UserId);
+            ViewData["user"] = user;
+
+            //审核状态
+            ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
+
+            return View();
+        }
+
+        /// <summary>
+        /// 审核
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DoAudit(string ProjectId, string AuditStatus, string AuditRemark)
+        {
+            Message message = new Message();
+
+            if(string.IsNullOrEmpty(ProjectId))
+            {
+                message.Success = false ;
+                message.Content = "未获取到项目信息，请重新尝试";
+                return Json(message);
+            }
+
+             var currentUser = this.GetCurrentUser();
+            B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply(currentUser);
+             //审核新增队列
+            message = bProject.Audit(ProjectId,AuditStatus,AuditRemark);
+           
+           
+            return Json(message);
+        }
+
+        /// <summary>
+        /// 审核详细
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public ActionResult AuditDetail(string projectId)
+        {
+            //重新查找数据
+            B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply();
+            var project = bProject.GetIntelInnovationProjectApplyById(projectId);
+            //找出最新的队列
+            if (project.Ques != null && project.Ques.Count > 0)
+            {
+                project.LatestQue = project.Ques.OrderByDescending(q => q.CreateDate).First();
+            }
+            ViewData["project"] = project;
+
+            B_User bUser = new B_User();
+            var user = bUser.GetUserById(project.UserId);
+            ViewData["user"] = user;
+
+            //审核状态
+            ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
+
+            return View();
         }
     }
 }

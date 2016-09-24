@@ -87,6 +87,8 @@ namespace Padmate.ServicePlatform.Service
                 AuditRemark = que.AuditRemark,
                 Application = que.Application,
                 ApplicationDate = que.ApplicationDate,
+                Creator = que.Creator,
+                CreateDate = que.CreateDate,
                 IntelInnovationProjectApplyId = que.IntelInnovationProjectApplyId.ToString()
 
             };
@@ -116,6 +118,8 @@ namespace Padmate.ServicePlatform.Service
                     AuditRemark = model.AuditRemark,
                     Application = model.Application,
                     ApplicationDate = model.ApplicationDate,
+                    Creator = model.Creator,
+                    CreateDate = model.CreateDate,
                     IntelInnovationProjectApplyId = System.Convert.ToInt32(model.IntelInnovationProjectApplyId)
                 };
 

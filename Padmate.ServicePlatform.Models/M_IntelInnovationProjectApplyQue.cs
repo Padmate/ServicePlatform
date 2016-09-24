@@ -53,5 +53,16 @@ namespace Padmate.ServicePlatform.Models
         /// 申请时间
         /// </summary>
         public DateTime ApplicationDate { get; set; }
+
+        /// <summary>
+        /// 申请人
+        /// </summary>
+        [MaxLength(200, ErrorMessage = "创建人不能超过200个字符")]
+        public string Creator { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateDate { get; set; }
     }
 }

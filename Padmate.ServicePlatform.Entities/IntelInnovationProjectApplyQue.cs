@@ -41,6 +41,16 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public DateTime ApplicationDate { get; set; }
 
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        public string Creator { get; set; }
+
+        /// <summary>
+        /// 创建日期
+        /// </summary>
+        public DateTime CreateDate { get; set; }
+
         public int IntelInnovationProjectApplyId { get; set; }
 
         public virtual IntelInnovationProjectApply IntelInnovationProjectApply { get; set; }

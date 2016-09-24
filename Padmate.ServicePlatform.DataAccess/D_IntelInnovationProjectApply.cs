@@ -37,6 +37,74 @@ namespace Padmate.ServicePlatform.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// 获取审核分页数据
+        /// </summary>
+        /// <returns></returns>
+        public List<IntelInnovationProjectApplySearch> GetPageDataForAudit(IntelInnovationProjectApplySearch projcet, int skip, int limit)
+        {
+            var sql = @"select app.*,
+                        que.Id as QueId,
+                        que.Auditor,
+                        que.AuditDate,
+                        que.AuditRemark,
+                        que.AuditStatus,
+                        que.Application,
+                        que.ApplicationDate
+                        from 
+                        --查找最新的队列
+                        (select IntelInnovationProjectApplyId,max(CreateDate) CreateDate
+                        from dbo.IntelInnovationProjectApplyQues group by IntelInnovationProjectApplyId) latestQue
+                        --左链接基础数据
+                        left join dbo.IntelInnovationProjectApplies app
+                        on app.Id = latestQue.IntelInnovationProjectApplyId
+                        --左链接que
+                        left join dbo.IntelInnovationProjectApplyQues que
+                        on que.CreateDate = latestQue.CreateDate";
+
+            //var args = new DbParameter[] {
+            //      new SqlParameter {ParameterName = "culture", Value = culture}};
+            //var locations = _dbContext.Database.SqlQuery<string>(sql, args);
+            var query = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var result = query.OrderByDescending(a => a.ApplicationDate)
+            .Skip(skip)
+            .Take(limit)
+            .ToList();
+
+            return result.ToList();
+        }
+
+        public int GetPageDataTotalCountForAudit(IntelInnovationProjectApplySearch projcet)
+        {
+            var sql = @"select app.*,
+                        que.Id as QueId,
+                        que.Auditor,
+                        que.AuditDate,
+                        que.AuditRemark,
+                        que.AuditStatus,
+                        que.Application,
+                        que.ApplicationDate
+                        from 
+                        --查找最新的队列
+                        (select IntelInnovationProjectApplyId,max(CreateDate) CreateDate
+                        from dbo.IntelInnovationProjectApplyQues group by IntelInnovationProjectApplyId) latestQue
+                        --左链接基础数据
+                        left join dbo.IntelInnovationProjectApplies app
+                        on app.Id = latestQue.IntelInnovationProjectApplyId
+                        --左链接que
+                        left join dbo.IntelInnovationProjectApplyQues que
+                        on que.CreateDate = latestQue.CreateDate";
+
+
+            var query = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var result = query.Count();
+
+            return result;
+        }
+
+
         public int GetPageDataTotalCount(IntelInnovationProjectApply projcet)
         {
             var query = _dbContext.IntelInnovationProjectApplies.Where(a => 1 == 1);

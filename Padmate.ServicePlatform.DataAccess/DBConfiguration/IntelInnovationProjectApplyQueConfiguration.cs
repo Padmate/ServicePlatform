@@ -17,6 +17,8 @@ namespace Padmate.ServicePlatform.DataAccess.DBConfiguration
             this.Property(p => p.AuditRemark).HasMaxLength(2000);
             this.Property(p => p.Application).HasMaxLength(200);
             this.Property(p => p.AuditStatus).HasMaxLength(50);
+            this.Property(p => p.Creator).HasMaxLength(200);
+
 
             this.HasRequired<IntelInnovationProjectApply>(s => s.IntelInnovationProjectApply)
                     .WithMany(s => s.Ques)

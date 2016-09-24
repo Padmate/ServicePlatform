@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201609230644000_addIntelInnovationProjectApplyQue.Designer.cs">
       <DependentUpon>201609230644000_addIntelInnovationProjectApplyQue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609240201099_updateIntelProjectQue.cs" />
+    <Compile Include="Migrations\201609240201099_updateIntelProjectQue.Designer.cs">
+      <DependentUpon>201609240201099_updateIntelProjectQue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceDBContext.cs" />
@@ -108,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609230644000_addIntelInnovationProjectApplyQue.resx">
       <DependentUpon>201609230644000_addIntelInnovationProjectApplyQue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609240201099_updateIntelProjectQue.resx">
+      <DependentUpon>201609240201099_updateIntelProjectQue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

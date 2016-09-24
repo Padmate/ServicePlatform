@@ -1049,6 +1049,7 @@
     <Content Include="fonts\fontawesome.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\CustomerMenu.js" />
+    <Content Include="Scripts\dateformathelp.js" />
     <Content Include="Scripts\jiathis\jiathis-share.css" />
     <Content Include="Scripts\jiathis\jiathis-share.js" />
     <Content Include="Scripts\jquery.placeholder.js" />
@@ -1132,6 +1133,8 @@
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Index.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\_Edit.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\_Detail.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Audit.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\AuditDetail.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />
@@ -1250,6 +1253,7 @@
     <Content Include="Views\Manage\UserInfo.cshtml" />
     <Content Include="Views\Manage\ZZProject.cshtml" />
     <Content Include="Views\Manage\RoleManage.cshtml" />
+    <Content Include="Views\Manage\IntelInnovationProjectApply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

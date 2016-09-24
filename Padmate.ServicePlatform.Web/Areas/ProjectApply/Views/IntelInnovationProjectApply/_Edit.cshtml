@@ -52,10 +52,9 @@
                     <!--项目状态-->
                     <div class="customer-content-md projectStatus">
 
-                        <label id="AuditStatusMsg">
-
-                        </label>
-                        <label id="AuditRemarkMsg"></label>
+                        <span id="AuditStatusMsg"></span><br/>
+                        <textarea id="taAuditRemarkMsg" hidden></textarea>
+                        <span id="spAuditRemarkMsg"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -198,6 +197,8 @@
                     $("#tbContact").val("");
                     $("#tbContactPhone").val("");
                     $("#AuditStatusMsg").html("");
+                    $("#spAuditRemarkMsg").html("");
+
 
                     var project = $.parseJSON(message.Content);
                     //赋值
@@ -212,6 +213,14 @@
                     if(project.LatestQue != null)
                     {
                         $("#AuditStatusMsg").html("审核状态："+DicAuditStatus(project.LatestQue.AuditStatus));
+                    }
+
+                    if (project.LatestQue != null
+                        && project.LatestQue.AuditRemark != null
+                        && project.LatestQue.AuditRemark != "") {
+                        
+                        $("#taAuditRemarkMsg").html("审核备注：" + DicAuditStatus(project.LatestQue.AuditRemark));
+                        document.getElementById("spAuditRemarkMsg").innerText = $("#taAuditRemarkMsg").val();
                     }
                     
 
