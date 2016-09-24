@@ -65,7 +65,17 @@ namespace Padmate.ServicePlatform.DataAccess
             //var args = new DbParameter[] {
             //      new SqlParameter {ParameterName = "culture", Value = culture}};
             //var locations = _dbContext.Database.SqlQuery<string>(sql, args);
-            var query = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+            var querySql = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var query = querySql.Where(a=> 1==1);
+            #region　条件过滤
+            if (!string.IsNullOrEmpty(projcet.Name))
+                query = query.Where(a => a.Name.Contains(projcet.Name));
+
+            if (!string.IsNullOrEmpty(projcet.AuditStatus))
+                query = query.Where(a => a.AuditStatus.Contains(projcet.AuditStatus));
+
+            #endregion
 
             var result = query.OrderByDescending(a => a.ApplicationDate)
             .Skip(skip)
@@ -97,7 +107,18 @@ namespace Padmate.ServicePlatform.DataAccess
                         on que.CreateDate = latestQue.CreateDate";
 
 
-            var query = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var querySql = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var query = querySql.Where(qs => 1 == 1);
+            #region　条件过滤
+            if (!string.IsNullOrEmpty(projcet.Name))
+                query = query.Where(a => a.Name.Contains(projcet.Name));
+
+            if (!string.IsNullOrEmpty(projcet.AuditStatus))
+                query = query.Where(a => a.AuditStatus.Contains(projcet.AuditStatus));
+
+            #endregion
 
             var result = query.Count();
 

@@ -84,7 +84,8 @@ namespace Padmate.ServicePlatform.Service
         {
             IntelInnovationProjectApplySearch searchModel = new IntelInnovationProjectApplySearch()
             {
-                Name = project.Name
+                Name = project.Name,
+                AuditStatus = project.AuditStatus
             };
 
             var offset = project.offset;
@@ -105,7 +106,8 @@ namespace Padmate.ServicePlatform.Service
         {
             IntelInnovationProjectApplySearch searchModel = new IntelInnovationProjectApplySearch()
             {
-                Name = project.Name
+                Name = project.Name,
+                AuditStatus = project.AuditStatus
             };
 
             var totalCount = _dProject.GetPageDataTotalCountForAudit(searchModel);
