@@ -1053,6 +1053,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\CustomerMenu.js" />
     <Content Include="Scripts\dateformathelp.js" />
+    <Content Include="Scripts\jdownload.js" />
     <Content Include="Scripts\jiathis\jiathis-share.css" />
     <Content Include="Scripts\jiathis\jiathis-share.js" />
     <Content Include="Scripts\jquery.placeholder.js" />

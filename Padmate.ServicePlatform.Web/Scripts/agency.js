@@ -37,7 +37,9 @@ $(function () {
         var clickPathName = clickedUrl.pathname.toLowerCase();
         //URL后缀分割，获取导航URL 如：/about.html
         var arrHeadPath = thisPathName.split('/');
-        var firstHeadPath = arrHeadPath[1].split('.');
+        //IE下pathname没有/
+        var headPath = arrHeadPath.length >1?arrHeadPath[1]:arrHeadPath[0];
+        var firstHeadPath = headPath.split('.');
         var firstCompareHeadPath = firstHeadPath[0];
 
         var arrClickPath = clickPathName.split('/');

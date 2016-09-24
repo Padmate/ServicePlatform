@@ -38,47 +38,49 @@
     }
 
      .projectStatus {
-        color: red;
+
         padding-bottom: 20px;
     }
-   
+    .projectStatus span{
+        color:red;
+    }
 </style>
 
 <div class="container">
     <div class="row projectArea">
-        <div class="col-sm-8 col-md-8">
+        <div class="col-xs-12 col-sm-8 col-md-8">
             <div class="form-horizontal">
                 <div class="col-md-offset-3 col-md-9">
                     <!--项目状态-->
                     <div class="customer-content-md projectStatus">
 
-                        <span id="AuditStatusMsg"></span><br/>
+                        <span id="AuditStatusMsg" class="customer-content-sm red"></span><br/>
                         <textarea id="taAuditRemarkMsg" hidden></textarea>
-                        <span id="spAuditRemarkMsg"></span>
+                        <span id="spAuditRemarkMsg" class="customer-content-sm red"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">项目名称：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <input class="input-large-full" id="tbName" placeholder="项目名称" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-3 text-right">
+                    <div class="col-xs-3 col-sm-3 col-md-3 text-right">
                         <label class="customer-content-sm">所属组别：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <label class="customer-content-sm">@userType</label>
                     </div>
 
                 </div>
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">是否有样机：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
 
                         <input type="radio" value="true" name="HasExample" id="hasExampleTrue" />
                         <label for="hasExampleTrue">是</label>
@@ -90,10 +92,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">上传商业计划书：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <div id="uploadFiles">上传附件</div>
 
                         <div id="thelist" class="uploader-list"></div>
@@ -102,37 +104,37 @@
 
                 </div>
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">项目简介：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <textarea id="taDescription" class="textarea-large-full"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">创新点：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <textarea id="taInnovationPoint" class="textarea-large-full"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">联系人：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <input class="input-large-full" id="tbContact" placeholder="联系人" />
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-3 control-label">
+                    <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">联系电话：</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
                         <input class="input-large-full" id="tbContactPhone" placeholder="联系电话" />
                     </div>
                 </div>
@@ -162,9 +164,18 @@
 
     $(function () {
         InitButton();
-        InitFileUploader();
         var userId = '@user.Id';
         LoadProjectByUserId(userId);
+
+        if (!WebUploader.Uploader.support()) {
+            alert('当前页面一些功能不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+            throw new Error('function does not support the browser you are using.');
+        } else {
+            InitFileUploader();
+
+        }
+
+
     });
 
 
@@ -218,11 +229,11 @@
                     if (project.LatestQue != null
                         && project.LatestQue.AuditRemark != null
                         && project.LatestQue.AuditRemark != "") {
-                        
+
                         $("#taAuditRemarkMsg").html("审核备注：" + DicAuditStatus(project.LatestQue.AuditRemark));
                         document.getElementById("spAuditRemarkMsg").innerText = $("#taAuditRemarkMsg").val();
                     }
-                    
+
 
                 } else {
 
@@ -324,8 +335,7 @@
 
                     } else {
                         //如果当前没有文件上传
-                        if(_isApplyButton)
-                        {
+                        if (_isApplyButton) {
                             $("body").hideLoading();
                             layer.alert(_buttonSaveSuccessMsg, {
                                 skin: 'layui-layer-molv' //样式类名
@@ -460,8 +470,7 @@
                     var completeFiles = fileUploader.getFiles("complete");
                     var allFiles = fileUploader.getFiles();
                     //当最后一文件上传完之后再执行刷新操作
-                    if(completeFiles.length == allFiles.length)
-                    {
+                    if (completeFiles.length == allFiles.length) {
                         //上传成功
                         if (_isApplyButton) {
                             $("body").hideLoading();
@@ -487,7 +496,7 @@
                         }
                     }
 
-                    
+
                 });
 
             }
