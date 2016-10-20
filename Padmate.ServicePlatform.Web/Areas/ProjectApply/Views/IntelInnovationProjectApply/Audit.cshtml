@@ -27,6 +27,8 @@
          margin-top:10px;
          margin-bottom:20px;
      }
+     .form-group .content{font-weight:normal}
+
 </style>
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
@@ -49,43 +51,147 @@
     <div class="col-xs-12 col-sm-8 col-md-8">
         <div class="form-horizontal" style="padding-bottom:100px;">
             <div class="form-group">
+
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}名称", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.OrganizationName</label>
+
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-xs-3 col-sm-3 col-md-3 text-right">
                     <label class="customer-content-sm">项目名称：</label>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9">
-                    <label class="customer-content-sm">@project.Name</label>
-                </div>
-            </div>
+                    <label class="customer-content-sm content">@project.Name</label>
 
-
-            <div class="form-group">
-                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
-                    <label class="customer-content-sm">所属组别：</label>
                 </div>
-                <div class="col-xs-9 col-sm-9 col-md-9">
-                    <label class="customer-content-sm">@userType</label>
-                </div>
-
             </div>
             <div class="form-group">
                 <div class="col-xs-3 col-sm-3 col-md-3 text-right">
-                    <label class="customer-content-sm">是否有样机：</label>
+                    <label class="customer-content-sm">所属行业领域：</label>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.FieldScopeName</label>
 
-                    <label class="customer-content-sm">
-                        @{
-                            var hasExample = "否";
-                            if (project.HasExample)
-                            {
-                                hasExample = "是";
-                            }
+                </div>
 
-                        }
-                        @hasExample
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">项目阶段：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@Common.Dic_ProjectStage[project.ProjectStage]</label>
+
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">营业执照注册号：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.BusinessLicense</label>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">团队成立时间：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">
+
+                        @System.Convert.ToDateTime(project.FoundedTime).ToString("yyyy-MM-dd")
                     </label>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">办公地址：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <textarea id="taBusinessAddress" disabled="disabled" class="textarea-large-full hidden">@project.BusinessAddress</textarea>
+                    <div id="divBusinessAddress">
+                        <span class="customer-content-sm content" id="spBusinessAddress"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">网址：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.Website</label>
+
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">微信公众号：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.WebChatNumber</label>
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}概要", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <textarea id="taOrganizationDescription" disabled="disabled" class="textarea-large-full hidden">@project.OrganizationDescription</textarea>
+                    <div id="divOrganizationDescription">
+                        <span class="customer-content-sm content" id="spOrganizationDescription"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">项目简介：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <textarea id="taDescription" disabled="disabled" class="textarea-large-full hidden">@project.Description</textarea>
+                    <div id="divDescription">
+                        <span class="customer-content-sm content" id="spDescription"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">核心技术：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <textarea id="taCoreTechnology" disabled="disabled" class="textarea-large-full hidden">@project.CoreTechnology</textarea>
+                    <div id="divCoreTechnology">
+                        <span class="customer-content-sm content" id="spCoreTechnology"></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">关键词：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.Keyword</label>
+
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-xs-3 col-sm-3 col-md-3 text-right">
                     <label class="customer-content-sm">商业计划书：</label>
@@ -96,56 +202,88 @@
                         foreach (var attachment in project.Attachments)
                         {
                             <div class="attachmen-list">
-                                <a class="customer-content-sm" href="@attachment.VirtualPath">@attachment.Name</a>
-
+                                <a class="customer-content-sm" href="@attachment.VirtualPath" download="@attachment.Name">@attachment.Name</a>
                             </div>
                         }
                     }
                 </div>
 
             </div>
-            <div class="form-group">
-                <div class="col-xs-3 col-sm-3 col-md-3 control-label">
-                    <label class="customer-content-sm">项目简介：</label>
-                </div>
-                <div class="col-xs-9 col-sm-9 col-md-9">
-                    <textarea id="taDescription" disabled="disabled" class="textarea-large-full hidden">@project.Description</textarea>
-                    <div id="divDescription">
-                        <span id="spDescription"></span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-xs-3 col-sm-3 col-md-3 control-label">
-                    <label class="customer-content-sm">创新点：</label>
-                </div>
-                <div class="col-xs-9 col-sm-9 col-md-9">
-                    <textarea id="taInnovationPoint" disabled="disabled" class="textarea-large-full hidden">@project.InnovationPoint</textarea>
-                    <div id="divInnovationPoint">
-                        <span id="spInnovationPoint"></span>
-                    </div>
-                </div>
-            </div>
 
             <div class="form-group">
                 <div class="col-xs-3 col-sm-3 col-md-3 text-right">
-                    <label class="customer-content-sm">联系人：</label>
+                    <label class="customer-content-sm">@string.Format("{0}负责人姓名", userType)：</label>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9">
-                    <label class="customer-content-sm">@project.Contact</label>
+                    <label class="customer-content-sm content">@project.Principal</label>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}负责人电话", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.PrincipalPhone</label>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}负责人邮件", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.PrincipalMail</label>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}负责人职位", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.PrincipalPosition</label>
+
+                </div>
+            </div>
+
 
             <div class="form-group">
                 <div class="col-xs-3 col-sm-3 col-md-3 text-right">
-                    <label class="customer-content-sm">联系电话：</label>
+                    <label class="customer-content-sm">@string.Format("{0}联系人姓名", userType)：</label>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9">
-                    <label class="customer-content-sm">@project.ContactPhone</label>
+                    <label class="customer-content-sm content">@project.Contact</label>
+
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}联系人电话", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.ContactPhone</label>
 
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}联系人邮件", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.ContactMail</label>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                    <label class="customer-content-sm">@string.Format("{0}联系人职位", userType)：</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <label class="customer-content-sm content">@project.ContactPosition</label>
+
+                </div>
+            </div>
 
         </div>
     </div>
@@ -192,12 +330,13 @@
     
 </div>
 <script>
+    
+   
     $(function () {
-        var description = $("#taDescription").val();
-        document.getElementById("spDescription").innerText = description;
-
-        var description = $("#taInnovationPoint").val();
-        document.getElementById("spInnovationPoint").innerText = description;
+        LoadTextareaContent("Description");
+        LoadTextareaContent("BusinessAddress");
+        LoadTextareaContent("OrganizationDescription");
+        LoadTextareaContent("CoreTechnology");
 
         $("#btnConfirm").click(function () {
             Audit('@Common.Audit_Success');
@@ -210,6 +349,12 @@
         });
 
     });
+
+    function LoadTextareaContent(name) {
+        var description = $("#ta" + name).val();;
+        document.getElementById("sp" + name).innerText = description
+    }
+
 
     function Audit(auditstatus)
     {

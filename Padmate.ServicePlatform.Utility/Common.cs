@@ -104,6 +104,82 @@ namespace Padmate.ServicePlatform.Utility
             {Audit_Failue,"审核失败"}
         };
         #endregion
+        #region 行业领域
+        /// <summary>
+        /// 智能硬件
+        /// </summary>
+        public const string FieldScope_IntelligentHardware = "intelligenthardware";
+
+        /// <summary>
+        /// 机器人
+        /// </summary>
+        public const string FieldScope_Robot = "robot";
+
+        /// <summary>
+        /// 物联网
+        /// </summary>
+        public const string FieldScope_Internet = "internet";
+
+        /// <summary>
+        /// 大数据
+        /// </summary>
+        public const string FieldScope_BigData = "bigdata";
+
+        /// <summary>
+        /// AR /VR
+        /// </summary>
+        public const string FieldScope_ARVR = "arvr";
+
+        /// <summary>
+        /// 其它
+        /// </summary>
+        public const string FieldScope_Other = "other";
+
+
+        public static Dictionary<string, string> Dic_FieldScope = new Dictionary<string, string>(){
+            {FieldScope_IntelligentHardware,"智能硬件"},
+            {FieldScope_Robot,"机器人"},
+            {FieldScope_Internet,"物联网"},
+            {FieldScope_BigData,"大数据"},
+            {FieldScope_ARVR,"AR/VR"},
+            {FieldScope_Other,"其它"}
+        };
+        #endregion
+
+        #region 项目阶段
+        /// <summary>
+        /// 创意
+        /// </summary>
+        public const string ProjectStage_CY = "cy";
+
+        /// <summary>
+        /// 研发
+        /// </summary>
+        public const string ProjectStage_YF = "yf";
+
+        /// <summary>
+        /// 产品开发
+        /// </summary>
+        public const string ProjectStage_CPKF = "cpkf";
+
+        /// <summary>
+        /// 试运营
+        /// </summary>
+        public const string ProjectStage_SYY = "syy";
+
+        /// <summary>
+        /// 市场拓展
+        /// </summary>
+        public const string ProjectStage_SCTZ = "sctz";
+
+        public static Dictionary<string, string> Dic_ProjectStage = new Dictionary<string, string>(){
+            {ProjectStage_CY,"创意"},
+            {ProjectStage_YF,"研发"},
+            {ProjectStage_CPKF,"产品开发"},
+            {ProjectStage_SYY,"试运营"},
+            {ProjectStage_SCTZ,"市场拓展"}
+        };
+        #endregion
     }
 
     public static class SystemRole

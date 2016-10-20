@@ -34,3 +34,28 @@ function InitDatetimepicker(datetimepicker) {
     });
 }
 
+///只选择到日期
+function InitDatepicker(datetimepicker) {
+
+    //时间控件
+    $(datetimepicker).datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        language: 'zh-CN',
+        minView: "month" //选择日期后，不会再跳转去选择时分秒 
+    });
+
+    //datetimepicker 关闭事件执行时会导致modal的关闭事件触发，添加一下代码防止触发bootstrap modal关闭事件
+    $(datetimepicker).datetimepicker().on('changeDate', function (ev) {
+        //
+    }).on('hide', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    });
+}
+

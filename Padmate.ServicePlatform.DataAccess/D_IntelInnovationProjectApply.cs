@@ -196,10 +196,27 @@ namespace Padmate.ServicePlatform.DataAccess
 
             projcet.Name = model.Name;
             projcet.Description = model.Description;
-            projcet.HasExample = model.HasExample;
-            projcet.InnovationPoint = model.InnovationPoint;
-            projcet.ContactPhone = model.ContactPhone;
+            projcet.OrganizationName = model.OrganizationName;
+            projcet.FieldScopeCode = model.FieldScopeCode;
+            projcet.FieldScopeName = model.FieldScopeName;
+            projcet.ProjectStage = model.ProjectStage;
+            projcet.BusinessLicense = model.BusinessLicense;
+            projcet.FoundedTime = model.FoundedTime;
+            projcet.BusinessAddress = model.BusinessAddress;
+            projcet.Website = model.Website;
+            projcet.WebChatNumber = model.WebChatNumber;
+            projcet.Principal = model.Principal;
+            projcet.PrincipalPosition = model.PrincipalPosition;
+            projcet.PrincipalPhone = model.PrincipalPhone;
+            projcet.PrincipalMail = model.PrincipalMail;
             projcet.Contact = model.Contact;
+            projcet.ContactPosition = model.ContactPosition;
+            projcet.ContactPhone = model.ContactPhone;
+            projcet.ContactMail = model.ContactMail;
+            projcet.OrganizationDescription = model.OrganizationDescription;
+            projcet.CoreTechnology = model.CoreTechnology;
+            projcet.Keyword = model.Keyword;
+
 
             _dbContext.SaveChanges();
             return projcet.Id;

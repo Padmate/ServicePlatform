@@ -14,6 +14,107 @@ namespace Padmate.ServicePlatform.Entities
         public int Id { get; set; }
 
         /// <summary>
+        /// 组织名称
+        /// 企业名称/团队名称
+        /// </summary>
+        public string OrganizationName { get; set; }
+
+        /// <summary>
+        /// 领域范围
+        /// </summary>
+        public string FieldScopeCode { get; set; }
+
+        /// <summary>
+        /// 领域范围
+        /// </summary>
+        public string FieldScopeName { get; set; }
+
+        /// <summary>
+        /// 项目阶段
+        /// </summary>
+        public string ProjectStage { get; set; }
+
+        /// <summary>
+        /// 成立时间
+        /// </summary>
+        public DateTime? FoundedTime { get; set; }
+
+        /// <summary>
+        /// 营业执照注册号
+        /// </summary>
+        public string BusinessLicense { get; set; }
+
+        /// <summary>
+        /// 办公地址
+        /// </summary>
+        public string BusinessAddress { get; set; }
+
+        /// <summary>
+        /// 网址
+        /// </summary>
+        public string Website { get; set; }
+
+        /// <summary>
+        /// 微信公众号
+        /// </summary>
+        public string WebChatNumber { get; set; }
+
+        /// <summary>
+        /// 负责人
+        /// </summary>
+        public string Principal { get; set; }
+
+        /// <summary>
+        /// 负责人职位
+        /// </summary>
+        public string PrincipalPosition { get; set; }
+
+        /// <summary>
+        /// 负责人联系电话
+        /// </summary>
+        public string PrincipalPhone { get; set; }
+
+        /// <summary>
+        /// 负责人联系邮箱
+        /// </summary>
+        public string PrincipalMail { get; set; }
+
+        /// <summary>
+        /// 联系人
+        /// </summary>
+        public string Contact { get; set; }
+
+        /// <summary>
+        /// 联系人职位
+        /// </summary>
+        public string ContactPosition { get; set; }
+
+        /// <summary>
+        /// 联系人电话
+        /// </summary>
+        public string ContactPhone { get; set; }
+
+        /// <summary>
+        /// 联系人邮箱
+        /// </summary>
+        public string ContactMail { get; set; }
+
+        /// <summary>
+        /// 组织概要
+        /// </summary>
+        public string OrganizationDescription { get; set; }
+
+        /// <summary>
+        /// 核心技术
+        /// </summary>
+        public string CoreTechnology { get; set; }
+
+        /// <summary>
+        /// 关键词
+        /// </summary>
+        public string Keyword { get; set; }
+
+        /// <summary>
         /// 项目名称
         /// </summary>
         public string Name { get; set; }
@@ -23,25 +124,7 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// 是否有样机
-        /// </summary>
-        public bool HasExample { get; set; }
 
-        /// <summary>
-        /// 创新点
-        /// </summary>
-        public string InnovationPoint { get; set; }
-
-        /// <summary>
-        /// 联系人
-        /// </summary>
-        public string Contact { get; set; }
-
-        /// <summary>
-        /// 联系电话
-        /// </summary>
-        public string ContactPhone { get; set; }
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
@@ -72,15 +155,72 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// 是否有样机
-        /// </summary>
-        public bool HasExample { get; set; }
 
         /// <summary>
-        /// 创新点
+        /// 组织名称
+        /// 企业名称/团队名称
         /// </summary>
-        public string InnovationPoint { get; set; }
+        public string OrganizationName { get; set; }
+
+        /// <summary>
+        /// 领域范围
+        /// </summary>
+        public string FieldScopeCode { get; set; }
+
+        /// <summary>
+        /// 领域范围
+        /// </summary>
+        public string FieldScopeName { get; set; }
+
+        /// <summary>
+        /// 项目阶段
+        /// </summary>
+        public string ProjectStage { get; set; }
+
+        /// <summary>
+        /// 成立时间
+        /// </summary>
+        public DateTime? FoundedTime { get; set; }
+
+        /// <summary>
+        /// 营业执照注册号
+        /// </summary>
+        public string BusinessLicense { get; set; }
+
+        /// <summary>
+        /// 办公地址
+        /// </summary>
+        public string BusinessAddress { get; set; }
+
+        /// <summary>
+        /// 网址
+        /// </summary>
+        public string Website { get; set; }
+
+        /// <summary>
+        /// 微信公众号
+        /// </summary>
+        public string WebChatNumber { get; set; }
+
+        /// <summary>
+        /// 负责人
+        /// </summary>
+        public string Principal { get; set; }
+
+        /// <summary>
+        /// 负责人职位
+        /// </summary>
+        public string PrincipalPosition { get; set; }
+
+        /// <summary>
+        /// 负责人联系电话
+        /// </summary>
+        public string PrincipalPhone { get; set; }
+
+        /// <summary>
+        /// 负责人联系邮箱
+        /// </summary>
+        public string PrincipalMail { get; set; }
 
         /// <summary>
         /// 联系人
@@ -88,9 +228,34 @@ namespace Padmate.ServicePlatform.Entities
         public string Contact { get; set; }
 
         /// <summary>
-        /// 联系电话
+        /// 联系人职位
+        /// </summary>
+        public string ContactPosition { get; set; }
+
+        /// <summary>
+        /// 联系人电话
         /// </summary>
         public string ContactPhone { get; set; }
+
+        /// <summary>
+        /// 联系人邮箱
+        /// </summary>
+        public string ContactMail { get; set; }
+
+        /// <summary>
+        /// 组织概要
+        /// </summary>
+        public string OrganizationDescription { get; set; }
+
+        /// <summary>
+        /// 核心技术
+        /// </summary>
+        public string CoreTechnology { get; set; }
+
+        /// <summary>
+        /// 关键词
+        /// </summary>
+        public string Keyword { get; set; }
 
         public int QueId { get; set; }
 

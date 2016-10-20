@@ -49,6 +49,9 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             //审核状态
             ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
 
+            ViewData["FieldScope"] = JsonHandler.ToJson(Common.Dic_FieldScope);
+
+
             return View();
         }
 

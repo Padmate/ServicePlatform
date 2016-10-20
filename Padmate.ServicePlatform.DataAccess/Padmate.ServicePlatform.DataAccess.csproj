@@ -92,6 +92,22 @@
     <Compile Include="Migrations\201609240201099_updateIntelProjectQue.Designer.cs">
       <DependentUpon>201609240201099_updateIntelProjectQue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610200607065_RefactorIntelFun.cs" />
+    <Compile Include="Migrations\201610200607065_RefactorIntelFun.Designer.cs">
+      <DependentUpon>201610200607065_RefactorIntelFun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610200626494_UpdateIntelFun.cs" />
+    <Compile Include="Migrations\201610200626494_UpdateIntelFun.Designer.cs">
+      <DependentUpon>201610200626494_UpdateIntelFun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610200818307_AddFieldScopeName.cs" />
+    <Compile Include="Migrations\201610200818307_AddFieldScopeName.Designer.cs">
+      <DependentUpon>201610200818307_AddFieldScopeName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610201243060_RemoveHasExample.cs" />
+    <Compile Include="Migrations\201610201243060_RemoveHasExample.Designer.cs">
+      <DependentUpon>201610201243060_RemoveHasExample.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceDBContext.cs" />
@@ -115,6 +131,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609240201099_updateIntelProjectQue.resx">
       <DependentUpon>201609240201099_updateIntelProjectQue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610200607065_RefactorIntelFun.resx">
+      <DependentUpon>201610200607065_RefactorIntelFun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610200626494_UpdateIntelFun.resx">
+      <DependentUpon>201610200626494_UpdateIntelFun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610200818307_AddFieldScopeName.resx">
+      <DependentUpon>201610200818307_AddFieldScopeName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610201243060_RemoveHasExample.resx">
+      <DependentUpon>201610201243060_RemoveHasExample.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
