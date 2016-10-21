@@ -1,6 +1,19 @@
 ﻿@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
 @{
     ViewBag.Title = "用户管理";
+    var loginUser = (M_User)ViewData["LoginUser"];
+
+
+    var isSystemAdmin = "false";
+    if(loginUser.Roles != null)
+    {
+        var sysAdminRole = loginUser.Roles.Where(r => r.Name == SystemRole.SystemAdmin).ToList();
+        if(sysAdminRole.Count()>0)
+        {
+            isSystemAdmin = "true";
+        }
+    }
 }
 
 
@@ -209,7 +222,19 @@
                 });
                 return;
             }
+            
+            
+            if ('@isSystemAdmin' =="false"
+                && selections[0].IsSystemAdmin)
+            {
+                layer.alert("对不起，您无权对系统管理员进行操作", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
 
+            }
             var id = selections[0].Id;
             $('#useredit').modal('show');
             $("#divEditContainer").load("/User/User/Edit?userId=" + id);
@@ -230,6 +255,18 @@
             for (var i = 0; i < selections.length; i++) {
                 var id = selections[i].Id;
                 contactIds.push(id);
+
+                if ('@isSystemAdmin' == "false"
+                && selections[i].IsSystemAdmin) {
+                    layer.alert("对不起，您无权对系统管理员进行操作", {
+                        skin: 'layui-layer-molv'
+                                , closeBtn: 0
+                                , shift: 5 //动画类型
+                    });
+                    return;
+
+                }
+
             }
             //delete records
             var jsonUserId = JSON.stringify(contactIds);

@@ -1,6 +1,7 @@
 ﻿using Padmate.ServicePlatform.DataAccess;
 using Padmate.ServicePlatform.Entities;
 using Padmate.ServicePlatform.Models;
+using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,17 @@ namespace Padmate.ServicePlatform.Service
 {
     public class B_User
     {
+        public B_User()
+        {
+
+        }
+
+        M_User _currentUser;
+        public B_User(M_User user)
+        {
+            _currentUser = user;
+        }
+
         D_User _dUser = new D_User();
 
         public M_User GetUserByName(string userName)
@@ -80,6 +92,9 @@ namespace Padmate.ServicePlatform.Service
         {
             if (user == null) return null;
             B_Role bRole = new B_Role();
+            //是否系统管理员
+            bool isSystemAdmin = user.Roles.Any(r => r.Name == SystemRole.SystemAdmin) ? true : false;
+
             var model = new M_User()
             {
                 Id = user.Id.ToString(),
@@ -87,7 +102,8 @@ namespace Padmate.ServicePlatform.Service
                 UserType = user.UserType,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Roles = user.Roles.Select(r=>bRole.ConverEntityToModel(r)).ToList()
+                Roles = user.Roles.Select(r=>bRole.ConverEntityToModel(r)).ToList(),
+                IsSystemAdmin = isSystemAdmin
             };
             return model;
         }

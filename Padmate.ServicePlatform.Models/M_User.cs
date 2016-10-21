@@ -33,6 +33,11 @@ namespace Padmate.ServicePlatform.Models
         /// 用户营业执照
         /// </summary>
         public IList<M_UserAttachment> UserBusinessLicenseAttachments { get; set; }
+
+        /// <summary>
+        /// 是否系统管理员
+        /// </summary>
+        public bool IsSystemAdmin { get; set; }
     }
 
     public class SetUserInfoModel:BaseModel

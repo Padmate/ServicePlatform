@@ -22,7 +22,10 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
             String strReqStream = srRequest.ReadToEnd();
             M_User model = JsonHandler.UnJson<M_User>(strReqStream);
 
-            B_User bUser = new B_User();
+            //获取当前登录用户
+            var currentUser = this.GetCurrentUser();
+
+            B_User bUser = new B_User(currentUser);
             var pageData = bUser.GetPageData(model);
             var totalCount = bUser.GetPageDataTotalCount(model);
 

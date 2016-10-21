@@ -255,6 +255,10 @@ namespace Padmate.ServicePlatform.Web.Controllers
             //角色
             ViewData["Roles"] = JsonHandler.ToJson(SystemRole.Roles);
 
+            //获取当前登录用户
+            var currentUser = this.GetCurrentUser();
+            ViewData["LoginUser"] = currentUser;
+
             return View();
         }
         #endregion
