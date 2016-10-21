@@ -66,11 +66,11 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             String strReqStream = srRequest.ReadToEnd();
             M_IntelInnovationProjectApply model = JsonHandler.DeserializeJsonToObject<M_IntelInnovationProjectApply>(strReqStream);
 
+
             Message message = new Message();
             //校验model
             message = model.validate();
             if (!message.Success) return Json(message);
-
             var currentUser = this.GetCurrentUser();
             B_IntelInnovationProjectApply bIntelInnovationProjectApply = new B_IntelInnovationProjectApply();
             message = bIntelInnovationProjectApply.EditIntelInnovationProjectApply(model);
@@ -92,12 +92,13 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             String strReqStream = srRequest.ReadToEnd();
             M_IntelInnovationProjectApply model = JsonHandler.DeserializeJsonToObject<M_IntelInnovationProjectApply>(strReqStream);
 
+            var currentUser = this.GetCurrentUser();
+
             Message message = new Message();
             //校验model
-            message = model.validate();
+            message = Validate(model, currentUser.UserType);
             if (!message.Success) return Json(message);
 
-            var currentUser = this.GetCurrentUser();
             B_IntelInnovationProjectApply bIntelInnovationProjectApply = new B_IntelInnovationProjectApply();
             message = bIntelInnovationProjectApply.EditIntelInnovationProjectApply(model);
             //新增一条提交申请的队列
@@ -395,6 +396,23 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
 
             return View();
+        }
+
+        private Message Validate(M_IntelInnovationProjectApply model,string usertype)
+        {
+            Message message = new Message();
+            message = model.validate();
+            if (!message.Success) return message;
+
+            if(usertype == Common.UserType_Enterprise && string.IsNullOrEmpty(model.BusinessLicense))
+            {
+                message.Success = false;
+                message.Content = "营业执照注册号不能为空";
+                return message;
+            }
+
+
+            return message;
         }
     }
 }

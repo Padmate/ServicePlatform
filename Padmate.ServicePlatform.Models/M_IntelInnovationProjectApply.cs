@@ -50,7 +50,6 @@ namespace Padmate.ServicePlatform.Models
         /// <summary>
         /// 营业执照注册号
         /// </summary>
-        [Required(ErrorMessage = "营业执照号不能为空")]
         [MaxLength(500, ErrorMessage = "营业执照号不能超过500个字符")] 
         public string BusinessLicense { get; set; }
 
