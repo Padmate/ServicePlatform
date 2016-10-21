@@ -93,7 +93,13 @@
     $(document).ready(function () {
 
         LoadHomeBGImage();
-        InitWebUploader();
+        if (!WebUploader.Uploader.support()) {
+            alert('当前页面一些功能不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+            throw new Error('function does not support the browser you are using.');
+        } else {
+            InitWebUploader();
+
+        }
 
         LinkHrefEvent();
 

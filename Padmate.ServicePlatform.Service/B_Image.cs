@@ -32,7 +32,7 @@ namespace Padmate.ServicePlatform.Service
                 Extension = i.Extension,
                 Sequence = i.Sequence,
                 Type = i.Type,
-                LinkHref = i.LinkHref
+                LinkHref = string.IsNullOrEmpty(i.LinkHref)?string.Empty :i.LinkHref
 
 
             }).ToList();
@@ -59,7 +59,7 @@ namespace Padmate.ServicePlatform.Service
                 Extension = image.Extension,
                 Sequence = image.Sequence,
                 Type = image.Type,
-                LinkHref = image.LinkHref
+                LinkHref = string.IsNullOrEmpty(image.LinkHref)?string.Empty:image.LinkHref
 
 
             };
