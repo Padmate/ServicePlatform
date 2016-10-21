@@ -70,6 +70,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RefBin\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -1142,6 +1143,7 @@
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\_Detail.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Audit.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\AuditDetail.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Tip.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />

@@ -3,6 +3,7 @@ using Padmate.ServicePlatform.Service;
 using Padmate.ServicePlatform.Utility;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,30 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             var user = bUser.GetUserByName(loginUser.UserName);
             ViewData["UserInfo"] = user;
 
+            var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+            string returnUrl = string.Format("/intel-innovation-project-apply-tip{0}", urlRewriteExtension);
+
+            #region 用户校验
+            if(loginUser.UserType == Common.UserType_Personal)
+            {
+                return Redirect(string.Format("{0}?type=1", returnUrl));
+            }
+            else if(loginUser.UserType == Common.UserType_Enterprise)
+            {
+                //校验是否有营业执照
+                B_UserAttachment bAttachment = new B_UserAttachment();
+                M_UserAttachment model = new M_UserAttachment();
+                model.UserId = loginUser.Id;
+                model.Type = Common.UserAttachment_BusinessLicense;
+                var attachments = bAttachment.GetUserAttachmentByMulitCondition(model);
+                if(attachments.Count() ==0)
+                {
+                    return Redirect(string.Format("{0}?type=2", returnUrl));
+
+                }
+            }
+
+            #endregion
 
             //根据用户ID查找该用户下的IntelInnovationProjectApply数据，如果找不到，则新增一条空白数据
             B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply();
@@ -52,6 +77,11 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             ViewData["FieldScope"] = JsonHandler.ToJson(Common.Dic_FieldScope);
 
 
+            return View();
+        }
+
+        public ActionResult Tip()
+        {
             return View();
         }
 

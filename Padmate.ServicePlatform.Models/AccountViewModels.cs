@@ -67,17 +67,19 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         public string UserType { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "密码必须至少包含6个字符。", MinimumLength = 6)]
+        [Required(ErrorMessage = "请输入密码")]
+        [StringLength(15, ErrorMessage = "密码必须至少包含8个字符。", MinimumLength = 8)]
+        [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$", ErrorMessage = "密码必须为大小写字母和数字的组合，不能使用特殊字符，长度在8-15之间")]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "请确认密码")]
         [DataType(DataType.Password)]
         [Display(Name = "确认密码")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "邮箱不能为空")]
         [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "邮箱格式不正确")]
         [Display(Name = "邮箱")]
         public string EmailAddress { get; set; }

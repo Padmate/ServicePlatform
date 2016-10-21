@@ -16,6 +16,7 @@ using Padmate.ServicePlatform.Entities;
 using Padmate.ServicePlatform.Utility;
 using System.IO;
 using Padmate.ServicePlatform.Service;
+using System.Web.Script.Serialization;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
@@ -170,11 +171,18 @@ namespace Padmate.ServicePlatform.Web.Controllers
             message = model.validate();
             if (!message.Success) return Json(message);
 
+            JavaScriptSerializer serialize = new JavaScriptSerializer();
+
             if(model.Password != model.ConfirmPassword)
             {
                 message.Success = false;
                 message.Content = "确认密码与密码不匹配";
-                return Json(message);
+
+                //此处要返回text/html类型的值
+                //如果返回application/json类型的值可能会导致浏览器弹出下载提示框
+                return Content(serialize.Serialize(message));
+               
+
             }
             var user = new ApplicationUser { UserName = model.UserName, UserType = model.UserType, Email = model.EmailAddress };
             var result = UserManager.Create(user, model.Password);
@@ -195,7 +203,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
                 message.Content = error;
             }
 
-            return Json(message);
+            return Content(serialize.Serialize(message));
+           
         }
 
         //

@@ -80,7 +80,8 @@
     <div class="container" style="padding-bottom:100px;">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-md-offset-3">
-                <form class="form-horizontal" id="form-register" action="/Account/Register" method="post" role="form" enctype="multipart/form-data">
+                <form class="form-horizontal" id="form-register" action="/Account/Register" method="post" role="form" 
+                      enctype="application/x-www-form-urlencoded">
                     @Html.AntiForgeryToken()
 
                     <div class="form-group">
@@ -105,7 +106,8 @@
                             <label class="customer-content-sm">密码：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="Password" placeholder="密码" type="password" />
+                            <input class="input-large-full" name="Password" placeholder="需包含大小写字母和数字，无特殊字符，长度在8-15之间" type="password"
+                                   required oninvalid="setCustomValidity('请输入密码')" oninput="setCustomValidity('')"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -113,7 +115,8 @@
                             <label class="customer-content-sm">确认密码：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="ConfirmPassword" placeholder="再次确认密码" type="password" />
+                            <input class="input-large-full" name="ConfirmPassword" placeholder="再次确认密码" type="password"
+                                   required oninvalid="setCustomValidity('请再次输入密码')" oninput="setCustomValidity('')" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -121,7 +124,9 @@
                             <label class="customer-content-sm">邮箱：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="EmailAddress" placeholder="邮箱" type="email" />
+                            <input class="input-large-full" name="EmailAddress" placeholder="邮箱" type="email"
+                                   required oninvalid="setCustomValidity('请输入邮箱')" oninput="setCustomValidity('')"
+                                   />
                         </div>
                     </div>
                     <div class="form-group">
@@ -199,7 +204,7 @@
 
     //
     function showResponse(message) {
-
+        debugger;
         if (message.Success) {
             userId = message.ReturnStrId;
 

@@ -1,0 +1,38 @@
+﻿@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@using System.Configuration;
+@{
+    ViewBag.Title = "提示";
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    string returnUrl = string.Format("/manage/userinfo{0}", urlRewriteExtension);
+
+    var type = Request["type"];
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @if(type == "1")
+                {
+                    <h2 class="customer-h2" style="text-align:center">
+                        对不起，个人用户暂时不能进行"英特尔创新创业大赛"的报名申请
+                        
+                    </h2>
+                    <h4 class="customer-h4" style="text-align:center">
+                        您可以注册团队或企业用户进行申请
+                        <a href="/Account/Register">马上注册</a>
+                    </h4>
+                }
+                else if (type == "2")
+                {
+                    <h2 class="customer-h2" style="text-align:center">请先上传营业执照再进行"英特尔创新创业大赛"的报名申请</h2>
+                    <h4 class="customer-h4" style="text-align:center">
+                        
+                        <a href="@returnUrl">现在就去上传</a>
+                    </h4>
+                }
+            </div>
+        </div>
+    </div>
+</section>
