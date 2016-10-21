@@ -31,7 +31,9 @@ namespace Padmate.ServicePlatform.Service
                 SaveName = i.SaveName,
                 Extension = i.Extension,
                 Sequence = i.Sequence,
-                Type = i.Type
+                Type = i.Type,
+                LinkHref = i.LinkHref
+
 
             }).ToList();
 
@@ -56,7 +58,9 @@ namespace Padmate.ServicePlatform.Service
                 SaveName = image.SaveName,
                 Extension = image.Extension,
                 Sequence = image.Sequence,
-                Type = image.Type
+                Type = image.Type,
+                LinkHref = image.LinkHref
+
 
             };
 
@@ -101,7 +105,9 @@ namespace Padmate.ServicePlatform.Service
                         Extension = extension,
                         SaveName = saveName,
                         Sequence = sequence,
-                        Type = imageType
+                        Type = imageType,
+                        LinkHref = string.Empty 
+
                     };
                     message.ReturnId = _dImage.AddImage(image);
                     #endregion
@@ -171,6 +177,25 @@ namespace Padmate.ServicePlatform.Service
             {
                 message.Success = false;
                 message.Content = "图片顺序更新失败，异常："+e.Message ;
+            }
+            return message;
+        }
+
+        public Message UpdateLinkHref(int id, string linkhref)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "图片链接更新成功";
+
+            try
+            {
+                _dImage.UpdateLinkHref(id, linkhref);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "图片链接更新失败，异常：" + e.Message;
             }
             return message;
         }

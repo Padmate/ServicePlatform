@@ -44,5 +44,10 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public string Type { get; set; }
 
+        /// <summary>
+        /// 相关链接
+        /// </summary>
+        public string LinkHref { get; set; }
+
     }
 }

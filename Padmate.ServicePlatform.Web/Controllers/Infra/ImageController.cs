@@ -57,6 +57,30 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
         }
 
         /// <summary>
+        /// 更新图片链接
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateLinkHref(M_Image image)
+        {
+            
+            Message message = new Message();
+            B_Image _bImage = new B_Image();
+            try
+            {
+                message = _bImage.UpdateLinkHref(image.Id, image.LinkHref);
+
+            }catch(Exception e)
+            {
+                message.Success = false;
+                message.Content = "链接更新失败,异常："+e.Message;
+            }
+
+            return Json(message);
+        }
+
+        /// <summary>
         /// 删除图片
         /// </summary>
         /// <param name="Id"></param>

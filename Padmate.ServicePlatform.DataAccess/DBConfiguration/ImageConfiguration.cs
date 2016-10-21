@@ -14,6 +14,7 @@ namespace Padmate.ServicePlatform.DataAccess.DBConfiguration
             this.HasKey(m => m.Id);
             this.Property(m => m.Extension).HasMaxLength(10);
             this.Property(m => m.Type).HasMaxLength(50);
+            this.Property(m => m.LinkHref).HasMaxLength(2000);
 
 
         }

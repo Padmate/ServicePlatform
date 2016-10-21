@@ -50,8 +50,18 @@
                     activeClass = "active";
                 }
                 <div class="item @activeClass">
-                  
-                    <img class="img-responsive" src="@homebgImages[i].VirtualPath" alt="@homebgImages[i].Name.Split('.').First()">
+                    @if (string.IsNullOrEmpty(homebgImages[i].LinkHref))
+                    {
+                        <img class="img-responsive" src="@homebgImages[i].VirtualPath" alt="@homebgImages[i].Name.Split('.').First()">
+
+                    }
+                    else
+                    {
+                        <a href="@homebgImages[i].LinkHref">
+                            <img class="img-responsive" src="@homebgImages[i].VirtualPath" alt="@homebgImages[i].Name.Split('.').First()">
+
+                        </a>
+                    }
 
                 </div>
             }

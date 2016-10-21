@@ -42,5 +42,10 @@ namespace Padmate.ServicePlatform.Models
         /// 图片所属类型
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// 相关链接
+        /// </summary>
+        public string LinkHref { get; set; }
     }
 }

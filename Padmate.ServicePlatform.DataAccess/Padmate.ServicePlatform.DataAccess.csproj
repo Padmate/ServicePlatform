@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201610210531083_UpdateUserAttachment.Designer.cs">
       <DependentUpon>201610210531083_UpdateUserAttachment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610211356122_AddLinkHreftoImage.cs" />
+    <Compile Include="Migrations\201610211356122_AddLinkHreftoImage.Designer.cs">
+      <DependentUpon>201610211356122_AddLinkHreftoImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceDBContext.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610210531083_UpdateUserAttachment.resx">
       <DependentUpon>201610210531083_UpdateUserAttachment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610211356122_AddLinkHreftoImage.resx">
+      <DependentUpon>201610211356122_AddLinkHreftoImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
