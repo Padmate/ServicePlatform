@@ -24,6 +24,8 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public virtual UserProfile UserProfile { get; set; }
 
+        public virtual ICollection<UserAttachment> UserAttachments { get; set; }
+
         /// <summary>
         /// 英特尔创新创业项目申请
         /// </summary>
@@ -43,7 +45,7 @@ namespace Padmate.ServicePlatform.Entities
 
         public ApplicationUser() {
             IntelInnovationProjectApplies = new List<IntelInnovationProjectApply>();
-        
+            UserAttachments = new List<UserAttachment>();
         }
 
     }
@@ -67,6 +69,8 @@ namespace Padmate.ServicePlatform.Entities
         public ICollection<Role> Roles { get; set; }
 
         public UserProfile UserProfile { get; set; }
+
+        public ICollection<UserAttachment> UserAttachments { get; set; }
 
         public ApplicationUser ConverToApplicationUser(User user)
         {

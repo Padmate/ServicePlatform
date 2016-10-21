@@ -67,6 +67,7 @@
     <Compile Include="DBConfiguration\MailConfiguration.cs" />
     <Compile Include="DBConfiguration\ProjectConfiguration.cs" />
     <Compile Include="DBConfiguration\ProjectDownloadConfiguration.cs" />
+    <Compile Include="DBConfiguration\UserAttachmentConfiguration.cs" />
     <Compile Include="DBConfiguration\UserProfileConfiguration.cs" />
     <Compile Include="D_Article.cs" />
     <Compile Include="D_Contact.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="D_ProjectDownload.cs" />
     <Compile Include="D_Role.cs" />
     <Compile Include="D_User.cs" />
+    <Compile Include="D_UserAttachment.cs" />
     <Compile Include="Migrations\201609220721116_init.cs" />
     <Compile Include="Migrations\201609220721116_init.Designer.cs">
       <DependentUpon>201609220721116_init.cs</DependentUpon>
@@ -107,6 +109,14 @@
     <Compile Include="Migrations\201610201243060_RemoveHasExample.cs" />
     <Compile Include="Migrations\201610201243060_RemoveHasExample.Designer.cs">
       <DependentUpon>201610201243060_RemoveHasExample.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610210456156_AddUserAttachment.cs" />
+    <Compile Include="Migrations\201610210456156_AddUserAttachment.Designer.cs">
+      <DependentUpon>201610210456156_AddUserAttachment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610210531083_UpdateUserAttachment.cs" />
+    <Compile Include="Migrations\201610210531083_UpdateUserAttachment.Designer.cs">
+      <DependentUpon>201610210531083_UpdateUserAttachment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,6 +153,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610201243060_RemoveHasExample.resx">
       <DependentUpon>201610201243060_RemoveHasExample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610210456156_AddUserAttachment.resx">
+      <DependentUpon>201610210456156_AddUserAttachment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610210531083_UpdateUserAttachment.resx">
+      <DependentUpon>201610210531083_UpdateUserAttachment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

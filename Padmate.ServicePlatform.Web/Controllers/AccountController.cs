@@ -13,11 +13,14 @@ using System.Collections.Generic;
 using Padmate.ServicePlatform.Models;
 using System.Configuration;
 using Padmate.ServicePlatform.Entities;
+using Padmate.ServicePlatform.Utility;
+using System.IO;
+using Padmate.ServicePlatform.Service;
 
 namespace Padmate.ServicePlatform.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -152,12 +155,55 @@ namespace Padmate.ServicePlatform.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult RegisterNew()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            Message message = new Message();
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            if(model.Password != model.ConfirmPassword)
+            {
+                message.Success = false;
+                message.Content = "确认密码与密码不匹配";
+                return Json(message);
+            }
+            var user = new ApplicationUser { UserName = model.UserName, UserType = model.UserType, Email = model.EmailAddress };
+            var result = UserManager.Create(user, model.Password);
+            if (result.Succeeded)
+            {
+                //登录
+                SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                message.ReturnStrId =  user.Id;
+
+            }
+            else
+            {
+                message.Success = false;
+                string error = string.Empty;
+                foreach(var er in result.Errors){
+                    error += er + "<br/>";
+                }
+                message.Content = error;
+            }
+
+            return Json(message);
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> RegisterNew(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -187,6 +233,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
             // 如果我们进行到这一步时某个地方出错，则重新显示表单
             return View(model);
         }
+
+        
 
         //
         // GET: /Account/ConfirmEmail

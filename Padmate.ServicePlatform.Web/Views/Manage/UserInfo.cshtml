@@ -19,7 +19,22 @@
         font-size:18px;
         padding:10px 20px;
     }
+    .attachment-delete {
+        float: right;
+    }
+
+
+    #thelist {
+        margin-bottom: 10px;
+    }
+    #thelist a{
+        margin:5px;
+        text-decoration:underline
+    }
 </style>
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
 <section>
     <div class="container">
         <div class="row">
@@ -42,7 +57,7 @@
                             <label class="customer-content-sm">用户名称：</label>
                         </div>
                         <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
-                            <label class="customer-content-sm">@user.UserName</label>
+                            <label class="customer-content-sm data-UserName"></label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -62,13 +77,26 @@
                             <label class="customer-content-sm">@userType</label>
                         </div>
                     </div>
+                    @if (user.UserType == Common.UserType_Enterprise)
+                    {
+                        <div class="form-group">
+                            <div class="col-xs-12 col-is-4 col-sm-3 col-md-2 control-label">
+                                <label class="customer-content-sm">营业执照：</label>
+                            </div>
+                            <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
+                                <div id="uploadFiles">上传营业执照</div>
+
+                                <div id="thelist" class="uploader-list"></div>
+                            </div>
+                        </div>
+                    }
                     
                     <div class="form-group">
                         <div class="col-xs-12 col-is-4 col-sm-3 col-md-2 control-label">
                             <label class="customer-content-sm">邮 箱：</label>
                         </div>
                         <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
-                            <input class="input-large-full" id="tbEmail" placeholder="邮 箱" value="@user.Email" />
+                            <input class="input-large-full data-Email" placeholder="邮 箱"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -76,12 +104,12 @@
                             <label class="customer-content-sm">联系电话：</label>
                         </div>
                         <div class="col-xs-12 col-is-8 col-sm-5 col-md-4">
-                            <input class="input-large-full" id="tbPhoneNumber" placeholder="联系电话" value="@user.PhoneNumber" />
+                            <input class="input-large-full data-PhoneNumber" placeholder="联系电话" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12 col-is-12 col-sm-8 col-md-6 text-right">
-                            <input type="button" class="btn btn-success" onclick="SaveEdit()" value="保存更改"/>
+                            <input type="button" class="btn btn-lg btn-success" onclick="SaveEdit()" value="保存更改"/>
                         </div>
                         
 
@@ -97,6 +125,17 @@
 
 <script>
 
+    var userid = '@user.Id';
+
+    $(function () {
+
+        LoadUserInfoByUserId();
+
+        if ('@user.UserType' == '@Common.UserType_Enterprise') {
+            InitFileUploader();
+        }
+
+    });
 
     //修改或新增保存
     function SaveEdit() {
@@ -112,27 +151,353 @@
             async: false,   //同步
             success: function (message) {
 
-                $("body").hideLoading();
+                if (message.Success)
+                {
+                    //上传文件
+                    var files = fileUploader.getFiles("inited");//初始状态
+                    if (files.length > 0) {
 
-                layer.alert(message.Content, {
-                    skin: 'layui-layer-molv' //样式类名
-                  , closeBtn: 0
-                });
+                        //删除原来的附件
+                        $.ajax({
+                            type: "POST",
+                            url: "/User/User/DeleteUserBusinessAttachmentByUserId",
+                            dataType: "json",
+                            data: { UserId: userid},
+                            async: false,   //同步
+                            success: function (message) {
+                                
+                                if (message.Success) {
+                                    UploadFiles();
+
+                                } else {
+                                    $("body").hideLoading();
+
+                                }
+
+                            }
+                        });
+
+                           
+
+
+                    } else {//如果当前没有文件上传
+
+                        //重新加载数据
+                        LoadUserInfoByUserId();
+                        $("body").hideLoading();
+                        layer.alert("用户信息修改成功", {
+                            skin: 'layui-layer-molv' //样式类名
+                            , closeBtn: 0
+                        });
+                    }
+
+                } else {
+                    //保存失败
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                }
+               
             }
         });
     }
 
     //构造保存对象
     function ConstructSaveObj() {
-        
-        
+
+
 
         var obj = {
-            Id: '@user.Id',
-            Email: $("#tbEmail").val(),
-            PhoneNumber: $("#tbPhoneNumber").val()
+            Id: "",
+            Email: "",
+            PhoneNumber: ""
         };
 
+        obj = $.GetBindData(obj);
+        obj.Id = userid;
         return obj;
     }
+
+    //加载用户信息
+    function LoadUserInfoByUserId() {
+
+        $.ajax({
+            type: "POST",
+            url: "/User/User/LoadUserInfoByUserId",
+            dataType: "json",
+            data: { UserId: userid },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success) {
+
+                    var user = $.parseJSON(message.Content);
+                    $.SetBindData(user);
+                    RefreshFileQueueList(user.UserBusinessLicenseAttachments);
+
+
+                } else {
+
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+
+            }
+        });
+
+    }
+
+    function GetBusinessAttachmentsByUserId() {
+        var result = null;
+        $.ajax({
+            type: "POST",
+            url: "/User/User/GetBusinessLicenseByUserId",
+            dataType: "json",
+            data: { UserId: userid },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success) {
+
+                    result = $.parseJSON(message.Content);
+                }
+            }
+        });
+        return result;
+
+    }
+
+    var fileUploader;
+    function InitFileUploader() {
+
+        var GUID = WebUploader.Base.guid();//一个GUID
+        // 初始化Web Uploader
+        fileUploader = WebUploader.create({
+            auto: false,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/User/User/ChunkedUploadAttachment',
+            duplicate: true, //可重复上传同一文件
+            pick: {
+                id: '#uploadFiles',
+                //只能选择一个文件上传
+                multiple: false
+            },
+            compress: false, //图片不压缩
+            fileNumLimit: 1,
+            fileSingleSizeLimit: 20 * 1024 * 1024, // 单个文件最大不能超过20 M
+            chunked: true,//开始分片上传
+            chunkSize: 2 * 1024 * 1024,//每一片的大小为2M
+            formData: {
+                guid: GUID //自定义参数
+            },
+            accept: {
+                title: 'file',
+                extensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,rar,zip,bmp,gif,jpg,jpeg,png'
+                //mimeTypes: 'image/*,text/plain,application/msword,application/x-xls,application/vnd.ms-excel,application/x-ppt,application/vnd.ms-powerpoint,application/pdf,application/rtf,application/x-rtf,application/zip,application/x-rar-compressed'
+            }
+
+
+        });
+
+        fileUploader.on('beforeFileQueued', function (file) {
+
+            EmptyFileQueue();
+        });
+
+        fileUploader.on('fileQueued', function (file) {
+            AddFileQueueData(file);
+
+        });
+
+        fileUploader.on('uploadStart', function (file) {
+
+        });
+
+        fileUploader.on('uploadProgress', function (file, percentage) {
+
+
+        });
+
+
+        fileUploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+            if (handler == "Q_TYPE_DENIED") {
+                alert("文件类型不支持");
+            }
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("只能上传一个文件");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("不能重复上传同一文件");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+
+                layer.alert("文件大小不能超过20M", {
+                    skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                });
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        fileUploader.on('uploadSuccess', function (file, response) {
+
+
+            if (response.Success == false || response.Success == "false") {
+                layer.alert(response.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                });
+            } else {
+
+                var obj = {
+                    UserId: userid,
+                    Type: '@Common.UserAttachment_BusinessLicense', //附件类型
+                    guid: GUID,
+                    fileName: file.name,
+                    extension: file.ext
+                };
+
+                $.post('/User/User/MergeFile', obj, function (data) {
+
+                    //上传完成
+                    $("body").hideLoading();
+                    LoadUserInfoByUserId();
+
+                    layer.alert("用户信息修改成功", {
+                        skin: 'layui-layer-molv' //样式类名
+                            , closeBtn: 0
+                    });
+
+
+                });
+
+
+
+            }
+
+        });
+
+        fileUploader.on('uploadFinished', function () {
+            //无论有没有要上传的文件都会进入
+            $("body").hideLoading();
+
+
+        });
+
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        fileUploader.on('uploadComplete', function (file) {
+
+        });
+    }
+
+    function UploadFiles() {
+
+        //fileUploader.options.formData.articleId = articleId;
+        fileUploader.upload();
+    }
+
+    //添加文件队列
+    function AddFileQueueData(file) {
+
+        //清空，只允许上传一个文件
+        $("#thelist").html("");
+
+
+        var dynamicHtml = "";
+
+        dynamicHtml += '<div id="' + file.id + '">';
+        dynamicHtml += '<a class="customer-content-sm" href="javaScript:void(0)">' + file.name + '</a>';
+        dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="RemoveFileQueueData(' + file.id + ')">';
+        dynamicHtml += '<i class="fa fa-remove"></i>删除';
+        dynamicHtml += '</a>';
+        dynamicHtml += '<div class="clearfix"></div>';
+        dynamicHtml += '</div>';
+
+        $("#thelist").append(dynamicHtml);
+    }
+
+    function RemoveFileQueueData(div) {
+
+        //删除文件显示信息
+        $("#" + div.id).remove();
+
+
+        var file = fileUploader.getFile(div.id);
+        //删除队列中的文件
+        fileUploader.removeFile(file, true);
+
+    }
+
+
+
+    //清空文件上传队列
+    function EmptyFileQueue() {
+        var files = fileUploader.getFiles();
+        for (var i = 0; i < files.length; i++) {
+            //删除队列中的文件
+            fileUploader.removeFile(files[i], true);
+        }
+
+    }
+
+    //重新刷新附件表格
+    function RefreshFileQueueList(attachments) {
+
+        //先清空
+        $("#thelist").html("");
+
+        var dynamicHtml = "";
+        if (attachments != null && attachments.length > 0) {
+            for (var i = 0; i < attachments.length; i++) {
+                dynamicHtml += '<div>';
+                dynamicHtml += '<a class="customer-content-sm" href="' + attachments[i].VirtualPath + '">' + attachments[i].Name + '</a>';
+                dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="DeleteFile(' + attachments[i].Id + ')">';
+                dynamicHtml += '<i class="fa fa-remove"></i>删除';
+                dynamicHtml += '</a>';
+                dynamicHtml += '<div class="clearfix"></div>';
+                dynamicHtml += '</div>';
+            }
+        }
+
+
+        $("#thelist").html(dynamicHtml);
+
+    }
+
+    function DeleteFile(attachmentId) {
+
+        $.ajax({
+            type: "POST",
+            url: "/User/User/DeleteAttachment",
+            dataType: "json",
+            data: { Id: attachmentId },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success == false || message.Success == "false") {
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                    });
+                    return;
+                } else {
+                    //重新加载
+                    var attachments = GetBusinessAttachmentsByUserId();
+                    RefreshFileQueueList(attachments);
+                }
+
+            }
+        });
+    }
+
 </script>

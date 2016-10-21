@@ -34,6 +34,8 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public DbSet<UserProfile> UserProfile { get; set; }
 
+        public DbSet<UserAttachment> UserAttachments { get; set; }
+
         public DbSet<IntelInnovationProjectApply> IntelInnovationProjectApplies { get; set; }
         public DbSet<IntelInnovationProjectApplyQue> IntelInnovationProjectApplyQues { get; set; }
 
@@ -52,6 +54,7 @@ namespace Padmate.ServicePlatform.DataAccess
             modelBuilder.Configurations.Add(new ProjectConfiguration());
             modelBuilder.Configurations.Add(new ProjectDownloadConfiguration());
             modelBuilder.Configurations.Add(new UserProfileConfiguration());
+            modelBuilder.Configurations.Add(new UserAttachmentConfiguration());
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyConfiguration());
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyQueConfiguration());
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyAttachmentConfiguration());

@@ -88,7 +88,6 @@ namespace Padmate.ServicePlatform.Service
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Roles = user.Roles.Select(r=>bRole.ConverEntityToModel(r)).ToList()
-
             };
             return model;
         }

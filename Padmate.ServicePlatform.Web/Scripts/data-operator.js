@@ -27,6 +27,9 @@ jQuery.SetBindData = function (obj) {
             var tagName = domObj[0].tagName.toLowerCase();
             if (tagName == "input" || tagName == "textarea") {
                 domObj.val(obj[name]);
+            }else if(tagName =="label")
+            {
+                domObj.html(obj[name]);
             }
         }
 

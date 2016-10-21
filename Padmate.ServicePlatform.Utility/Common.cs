@@ -180,6 +180,12 @@ namespace Padmate.ServicePlatform.Utility
             {ProjectStage_SCTZ,"市场拓展"}
         };
         #endregion
+        #region 用户附件类型
+        /// <summary>
+        /// 营业执照
+        /// </summary>
+        public const string UserAttachment_BusinessLicense = "1";
+        #endregion
     }
 
     public static class SystemRole

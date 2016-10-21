@@ -14,5 +14,11 @@ namespace Padmate.ServicePlatform.Models
         public int? ReturnId { get; set; }
 
         public string ReturnStrId { get; set; }
+
+        public Message()
+        {
+            Success = true;
+            Content = string.Empty;
+        }
     }
 }

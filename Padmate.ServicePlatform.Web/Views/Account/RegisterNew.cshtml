@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@model RegisterViewModel
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="~/Content/login-style.css">
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.placeholder.js"></script>
+
+</head>
+
+
+<body>
+    <div class="container">
+        <div id="content">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>注册新账户。</h4>
+                <hr />
+                @Html.ValidationSummary(false, null, new { @class = "login-tip" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @placeholder = "用户名", @class = "username" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <select name="UserType" id="UserType" class="username">
+                            @foreach (var key in Common.Dic_UserTypes.Keys)
+                            {
+                                <option value="@key">@Common.Dic_UserTypes[key]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = "密码", @class = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "确认密码", @class = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.EmailAddress, new { @placeholder = "邮箱", @class = "email" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="注册" />
+                    <a href="/">回到首页</a>
+                    <a href="/Account/Login">登 录</a>
+
+                </div>
+            }
+        </div><!-- content -->
+    </div><!-- container -->
+</body>
+
+</html>
+<script>
+    $(function () {
+        // Invoke the plugin
+        $('input, textarea').placeholder({ customClass: 'my-placeholder' });
+
+    });
+</script>

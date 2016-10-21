@@ -57,6 +57,7 @@
     <Compile Include="M_Project.cs" />
     <Compile Include="M_ProjectDownload.cs" />
     <Compile Include="M_Role.cs" />
+    <Compile Include="M_UserAttachment.cs" />
     <Compile Include="PageResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="M_User.cs" />

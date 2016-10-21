@@ -5,20 +5,20 @@
     //项目内容
     var project = (M_IntelInnovationProjectApply)ViewData["project"];
     //如果项目没有提交或者审核失败，则允许修改和提交，否则只能查看
-    var enableEdit = false ;
-    if(project.Ques.Count ==0 || project.LatestQue.AuditStatus == Common.Audit_Failue)
+    var enableEdit = false;
+    if (project.Ques.Count == 0 || project.LatestQue.AuditStatus == Common.Audit_Failue)
     {
-        enableEdit = true ;
+        enableEdit = true;
     }
-    
-    
- }
+
+
+}
 
 <link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
 <script src="~/Scripts/webuploader/webuploader.js"></script>
 
 <style>
-     .projectapplybg {
+    .projectapplybg {
         position: relative;
         max-width: 100%;
         height: 0;
@@ -77,9 +77,9 @@
         @Html.Partial("_Detail")
 
     }
-    
 
-    
+
+
 
 </section>
 

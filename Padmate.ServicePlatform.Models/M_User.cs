@@ -26,6 +26,13 @@ namespace Padmate.ServicePlatform.Models
         public string UserType { get; set; }
 
         public IList<M_Role> Roles { get; set; }
+
+        public IList<M_UserAttachment> UserAttachments { get; set; }
+
+        /// <summary>
+        /// 用户营业执照
+        /// </summary>
+        public IList<M_UserAttachment> UserBusinessLicenseAttachments { get; set; }
     }
 
     public class SetUserInfoModel:BaseModel

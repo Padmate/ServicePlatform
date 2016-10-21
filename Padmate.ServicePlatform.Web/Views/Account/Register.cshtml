@@ -1,78 +1,427 @@
-﻿@{
-    Layout = null;
-}
-@using Padmate.ServicePlatform.Models;
+﻿@using Padmate.ServicePlatform.Models;
 @using Padmate.ServicePlatform.Utility;
-@model RegisterViewModel
+@using System.Configuration;
+@{
+    ViewBag.Title = "账号注册";
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    string returnUrl = string.Format("/manage/userinfo{0}{1}", urlRewriteExtension, "?from=register");
+
+}
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<style>
+    .registerbg {
+        position: relative;
+        max-width: 100%;
+        height: 0;
+        padding-bottom: 15%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-image: url("../img/register.jpg");
+        margin: 50px auto;
+        background-color: #333;
+    }
+
+    .register-intro {
+        padding: 5% 10%;
+        text-align: center;
+    }
+
+    .register {
+        position: absolute;
+        bottom: -100px;
+        left: 35%;
+        z-index: 309;
+    }
+
+    #sendregister {
+        padding: 80px 0px;
+    }
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-    <link rel="stylesheet" href="~/Content/login-style.css">
-    <script src="~/Scripts/jquery.js"></script>
-    <script src="~/Scripts/jquery.placeholder.js"></script>
 
-</head>
+    .content-body-padding, .contact {
+        padding: 0px 0px;
+    }
+
+    #eregisterContent {
+        height: 200px;
+    }
+
+    .attachment-delete {
+        float: right;
+    }
 
 
-<body>
-    <div class="container">
-        <div id="content">
-            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>注册新账户。</h4>
-                <hr />
-                @Html.ValidationSummary(false, null, new { @class = "login-tip" })
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.UserName, new { @placeholder = "用户名", @class = "username" })
+    #thelist {
+        margin-bottom: 10px;
+    }
+
+        #thelist a {
+            margin: 5px;
+            text-decoration: underline;
+        }
+</style>
+
+
+<section class="contact">
+    <div class="registerbg">
+        <div class="register-intro">
+            <h2 class="customer-h2 whitefont">马上注册，体验更多服务</h2>
+
+        </div>
+    </div>
+
+    <div class="container" style="padding-bottom:100px;">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-md-offset-3">
+                <form class="form-horizontal" id="form-register" action="/Account/Register" method="post" role="form" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <div class="errorMsg customer-content-sm" style="color:red;"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <select name="UserType"  id="UserType" class="username">
-                            @foreach(var key in Common.Dic_UserTypes.Keys)
-                            {
-                                <option value="@key">@Common.Dic_UserTypes[key]</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @placeholder = "密码", @class = "password" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "确认密码", @class = "password" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.EmailAddress, new { @placeholder = "邮箱", @class = "email" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="注册" />
-                    <a href="/">回到首页</a>
-                    <a href="/Account/Login">登 录</a>
 
-                </div>
-            }
-        </div><!-- content -->
-    </div><!-- container -->
-</body>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                            <label class="customer-content-sm">用户名：</label>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <input class="input-large-full" name="UserName" placeholder="包含大小写字母及数字" type="text"
+                                   required oninvalid="setCustomValidity('请输入用户名')" oninput="setCustomValidity('')" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                            <label class="customer-content-sm">密码：</label>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <input class="input-large-full" name="Password" placeholder="密码" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                            <label class="customer-content-sm">确认密码：</label>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <input class="input-large-full" name="ConfirmPassword" placeholder="再次确认密码" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                            <label class="customer-content-sm">邮箱：</label>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <input class="input-large-full" name="EmailAddress" placeholder="邮箱" type="email" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                            <label class="customer-content-sm">用户类型：</label>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <select name="UserType" id="UserType" class="select-large-full">
+                                @foreach (var key in Common.Dic_UserTypes.Keys)
+                                {
+                                    <option value="@key">@Common.Dic_UserTypes[key]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group div-businesslicense" style="visibility:hidden">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                            <label class="customer-content-sm">上传营业执照：</label>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <div id="uploadFiles">上传营业执照</div>
 
-</html>
+                            <div id="thelist" class="uploader-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <input class="btn btn-lg btn-success btn-register"
+                                   style="padding-left:50px;padding-right:50px;" type="submit" value="确 认" />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
 <script>
+
+    var userId = "";
     $(function () {
-        // Invoke the plugin
-        $('input, textarea').placeholder({ customClass: 'my-placeholder' });
-        
+
+        var options = {
+            type: "POST",
+            url: "/Account/Register",
+            dataType: "json",
+            beforeSubmit: showRequest,
+            success: showResponse
+        };
+        $('#form-register').ajaxForm(options);
+
+        InitFileUploader();
+        SelectUserType();
+
     });
+
+    function showRequest(formData, jqForm, options) {
+        //提交前校验
+        var fileList = $("#thelist div");
+
+        if ($("#UserType").val() == '@Common.UserType_Enterprise' && fileList.length == 0) {
+            layer.alert("请上传营业执照", {
+                skin: 'layui-layer-molv' //样式类名
+                     , closeBtn: 0
+            });
+            return false;
+        }
+    }
+
+    //
+    function showResponse(message) {
+
+        if (message.Success) {
+            userId = message.ReturnStrId;
+
+            //上传文件
+            var files = fileUploader.getFiles("inited");//初始状态
+            if (files.length > 0) {
+                //上传附件
+                UploadFiles();
+
+
+            } else {//如果当前没有文件上传
+                layer.alert("注册成功", {
+                    skin: 'layui-layer-molv' //样式类名
+                                 , closeBtn: 0
+                }, function () {
+                    //跳转
+                    window.location.href = '@returnUrl';
+                });
+            }
+
+
+        } else {
+            $(".errorMsg").html(message.Content);
+        }
+    }
+
+    function SelectUserType() {
+        $("#UserType").click(function () {
+            var selectValue = $(this).val();
+            if (selectValue == '@Common.UserType_Enterprise') {
+                $(".div-businesslicense").css("visibility", "visible");
+            } else {
+
+                //清空文件上传队列
+                $("#thelist").html("");
+                EmptyFileQueue();
+
+                $(".div-businesslicense").css("visibility", "hidden");
+
+            }
+
+        });
+    }
+
+    var fileUploader;
+    function InitFileUploader() {
+
+        var GUID = WebUploader.Base.guid();//一个GUID
+        // 初始化Web Uploader
+        fileUploader = WebUploader.create({
+            auto: false,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/User/User/ChunkedUploadAttachment',
+            duplicate: true, //可重复上传同一文件
+            pick: {
+                id: '#uploadFiles',
+                //只能选择一个文件上传
+                multiple: false
+            },
+            compress: false, //图片不压缩
+            fileNumLimit: 1,
+            fileSingleSizeLimit: 20 * 1024 * 1024, // 单个文件最大不能超过20 M
+            chunked: true,//开始分片上传
+            chunkSize: 2 * 1024 * 1024,//每一片的大小为2M
+            formData: {
+                guid: GUID //自定义参数
+            },
+            accept: {
+                title: 'file',
+                extensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,rar,zip,bmp,gif,jpg,jpeg,png'
+                //mimeTypes: 'image/*,text/plain,application/msword,application/x-xls,application/vnd.ms-excel,application/x-ppt,application/vnd.ms-powerpoint,application/pdf,application/rtf,application/x-rtf,application/zip,application/x-rar-compressed'
+            }
+
+
+        });
+
+        fileUploader.on('beforeFileQueued', function (file) {
+
+            EmptyFileQueue();
+        });
+
+        fileUploader.on('fileQueued', function (file) {
+            AddFileQueueData(file);
+
+        });
+
+        fileUploader.on('uploadStart', function (file) {
+
+        });
+
+        fileUploader.on('uploadProgress', function (file, percentage) {
+
+
+        });
+
+
+        fileUploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+            if (handler == "Q_TYPE_DENIED") {
+                alert("文件类型不支持");
+            }
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("只能上传一个文件");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("不能重复上传同一文件");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+
+                layer.alert("文件大小不能超过20M", {
+                    skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                });
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        fileUploader.on('uploadSuccess', function (file, response) {
+
+
+            if (response.Success == false || response.Success == "false") {
+                layer.alert(response.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                });
+            } else {
+
+                var obj = {
+                    UserId: userId,
+                    Type: '@Common.UserAttachment_BusinessLicense', //附件类型
+                    guid: GUID,
+                    fileName: file.name,
+                    extension: file.ext
+                };
+
+                $.post('/User/User/MergeFile', obj, function (data) {
+
+
+                    layer.alert("注册成功", {
+                        skin: 'layui-layer-molv' //样式类名
+                                , closeBtn: 0
+                    }, function () {
+                        //跳转
+                        window.location.href = '@returnUrl';
+                    });
+
+
+                });
+
+
+
+            }
+
+        });
+
+        fileUploader.on('uploadFinished', function () {
+            //无论有没有要上传的文件都会进入
+            $("body").hideLoading();
+
+
+        });
+
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        fileUploader.on('uploadComplete', function (file) {
+
+        });
+    }
+
+    function UploadFiles() {
+
+        //fileUploader.options.formData.articleId = articleId;
+        fileUploader.upload();
+    }
+
+    //添加文件队列
+    function AddFileQueueData(file) {
+
+        //清空，只允许上传一个文件
+        $("#thelist").html("");
+
+
+        var dynamicHtml = "";
+
+        dynamicHtml += '<div id="' + file.id + '">';
+        dynamicHtml += '<a class="customer-content-sm" href="javaScript:void(0)">' + file.name + '</a>';
+        dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="RemoveFileQueueData(' + file.id + ')">';
+        dynamicHtml += '<i class="fa fa-remove"></i>删除';
+        dynamicHtml += '</a>';
+        dynamicHtml += '<div class="clearfix"></div>';
+        dynamicHtml += '</div>';
+
+        $("#thelist").append(dynamicHtml);
+    }
+
+    function RemoveFileQueueData(div) {
+
+        //删除文件显示信息
+        $("#" + div.id).remove();
+
+
+        var file = fileUploader.getFile(div.id);
+        //删除队列中的文件
+        fileUploader.removeFile(file, true);
+
+    }
+
+
+
+    //清空文件上传队列
+    function EmptyFileQueue() {
+        var files = fileUploader.getFiles();
+        for (var i = 0; i < files.length; i++) {
+            //删除队列中的文件
+            fileUploader.removeFile(files[i], true);
+        }
+
+    }
+
 </script>
+

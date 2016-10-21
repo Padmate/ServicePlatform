@@ -21,7 +21,8 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public User GetUserByName(string userName)
         {
-           var user =  _dbContext.Users.Where(u=>u.UserName == userName).FirstOrDefault();
+           var user =  _dbContext.Users
+               .Where(u=>u.UserName == userName).FirstOrDefault();
            var result = ConverApplicationUserToUser(user);
            return result;
         }
