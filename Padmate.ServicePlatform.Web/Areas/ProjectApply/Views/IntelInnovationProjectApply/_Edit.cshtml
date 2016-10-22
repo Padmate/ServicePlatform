@@ -376,6 +376,8 @@
 
 <script>
 
+    //一次性上传的文件数
+    var uploadFileNum = 0;
     var dicAuditStatus = $.parseJSON('@Html.Raw(ViewData["AuditStatus"])');
     var dicFieldScope = $.parseJSON('@Html.Raw(ViewData["FieldScope"])');
 
@@ -601,7 +603,7 @@
         return obj;
 
     }
-
+    var mask;
     ///保存和提交
     //buttonType:save/apply
     function SaveAndApply() {
@@ -617,7 +619,7 @@
         obj.ProjectStage = $("input[name='ckProjectStage']:checked").val();
 
         var fileList = $("#thelist div");
-        if (fileList.length == 0) {
+        if (_isApplyButton && fileList.length == 0) {
             layer.alert("请上传商业计划书", {
                 skin: 'layui-layer-molv' //样式类名
                      , closeBtn: 0
@@ -625,7 +627,10 @@
             return;
         }
 
-        $("body").showLoading();
+        mask = layer.load(0,  //0代表加载的风格，支持0-2
+        {
+            shade: [0.5, '#fff'] //0.1透明度的白色背景
+        });
 
         var jsonParam = JSON.stringify(obj);
         $.ajax({
@@ -642,6 +647,8 @@
                    
                     //上传文件
                     var files = fileUploader.getFiles("inited");//初始状态
+                    uploadFileNum = files.length;
+
                     if (files.length > 0) {
                         UploadFiles();
 
@@ -650,8 +657,7 @@
                         
                         if (_isApplyButton) {
                             
-
-                            $("body").hideLoading();
+                            layer.close(mask);
                             layer.alert(_buttonSaveSuccessMsg, {
                                 skin: 'layui-layer-molv' //样式类名
                                 , closeBtn: 0
@@ -663,7 +669,7 @@
                         } else {
                             //重新加载数据
                             LoadProjectByUserId('@user.Id');
-                            $("body").hideLoading();
+                            layer.close(mask);
                             layer.alert(_buttonSaveSuccessMsg, {
                                 skin: 'layui-layer-molv' //样式类名
                                 , closeBtn: 0
@@ -675,7 +681,7 @@
 
                 } else {
 
-                    $("body").hideLoading();
+                    layer.close(mask);
                     //tips层
                     layer.alert(message.Content, {
                         skin: 'layui-layer-molv' //样式类名
@@ -696,7 +702,7 @@
             auto: false,   // 选完文件后，是否自动上传。
             swf: '../Scripts/webuploader/Uploader.swf',
             server: '/ProjectApply/IntelInnovationProjectApply/ChunkedUploadAttachment',
-            duplicate: false, //可重复上传同一文件
+            duplicate: true, //可重复上传同一文件
             pick: '#uploadFiles',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
             compress: false, //图片不压缩
             multiple: true,
@@ -726,7 +732,7 @@
         });
 
         fileUploader.on('uploadStart', function (file) {
-
+            
         });
 
         fileUploader.on('uploadProgress', function (file, percentage) {
@@ -738,7 +744,7 @@
         fileUploader.on('error', function (handler) {
 
             //隐藏遮罩
-            $("body").hideLoading();
+            layer.close(mask);
             if (handler == "Q_TYPE_DENIED") {
                 alert("文件类型不支持");
             }
@@ -762,7 +768,6 @@
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
         fileUploader.on('uploadSuccess', function (file, response) {
 
-
             if (response.Success == false || response.Success == "false") {
                 layer.alert(response.Content, {
                     skin: 'layui-layer-molv' //样式类名
@@ -778,17 +783,14 @@
                 };
 
                 $.post('/ProjectApply/IntelInnovationProjectApply/MergeFile', obj, function (data) {
-
-                    var cc = fileUploader.getFiles("queued");
-                    var dd = fileUploader.getFiles("progress");
-                    //上传完成
-                    var completeFiles = fileUploader.getFiles("complete");
-                    var allFiles = fileUploader.getFiles();
+                    
+                    --uploadFileNum;
                     //当最后一文件上传完之后再执行刷新操作
-                    if (completeFiles.length == allFiles.length) {
+                    if (uploadFileNum == 0) {
+                        layer.close(mask);
                         //上传成功
                         if (_isApplyButton) {
-                            $("body").hideLoading();
+                            layer.close(mask);
                             //如果当前是提交申请，则直接刷新当前页面
                             layer.alert(_buttonSaveSuccessMsg, {
                                 skin: 'layui-layer-molv' //样式类名
@@ -798,7 +800,7 @@
                             });
 
                         } else {
-                            $("body").hideLoading();
+                            layer.close(mask);
                             LoadProjectByUserId('@user.Id');
 
                             //删除队列中当前上传完的文件
@@ -820,7 +822,8 @@
 
         fileUploader.on('uploadFinished', function () {
             //无论有没有要上传的文件都会进入
-            $("body").hideLoading();
+            //layer.close();
+
 
 
         });
@@ -828,7 +831,6 @@
 
         // 完成上传完了，成功或者失败，先删除进度条。
         fileUploader.on('uploadComplete', function (file) {
-
         });
     }
 
@@ -840,6 +842,7 @@
 
     //添加文件队列
     function AddFileQueueData(file) {
+
 
         var dynamicHtml = "";
 
@@ -855,6 +858,7 @@
     }
 
     function RemoveFileQueueData(div) {
+
 
         //删除文件显示信息
         $("#" + div.id).remove();
@@ -887,7 +891,7 @@
         var dynamicHtml = "";
         if (attachments != null && attachments.length > 0) {
             for (var i = 0; i < attachments.length; i++) {
-                dynamicHtml += '<div>';
+                dynamicHtml += '<div id="divatt-' + attachments[i].Id + '">';
                 dynamicHtml += '<a class="customer-content-sm" href="' + attachments[i].VirtualPath + '">' + attachments[i].Name + '</a>';
                 dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="DeleteFile(' + attachments[i].Id + ')">';
                 dynamicHtml += '<i class="fa fa-remove"></i>删除';
@@ -918,9 +922,9 @@
                     });
                     return;
                 } else {
-                    //重新加载
-                    var attachments = LoadProjectAttachmentsByProjectId('@project.Id');
-                    RefreshFileQueueList(attachments);
+                    //在列表中移除
+                    $("#divatt-" + attachmentId).remove();
+                    
                 }
 
             }

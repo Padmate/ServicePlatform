@@ -193,8 +193,12 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
         [HttpPost]
         public ActionResult ChunkedUploadAttachment(HttpPostedFileBase file)
         {
+            //获取当前用户
+            var loginUser = this.GetCurrentUser();
+
             //虚拟目录
             string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["userAttachmentVirtualDirectory"].ToString();
+            attachmentVirtualDirectory = Path.Combine(attachmentVirtualDirectory, loginUser.UserName);
 
             Message message = new Message();
             message.Success = true;
@@ -251,8 +255,11 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
         {
             Message message = new Message();
             message.Success = true;
+            //获取当前用户
+            var loginUser = this.GetCurrentUser();
 
             string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["userAttachmentVirtualDirectory"].ToString();
+            attachmentVirtualDirectory = Path.Combine(attachmentVirtualDirectory, loginUser.UserName);
 
             #region 校验
             if (string.IsNullOrEmpty(model.UserId))

@@ -99,7 +99,8 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
             Message message = new Message();
             //校验model
-            message = model.validate();
+            var ignoreRequired = true;
+            message = model.validate(ignoreRequired);
             if (!message.Success) return Json(message);
             var currentUser = this.GetCurrentUser();
             B_IntelInnovationProjectApply bIntelInnovationProjectApply = new B_IntelInnovationProjectApply();
@@ -196,8 +197,12 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
         [HttpPost]
         public ActionResult ChunkedUploadAttachment(HttpPostedFileBase file)
         {
+            //获取当前用户
+            var loginUser = this.GetCurrentUser();
+
             //虚拟目录
             string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["intelProjectAttachmentVirtualDirectory"].ToString();
+            attachmentVirtualDirectory = Path.Combine(attachmentVirtualDirectory,loginUser.UserName);
 
             Message message = new Message();
             message.Success = true;
@@ -255,7 +260,11 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             Message message = new Message();
             message.Success = true;
 
+            //获取当前用户
+            var loginUser = this.GetCurrentUser();
+
             string attachmentVirtualDirectory = SystemConfig.Init.PathConfiguration["intelProjectAttachmentVirtualDirectory"].ToString();
+            attachmentVirtualDirectory = Path.Combine(attachmentVirtualDirectory, loginUser.UserName);
 
             #region 校验
             if (string.IsNullOrEmpty(model.IntelInnovationProjectApplyId))

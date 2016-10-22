@@ -58,14 +58,7 @@
     }
 
 
-    #thelist {
-        margin-bottom: 10px;
-    }
-
-        #thelist a {
-            margin: 5px;
-            text-decoration: underline;
-        }
+    
 </style>
 
 
@@ -84,14 +77,7 @@
                       enctype="application/x-www-form-urlencoded">
                     @Html.AntiForgeryToken()
 
-                    <div class="form-group">
-                        <div class="col-xs-3 col-sm-3 col-md-3 control-label">
-                        </div>
-                        <div class="col-xs-9 col-sm-9 col-md-9">
-                            <div class="errorMsg customer-content-sm" style="color:red;"></div>
-                        </div>
-                    </div>
-
+                    
                     <div class="form-group">
                         <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                             <label class="customer-content-sm">用户名：</label>
@@ -142,14 +128,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group div-businesslicense" style="visibility:hidden">
+                    <div class="form-group div-businesslicense" style="visibility:hidden;">
                         <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                             <label class="customer-content-sm">上传营业执照：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
                             <div id="uploadFiles">上传营业执照</div>
-
-                            <div id="thelist" class="uploader-list"></div>
+                            <img class="img-responsive" style="display:none" id="showUploadImage" src="~/img/businesslicense.png" alt="营业执照"/>
                         </div>
                     </div>
 
@@ -184,16 +169,24 @@
         };
         $('#form-register').ajaxForm(options);
 
-        InitFileUploader();
+        if (!WebUploader.Uploader.support()) {
+            alert('当前页面一些功能不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
+            throw new Error('function does not support the browser you are using.');
+        } else {
+            InitFileUploader();
+        }
+
         SelectUserType();
+
+        
 
     });
 
     function showRequest(formData, jqForm, options) {
         //提交前校验
-        var fileList = $("#thelist div");
+        var initedFiles = fileUploader.getFiles("inited"); //初始状态的文件
 
-        if ($("#UserType").val() == '@Common.UserType_Enterprise' && fileList.length == 0) {
+        if ($("#UserType").val() == '@Common.UserType_Enterprise' && initedFiles.length == 0) {
             layer.alert("请上传营业执照", {
                 skin: 'layui-layer-molv' //样式类名
                      , closeBtn: 0
@@ -204,7 +197,6 @@
 
     //
     function showResponse(message) {
-        debugger;
         if (message.Success) {
             userId = message.ReturnStrId;
 
@@ -227,7 +219,10 @@
 
 
         } else {
-            $(".errorMsg").html(message.Content);
+            layer.alert(message.Content, {
+                skin: 'layui-layer-molv' //样式类名
+                     , closeBtn: 0
+            });
         }
     }
 
@@ -236,14 +231,14 @@
             var selectValue = $(this).val();
             if (selectValue == '@Common.UserType_Enterprise') {
                 $(".div-businesslicense").css("visibility", "visible");
+                $("#showUploadImage").css("display", "block");
             } else {
 
                 //清空文件上传队列
-                $("#thelist").html("");
                 EmptyFileQueue();
 
                 $(".div-businesslicense").css("visibility", "hidden");
-
+                $("#showUploadImage").css("display", "none");
             }
 
         });
@@ -265,19 +260,25 @@
                 multiple: false
             },
             compress: false, //图片不压缩
+            multiple: false,
             fileNumLimit: 1,
-            fileSingleSizeLimit: 20 * 1024 * 1024, // 单个文件最大不能超过20 M
+            fileSingleSizeLimit: 5 * 1024 * 1024, // 单个文件最大不能超过5 M
             chunked: true,//开始分片上传
             chunkSize: 2 * 1024 * 1024,//每一片的大小为2M
             formData: {
                 guid: GUID //自定义参数
             },
-            accept: {
-                title: 'file',
-                extensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,rar,zip,bmp,gif,jpg,jpeg,png'
-                //mimeTypes: 'image/*,text/plain,application/msword,application/x-xls,application/vnd.ms-excel,application/x-ppt,application/vnd.ms-powerpoint,application/pdf,application/rtf,application/x-rtf,application/zip,application/x-rar-compressed'
-            }
+            accept: {           // 只允许选择图片文件。
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            thumb: {        //缩略图配置
+                // 为空的话则保留原有图片格式。
+                // 否则强制转换成指定的类型。
+                type: ''
 
+            }
 
         });
 
@@ -287,7 +288,14 @@
         });
 
         fileUploader.on('fileQueued', function (file) {
-            AddFileQueueData(file);
+            //生成预览图片
+            fileUploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $("#showUploadImage").attr('alt', "预览错误");
+                } else {
+                    $("#showUploadImage").attr('src', src);
+                }
+            }, 1, 1);
 
         });
 
@@ -306,7 +314,7 @@
             //隐藏遮罩
             $("body").hideLoading();
             if (handler == "Q_TYPE_DENIED") {
-                alert("文件类型不支持");
+                alert("只允许上传后缀为：gif,jpg,jpeg,bmp,png的图片");
             }
 
             if (handler == "Q_EXCEED_NUM_LIMIT") {
@@ -317,7 +325,7 @@
             }
             if (handler == "F_EXCEED_SIZE") {
 
-                layer.alert("文件大小不能超过20M", {
+                layer.alert("文件大小不能超过5M", {
                     skin: 'layui-layer-molv' //样式类名
                        , closeBtn: 0
                 });
@@ -380,46 +388,15 @@
 
     function UploadFiles() {
 
-        //fileUploader.options.formData.articleId = articleId;
         fileUploader.upload();
     }
-
-    //添加文件队列
-    function AddFileQueueData(file) {
-
-        //清空，只允许上传一个文件
-        $("#thelist").html("");
-
-
-        var dynamicHtml = "";
-
-        dynamicHtml += '<div id="' + file.id + '">';
-        dynamicHtml += '<a class="customer-content-sm" href="javaScript:void(0)">' + file.name + '</a>';
-        dynamicHtml += '<a class="customer-content-sm attachment-delete" href="javaScript:void(0)" onclick="RemoveFileQueueData(' + file.id + ')">';
-        dynamicHtml += '<i class="fa fa-remove"></i>删除';
-        dynamicHtml += '</a>';
-        dynamicHtml += '<div class="clearfix"></div>';
-        dynamicHtml += '</div>';
-
-        $("#thelist").append(dynamicHtml);
-    }
-
-    function RemoveFileQueueData(div) {
-
-        //删除文件显示信息
-        $("#" + div.id).remove();
-
-
-        var file = fileUploader.getFile(div.id);
-        //删除队列中的文件
-        fileUploader.removeFile(file, true);
-
-    }
-
 
 
     //清空文件上传队列
     function EmptyFileQueue() {
+        //清空显示区域
+        $("#showUploadImage").attr("src", "../img/businesslicense.png");
+
         var files = fileUploader.getFiles();
         for (var i = 0; i < files.length; i++) {
             //删除队列中的文件

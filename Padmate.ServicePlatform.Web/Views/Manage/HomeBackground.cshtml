@@ -246,9 +246,12 @@
                 $("#imageList").html("");
                 var dynamicHtml = ""
                 for (var i = 0; i < bgImages.length; i++) {
+
+                    var linkHref = bgImages[i].LinkHref == null ? "" : bgImages[i].LinkHref;
+
                     dynamicHtml += '<li class="text-center" id="' + bgImages[i].Id + '">';
                     dynamicHtml += '<img src="' + bgImages[i].VirtualPath + '" class="imageSmall">';
-                    dynamicHtml += '<input class="input-large-full linkhref" placeholder="图片链接" value="' + bgImages[i].LinkHref + '"/>';
+                    dynamicHtml += '<input class="input-large-full linkhref" placeholder="图片链接" value="' + linkHref + '"/>';
 
                     dynamicHtml += '<label>' + bgImages[i].Name + '</label>';
 

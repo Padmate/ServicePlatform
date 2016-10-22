@@ -27,7 +27,14 @@ namespace Padmate.ServicePlatform.Models
         public Message validate()
         {
             Message message = new Message();
-            message = validate(this);
+            message = validate(this,false);
+            return message;
+        }
+
+        public Message validate(bool ignoreRequired)
+        {
+            Message message = new Message();
+            message = validate(this,ignoreRequired);
             return message;
         }
 
@@ -37,7 +44,7 @@ namespace Padmate.ServicePlatform.Models
         /// <param name="obj">视图数据对象</param>
         /// <param name="retMsg">返回消息</param>
         /// <returns></returns>
-        public Message validate(BaseModel obj)
+        public Message validate(BaseModel obj,bool ignoreRequired)
         {
             Message message = new Message();
             message.Success = true;
@@ -54,6 +61,12 @@ namespace Padmate.ServicePlatform.Models
                         ValidationAttribute vAttrib = attrib as ValidationAttribute;
                         if (vAttrib != null)
                         {
+                            //如果忽略校验必输项，则跳过OptionalRequired校验
+                            if (vAttrib.GetType() == typeof(OptionalRequiredAttribute) && ignoreRequired)
+                            {
+                                continue;
+                            }
+
                             ///验证
                             if (!vAttrib.IsValid(property.GetValue(obj, null)))
                             {
@@ -66,7 +79,7 @@ namespace Padmate.ServicePlatform.Models
                         if (property.GetType() == typeof(BaseModel))
                         {
                             //递归验证
-                            message = validate(property.GetValue(obj, null) as BaseModel);
+                            message = validate(property.GetValue(obj, null) as BaseModel,ignoreRequired);
                             if (!message.Success)
                                 return message;
                         }
@@ -77,6 +90,8 @@ namespace Padmate.ServicePlatform.Models
             return message;
         }
 
+
+        
         #endregion
 
     }
