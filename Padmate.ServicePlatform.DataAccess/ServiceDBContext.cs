@@ -41,6 +41,7 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public DbSet<IntelInnovationProjectApplyAttachment> IntelInnovationProjectApplyAttachments { get; set; }
 
+        public DbSet<Module> Modules { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -58,6 +59,7 @@ namespace Padmate.ServicePlatform.DataAccess
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyConfiguration());
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyQueConfiguration());
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyAttachmentConfiguration());
+            modelBuilder.Configurations.Add(new ModuleConfiguration());
 
         }
 

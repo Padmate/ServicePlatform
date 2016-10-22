@@ -38,12 +38,15 @@ namespace Padmate.ServicePlatform.Utility
         public const string Article_Thumbnails = "article_thumbnails";
         public const string Project_Thumbnails = "project_thumbnails";
         public const string ProjectAttachment_Thumbnails = "projectattachment_thumbnails";
+        public const string Module_Thumbnails = "module_thumbnails";
+
 
         public static Dictionary<string, string> Dic_ImageType = new Dictionary<string, string>(){
             {Image_HomeBG,"首页背景图片"},
             {Article_Thumbnails,"文章缩略图"},
             {Project_Thumbnails,"项目缩略图"},
-            {ProjectAttachment_Thumbnails,"项目附件缩略图"}
+            {ProjectAttachment_Thumbnails,"项目附件缩略图"},
+            {Module_Thumbnails,"模块缩略图"}
 
         };
         #endregion
@@ -185,6 +188,14 @@ namespace Padmate.ServicePlatform.Utility
         /// 营业执照
         /// </summary>
         public const string UserAttachment_BusinessLicense = "1";
+        #endregion
+        #region 模块类型
+        public const string ModuleType_ServicePrice = "service-price";
+
+        public static Dictionary<string, string> Dic_ModuleType = new Dictionary<string, string>()
+        {
+            {ModuleType_ServicePrice,"服务报价"}
+        };
         #endregion
     }
 

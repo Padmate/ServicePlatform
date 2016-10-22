@@ -65,10 +65,12 @@
                     <button id="btnAudit" class="btn btn-danger">
                         <i class="glyphicon glyphicon-check"></i> 审核
                     </button>
+                    <button id="btnEditRemark" class="btn btn-info">
+                        <i class="glyphicon glyphicon-record"></i>修改备注
+                    </button>
                     <button id="btnDetail" class="btn btn-default">
                         <i class="glyphicon glyphicon-record"></i>详细
                     </button>
-                    
                 </div>
                 <table id="table"></table>
 
@@ -132,34 +134,33 @@
         return result;
     }
 
-    function InitTable()
-    {
+    function InitTable() {
         $('#table').bootstrapTable({
-            height:500,
+            height: 500,
             method: 'post',                 //The method type to request remote data.
             url: '/ProjectApply/IntelInnovationProjectApply/GetPageDataForAudit',
             dataType: "json",               //The type of data that you are expecting back from the server.
-            contentType:'application/json',
+            contentType: 'application/json',
             pagination: true,               //True to show a pagination toolbar on table bottom.
             pageSize: 10,                   //初始化每页显示几条
-            pageNumber:1,                   //初始化在第几页
-            pageList: [10,25,50,100,200,'All'],
+            pageNumber: 1,                   //初始化在第几页
+            pageList: [10, 25, 50, 100, 200, 'All'],
             sidePagination: "server",       //服务端请求
-            idField:'Id',
-            toolbar:'#toolbar',
-            showRefresh:true,
-            search:false,
+            idField: 'Id',
+            toolbar: '#toolbar',
+            showRefresh: true,
+            search: false,
             queryParams: ConstructQueryParams,
             clickToSelect: true,     //单击行选中数据
             //queryParamsType: "limit",
             locale: 'zh-CN',
             columns: [{
                 checkbox: true
-                },
+            },
                 {
                     field: 'Id',
                     title: 'Id',
-                    visible:false,
+                    visible: false,
                 },
                 {
                     field: 'Name',
@@ -172,17 +173,15 @@
                     title: '审核状态',
                     formatter: function (value, row, index) {
 
-                        var fontClass =""
-                        if(value == '@Common.Audit_Waiting')
-                        {
+                        var fontClass = ""
+                        if (value == '@Common.Audit_Waiting') {
                             fontClass = "waiting-audit";
-                        } else if (value == '@Common.Audit_Failue')
-                        {
+                        } else if (value == '@Common.Audit_Failue') {
                             fontClass = "failue-audit"
                         }
                         var result = DicAuditStatus(value);
 
-                        return '<label class='+fontClass+'>'+result+'</label>';
+                        return '<label class=' + fontClass + '>' + result + '</label>';
                     }
 
                 },
@@ -193,7 +192,7 @@
                     formatter: function (value, row, index) {
 
                         var result = value;
-                        if (result !=null && result != "" && result.length > 50) {
+                        if (result != null && result != "" && result.length > 50) {
                             result = '<a class="custooltip" href="#">' + result.substr(0, 50) + '......<span class="classic">' + row.Description + '</span></a>';
 
                         }
@@ -219,11 +218,10 @@
                     title: '审核时间',
                     formatter: function (value, row, index) {
                         var result = value;
-                        if (value != null)
-                        {
+                        if (value != null) {
                             result = JsonDateFormat2(value);
                         }
-                        
+
 
                         return result;
                     }
@@ -261,11 +259,10 @@
             ]
         });
     }
-    function ConstructQueryParams(param)
-    {
+    function ConstructQueryParams(param) {
         var params = {
             limit: param.limit, //页面大小
-            offset:param.offset,//偏移数量
+            offset: param.offset,//偏移数量
             page: param.offset / param.limit, //页码
             Name: $("#tbSearchName").val(),
             AuditStatus: $("#selSearchAuditStatus").val()
@@ -350,7 +347,7 @@
 
             //只有审核状态为："等待审核"才允许审核
             var auditStatus = selections[0].AuditStatus;
-            if(auditStatus != '@Common.Audit_Waiting')
+            if (auditStatus != '@Common.Audit_Waiting')
             {
                 layer.alert("只有'等待审核'的数据才能进行审核", {
                     skin: 'layui-layer-molv'
@@ -363,6 +360,65 @@
             var id = selections[0].Id;
             $('#intelProjectAudit').modal('show');
             $("#divAuditContainer").load("/ProjectApply/IntelInnovationProjectApply/Audit?projectId=" + id);
+        });
+
+        //修改备注
+        $("#btnEditRemark").click(function () {
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+            var projectQueIds = [];
+            for (var i = 0; i < selections.length; i++) {
+                var id = selections[i].QueId;
+                projectQueIds.push(id);
+
+            }
+
+            var prompt = layer.prompt({
+                title: '请输入备注',
+                formType: 2 //prompt风格，支持0-2
+            }, function (remark) {
+                
+                var jsonProjectQueId = JSON.stringify(projectQueIds);
+                var obj = {
+                    AuditRemark: remark,
+                    Id:jsonProjectQueId
+
+                };
+
+                $.ajax({
+                    type: "post",//使用get方法访问后台
+                    dataType: "json",//返回json格式的数据
+                    url: "/ProjectApply/IntelInnovationProjectApply/BatchUpdateRemark",
+                    data: obj,
+                    async: false,
+                    success: function (message) {
+                        if (message.Success) {
+                            RefreshTable();
+                            layer.close(prompt);
+                        } else {
+                            layer.close(prompt);
+
+                            layer.alert(message.Content, {
+                                skin: 'layui-layer-molv'
+                                , closeBtn: 0
+                                , shift: 5 //动画类型
+                            });
+                            
+                        }
+
+                    }
+                });
+            });
+
+
+            
         });
     }
 

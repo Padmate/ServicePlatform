@@ -1,0 +1,30 @@
+﻿@using System.Configuration;
+@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@{
+    M_Module module = (M_Module)ViewData["module"];
+
+    ViewBag.Title = module.SubTitle;
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                @Html.Raw(module.Content)
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+
+<script>
+
+</script>
+

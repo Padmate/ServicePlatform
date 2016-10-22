@@ -437,6 +437,18 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             return View();
         }
 
+        [HttpPost]
+        public ActionResult BatchUpdateRemark(M_IntelInnovationProjectApplyQue model)
+        {
+            Message message = new Message();
+            var queIds = JsonHandler.UnJson<List<int>>(model.Id);
+
+            B_IntelInnovationProjectApplyQue bQue = new B_IntelInnovationProjectApplyQue();
+            message = bQue.BatchUpdateAuditRemark(queIds,model.AuditRemark);
+
+            return Json(message);
+        }
+
         private Message Validate(M_IntelInnovationProjectApply model,string usertype)
         {
             Message message = new Message();

@@ -1,0 +1,341 @@
+﻿@{
+    Layout = null;
+    var _type = Request["type"];
+}
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+
+<!--#region修改-->
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center">新 增</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">URL唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbModuleUrlId" style="width:40%" placeholder="只能是字母、数字或 - 组成" />
+                <input class="btn btn-default" id="btnGenerateNewUrlId" type="button" style="width:9%" value="自动生成" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">一级标题：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbTitle" placeholder="一级标题" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">二级标题：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbSubTitle" placeholder="二级标题" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">模块描述：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textareaS" id="taDescription"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">顺序：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbSequence" placeholder="顺序" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">模块图片：</label>
+            </div>
+            <div class="col-md-10">
+                <div id="uploadThumbnailsImage">选择图片</div>
+                <span class="customer-content-sm" id="status"></span>
+            </div>
+            <div class="col-lg-4 col-md-6 col-md-offset-2" style="margin-top:10px;">
+                <img class="image-smallsize" id="showUploadImage" src="~/img/small_model.jpg" alt="无图标" />
+
+            </div>
+
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">是否链接：</label>
+            </div>
+            <div class="col-md-10">
+                <input type="radio" value="true" name="IsHref" /><label>是</label>
+                <input type="radio" value="false" checked="checked" name="IsHref" style="margin-left:50px;" /><label>否</label>
+
+            </div>
+        </div>
+        <div class="form-group" id="divModuleHref" style="display:none;">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">模块链接：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="inputS" id="tbHref" placeholder="模块链接" />
+            </div>
+        </div>
+
+        <div class="form-group" id="divModuleContent">
+            <div class="col-md-12">
+                <div class="checkbox">
+                    <textarea id="taContent" name="taContent"></textarea>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
+        保 存
+    </button>
+</div>
+<!--#endregion 修改-->
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
+<script>
+
+    var editor = CKEDITOR.instances["taContent"];
+    if (editor) { editor.destroy(true); }
+    CKEDITOR.replace("taContent", {
+        enterMode: CKEDITOR.ENTER_BR
+    });
+    CKFinder.setupCKEditor(null, '@Url.Content("~/ckfinder/")');
+
+    $(function () {
+
+        //模块是否链接事件
+        $("[name='IsHref']").change(function () {
+            ChangeHrefRadio();
+        });
+        InitGenerateModuleUrlIdEvent();
+        InitWebUploader();
+    })
+
+    var uploader;
+    function InitWebUploader() {
+
+
+        // 初始化Web Uploader
+        uploader = WebUploader.create({
+            auto: false,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/Infra/Module/UploadThumbnailsImage',
+            duplicate: true, //可重复上传同一文件
+            pick: {
+                id: '#uploadThumbnailsImage',
+                //只能选择一个文件上传
+                multiple: false
+            },
+            compress: false, //图片不压缩
+            accept: {           // 只允许选择图片文件。
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            fileSingleSizeLimit: 1 * 1024 * 1024, // 单个文件最大不能超过1 M
+            thumb: {        //缩略图配置
+                // 为空的话则保留原有图片格式。
+                // 否则强制转换成指定的类型。
+                type: ''
+
+            }
+        });
+        uploader.on('beforeFileQueued', function (file) {
+
+            EmptyFileQueue();
+        });
+        uploader.on('fileQueued', function (file) {
+            //生成预览图片
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $("#showUploadImage").attr('alt', "预览错误");
+                } else {
+                    $("#showUploadImage").attr('src', src);
+                }
+            }, 1, 1);
+        });
+
+        uploader.on('startUpload', function () {
+
+            //开始上传，添加遮罩
+            //$("body").showLoading();
+        });
+        uploader.on('uploadFinished', function () {
+
+            //图片上传成功后关闭对话框，刷新表格
+            CloseAddScreen();
+            //刷新
+            RefreshTable();
+            $("body").hideLoading();
+        });
+
+        uploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("超出最大张数");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("文件重复");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+                $("#status").html("<lable style='color:red;'>图片大小不能超过1M</lable>");
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, response) {
+
+            if (response.Success == false || response.Success == "false") {
+
+            } else {
+
+            }
+
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+            //$('#' + file.id).find('.progress').remove();
+            //隐藏遮罩
+            //$("body").hideLoading();
+        });
+    }
+
+    function UploadImage(moduleId) {
+
+        uploader.options.formData.moduleId = moduleId;
+        uploader.upload();
+    }
+
+    //清空文件上传队列
+    function EmptyFileQueue() {
+
+
+        var files = uploader.getFiles();
+        for (var i = 0; i < files.length; i++) {
+            //删除队列中的文件
+            uploader.removeFile(files[i], true);
+        }
+
+    }
+
+    function ChangeHrefRadio() {
+        var isHref = $("input[name='IsHref']:checked").val();
+
+        $("#divModuleHref").toggle();
+        $("#divModuleContent").toggle();
+
+        if (isHref == "true") {
+            //如果是链接，则隐藏并且清空内容编辑框,显示Href输入框
+            CKEDITOR.instances["taContent"].setData("");
+
+        } else {
+            //如果不是链接，则隐藏并且清空Href输入框,显示内容编辑框
+            $("#Href").val(" ");
+        }
+    }
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/Infra/Module/SaveAdd",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+                    //上传图片
+                    UploadImage(message.ReturnId);
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+    function InitGenerateModuleUrlIdEvent() {
+        $("#btnGenerateNewUrlId").click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/Infra/Module/GenerateNewURLId",
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+
+                    if (message.Success) {
+
+                        $("#tbModuleUrlId").val(message.ReturnStrId);
+
+                    } else {
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv' //样式类名
+                          , closeBtn: 0
+                        });
+                        return;
+                    }
+                }
+            });
+        });
+    }
+
+    //构造保存对象
+    function ConstructSaveObj() {
+        var editor = CKEDITOR.instances["taContent"];
+        var obj = {
+            Title: $("#tbTitle").val(),
+            SubTitle: $("#tbSubTitle").val(),
+            Description: $("#taDescription").val(),
+            ModuleUrlId: $("#tbModuleUrlId").val(),
+            Sequence: $("#tbSequence").val(),
+            IsHref: $("input[name='IsHref']:checked").val(),
+            Href: $("#tbHref").val(),
+            Content: editor.getData(),
+            Type: '@_type'
+
+        };
+        return obj;
+    }
+
+
+</script>

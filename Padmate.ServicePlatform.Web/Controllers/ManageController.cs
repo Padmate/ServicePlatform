@@ -296,5 +296,11 @@ namespace Padmate.ServicePlatform.Web.Controllers
             ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
             return View();
         }
+
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
+        public ActionResult Module()
+        {
+            return View();
+        }
     }
 }

@@ -127,5 +127,30 @@ namespace Padmate.ServicePlatform.DataAccess
                 _dbContext.SaveChanges();
             }
         }
+
+        public void BatchUpdateRemarkByIds(List<int> ids,string remark)
+        {
+            string idstr = "(";
+            for (int i = 0; i < ids.Count;i++ )
+            {
+                if(i ==0)
+                {
+                    idstr += "'"+ids[i]+"'";
+
+                }
+                else
+                {
+                    idstr += ",'"+ids[i]+"'";
+
+                }
+            }
+
+            idstr += ")";
+
+            var sql = @"update IntelInnovationProjectApplyQues set AuditRemark ='{0}' where id in {1}";
+            sql = string.Format(sql,remark,idstr);
+
+            int updateRows =  _dbContext.Database.ExecuteSqlCommand(sql);
+        }
     }
 }

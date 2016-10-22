@@ -168,6 +168,24 @@ namespace Padmate.ServicePlatform.Service
             return message;
         }
 
+        public Message BatchUpdateAuditRemark(List<int> ids,string remark)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "更新成功";
+
+            try
+            {
+                _que.BatchUpdateRemarkByIds(ids, remark);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "更新失败，异常：" + e.Message;
+            }
+            return message;
+        }
 
 
         public Message DeleteById(string id)

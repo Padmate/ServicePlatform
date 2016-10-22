@@ -48,6 +48,7 @@
     <Compile Include="B_IntelInnovationProjectApplyAttachment.cs" />
     <Compile Include="B_IntelInnovationProjectApplyQue.cs" />
     <Compile Include="B_Mail.cs" />
+    <Compile Include="B_Module.cs" />
     <Compile Include="B_Project.cs" />
     <Compile Include="B_ProjectDownload.cs" />
     <Compile Include="B_Role.cs" />

@@ -11,6 +11,7 @@
     List<M_Article> activityForecastArticles = (List<M_Article>)ViewData["activityForecastArticles"];
     List<M_Article> wonderfulActivityArticles = (List<M_Article>)ViewData["wonderfulActivityArticles"];
     List<M_Article> informationArticles = (List<M_Article>)ViewData["informationArticles"];
+    List<M_Module> servicePrices = (List<M_Module>)ViewData["servicePrices"];
 
     List<M_Image> homebgImages = (List<M_Image>)ViewData["homebgImages"];
 
@@ -411,6 +412,80 @@
     </div>
     
 </section>
+<!--服务报价-->
+<section id="servicePrice" class="bg-darkest-gray">
+    <div class="container">
+        <div class="row">
+            @{
+                for (int i = 0; i < servicePrices.Count; i++)
+                {
+                    var contentHref = "/service/service-price/" + servicePrices[i].ModuleURLId + urlRewriteExtension;
+                    var aHref = servicePrices[i].IsHref ? servicePrices[i].Href : contentHref;
+                    var aTarget = servicePrices[i].IsHref ? "_blank" : "_self";
+                    var imageVirtualPath = servicePrices[i].Image == null ? "../img/small_model.jpg"
+                        : servicePrices[i].Image.VirtualPath;
+
+                    <div class="col-is-6 col-sm-4 col-md-4">
+                        <div class="service-box" style="margin-bottom:50px;">
+                            @if (!servicePrices[i].IsHref && string.IsNullOrEmpty(servicePrices[i].Content))
+                            {
+                                <img class="img-responsive" src="@imageVirtualPath" alt="@servicePrices[i].SubTitle" />
+                            }
+                            else
+                            {
+                                <a href="@aHref" class="information-box" target="@aTarget">
+                                    <img class="img-responsive" src="@imageVirtualPath" alt="@servicePrices[i].SubTitle" />
+                                    <div class="information-box-caption">
+                                        <div class="information-box-caption-content">
+                                            <!--div文字居中-->
+                                            <div class="divmiddle-box">
+                                                <div class="divmiddle-box-content">
+                                                    <p class="customer-content-md whitefont"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                            
+                            <div class="service-information-caption service-price-content">
+                                <h4 class="customer-h4">
+                                    @servicePrices[i].SubTitle
+                                </h4>
+                                <span class="customer-content-sm">
+                                    @Html.Raw(servicePrices[i].Description)
+
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <script>
+
+            //找出所有service-price-content中div最高的那个高度
+            var higestCaption = 0;
+            $(".service-price-content").each(function () {
+
+                var sectionHight = $(this).height();
+                if (higestCaption < sectionHight) {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有service-price-content的div高度赋值为最高高度
+            $(".service-price-content").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
+
+
+            });
+
+        </script>
+
+    </div>
+</section>
 
 <!--#endregion Service-->
 <!--Activity Section-->
@@ -452,7 +527,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <div class="service-information-caption">
+                            <div class="service-information-caption activity-forecast-content">
                                 <h4 class="customer-h4">
                                     @activityForecastArticles[i].Title
                                 </h4>
@@ -479,6 +554,28 @@
 
             </div>
         </div>
+        <script>
+
+                //找出所有activity-forecast-content中div最高的那个高度
+                var higestCaption = 0;
+                $(".activity-forecast-content").each(function () {
+
+                    var sectionHight = $(this).height();
+                    if (higestCaption < sectionHight) {
+                        higestCaption = sectionHight;
+                    }
+                });
+                //将所有activity-forecast-content的div高度赋值为最高高度
+                $(".activity-forecast-content").each(function () {
+                    var padding = 20;
+                    $(this).css({ 'height': higestCaption + padding });
+
+
+                });
+
+        </script>
+
+
 
         <div class="row">
             <h3 class="customer-h3">
@@ -510,12 +607,12 @@
                                     </div>
                                 </div>
                             </a>
-                            <div class="service-information-caption">
+                            <div class="service-information-caption wonderful-activity-content">
                                 <h4 class="customer-h4">
                                     @wonderfulActivityArticles[i].Title
                                 </h4>
                                 <p class="customer-content-sm">
-                                    @wonderfulActivityArticles[i].SubTitle 
+                                    @wonderfulActivityArticles[i].SubTitle
                                 </p>
                             </div>
                            
@@ -537,9 +634,9 @@
         </div>
         <script>
              
-            //找出所有service-information-caption中div最高的那个高度
+            //找出所有wonderful-activity-content中div最高的那个高度
             var higestCaption = 0;
-            $(".service-information-caption").each(function () {
+            $(".wonderful-activity-content").each(function () {
                 
                 var sectionHight = $(this).height();
                 if(higestCaption < sectionHight)
@@ -547,8 +644,8 @@
                     higestCaption = sectionHight;
                 }
             });
-            //将所有service-information-caption的div高度赋值为最高高度
-            $(".service-information-caption").each(function () {
+            //将所有wonderful-activity-content的div高度赋值为最高高度
+            $(".wonderful-activity-content").each(function () {
                 var padding = 20;
                 $(this).css({ 'height': higestCaption + padding });
 

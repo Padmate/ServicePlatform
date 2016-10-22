@@ -27,6 +27,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
             B_Article _bArticle = new B_Article();
             B_Image _bImage = new B_Image();
+            B_Module bModule = new B_Module();
 
             List<M_Article> activityForecastArticles = _bArticle.GetFirstThreeActivityForecast();
             List<M_Article> wonderfulActivityArticles = _bArticle.GetFirstThreeWonderfulActivity();
@@ -35,6 +36,11 @@ namespace Padmate.ServicePlatform.Web.Controllers
             ViewData["activityForecastArticles"] = activityForecastArticles;
             ViewData["wonderfulActivityArticles"] = wonderfulActivityArticles;
             ViewData["informationArticles"] = informationArticles;
+
+            //服务报价
+            List<M_Module> servicePrices = bModule.GetModuleByType(Common.ModuleType_ServicePrice) ;
+            ViewData["servicePrices"] = servicePrices;
+
 
             //首页图片
             List<M_Image> homebgImages = _bImage.GetHomeBGImages();

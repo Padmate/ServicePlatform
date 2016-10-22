@@ -217,6 +217,7 @@
     <Compile Include="Controllers\Infra\ContactController.cs" />
     <Compile Include="Controllers\Infra\ImageController.cs" />
     <Compile Include="Controllers\Infra\MailController.cs" />
+    <Compile Include="Controllers\Infra\ModuleController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectApply\IntelInnovationProjectApplyController.cs" />
     <Compile Include="Controllers\Service\ProductController.cs" />
@@ -1146,6 +1147,11 @@
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\AuditDetail.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectApply\Tip.cshtml" />
     <Content Include="Areas\User\Views\User\Detail.cshtml" />
+    <Content Include="Areas\Infra\Views\Module\Edit.cshtml" />
+    <Content Include="Areas\Infra\Views\Module\Add.cshtml" />
+    <Content Include="Areas\Infra\Views\Module\Detail.cshtml" />
+    <Content Include="Areas\Infra\Views\Module\ShowDetail.cshtml" />
+    <Content Include="Areas\Infra\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />
@@ -1266,6 +1272,7 @@
     <Content Include="Views\Manage\RoleManage.cshtml" />
     <Content Include="Views\Manage\IntelInnovationProjectApply.cshtml" />
     <Content Include="Views\Account\RegisterNew.cshtml" />
+    <Content Include="Views\Manage\Module.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
