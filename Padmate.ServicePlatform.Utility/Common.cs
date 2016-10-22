@@ -77,9 +77,9 @@ namespace Padmate.ServicePlatform.Utility
         public const string UserType_Enterprise = "enterprise";
 
         public static Dictionary<string, string> Dic_UserTypes = new Dictionary<string, string>(){
-            {UserType_Personal,"个人"},    
-            {UserType_Team,"团队"},
-            {UserType_Enterprise,"企业"}
+            {UserType_Team,"团队"},            
+            {UserType_Enterprise,"企业"},
+            {UserType_Personal,"个人"} 
         };
         #endregion
         #region 审核状态

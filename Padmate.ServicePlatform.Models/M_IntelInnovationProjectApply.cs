@@ -70,15 +70,15 @@ namespace Padmate.ServicePlatform.Models
         /// <summary>
         /// 网址
         /// </summary>
-        [OptionalRequired(ErrorMessage = "网址不能为空")]
+        //[OptionalRequired(ErrorMessage = "网址不能为空")]
         [MaxLength(2000, ErrorMessage = "网址不能超过2000个字符")]
-        [RegularExpression(@"(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?", ErrorMessage = "网址格式不正确，正确格式如：http://www.domain.com ")]
+        //[RegularExpression(@"(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?", ErrorMessage = "网址格式不正确，正确格式如：http://www.domain.com ")]
         public string Website { get; set; }
 
         /// <summary>
         /// 微信公众号
         /// </summary>
-        [OptionalRequired(ErrorMessage = "微信公众号不能为空")]
+        //[OptionalRequired(ErrorMessage = "微信公众号不能为空")]
         [MaxLength(100, ErrorMessage = "微信公众号不能超过100个字符")] 
         public string WebChatNumber { get; set; }
 

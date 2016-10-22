@@ -164,7 +164,7 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
             Message message = new Message();
@@ -180,8 +180,14 @@ namespace Padmate.ServicePlatform.Web.Controllers
 
                 //此处要返回text/html类型的值
                 //如果返回application/json类型的值可能会导致浏览器弹出下载提示框
-                return Content(serialize.Serialize(message));
-               
+                //return Content(serialize.Serialize(message));
+                //return new ContentResult
+                //{
+                //    ContentType = "text/html",
+                //    Content = JsonHandler.ToJson(message),
+                //    ContentEncoding = System.Text.Encoding.UTF8
+                //}; 
+                return Json(message);
 
             }
             var user = new ApplicationUser { UserName = model.UserName, UserType = model.UserType, Email = model.EmailAddress };
@@ -202,8 +208,15 @@ namespace Padmate.ServicePlatform.Web.Controllers
                 }
                 message.Content = error;
             }
+            return Json(message);
 
-            return Content(serialize.Serialize(message));
+            //return new ContentResult
+            //{
+            //    ContentType = "text/html",
+            //    Content = JsonHandler.ToJson(message),
+            //    ContentEncoding = System.Text.Encoding.UTF8
+            //}; 
+            //return Content(serialize.Serialize(message));
            
         }
 

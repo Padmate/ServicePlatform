@@ -1,5 +1,6 @@
 ﻿@using Padmate.ServicePlatform.Models;
 @using Padmate.ServicePlatform.Utility;
+@using System.Configuration;
 @{
     M_User user = (M_User)ViewData["UserInfo"];
     ViewBag.Title = "用户信息";
@@ -10,7 +11,8 @@
     {
         tipMsg += "用户注册成功，请尽快完善用户资料。";
     }
-    
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    string returnUrl = string.Format("/manage/userinfo{0}", urlRewriteExtension);
     
 }
 <style>
@@ -222,6 +224,8 @@
                         layer.alert("用户信息修改成功", {
                             skin: 'layui-layer-molv' //样式类名
                             , closeBtn: 0
+                        }, function () {
+                            window.location.href = '@returnUrl';
                         });
                     }
 

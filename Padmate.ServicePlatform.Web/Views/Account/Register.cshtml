@@ -73,17 +73,14 @@
     <div class="container" style="padding-bottom:100px;">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-md-offset-3">
-                <form class="form-horizontal" id="form-register" action="/Account/Register" method="post" role="form" 
-                      enctype="application/x-www-form-urlencoded">
-                    @Html.AntiForgeryToken()
+                <div class="form-horizontal">
 
-                    
                     <div class="form-group">
                         <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                             <label class="customer-content-sm">用户名：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="UserName" placeholder="包含大小写字母及数字" type="text"
+                            <input class="input-large-full data-UserName" name="UserName" placeholder="包含大小写字母及数字" type="text"
                                    required oninvalid="setCustomValidity('请输入用户名')" oninput="setCustomValidity('')" />
                         </div>
                     </div>
@@ -92,8 +89,8 @@
                             <label class="customer-content-sm">密码：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="Password" placeholder="需包含大小写字母和数字，无特殊字符，长度在8-15之间" type="password"
-                                   required oninvalid="setCustomValidity('请输入密码')" oninput="setCustomValidity('')"/>
+                            <input class="input-large-full data-Password" name="Password" placeholder="密码必须为6-15位字母和数字组成" type="password"
+                                   required oninvalid="setCustomValidity('请输入密码')" oninput="setCustomValidity('')" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -101,7 +98,7 @@
                             <label class="customer-content-sm">确认密码：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="ConfirmPassword" placeholder="再次确认密码" type="password"
+                            <input class="input-large-full data-ConfirmPassword" name="ConfirmPassword" placeholder="再次确认密码" type="password"
                                    required oninvalid="setCustomValidity('请再次输入密码')" oninput="setCustomValidity('')" />
                         </div>
                     </div>
@@ -110,7 +107,7 @@
                             <label class="customer-content-sm">邮箱：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <input class="input-large-full" name="EmailAddress" placeholder="邮箱" type="email"
+                            <input class="input-large-full data-EmailAddress" name="EmailAddress" placeholder="邮箱" type="email"
                                    required oninvalid="setCustomValidity('请输入邮箱')" oninput="setCustomValidity('')"
                                    />
                         </div>
@@ -120,7 +117,7 @@
                             <label class="customer-content-sm">用户类型：</label>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9">
-                            <select name="UserType" id="UserType" class="select-large-full">
+                            <select name="UserType" id="UserType" class="select-large-full data-UserType">
                                 @foreach (var key in Common.Dic_UserTypes.Keys)
                                 {
                                     <option value="@key">@Common.Dic_UserTypes[key]</option>
@@ -147,7 +144,7 @@
                         </div>
                     </div>
 
-                </form>
+                </div>
             </div>
         </div>
 
@@ -160,15 +157,6 @@
     var userId = "";
     $(function () {
 
-        var options = {
-            type: "POST",
-            url: "/Account/Register",
-            dataType: "json",
-            beforeSubmit: showRequest,
-            success: showResponse
-        };
-        $('#form-register').ajaxForm(options);
-
         if (!WebUploader.Uploader.support()) {
             alert('当前页面一些功能不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
             throw new Error('function does not support the browser you are using.');
@@ -178,11 +166,86 @@
 
         SelectUserType();
 
-        
+        $(".btn-register").click(function () {
+            Register();
+        });
+
 
     });
+    
+    var mask;
+    function Register()
+    {
+        var obj = {
+            UserName: "",
+            Password: "",
+            ConfirmPassword: "",
+            EmailAddress: "",
+            UserType:""
+        };
 
-    function showRequest(formData, jqForm, options) {
+        obj = $.GetBindData(obj);
+
+        //提交前校验
+        var initedFiles = fileUploader.getFiles("inited"); //初始状态的文件
+
+        if ($("#UserType").val() == '@Common.UserType_Enterprise' && initedFiles.length == 0) {
+            layer.alert("请上传营业执照", {
+                skin: 'layui-layer-molv' //样式类名
+                     , closeBtn: 0
+            });
+            return false;
+        }
+
+        mask = layer.load(0,  //0代表加载的风格，支持0-2
+        {
+            shade: [0.5, '#fff'] //0.1透明度的白色背景
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/Account/Register",
+            dataType: "json",
+            data: obj,
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success) {
+                    userId = message.ReturnStrId;
+
+                    //上传文件
+                    var files = fileUploader.getFiles("inited");//初始状态
+                    if (files.length > 0) {
+                        //上传附件
+                        UploadFiles();
+
+
+                    } else {//如果当前没有文件上传
+
+                        layer.close(mask);
+                        layer.alert("注册成功", {
+                            skin: 'layui-layer-molv' //样式类名
+                                         , closeBtn: 0
+                        }, function () {
+                            //跳转
+                            window.location.href = '@returnUrl';
+                        });
+                    }
+
+
+                } else {
+                    layer.close(mask);
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                             , closeBtn: 0
+                    });
+                }
+
+            }
+        });
+    }
+
+    function Validate() {
         //提交前校验
         var initedFiles = fileUploader.getFiles("inited"); //初始状态的文件
 
@@ -195,36 +258,7 @@
         }
     }
 
-    //
-    function showResponse(message) {
-        if (message.Success) {
-            userId = message.ReturnStrId;
 
-            //上传文件
-            var files = fileUploader.getFiles("inited");//初始状态
-            if (files.length > 0) {
-                //上传附件
-                UploadFiles();
-
-
-            } else {//如果当前没有文件上传
-                layer.alert("注册成功", {
-                    skin: 'layui-layer-molv' //样式类名
-                                 , closeBtn: 0
-                }, function () {
-                    //跳转
-                    window.location.href = '@returnUrl';
-                });
-            }
-
-
-        } else {
-            layer.alert(message.Content, {
-                skin: 'layui-layer-molv' //样式类名
-                     , closeBtn: 0
-            });
-        }
-    }
 
     function SelectUserType() {
         $("#UserType").click(function () {
@@ -312,7 +346,7 @@
         fileUploader.on('error', function (handler) {
 
             //隐藏遮罩
-            $("body").hideLoading();
+            layer.close(mask);
             if (handler == "Q_TYPE_DENIED") {
                 alert("只允许上传后缀为：gif,jpg,jpeg,bmp,png的图片");
             }
@@ -374,7 +408,7 @@
 
         fileUploader.on('uploadFinished', function () {
             //无论有没有要上传的文件都会进入
-            $("body").hideLoading();
+            layer.close(mask);
 
 
         });

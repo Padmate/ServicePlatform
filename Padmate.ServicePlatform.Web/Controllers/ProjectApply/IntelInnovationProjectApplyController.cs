@@ -449,7 +449,18 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                 message.Content = "营业执照注册号不能为空";
                 return message;
             }
-
+            if (usertype == Common.UserType_Enterprise && string.IsNullOrEmpty(model.Website))
+            {
+                message.Success = false;
+                message.Content = "网址不能为空";
+                return message;
+            }
+            if (usertype == Common.UserType_Enterprise && string.IsNullOrEmpty(model.WebChatNumber))
+            {
+                message.Success = false;
+                message.Content = "微信公众号不能为空";
+                return message;
+            }
 
             return message;
         }

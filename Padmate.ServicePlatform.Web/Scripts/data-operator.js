@@ -8,7 +8,7 @@ jQuery.GetBindData = function (obj) {
         //判断是否存在jquery对象
         if (domObj.length > 0) {
             var tagName = domObj[0].tagName.toLowerCase();
-            if (tagName == "input" || tagName =="textarea") {
+            if (tagName == "input" || tagName =="textarea" || tagName == "select") {
                 obj[name] = domObj.val();
             }
         }
