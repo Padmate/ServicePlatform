@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+    var user = (M_User)ViewData["user"];
+    var roles = (List<M_Role>)ViewData["roles"];
+
+    var businessAttachment = (List<M_UserAttachment>)ViewData["businessAttachment"];
+    
+    
+}
+@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+
+
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div>
+
+    <h3 class="customer-h3 text-center">详 细</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 text-right">
+                <label class="customer-content-sm">用户名称：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <label class="customer-content-sm">@user.UserName</label>
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 text-right">
+                <label class="customer-content-sm">用户类型：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                @{
+                    var userType = !string.IsNullOrEmpty(user.UserType) ? Common.Dic_UserTypes[@user.UserType] : string.Empty;
+                }
+                <label class="customer-content-sm">@userType</label>
+
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 text-right">
+                <label class="customer-content-sm">邮 箱：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <label class="customer-content-sm">@user.Email</label>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 text-right">
+                <label class="customer-content-sm">联系电话：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <label class="customer-content-sm">@user.PhoneNumber</label>
+
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(user.UserType) && user.UserType == Common.UserType_Enterprise)
+        {
+            <div class="form-group">
+                <div class="col-sm-4 col-md-3 text-right">
+                    <label class="customer-content-sm">营业执照：</label>
+                </div>
+                <div class="col-sm-8 col-md-8">
+                    @if (businessAttachment.Count() >0)
+                    {
+                        <img class="img-responsive" src="@businessAttachment[0].VirtualPath"/>
+                    }
+                    else
+                    {
+                        <label class="customer-content-sm">无营业执照</label>
+
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+</div>
+
+
+<script>
+
+
+    $(function () {
+    })
+
+</script>

@@ -10,32 +10,32 @@
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
 </div>
-<div class="container">
+<div >
 
     <h3 class="customer-h3 text-center">新 增</h3>
     <hr />
     <div class="form-horizontal">
         <div class="form-group">
-            <div class="col-md-2 control-label">
+            <div class="col-sm-4 col-md-3 control-label">
                 <label class="customer-content-sm">用户名称：</label>
             </div>
-            <div class="col-md-10">
-                <input class="inputS" id="tbUserName" placeholder="用户名称" />
+            <div class="col-sm-8 col-md-8">
+                <input class="input-large-full" id="tbUserName" placeholder="用户名称" />
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-2 text-right">
+            <div class="col-sm-4 col-md-3 text-right">
                 <label class="customer-content-sm">密 码：</label>
             </div>
-            <div class="col-md-10">
+            <div class="col-sm-8 col-md-8">
                 <label class="customer-content-sm">默认密码为：123456</label>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-2 text-right">
+            <div class="col-sm-4 col-md-3 text-right">
                 <label class="customer-content-sm">所属角色：</label>
             </div>
-            <div class="col-md-10">
+            <div class="col-sm-8 col-md-8">
                 @{
                     foreach (var role in roles)
                     {
@@ -48,11 +48,11 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-2 control-label">
+            <div class="col-sm-4 col-md-3 control-label">
                 <label class="customer-content-sm">用户类型：</label>
             </div>
-            <div class="col-md-10">
-                <select class="select-large" id="selUserType">
+            <div class="col-sm-8 col-md-8">
+                <select class="select-large-full" id="selUserType">
                     @foreach(var key in Common.Dic_UserTypes.Keys)
                     {
                         <option value="@key">@Common.Dic_UserTypes[key]</option>
@@ -61,19 +61,19 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-2 control-label">
+            <div class="col-sm-4 col-md-3 control-label">
                 <label class="customer-content-sm">邮 箱：</label>
             </div>
-            <div class="col-md-10">
-                <input class="inputS" id="tbEmail" placeholder="邮 箱" />
+            <div class="col-sm-8 col-md-8">
+                <input class="input-large-full" id="tbEmail" placeholder="邮 箱" />
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-2 control-label">
+            <div class="col-sm-4 col-md-3 control-label">
                 <label class="customer-content-sm">联系电话：</label>
             </div>
-            <div class="col-md-10">
-                <input class="inputS" id="tbPhoneNumber" placeholder="联系电话" />
+            <div class="col-sm-8 col-md-8">
+                <input class="input-large-full" id="tbPhoneNumber" placeholder="联系电话" />
             </div>
         </div>
 

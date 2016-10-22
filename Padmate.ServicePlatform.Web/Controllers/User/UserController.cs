@@ -44,22 +44,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
             return Json(user);
         }
 
-        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
-        public ActionResult Detail(string id)
-        {
-            B_User bUser = new B_User();
-
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new Exception("找不到id为空的数据信息");
-            }
-            var user = bUser.GetUserById(id); ;
-
-            ViewData["user"] = user;
-
-            return View();
-        }
-
+        
         [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Add()
         {
@@ -106,6 +91,37 @@ namespace Padmate.ServicePlatform.Web.Controllers.User
             B_User bUser = new B_User();
             var user = bUser.GetUserById(userId);
             ViewData["user"] = user;
+
+            //找出所有角色
+            B_Role bRole = new B_Role();
+            var roles = bRole.GetAllData();
+            ViewData["roles"] = roles;
+
+
+            return View();
+        }
+
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
+        public ActionResult Detail(string id)
+        {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new Exception("找不到id为空的数据信息");
+            }
+           
+
+            B_User bUser = new B_User();
+            var user = bUser.GetUserById(id);
+            ViewData["user"] = user;
+
+            //营业执照
+            B_UserAttachment bAttachment = new B_UserAttachment();
+            M_UserAttachment model = new M_UserAttachment();
+            model.UserId = user.Id;
+            model.Type = Common.UserAttachment_BusinessLicense;
+            var businessAttachment = bAttachment.GetUserAttachmentByMulitCondition(model);
+            ViewData["businessAttachment"] = businessAttachment;
 
             //找出所有角色
             B_Role bRole = new B_Role();

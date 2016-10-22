@@ -27,13 +27,16 @@
 
                 <div id="toolbar">
                     <button id="btnAdd" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-plus"></i>Add
+                        <i class="glyphicon glyphicon-plus"></i>新增
                     </button>
                     <button id="btnEdit" class="btn btn-success">
-                        <i class="glyphicon glyphicon-plus"></i>Edit
+                        <i class="glyphicon glyphicon-plus"></i>修改
                     </button>
                     <button id="btnDelete" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-remove"></i> Delete
+                        <i class="glyphicon glyphicon-remove"></i> 删除
+                    </button>
+                    <button id="btnDetail" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>详细
                     </button>
                 </div>
                 <table id="table"></table>
@@ -63,6 +66,17 @@
     <div class="modal-dialog mediu-modal">
         <div class="modal-content mediu-modal-content">
             <div id="divEditContainer"></div>
+        </div>
+    </div>
+
+</div>
+
+<!--#region详细-->
+<div class="curd-model modal fade" id="userdetail" user="dialog"
+     data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog mediu-modal">
+        <div class="modal-content mediu-modal-content">
+            <div id="divDetailContainer"></div>
         </div>
     </div>
 
@@ -98,7 +112,7 @@
             clickToSelect: true,     //单击行选中数据
             queryParams: ConstructQueryParams,
             //queryParamsType: "limit",
-            locale: 'en-US',
+            locale: 'zh-CN',
             columns: [{
                 checkbox: true
             },
@@ -185,6 +199,16 @@
             // 关闭事件
             $("#divEditContainer").html("");
 
+        });
+        
+        $('#userdetail').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#userdetail').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divDetailContainer").html("");
+
         })
     }
 
@@ -194,6 +218,11 @@
     }
     function CloseEditScreen() {
         $('#useredit').modal('hide');
+
+    }
+
+    function CloseDetailScreen() {
+        $('#userdetail').modal('hide');
 
     }
 
@@ -289,6 +318,33 @@
 
                 }
             });
+        });
+
+        //详细
+        $("#btnDetail").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+
+            var id = selections[0].Id;
+            $('#userdetail').modal('show');
+            $("#divDetailContainer").load("/User/User/Detail?id=" + id);
+
         });
     }
 
