@@ -196,7 +196,7 @@
             server: '/Service/Project/ChunkedUploadAttachment',
             duplicate: true, //可重复上传同一文件
             pick: '#uploadFiles',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
-            compress: false, //图片不压缩
+            compress: false, //文件不压缩
             multiple: false,
             //fileSingleSizeLimit: 200 * 1024 * 1024, // 单个文件最大不能超过200 M
             chunked: true,//开始分片上传
@@ -274,7 +274,7 @@
             }
             if (handler == "F_EXCEED_SIZE") {
 
-                layer.alert("图片大小不能超过200M", {
+                layer.alert("文件大小不能超过200M", {
                     skin: 'layui-layer-molv' //样式类名
                        , closeBtn: 0
                 });
@@ -302,7 +302,7 @@
                 };
 
                 $.post('/Service/Project/MergeFile', obj, function (data) {
-                    //上传成功，则重新加载图片
+                    //上传成功，则重新加载文件
                     RefreshAttachmentTable();
                 });
 

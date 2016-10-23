@@ -239,7 +239,10 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
-                _dModule.BatchDelete(ids);
+                foreach(var id in ids)
+                {
+                    this.DeleteModule(id);
+                }
 
             }
             catch (Exception e)

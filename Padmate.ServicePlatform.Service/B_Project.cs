@@ -222,6 +222,12 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
+                B_Image bImage = new B_Image();
+                //删除图标
+                var project = _dProject.GetProjectById(id);
+                if (project.ImageId != null)
+                    bImage.DeleteImage(System.Convert.ToInt32(project.ImageId));
+
                 _dProject.DeleteProject(id);
 
             }
@@ -242,7 +248,10 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
-                _dProject.BatchDeleteProject(ids);
+                foreach(var id in ids)
+                {
+                    DeleteById(id);
+                }
 
             }
             catch (Exception e)

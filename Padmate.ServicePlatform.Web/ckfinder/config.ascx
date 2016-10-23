@@ -18,7 +18,8 @@
 		// user logs on your system.
 
         var user = HttpContext.Current.User;
-        if (user.Identity.IsAuthenticated && user.IsInRole(SystemRole.Admin))
+        if (user.Identity.IsAuthenticated && 
+            (user.IsInRole(SystemRole.BackstageAdmin) || user.IsInRole(SystemRole.SystemAdmin)))
         {
             return true;
         }
@@ -37,7 +38,7 @@
 		LicenseKey = "";
 
 		// The base URL used to reach files in CKFinder through the browser.
-		BaseUrl = "~/img/Upload/";
+		BaseUrl = "~/Upload/";
 
 		// The phisical directory in the server where the file will end up. If
 		// blank, CKFinder attempts to resolve BaseUrl.

@@ -429,6 +429,14 @@ header .carousel-indicators li:hover{background-color:gray;}
     padding:10px 0px;
 }
 
+.service-price-content{
+    background-color:#337ab7;
+}
+
+.service-price-content .customer-h4,.service-price-content span{
+    color:white;
+}
+
 .partner img{
     -webkit-filter: grayscale(1);/* Webkit */ 
     filter: grayscale(1);/* W3C */ 

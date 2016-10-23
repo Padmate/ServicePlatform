@@ -1068,6 +1068,7 @@
     <Content Include="Scripts\metisMenu\metisMenu.css" />
     <Content Include="Scripts\metisMenu\metisMenu.js" />
     <Content Include="Scripts\product-nav.js" />
+    <Content Include="Scripts\webuploader\customer-image-webuploader.js" />
     <Content Include="sitemap.xml" />
     <Content Include="System.config" />
     <Content Include="ckfinder\plugins\fileeditor\codemirror\LICENSE" />
