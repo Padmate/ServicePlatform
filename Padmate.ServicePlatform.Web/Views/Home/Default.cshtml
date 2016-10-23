@@ -413,79 +413,83 @@
     
 </section>
 <!--服务报价-->
-<section id="servicePrice">
-    <div class="container">
-        <div class="row">
-            @{
-                for (int i = 0; i < servicePrices.Count; i++)
+@if (servicePrices.Count > 0)
+{
+    <section id="servicePrice">
+        <div class="container">
+            <div class="row">
+                @{
+    for (int i = 0; i < servicePrices.Count; i++)
+    {
+        var contentHref = "/service/service-price/" + servicePrices[i].ModuleURLId + urlRewriteExtension;
+        var aHref = servicePrices[i].IsHref ? servicePrices[i].Href : contentHref;
+        var aTarget = servicePrices[i].IsHref ? "_blank" : "_self";
+        var imageVirtualPath = servicePrices[i].Image == null ? "../img/small_model.jpg"
+            : servicePrices[i].Image.VirtualPath;
+
+        <div class="col-is-6 col-sm-4 col-md-4">
+            <div class="service-box" style="margin-bottom:50px;">
+                @if (!servicePrices[i].IsHref && string.IsNullOrEmpty(servicePrices[i].Content))
                 {
-                    var contentHref = "/service/service-price/" + servicePrices[i].ModuleURLId + urlRewriteExtension;
-                    var aHref = servicePrices[i].IsHref ? servicePrices[i].Href : contentHref;
-                    var aTarget = servicePrices[i].IsHref ? "_blank" : "_self";
-                    var imageVirtualPath = servicePrices[i].Image == null ? "../img/small_model.jpg"
-                        : servicePrices[i].Image.VirtualPath;
-
-                    <div class="col-is-6 col-sm-4 col-md-4">
-                        <div class="service-box" style="margin-bottom:50px;">
-                            @if (!servicePrices[i].IsHref && string.IsNullOrEmpty(servicePrices[i].Content))
-                            {
-                                <img class="img-responsive" src="@imageVirtualPath" alt="@servicePrices[i].SubTitle" />
-                            }
-                            else
-                            {
-                                <a href="@aHref" class="information-box" target="@aTarget">
-                                    <img class="img-responsive" src="@imageVirtualPath" alt="@servicePrices[i].SubTitle" />
-                                    <div class="information-box-caption">
-                                        <div class="information-box-caption-content">
-                                            <!--div文字居中-->
-                                            <div class="divmiddle-box">
-                                                <div class="divmiddle-box-content">
-                                                    <p class="customer-content-md whitefont">@servicePrices[i].Title</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <img class="img-responsive" src="@imageVirtualPath" alt="@servicePrices[i].SubTitle" />
+                }
+                else
+                {
+                    <a href="@aHref" class="information-box" target="@aTarget">
+                        <img class="img-responsive" src="@imageVirtualPath" alt="@servicePrices[i].SubTitle" />
+                        <div class="information-box-caption">
+                            <div class="information-box-caption-content">
+                                <!--div文字居中-->
+                                <div class="divmiddle-box">
+                                    <div class="divmiddle-box-content">
+                                        <p class="customer-content-md whitefont">@servicePrices[i].Title</p>
                                     </div>
-                                </a>
-                            }
-                            
-                            <div class="service-information-caption service-price-content">
-                                <h4 class="customer-h4">
-                                    @servicePrices[i].SubTitle
-                                </h4>
-                                <span class="customer-content-sm">
-                                    @Html.Raw(servicePrices[i].Description)
-
-                                </span>
+                                </div>
                             </div>
-
                         </div>
-                    </div>
+                    </a>
                 }
-            }
+
+                <div class="service-information-caption service-price-content">
+                    <h4 class="customer-h4">
+                        @servicePrices[i].SubTitle
+                    </h4>
+                    <span class="customer-content-sm">
+                        @Html.Raw(servicePrices[i].Description)
+
+                    </span>
+                </div>
+
+            </div>
         </div>
-        <script>
-
-            //找出所有service-price-content中div最高的那个高度
-            var higestCaption = 0;
-            $(".service-price-content").each(function () {
-
-                var sectionHight = $(this).height();
-                if (higestCaption < sectionHight) {
-                    higestCaption = sectionHight;
+    }
                 }
-            });
-            //将所有service-price-content的div高度赋值为最高高度
-            $(".service-price-content").each(function () {
-                var padding = 20;
-                $(this).css({ 'height': higestCaption + padding });
+            </div>
+            <script>
+
+                //找出所有service-price-content中div最高的那个高度
+                var higestCaption = 0;
+                $(".service-price-content").each(function () {
+
+                    var sectionHight = $(this).height();
+                    if (higestCaption < sectionHight) {
+                        higestCaption = sectionHight;
+                    }
+                });
+                //将所有service-price-content的div高度赋值为最高高度
+                $(".service-price-content").each(function () {
+                    var padding = 20;
+                    $(this).css({ 'height': higestCaption + padding });
 
 
-            });
+                });
 
-        </script>
+            </script>
 
-    </div>
-</section>
+        </div>
+    </section>
+}
+
 
 <!--#endregion Service-->
 <!--Activity Section-->
