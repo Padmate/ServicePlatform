@@ -134,6 +134,16 @@ namespace Padmate.ServicePlatform.Utility
         public const string FieldScope_ARVR = "arvr";
 
         /// <summary>
+        /// 智能可穿戴
+        /// </summary>
+        public const string FieldScope_IntelligentWearable = "intelligentwearable";
+
+        /// <summary>
+        /// 人工智能及无人驾驶
+        /// </summary>
+        public const string FieldScope_AIAndUnmanned = "aiandunmanned";
+
+        /// <summary>
         /// 其它
         /// </summary>
         public const string FieldScope_Other = "other";
@@ -145,6 +155,8 @@ namespace Padmate.ServicePlatform.Utility
             {FieldScope_Internet,"物联网"},
             {FieldScope_BigData,"大数据"},
             {FieldScope_ARVR,"AR/VR"},
+            {FieldScope_IntelligentWearable,"智能可穿戴"},
+            {FieldScope_AIAndUnmanned,"人工智能及无人驾驶"},
             {FieldScope_Other,"其它"}
         };
         #endregion

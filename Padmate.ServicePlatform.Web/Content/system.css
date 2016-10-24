@@ -430,12 +430,12 @@ header .carousel-indicators li:hover{background-color:gray;}
 }
 
 .service-price-content{
-    background-color:#337ab7;
+    background-color:#ccc;
 }
 
-.service-price-content .customer-h4,.service-price-content span{
+/*.service-price-content .customer-h4,.service-price-content span{
     color:white;
-}
+}*/
 
 .partner img{
     -webkit-filter: grayscale(1);/* Webkit */ 
