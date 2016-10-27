@@ -45,6 +45,7 @@
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Scripts/loading/showLoading.css">
     <link href="~/Content/system.css" rel="stylesheet">
+    <link href="~/Content/lazyload.css" rel="stylesheet"/>
 
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
@@ -285,6 +286,8 @@
 
     <script src="~/Scripts/data-operator.js"></script>
 
+    <!--图片延迟加载-->
+    <script src="~/Scripts/lazyload/jquery.lazyload.min.js"></script>
     @RenderSection("scripts", required: false)
 
     <div class="content-body @bodyPaddingClass">
@@ -369,6 +372,14 @@
         </div>
     </footer>
 
-    
+    <script>
+
+        //image lazy load
+        //如果没有javascript，则加载noscript的内容，如果
+        //有javascript，则在执行下列show()方法
+        $("img.lazyimage").show().lazyload({
+            effect: "fadeIn"
+        });
+    </script>    
 </body>
 </html>
