@@ -345,7 +345,6 @@
                     if (message.Success) {
                         //投票成功，更新当前票数
                         $("#votecount" + projectid).html(message.ReturnId);
-                        $('#votecount'+projectid).addClass('animated bounce');
 
                     } else {
                         alert(message.Content);

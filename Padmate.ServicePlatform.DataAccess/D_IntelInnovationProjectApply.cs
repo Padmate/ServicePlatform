@@ -240,12 +240,13 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public List<IntelInnovationProjectApplySearch> GetVoteResults()
         {
-            var sql = @"select a.* from IntelInnovationProjectApplies a where VoteNo is not null
-                        order by a.TotalVotes desc, a.VoteNo asc";
+            var sql = @"select a.* from IntelInnovationProjectApplies a where VoteNo is not null";
 
             var query = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
 
-            var result = query
+            var votePrifix = VoteNoPrefix();
+            var result = query.OrderByDescending(a=>a.TotalVotes)
+            .ThenBy(a => System.Convert.ToInt32(a.VoteNo.Replace(votePrifix,string.Empty)))
             .ToList();
 
             return result.ToList();
