@@ -1289,6 +1289,7 @@
     <Content Include="Views\Account\RegisterNew.cshtml" />
     <Content Include="Views\Manage\Module.cshtml" />
     <Content Include="Views\Manage\IntelInnovationProjectVote.cshtml" />
+    <Content Include="VoteConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

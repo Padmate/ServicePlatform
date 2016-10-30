@@ -7,14 +7,30 @@
     //项目内容
     var project = (M_IntelInnovationProjectApply)ViewData["project"];
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
-
+    var isStartVote = (bool)ViewData["isStartVote"];
+    var isEndVote = (bool)ViewData["isEndVote"];
 }
 
 <link href="~/Content/vote.css" rel="stylesheet" />
 
-<section class="contact">
+<section class="contact vote-bg">
     <div class="container">
-       
+        <div class="row">
+            <div class="col-md-12 voteendtime">
+                @if (isEndVote)
+                {
+                    <div>
+                        <h2 class="customer-h2">
+                            投票已结束
+                            <a class="customer-content-md" href="#result">查看结果</a>
+                        </h2>
+
+                    </div>
+                }
+                
+
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
                 <div class="vote-area">
@@ -48,6 +64,11 @@
        
     </div>
 </section>
+@if (isEndVote)
+{
+    @Html.Partial("_Result")
+
+}
 
 <script>
     $(function () {

@@ -63,6 +63,23 @@
     max-width: none;
     border:none;
 }
+
+ .voteendtime{
+       text-align:center;
+    }
+    .voteendtime .customer-h2,.voteendtime .customer-content-lg{
+        color:yellow;
+    }
+    .voteendtime .customer-h2{
+        margin-bottom:10px;
+    }
+  .couunt-down{
+      margin-bottom:30px;
+  }
+   .voteendtime a{
+       color:yellow;
+       text-decoration:underline;
+   }
 /**
  * $keyframes \ votes 
  **/

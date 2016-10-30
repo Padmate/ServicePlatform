@@ -80,6 +80,29 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
             ViewData["project"] = project;
 
+
+            M_VoteConfig voteConfig = bProject.ReadVoteConfiguration();
+
+            var voteStartTime = System.Convert.ToDateTime(voteConfig.VoteStartTime);
+            var voteEndTime = System.Convert.ToDateTime(voteConfig.VoteEndTime);
+
+            //判断投票是否已经开始
+            var isStartVote = false;
+            if (DateTime.Compare(DateTime.Now, voteStartTime) > 0)
+            {
+                isStartVote = true;
+            }
+            ViewData["isStartVote"] = isStartVote;
+
+            //判断是否已经停止投票
+            var isEndVote = false;
+            if (DateTime.Compare(DateTime.Now, voteEndTime) > 0)
+            {
+                isEndVote = true;
+            }
+            ViewData["isEndVote"] = isEndVote;
+
+
             return View();
 
         }
