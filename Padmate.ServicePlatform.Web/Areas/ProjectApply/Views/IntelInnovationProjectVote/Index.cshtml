@@ -1,0 +1,473 @@
+﻿@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@using System.Configuration;
+
+@{
+    ViewBag.Title = "2016英特尔创新创业大赛投票";
+    //项目内容
+    var project = (M_IntelInnovationProjectApply)ViewData["project"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    M_VoteConfig voteconfig = (M_VoteConfig)ViewData["voteconfig"];
+
+    var isStartVote = (bool)ViewData["isStartVote"];    
+    var isEndVote = (bool)ViewData["isEndVote"];
+}
+
+<link href="~/Content/vote.css" rel="stylesheet" />
+
+<style>
+    .voteendtime{
+       text-align:center;
+    }
+    .voteendtime .customer-h2,.voteendtime .customer-content-lg{
+        color:yellow;
+    }
+    .voteendtime .customer-h2{
+        margin-bottom:10px;
+    }
+  .couunt-down{
+      margin-bottom:30px;
+  }
+</style>
+
+<section class="contact vote-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 voteendtime">
+                @if (isEndVote)
+                {
+                    <div>
+                        <h2 class="customer-h2"> 
+                          投票已结束
+                            <a class="customer-content-md" style="color:red;" href="#result">查看结果</a>
+                        </h2>
+                        
+                    </div>
+                }
+                else
+                {
+                    var tip = "投票开始时间";
+                    if(isStartVote)
+                    {
+                        tip = "投票截止时间";
+                    }
+                    <div>
+                        <h2 class="customer-h2"> @tip：@voteconfig.VoteEndTime </h2>
+                    </div>
+                    <div class="couunt-down customer-content-lg">
+                        <strong id="day_show">0天</strong>
+                        <strong id="hour_show">0时</strong>
+                        <strong id="minute_show">0分</strong>
+                        <strong id="second_show">0秒</strong>
+                    </div>
+                }
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-7">
+                <fieldset class="vote-search-section">
+                    <input type="text" class="form-control input-lg vote-search" placeholder="先输入编号或项目名称">
+                    <a href="javaScript:void(0)" class="btn-vote-search"><i class="fa fa-search fa-2x text-info"></i></a>
+
+                </fieldset>
+            </div>
+            
+        </div>
+        
+        <div class="row">
+            
+            @*<div class="col-is-6 col-sm-4 col-md-3">
+                <div class="vote-area">
+                    <a href="/intel-innovation-project-vote/XP10.html">
+
+                        <div class="vote-head" style="height: 180px;">
+                            <p class="customer-content-sm whitefont">团队：机器人团队</p>
+                             <p class="customer-content-sm">项目：这是一款使用纯js制作的炫酷Material Design风格按钮点击波特效。该...</p>
+                         </div>
+                    </a>
+                <div class="vote-content">
+                    <div class="col-xs-6 col-is-6 col-sm-12 col-md-12">
+                        <label class="customer-content-xs">XP10号</label>
+                    </div>
+                    <div class="col-xs-6 col-is-6 col-sm-6 col-md-6">
+                        <label class="customer-content-xs"><font id="votecount59">2</font>票</label>
+                    </div>
+                    <div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">
+                        <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote(59)">
+                            <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-xs">投票</strong>
+                        </a>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+                </div>
+            </div>*@
+            <div class="votebody" id="votebody"></div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <div class="votePageBar">
+                    <ul id="votePaginator"></ul>
+                </div>
+            </div>
+
+        </div>
+
+        
+        
+    </div>
+</section>
+@if (isEndVote)
+{
+    @Html.Partial("_Result")
+
+}
+
+<!--浏览器指纹识别-->
+<script src="~/Scripts/fingerprint2.min.js"></script>
+<!--倒计时-->
+<script src="~/Scripts/count-down.js"></script>
+
+<script>
+    var currentPage = '@Request["page"]';
+    var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
+    var votecounttime = '@ViewData["counttime"]';
+
+    $(function () {
+        timer(votecounttime);
+        //初始化分页数据
+        InitPaging();
+
+        //查询按钮事件
+        $(".btn-vote-search").click(function (e) {
+
+            InitPaging();
+        });
+       
+
+        document.onkeydown = function (e) {
+            var ev = document.all ? window.event : e;
+            if (ev.keyCode == 13) {
+                InitPaging();
+
+
+            }
+        }
+    })
+
+   
+
+    function InitPaging()
+    {
+        //获取总页数及当前页数据
+        var pageResult = GetPageData(_currentPage);
+        
+        //加载当前页数据
+        RenderPageData(pageResult.data);
+        ResizeVoteHead();
+        //重置分页条
+        ResetPaginator();
+        //超过一页才显示分页
+        if (pageResult.totalPages > 1) {
+            InitPaginator(pageResult.totalPages);
+        }
+
+    }
+    //重置分页条
+    function ResetPaginator()
+    {
+        $("#votePaginator").html("");
+
+    }
+    //配置分页属性
+    function InitPaginator(totalPages)
+    {
+        //重置分页条
+
+        var options = {
+            size: 'large',            //指定分页条的大小
+            bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
+            numberOfPages: 10,         //设置可选分页按钮个数，默认5
+            currentPage: _currentPage,          //当前页
+            totalPages: totalPages,         //总页数（从服务端获取）
+            pageUrl: function(type, page, current){
+                var url = '@string.Format("/intel-innovation-project-vote{0}", @urlRewriteExtension)';
+                if(page !=1)
+                {
+                    url = url+"?page="+page;
+                }
+
+                return url;
+
+            },
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "前一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                }
+            }
+        }
+
+        $("#votePaginator").bootstrapPaginator(options);
+    }
+    //获取分页数据
+    function GetPageData(currentPage)
+    {
+
+        var resultData = {
+            totalPages: 0,
+            data: null
+        };
+
+        var params = {
+            "Search": $(".vote-search").val(),
+            "page": currentPage
+        };
+
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetPageData",
+            data: params,
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+                resultData.totalPages = result.totalPages;
+                resultData.data = result.pageDatas;
+            }
+        });
+
+        return resultData;
+
+    }
+
+    //重新生成Body
+    function RenderPageData(projects)
+    {
+        var dynamicHtml = "";
+        if (projects.length > 0)
+        {
+            for (var i = 0; i < projects.length; i++) {
+                var voteHref = "/intel-innovation-project-vote/" + projects[i].VoteNo + '@urlRewriteExtension';
+                var projectName = projects[i].Name;
+
+                //获取字节长度
+                var projectNameCharNum = projects[i].Name.replace(/[^\x00-\xff]/g, "**").length;
+                if (projectNameCharNum > 50) {
+                    projectName = autoAddEllipsis(projectName, 50);
+                }
+
+                dynamicHtml += '<div class="col-is-6 col-sm-4 col-md-3">';
+                dynamicHtml += '<div class="vote-area">';
+
+                dynamicHtml += '<a href="' + voteHref + '">';
+                dynamicHtml += '<div class="vote-head">';
+                dynamicHtml += ' <p class="customer-content-sm whitefont">团队：' + projects[i].OrganizationName + '</p>';
+                dynamicHtml += ' <p class="customer-content-sm">项目：' + projectName + '</p>';
+
+                dynamicHtml += '</div>';
+                dynamicHtml += '</a>';
+
+                dynamicHtml += '<div class="vote-content">';
+                dynamicHtml += '<div class="col-xs-6 col-is-6 col-sm-12 col-md-12">';
+                dynamicHtml += '<label class="customer-content-xs">' + projects[i].VoteNo + '号</label>';
+                dynamicHtml += '</div>';
+                dynamicHtml += '<div class="col-xs-6 col-is-6 col-sm-6 col-md-6">';
+                dynamicHtml += '<label class="customer-content-xs">';
+                dynamicHtml += '<font id="votecount' + projects[i].Id + '">' + projects[i].TotalVotes + '</font>票';
+                dynamicHtml += '</label>';
+                dynamicHtml += '</div>';
+                dynamicHtml += '<div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">';
+                dynamicHtml += '<a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote(' + projects[i].Id + ')">';
+                dynamicHtml += '<i class="fa fa-thumbs-o-up"></i>';
+                dynamicHtml += '<strong class="customer-content-xs">投票</strong>';
+                dynamicHtml += '</a>';
+                dynamicHtml += '</div>';
+                dynamicHtml += '</div>';
+                dynamicHtml += '<div style="clear:both"></div>';
+                dynamicHtml += '</div>';
+
+
+                dynamicHtml += '</div>';
+
+            }
+        } else {
+            dynamicHtml += '<h3 class="customer-h3 whitefont">已找到0条记录</h3>';
+        }
+        
+        $("#votebody").html(dynamicHtml);
+
+    }
+
+    function ResizeVoteHead()
+    {
+        var higestCaption = 0;
+        $(".vote-head").each(function () {
+
+            var sectionHight = $(this).height();
+            if (higestCaption < sectionHight) {
+                higestCaption = sectionHight;
+            }
+        });
+        $(".vote-head").each(function () {
+            $(this).css({ 'height': higestCaption });
+
+
+        });
+    }
+
+    //投票
+    function vote(projectid)
+    {
+
+        new Fingerprint2().get(function (result, components) {
+
+            //获取浏览器指纹ID
+            var fingerprint = result;
+
+            //将GUID存储到浏览器的localStorage，作为浏览器的唯一ID（不同浏览器会有不同的ID，这会导致用户可更换浏览器进行投票）
+            //如果浏览器不支持localStorage,则返回空的id
+            var browserId = getBrowerUniqueID();
+            
+            var obj = {
+                ProjectId: projectid,
+                BrowserId: browserId,
+                FingerPrint:fingerprint
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/ProjectApply/IntelInnovationProjectVote/Vote",
+                data: obj,
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+                    if (message.Success) {
+                        //投票成功，更新当前票数
+                        $("#votecount" + projectid).html(message.ReturnId);
+                        $('#votecount'+projectid).addClass('animated bounce');
+
+                    } else {
+                        alert(message.Content);
+                    }
+
+                }
+            });
+        });
+
+        
+    }
+
+    ///获取浏览器唯一标识
+    function getBrowerUniqueID()
+    {
+        var browserId = "";
+        if (!(document.cookie || navigator.cookieEnabled)) {
+           // alert("开启浏览器缓存后才能进行投票。");
+           //未开启浏览器缓存
+            return browserId;
+        }
+
+        //如果浏览器不支持localStorage,则返回空的id
+        var deviceid = getDeviceID();
+        if (deviceid == null || deviceid == "") {
+            //如果获取不到ID，则生成一个新的ID
+            $.ajax({
+                type: "POST",
+                url: "/ProjectApply/IntelInnovationProjectVote/GenerateGUID",
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+                    if (message.Success) {
+
+                        deviceid = message.ReturnStrId;
+                        //将ID存储到localstorage或cookie
+                        setDeviceID(deviceid);
+                    }
+                }
+            });
+        }
+
+        return deviceid;
+
+
+    }
+
+    var deviceIdKey = "xiamenip_uniquedeviceid";
+    //获取设备ID
+    function getDeviceID()
+    {
+        var deviceid = "";
+
+        //如果浏览器支持localstorage，则从localstorage获取设备ID
+        if (window.localStorage) {
+            //获取设备ID
+            deviceid = window.localStorage.getItem(deviceIdKey); 
+                
+        } else {
+            //否则从cookie获取设备ID
+            deviceid = getCookie(deviceIdKey);
+        }
+        return deviceid;
+    }
+
+
+    function setDeviceID(deviceid)
+    {
+        //如果浏览器支持localstorage，则将DeviceID存入localstorage
+        //永久存储
+        //将GUID存储到浏览器的localStorage，作为浏览器的唯一ID（不同浏览器会有不同的ID，这会导致用户可更换浏览器进行投票）
+        if (window.localStorage) {
+            window.localStorage.setItem(deviceIdKey, deviceid);
+        }else{
+            //将DeviceId存入cookie,过期时间为1天
+            setCookie(deviceIdKey,deviceid,1);
+        }
+    }
+
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=")
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1
+                c_end = document.cookie.indexOf(";", c_start)
+                if (c_end == -1) c_end = document.cookie.length
+                return unescape(document.cookie.substring(c_start, c_end))
+            }
+        }
+        return ""
+    }
+
+    function setCookie(c_name, value, expiredays) {
+        var exdate = new Date()
+        exdate.setDate(exdate.getDate() + expiredays)
+        document.cookie = c_name + "=" + escape(value) +
+        ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+    }
+
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+                    "SymbianOS", "Windows Phone",
+                    "iPad", "iPod"];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+</script>

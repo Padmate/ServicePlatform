@@ -172,6 +172,15 @@ namespace Padmate.ServicePlatform.Models
         public string Keyword { get; set; }
 
         /// <summary>
+        /// 投票编号
+        /// </summary>
+        public string VoteNo { get; set; }
+
+        /// <summary>
+        /// 投票总票数
+        /// </summary>
+        public int TotalVotes { get; set; }
+        /// <summary>
         /// 附件列表
         /// </summary>
         public List<M_IntelInnovationProjectApplyAttachment> Attachments { get; set; }
@@ -334,6 +343,13 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         public DateTime ApplicationDate { get; set; }
 
+        public string VoteNo { get; set; }
 
+        public int TotalVotes { get; set; }
+
+        /// <summary>
+        /// 查询条件
+        /// </summary>
+        public string Search { get; set; }
     }
 }

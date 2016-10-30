@@ -5,13 +5,14 @@
     M_User user = (M_User)ViewData["UserInfo"];
     ViewBag.Title = "用户信息";
     var from = Request["from"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
     var tipMsg = string.Empty;
     if (from == "register")
     {
-        tipMsg += "用户注册成功，请尽快完善用户资料。";
+        var intelProjectUrl = "/intel-innovation-project-apply" + urlRewriteExtension;
+        tipMsg += "用户注册成功，请尽快完善用户资料。<br/><br/><a href='" + intelProjectUrl + "' style='color:red;text-decoration:underline;'>马上去报名 - 2016英特尔海峡创新创业大赛</a>";
     }
-    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     string returnUrl = string.Format("/manage/userinfo{0}", urlRewriteExtension);
     
 }
@@ -48,7 +49,7 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
-                                <label class="customer-content-sm tip">@tipMsg</label>
+                                <label class="customer-content-sm tip">@Html.Raw(tipMsg)</label>
                             </div>
                         </div>
                     </div>

@@ -26,6 +26,14 @@
     }
     <title>@title</title>
     <link rel="shortcut icon" href="~/img/logos/favicon.ico" />
+
+    <!--[if lt IE 8]>
+      <script>
+        window.location="../browser-detect.html";
+      </script>
+    <![endif]-->
+
+
     <!-- Bootstrap Core CSS -->
     <link href="~/Content/bootstrap.css" rel="stylesheet">
     <link href="~/Content/bootstrap-table.css" rel="stylesheet">
@@ -285,7 +293,8 @@
     <script src="~/Scripts/jdownload.js"></script>
 
     <script src="~/Scripts/data-operator.js"></script>
-
+    <!--字符串截取添加省略号-->
+    <script src="~/Scripts/add-ellipsis.js"></script>
     <!--图片延迟加载-->
     <script src="~/Scripts/lazyload/jquery.lazyload.min.js"></script>
     @RenderSection("scripts", required: false)

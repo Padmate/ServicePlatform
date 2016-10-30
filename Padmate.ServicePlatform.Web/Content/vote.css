@@ -1,0 +1,101 @@
+﻿
+.vote-bg{
+        background-image:url("../img/votebg.jpg");
+        background-repeat:no-repeat;
+        background-attachment:fixed;
+        background-size:cover;
+        min-height:600px;
+    }
+    .vote-area{
+        background-color: #fff;
+        border: solid 1px lightgray;
+        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        margin: 20px 0px;
+         -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .vote-head{
+        min-height:150px;
+        /*background-color:#00a7d0;*/
+        background:url("../img/votebg2.jpg") center;
+        padding:10px;
+        color:white;
+        font-weight:bold;
+       
+    }
+    .vote-content{
+        padding:10px 10px;
+        min-height:90px;
+    }
+
+    a.btn-vote{
+        margin:0;
+        padding:5px 10px;
+    }
+    .vote-btn{
+        text-align:right;
+    }
+.update-vote{
+  -webkit-animation: votes 0.5s 1;
+  animation: votes 0.5s 1;
+}
+
+  .vote-search-section {
+    background-color: #fff;
+    border: solid 1px lightgray;
+    -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+     -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+}
+.btn-vote-search {
+    width:12%;
+
+}
+.vote-search {
+    display: inline-block;
+    width: 87%;
+    max-width: none;
+    border:none;
+}
+/**
+ * $keyframes \ votes 
+ **/
+@keyframes votes {
+  0% {
+	    margin-top: 0px;
+    }
+    100% {
+	    margin-top: 6px; 
+    } 
+}
+@-webkit-keyframes votes {
+  0% {
+			margin-top: 0px;
+		}
+		100% {
+			margin-top: 6px; 
+		} 
+}
+
+@media(max-width:479px) {
+   .vote-btn{
+        text-align:center;
+    }
+   a.btn-vote{
+       padding:6px 30px;
+   }
+   .btn-vote .customer-content-xs{
+       font-size:18px;
+   }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+   
+
+}

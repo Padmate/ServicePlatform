@@ -298,6 +298,16 @@ namespace Padmate.ServicePlatform.Web.Controllers
         }
 
         [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
+        public ActionResult IntelInnovationProjectVote()
+        {
+            B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply();
+
+            M_VoteConfig voteConfig = bProject.ReadVoteConfiguration();
+            ViewData["voteconfig"] = voteConfig;
+            return View();
+        }
+
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Module()
         {
             return View();

@@ -1,0 +1,70 @@
+﻿
+<style>
+    #resulttable table td{
+        padding:10px 5px;
+    }
+
+</style>
+<section id="result">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="customer-h3">投票结果</h3>
+            </div>
+            <div class="col-md-12 customer-content-sm">
+                <div id="resulttable"></div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+<script>
+    $(function () {
+        RenderResult();
+    })
+
+    function GetVoteResults()
+    {
+        var voteResults;
+
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetVoteResult",
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+                voteResults = result;
+            }
+        });
+
+        return voteResults;
+    }
+
+    function RenderResult()
+    {
+        var voteResults = GetVoteResults();
+        var dynamicHtml = '';
+        if(voteResults.length >0)
+        {
+            dynamicHtml += '<table style="width:100%" border="1">';
+            dynamicHtml += '<colgroup>';
+            dynamicHtml += '<col width="10%" />';
+            dynamicHtml += '<col width="80%" />';
+            dynamicHtml += '<col width="20%" />';
+            dynamicHtml += '</colgroup>';
+            for (var i = 0; i < voteResults.length; i++) {
+                dynamicHtml += '<tr>';
+                dynamicHtml += '<td>' + voteResults[i].VoteNo + '号</td>';
+                dynamicHtml += '<td>'+voteResults[i].Name+'</td>';
+                dynamicHtml += '<td class="text-center">'+voteResults[i].TotalVotes+'票</td>';
+                dynamicHtml += '</tr>';
+            }
+            
+            dynamicHtml += '</table>';
+            
+        }
+        
+        $("#resulttable").html(dynamicHtml);
+    }
+</script>

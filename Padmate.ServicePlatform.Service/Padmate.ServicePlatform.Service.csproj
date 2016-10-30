@@ -54,6 +54,7 @@
     <Compile Include="B_Role.cs" />
     <Compile Include="B_User.cs" />
     <Compile Include="B_UserAttachment.cs" />
+    <Compile Include="B_Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

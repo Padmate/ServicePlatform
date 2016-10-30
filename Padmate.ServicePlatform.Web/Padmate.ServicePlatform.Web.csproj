@@ -220,6 +220,7 @@
     <Compile Include="Controllers\Infra\ModuleController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectApply\IntelInnovationProjectApplyController.cs" />
+    <Compile Include="Controllers\ProjectApply\IntelInnovationProjectVoteController.cs" />
     <Compile Include="Controllers\Service\ProductController.cs" />
     <Compile Include="Controllers\Service\ProjectController.cs" />
     <Compile Include="Controllers\Service\ServiceController.cs" />
@@ -767,6 +768,7 @@
     <Content Include="Content\system-IE8.css" />
     <Content Include="Content\system.css" />
     <Content Include="Content\tooltip.css" />
+    <Content Include="Content\vote.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -774,6 +776,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="browser-detect.html" />
     <Content Include="img\404-bg.png" />
     <Content Include="img\404.png" />
     <Content Include="img\aboutbg.jpg" />
@@ -1010,7 +1013,10 @@
     <Content Include="img\tip\Info.png" />
     <Content Include="img\tip\Warning.png" />
     <Content Include="img\tour-bg.png" />
+    <Content Include="img\votebg.jpg" />
+    <Content Include="img\votebg2.jpg" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\add-ellipsis.js" />
     <Content Include="Scripts\agency.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.min.js" />
@@ -1057,9 +1063,12 @@
     <Content Include="fonts\fontawesome.ttf" />
     <Content Include="fonts\fontawesome.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\count-down.js" />
     <Content Include="Scripts\CustomerMenu.js" />
     <Content Include="Scripts\data-operator.js" />
     <Content Include="Scripts\dateformathelp.js" />
+    <Content Include="Scripts\fingerprint2.min.js" />
+    <Content Include="Scripts\ietest.js" />
     <Content Include="Scripts\jdownload.js" />
     <Content Include="Scripts\jiathis\jiathis-share.css" />
     <Content Include="Scripts\jiathis\jiathis-share.js" />
@@ -1155,6 +1164,9 @@
     <Content Include="Areas\Infra\Views\Module\Detail.cshtml" />
     <Content Include="Areas\Infra\Views\Module\ShowDetail.cshtml" />
     <Content Include="Areas\Infra\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\Index.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\Detail.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\_Result.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />
@@ -1276,6 +1288,7 @@
     <Content Include="Views\Manage\IntelInnovationProjectApply.cshtml" />
     <Content Include="Views\Account\RegisterNew.cshtml" />
     <Content Include="Views\Manage\Module.cshtml" />
+    <Content Include="Views\Manage\IntelInnovationProjectVote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

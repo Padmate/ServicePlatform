@@ -43,6 +43,9 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public DbSet<Module> Modules { get; set; }
 
+        public DbSet<Vote> Votes { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -60,6 +63,7 @@ namespace Padmate.ServicePlatform.DataAccess
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyQueConfiguration());
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyAttachmentConfiguration());
             modelBuilder.Configurations.Add(new ModuleConfiguration());
+            modelBuilder.Configurations.Add(new VoteConfiguration());
 
         }
 

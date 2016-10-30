@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -124,7 +125,19 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public string Description { get; set; }
 
+        #region 投票
+        /// <summary>
+        /// 投票编号
+        /// </summary>
+        public string VoteNo { get; set; }
 
+        /// <summary>
+        /// 总票数
+        /// 默认为0
+        /// </summary>
+        [DefaultValue(0)]
+        public int TotalVotes { get; set; }
+        #endregion
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
@@ -290,7 +303,10 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         public DateTime ApplicationDate { get; set; }
 
+        public string VoteNo { get; set; }
+        public int TotalVotes { get; set; }
 
+        public string Search { get; set; }
     }
 
 }

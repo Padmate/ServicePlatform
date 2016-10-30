@@ -59,6 +59,7 @@
     <Compile Include="M_ProjectDownload.cs" />
     <Compile Include="M_Role.cs" />
     <Compile Include="M_UserAttachment.cs" />
+    <Compile Include="M_Vote.cs" />
     <Compile Include="OptionalRequiredAttribute.cs" />
     <Compile Include="PageResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

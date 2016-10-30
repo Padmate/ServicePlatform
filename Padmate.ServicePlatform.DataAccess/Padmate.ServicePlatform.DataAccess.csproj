@@ -70,6 +70,7 @@
     <Compile Include="DBConfiguration\ProjectDownloadConfiguration.cs" />
     <Compile Include="DBConfiguration\UserAttachmentConfiguration.cs" />
     <Compile Include="DBConfiguration\UserProfileConfiguration.cs" />
+    <Compile Include="DBConfiguration\VoteConfiguration.cs" />
     <Compile Include="D_Article.cs" />
     <Compile Include="D_Contact.cs" />
     <Compile Include="D_ContactScope.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="D_Role.cs" />
     <Compile Include="D_User.cs" />
     <Compile Include="D_UserAttachment.cs" />
+    <Compile Include="D_Vote.cs" />
     <Compile Include="Migrations\201609220721116_init.cs" />
     <Compile Include="Migrations\201609220721116_init.Designer.cs">
       <DependentUpon>201609220721116_init.cs</DependentUpon>
@@ -127,6 +129,30 @@
     <Compile Include="Migrations\201610221221292_AddModuleTable.cs" />
     <Compile Include="Migrations\201610221221292_AddModuleTable.Designer.cs">
       <DependentUpon>201610221221292_AddModuleTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610270336552_AddVoteComumnsToIntelProject.cs" />
+    <Compile Include="Migrations\201610270336552_AddVoteComumnsToIntelProject.Designer.cs">
+      <DependentUpon>201610270336552_AddVoteComumnsToIntelProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610270554096_UpdateVoteComumnsToIntelProjece.cs" />
+    <Compile Include="Migrations\201610270554096_UpdateVoteComumnsToIntelProjece.Designer.cs">
+      <DependentUpon>201610270554096_UpdateVoteComumnsToIntelProjece.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610270736368_UpdateVoteNoComumnsToIntelProjece.cs" />
+    <Compile Include="Migrations\201610270736368_UpdateVoteNoComumnsToIntelProjece.Designer.cs">
+      <DependentUpon>201610270736368_UpdateVoteNoComumnsToIntelProjece.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280549253_AddVoteTable.cs" />
+    <Compile Include="Migrations\201610280549253_AddVoteTable.Designer.cs">
+      <DependentUpon>201610280549253_AddVoteTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280638582_AddClientIPToVote.cs" />
+    <Compile Include="Migrations\201610280638582_AddClientIPToVote.Designer.cs">
+      <DependentUpon>201610280638582_AddClientIPToVote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280834507_AddFingerPrintToVote.cs" />
+    <Compile Include="Migrations\201610280834507_AddFingerPrintToVote.Designer.cs">
+      <DependentUpon>201610280834507_AddFingerPrintToVote.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -175,6 +201,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610221221292_AddModuleTable.resx">
       <DependentUpon>201610221221292_AddModuleTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610270336552_AddVoteComumnsToIntelProject.resx">
+      <DependentUpon>201610270336552_AddVoteComumnsToIntelProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610270554096_UpdateVoteComumnsToIntelProjece.resx">
+      <DependentUpon>201610270554096_UpdateVoteComumnsToIntelProjece.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610270736368_UpdateVoteNoComumnsToIntelProjece.resx">
+      <DependentUpon>201610270736368_UpdateVoteNoComumnsToIntelProjece.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280549253_AddVoteTable.resx">
+      <DependentUpon>201610280549253_AddVoteTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280638582_AddClientIPToVote.resx">
+      <DependentUpon>201610280638582_AddClientIPToVote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280834507_AddFingerPrintToVote.resx">
+      <DependentUpon>201610280834507_AddFingerPrintToVote.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -154,12 +154,28 @@
                     }
                 </a>
             </li>
+           
             <li>
-                <a class="menu-first" href="@string.Format("/manage/intel-innovation-project-apply{0}", urlRewriteExtension)">
-                    <i class="fa fa-compass"></i>
-                    英特尔大赛申请
-                    
+                <a data-toggle="collapse" data-parent="#accordion" class="menu-first" href="#intelprojectmanage">
+                    <i class="fa fa-random"></i>
+                    英特尔大赛
+                    <span class="fa fa-chevron-left"></span>
                 </a>
+                <ul id="intelprojectmanage" class="panel-collapse collapse menu-second">
+                    <li>
+                        <a href="@string.Format("/manage/intel-innovation-project-apply{0}", urlRewriteExtension)">
+                            <i class="fa fa-compass"></i>
+                            英特尔大赛审核
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@string.Format("/manage/intel-innovation-project-vote-setting{0}", urlRewriteExtension)">
+                            <i class="fa fa-cog"></i>
+                            投票参数设置
+                        </a>
+                    </li>
+                </ul>
+
             </li>
         </ul>
         

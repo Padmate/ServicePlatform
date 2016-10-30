@@ -37,6 +37,8 @@ namespace Padmate.ServicePlatform.DataAccess
             return result;
         }
 
+
+
         /// <summary>
         /// 获取审核分页数据
         /// </summary>
@@ -74,7 +76,6 @@ namespace Padmate.ServicePlatform.DataAccess
 
             if (!string.IsNullOrEmpty(projcet.AuditStatus))
                 query = query.Where(a => a.AuditStatus.Contains(projcet.AuditStatus));
-
             #endregion
 
             var result = query.OrderByDescending(a => a.ApplicationDate)
@@ -117,7 +118,6 @@ namespace Padmate.ServicePlatform.DataAccess
 
             if (!string.IsNullOrEmpty(projcet.AuditStatus))
                 query = query.Where(a => a.AuditStatus.Contains(projcet.AuditStatus));
-
             #endregion
 
             var result = query.Count();
@@ -141,6 +141,117 @@ namespace Padmate.ServicePlatform.DataAccess
             return result;
         }
 
+
+        public List<IntelInnovationProjectApplySearch> GetPageDataForVote(IntelInnovationProjectApplySearch projcet, int skip, int limit)
+        {
+            var sql = @"select app.*,
+                        que.Id as QueId,
+                        que.Auditor,
+                        que.AuditDate,
+                        que.AuditRemark,
+                        que.AuditStatus,
+                        que.Application,
+                        que.ApplicationDate
+                        from 
+                        --查找最新的队列
+                        (select IntelInnovationProjectApplyId,max(CreateDate) CreateDate
+                        from dbo.IntelInnovationProjectApplyQues group by IntelInnovationProjectApplyId) latestQue
+                        --左链接基础数据
+                        left join dbo.IntelInnovationProjectApplies app
+                        on app.Id = latestQue.IntelInnovationProjectApplyId
+                        --左链接que
+                        left join dbo.IntelInnovationProjectApplyQues que
+                        on que.CreateDate = latestQue.CreateDate
+						--过滤确认切投票编号不为空的数据
+						where VoteNo is not null and AuditStatus ='1'";
+
+            var querySql = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var query = querySql.Where(a => 1 == 1);
+            #region　条件过滤
+            if (!string.IsNullOrEmpty(projcet.Name))
+                query = query.Where(a => a.Name.Contains(projcet.Name));
+
+            if (projcet.VoteNo != null)
+                query = query.Where(a => a.VoteNo == projcet.VoteNo);
+            if(!string.IsNullOrEmpty(projcet.Search))
+            {
+                query = query.Where(a => a.VoteNo.ToLower().Contains(projcet.Search.ToLower()) 
+                    || a.Name.ToLower().Contains(projcet.Search.ToLower()));
+
+            }
+            #endregion
+
+            var votePrifix = VoteNoPrefix();
+            var result = query.OrderBy(a => System.Convert.ToInt32(a.VoteNo.Replace(votePrifix,string.Empty)))
+            .Skip(skip)
+            .Take(limit)
+            .ToList();
+
+            return result.ToList();
+        }
+
+        public int GetPageDataTotalCountForVote(IntelInnovationProjectApplySearch projcet)
+        {
+            var sql = @"select app.*,
+                        que.Id as QueId,
+                        que.Auditor,
+                        que.AuditDate,
+                        que.AuditRemark,
+                        que.AuditStatus,
+                        que.Application,
+                        que.ApplicationDate
+                        from 
+                        --查找最新的队列
+                        (select IntelInnovationProjectApplyId,max(CreateDate) CreateDate
+                        from dbo.IntelInnovationProjectApplyQues group by IntelInnovationProjectApplyId) latestQue
+                        --左链接基础数据
+                        left join dbo.IntelInnovationProjectApplies app
+                        on app.Id = latestQue.IntelInnovationProjectApplyId
+                        --左链接que
+                        left join dbo.IntelInnovationProjectApplyQues que
+                        on que.CreateDate = latestQue.CreateDate
+						--过滤确认切投票编号不为空的数据
+						where VoteNo is not null and AuditStatus ='1'";
+
+
+
+            var querySql = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var query = querySql.Where(qs => 1 == 1);
+            #region　条件过滤
+            if (!string.IsNullOrEmpty(projcet.Name))
+                query = query.Where(a => a.Name.Contains(projcet.Name));
+
+            if (projcet.VoteNo != null)
+                query = query.Where(a => a.VoteNo == projcet.VoteNo);
+
+            if (!string.IsNullOrEmpty(projcet.Search))
+            {
+                query = query.Where(a => a.VoteNo.ToLower().Contains(projcet.Search.ToLower())
+                    || a.Name.ToLower().Contains(projcet.Search.ToLower()));
+            }
+            #endregion
+
+            var result = query.Count();
+
+            return result;
+        }
+
+        public List<IntelInnovationProjectApplySearch> GetVoteResults()
+        {
+            var sql = @"select a.* from IntelInnovationProjectApplies a where VoteNo is not null
+                        order by a.TotalVotes desc, a.VoteNo asc";
+
+            var query = _dbContext.Database.SqlQuery<IntelInnovationProjectApplySearch>(sql);
+
+            var result = query
+            .ToList();
+
+            return result.ToList();
+        }
+
+
         /// <summary>
         /// 根据ID查找
         /// </summary>
@@ -151,6 +262,18 @@ namespace Padmate.ServicePlatform.DataAccess
             var projcet = _dbContext.IntelInnovationProjectApplies
                 .Include("Attachments")
                 .FirstOrDefault(a => a.Id == id);
+            return projcet;
+        }
+
+        /// <summary>
+        /// 根据VoteNo查找
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IntelInnovationProjectApply GetIntelInnovationProjectApplyVoteNo(string voteno)
+        {
+            var projcet = _dbContext.IntelInnovationProjectApplies
+                .FirstOrDefault(a => a.VoteNo == voteno);
             return projcet;
         }
 
@@ -216,6 +339,8 @@ namespace Padmate.ServicePlatform.DataAccess
             projcet.OrganizationDescription = model.OrganizationDescription;
             projcet.CoreTechnology = model.CoreTechnology;
             projcet.Keyword = model.Keyword;
+            projcet.VoteNo = model.VoteNo;
+            projcet.TotalVotes = model.TotalVotes;
 
 
             _dbContext.SaveChanges();
@@ -242,6 +367,71 @@ namespace Padmate.ServicePlatform.DataAccess
                 _dbContext.IntelInnovationProjectApplies.RemoveRange(contacts);
                 _dbContext.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// 投票编号前缀
+        /// </summary>
+        /// <returns></returns>
+        public string VoteNoPrefix()
+        {
+            return "XP";
+        }
+        
+        /// <summary>
+        /// 获取最大的编号数
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxVoteNo()
+        {
+            //编号前缀
+            var votePrefix = VoteNoPrefix();
+
+            var returnVoteNo = 0;
+            var sql = @"select max(votenum) as maxvoteno from
+                        (
+                            select convert(int,replace(a.voteno,'{0}','')) as votenum from IntelInnovationProjectApplies a
+
+                        )temp";
+            sql = string.Format(sql,votePrefix);
+            var maxVoteNo = _dbContext.Database.SqlQuery<int?>(sql).FirstOrDefault();
+            if (maxVoteNo == null)
+            {
+                
+                returnVoteNo = 0;
+            }
+            else
+            {
+                var prefix = VoteNoPrefix();
+                returnVoteNo = System.Convert.ToInt32(maxVoteNo);
+            }
+
+                
+            return returnVoteNo;
+        }
+
+        /// <summary>
+        /// 修改投票编号
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="voteNo"></param>
+        /// <returns></returns>
+        public int EditVoteNo(int id,string voteNo)
+        {
+            var projcet = _dbContext.IntelInnovationProjectApplies.FirstOrDefault(a => a.Id == id);
+
+            projcet.VoteNo = voteNo;
+            _dbContext.SaveChanges();
+            return projcet.Id;
+        }
+
+        public int EditTotalVotes(int id,int totalVotes)
+        {
+            var projcet = _dbContext.IntelInnovationProjectApplies.FirstOrDefault(a => a.Id == id);
+
+            projcet.TotalVotes = totalVotes;
+            _dbContext.SaveChanges();
+            return projcet.Id;
         }
     }
 }

@@ -1,0 +1,61 @@
+﻿@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@using System.Configuration;
+
+@{
+    ViewBag.Title = "2016英特尔创新创业大赛投票";
+    //项目内容
+    var project = (M_IntelInnovationProjectApply)ViewData["project"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+}
+
+<link href="~/Content/vote.css" rel="stylesheet" />
+
+<section class="contact">
+    <div class="container">
+       
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+                <div class="vote-area">
+
+                    <div class="vote-head" style="height: 180px;">
+                        <p class="customer-content-sm whitefont">团队：@project.OrganizationName</p>
+                        <p class="customer-content-sm">项目：@project.Name</p>
+                    </div>
+                    <div class="vote-content">
+                        <div class="col-xs-6 col-is-6 col-sm-12 col-md-12">
+                            <label class="customer-content-xs">@project.VoteNo 号</label>
+                        </div>
+                        <div class="col-xs-6 col-is-6 col-sm-6 col-md-6">
+                            <label class="customer-content-xs"><font id="votecount'@project.VoteNo'">@project.TotalVotes</font>票</label>
+                        </div>
+                        <div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">
+                            <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)">
+                                <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-xs">投票</strong>
+                            </a>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+
+
+                </div>
+
+
+        </div>
+
+       
+    </div>
+</section>
+
+<script>
+    $(function () {
+
+      
+        $('.btn-vote').clicl(function (event) {
+            
+
+        });
+    })
+</script>

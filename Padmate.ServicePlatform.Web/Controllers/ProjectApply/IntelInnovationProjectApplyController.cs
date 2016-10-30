@@ -404,9 +404,15 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
              var currentUser = this.GetCurrentUser();
             B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply(currentUser);
+
              //审核新增队列
             message = bProject.Audit(ProjectId,AuditStatus,AuditRemark);
-           
+            
+            //审核通过后更新投票编号，以便用户可以进行投票
+            if(message.Success && AuditStatus == Common.Audit_Success)
+            {
+                message = bProject.UpdateVoteNo(ProjectId);
+            }
            
             return Json(message);
         }

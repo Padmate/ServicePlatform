@@ -1,0 +1,106 @@
+﻿@using Padmate.ServicePlatform.Utility;
+@using Padmate.ServicePlatform.Models;
+@{
+    ViewBag.Title = "2016英特尔创新创业大赛海峡赛投票参数设置";
+    M_VoteConfig voteconfig = (M_VoteConfig)ViewData["voteconfig"];
+    var eachDayVoteTimes = string.IsNullOrEmpty(voteconfig.EachDayVoteTimes) ? string.Empty : voteconfig.EachDayVoteTimes;
+    var voteStartTime = string.IsNullOrEmpty(voteconfig.VoteStartTime) ? string.Empty : voteconfig.VoteStartTime;
+    var voteEndTime = string.IsNullOrEmpty(voteconfig.VoteEndTime) ? string.Empty : voteconfig.VoteEndTime;
+    
+    
+}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 col-is-4 col-sm-2 col-md-2 setting-left">
+                @Html.Partial("_SystemManageLeftMenu")
+            </div>
+            <div class="col-xs-8 col-is-8 col-sm-10 col-md-10">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">每天投票次数：</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-large-full" id="tbEachDayVoteTimes" placeholder="每天投票次数" value="@eachDayVoteTimes"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">投票起始时间：</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="tbVoteStartTime">
+                                <input class="form-control" size="16" type="text" value="@voteStartTime" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="tbVoteStartTime" name="VoteStartTime" value="@voteStartTime" /><br />
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">投票截止时间：</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="tbVoteEndTime">
+                                <input class="form-control" size="16" type="text" value="@voteEndTime" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="tbVoteEndTime" name="VoteEndTime" value="@voteEndTime" /><br />
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-success btn-lg btn-save">保存</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<script>
+    $(function () {
+        //时间控件
+        InitDatetimepicker(".form_datetime");
+        
+        $(".btn-save").click(function () {
+            Save();
+        });
+    });
+    function Save()
+    {
+        var obj = {
+            EachDayVoteTimes: $("#tbEachDayVoteTimes").val(),
+            VoteStartTime: $("#tbVoteStartTime").val(),
+            VoteEndTime: $("#tbVoteEndTime").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/SaveVoteConfig",
+            dataType: "json",
+            data: obj,
+            async: false,   //同步
+            success: function (message) {
+
+                layer.alert(message.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                });
+            }
+        });
+    }
+</script>

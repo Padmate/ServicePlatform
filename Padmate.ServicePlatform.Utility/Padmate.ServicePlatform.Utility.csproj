@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="FileUpload.cs" />
     <Compile Include="JsonHandler.cs" />
