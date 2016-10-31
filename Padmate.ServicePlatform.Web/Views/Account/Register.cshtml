@@ -233,7 +233,9 @@
 
 
     function SelectUserType() {
-        $("#UserType").click(function () {
+
+        $("#UserType").change(function () {
+
             var selectValue = $(this).val();
             if (selectValue == '@Common.UserType_Enterprise') {
                 $(".div-businesslicense").css("visibility", "visible");
