@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "2016英特尔创新创业大赛海峡赛投票参数设置";
     M_VoteConfig voteconfig = (M_VoteConfig)ViewData["voteconfig"];
+    var voteInterval = string.IsNullOrEmpty(voteconfig.VoteInterval) ? string.Empty : voteconfig.VoteInterval;    
     var eachDayVoteTimes = string.IsNullOrEmpty(voteconfig.EachDayVoteTimes) ? string.Empty : voteconfig.EachDayVoteTimes;
     var voteStartTime = string.IsNullOrEmpty(voteconfig.VoteStartTime) ? string.Empty : voteconfig.VoteStartTime;
     var voteEndTime = string.IsNullOrEmpty(voteconfig.VoteEndTime) ? string.Empty : voteconfig.VoteEndTime;
@@ -19,12 +20,25 @@
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-md-2 control-label">
-                            <label class="customer-content-sm">每天投票次数：</label>
+                            <label class="customer-content-sm">投票间隔（分钟）</label>
                         </div>
                         <div class="col-md-3">
-                            <input class="input-large-full" id="tbEachDayVoteTimes" placeholder="每天投票次数" value="@eachDayVoteTimes"/>
+                            <input class="input-large-full" id="tbVoteInterval" placeholder="投票间隔/分钟" value="@voteInterval"/>
                         </div>
+
+                       
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label class="customer-content-sm">投票次数</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-large-full" id="tbEachDayVoteTimes" placeholder="投票次数" value="@eachDayVoteTimes" />
+                            
+                        </div>
+
+                    </div>
+
                     <div class="form-group">
                         <div class="col-md-2 control-label">
                             <label class="customer-content-sm">投票起始时间：</label>
@@ -83,6 +97,7 @@
     function Save()
     {
         var obj = {
+            VoteInterval: $("#tbVoteInterval").val(),
             EachDayVoteTimes: $("#tbEachDayVoteTimes").val(),
             VoteStartTime: $("#tbVoteStartTime").val(),
             VoteEndTime: $("#tbVoteEndTime").val()

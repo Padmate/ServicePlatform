@@ -1167,6 +1167,7 @@
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\Index.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\Detail.cshtml" />
     <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\_Result.cshtml" />
+    <Content Include="Areas\ProjectApply\Views\IntelInnovationProjectVote\_VoteFun.cshtml" />
     <None Include="Properties\PublishProfiles\ServicePlatform.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvas-bg\css\component.css" />

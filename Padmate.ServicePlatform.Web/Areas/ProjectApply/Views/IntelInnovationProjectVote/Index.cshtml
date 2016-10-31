@@ -12,6 +12,8 @@
 
     var isStartVote = (bool)ViewData["isStartVote"];    
     var isEndVote = (bool)ViewData["isEndVote"];
+    
+    
 }
 
 <link href="~/Content/vote.css" rel="stylesheet" />
@@ -119,7 +121,6 @@
 <script src="~/Scripts/fingerprint2.min.js"></script>
 <!--倒计时-->
 <script src="~/Scripts/count-down.js"></script>
-
 <script>
     var currentPage = '@Request["page"]';
     var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
@@ -145,6 +146,7 @@
 
             }
         }
+
     })
 
    
@@ -316,146 +318,6 @@
         });
     }
 
-    //投票
-    function vote(projectid)
-    {
-
-        new Fingerprint2().get(function (result, components) {
-
-            //获取浏览器指纹ID
-            var fingerprint = result;
-
-            //将GUID存储到浏览器的localStorage，作为浏览器的唯一ID（不同浏览器会有不同的ID，这会导致用户可更换浏览器进行投票）
-            //如果浏览器不支持localStorage,则返回空的id
-            var browserId = getBrowerUniqueID();
-            
-            var obj = {
-                ProjectId: projectid,
-                BrowserId: browserId,
-                FingerPrint:fingerprint
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "/ProjectApply/IntelInnovationProjectVote/Vote",
-                data: obj,
-                dataType: "json",
-                async: false,   //同步
-                success: function (message) {
-                    if (message.Success) {
-                        //投票成功，更新当前票数
-                        $("#votecount" + projectid).html(message.ReturnId);
-
-                    } else {
-                        alert(message.Content);
-                    }
-
-                }
-            });
-        });
-
-        
-    }
-
-    ///获取浏览器唯一标识
-    function getBrowerUniqueID()
-    {
-        var browserId = "";
-        if (!(document.cookie || navigator.cookieEnabled)) {
-           // alert("开启浏览器缓存后才能进行投票。");
-           //未开启浏览器缓存
-            return browserId;
-        }
-
-        //如果浏览器不支持localStorage,则返回空的id
-        var deviceid = getDeviceID();
-        if (deviceid == null || deviceid == "") {
-            //如果获取不到ID，则生成一个新的ID
-            $.ajax({
-                type: "POST",
-                url: "/ProjectApply/IntelInnovationProjectVote/GenerateGUID",
-                dataType: "json",
-                async: false,   //同步
-                success: function (message) {
-                    if (message.Success) {
-
-                        deviceid = message.ReturnStrId;
-                        //将ID存储到localstorage或cookie
-                        setDeviceID(deviceid);
-                    }
-                }
-            });
-        }
-
-        return deviceid;
-
-
-    }
-
-    var deviceIdKey = "xiamenip_uniquedeviceid";
-    //获取设备ID
-    function getDeviceID()
-    {
-        var deviceid = "";
-
-        //如果浏览器支持localstorage，则从localstorage获取设备ID
-        if (window.localStorage) {
-            //获取设备ID
-            deviceid = window.localStorage.getItem(deviceIdKey); 
-                
-        } else {
-            //否则从cookie获取设备ID
-            deviceid = getCookie(deviceIdKey);
-        }
-        return deviceid;
-    }
-
-
-    function setDeviceID(deviceid)
-    {
-        //如果浏览器支持localstorage，则将DeviceID存入localstorage
-        //永久存储
-        //将GUID存储到浏览器的localStorage，作为浏览器的唯一ID（不同浏览器会有不同的ID，这会导致用户可更换浏览器进行投票）
-        if (window.localStorage) {
-            window.localStorage.setItem(deviceIdKey, deviceid);
-        }else{
-            //将DeviceId存入cookie,过期时间为1天
-            setCookie(deviceIdKey,deviceid,1);
-        }
-    }
-
-    function getCookie(c_name) {
-        if (document.cookie.length > 0) {
-            c_start = document.cookie.indexOf(c_name + "=")
-            if (c_start != -1) {
-                c_start = c_start + c_name.length + 1
-                c_end = document.cookie.indexOf(";", c_start)
-                if (c_end == -1) c_end = document.cookie.length
-                return unescape(document.cookie.substring(c_start, c_end))
-            }
-        }
-        return ""
-    }
-
-    function setCookie(c_name, value, expiredays) {
-        var exdate = new Date()
-        exdate.setDate(exdate.getDate() + expiredays)
-        document.cookie = c_name + "=" + escape(value) +
-        ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-    }
-
-    function IsPC() {
-        var userAgentInfo = navigator.userAgent;
-        var Agents = ["Android", "iPhone",
-                    "SymbianOS", "Windows Phone",
-                    "iPad", "iPod"];
-        var flag = true;
-        for (var v = 0; v < Agents.length; v++) {
-            if (userAgentInfo.indexOf(Agents[v]) > 0) {
-                flag = false;
-                break;
-            }
-        }
-        return flag;
-    }
+   
 </script>
+@Html.Partial("_VoteFun")

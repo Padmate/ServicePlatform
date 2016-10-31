@@ -1,0 +1,199 @@
+﻿@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@using System.Configuration;
+
+@{
+
+    M_VoteConfig voteconfig = (M_VoteConfig)ViewData["voteconfig"];
+    
+    var voteInterval = System.Convert.ToInt32(voteconfig.VoteInterval);
+    var intervalEachVotes = System.Convert.ToInt32(voteconfig.EachDayVoteTimes);
+
+    var intervalDay = voteInterval / (24 * 60);
+    var intervalMinute = voteInterval % (24 * 60);
+
+    var dayTip = intervalDay == 0 ? "" : intervalDay + "天";
+    var minuteTip = intervalMinute == 0 ? "" : intervalMinute + "分钟";
+    var errtip = string.Format("您已经投过票了，{0}{1}内只能投{2}票", dayTip, minuteTip, intervalEachVotes);
+}
+
+<script>
+    var deviceId = "vdeviceidandallowvotetagxxxxx_lkjlkjl";
+    var allowVoteTagId = "allwovotetagid_xdfsdfsdf";
+    //投票
+    function vote(projectid) {
+        var allowVote = getAllowVoteTag();
+        if (allowVote != null && allowVote == "false") {
+            alert('@errtip');
+            return false;
+        }
+
+        new Fingerprint2().get(function (result, components) {
+
+            //获取浏览器指纹ID
+            var fingerprint = result;
+
+            //用户是否清空了缓存
+            var hasEmptyCache = HasEmptyCache();
+
+            //将GUID存储到浏览器的localStorage，作为浏览器的唯一ID（不同浏览器会有不同的ID，这会导致用户可更换浏览器进行投票）
+            //如果浏览器不支持localStorage,则返回空的id
+            var browserId = GetAndSetBrowerUniqueID(hasEmptyCache);
+
+
+            var obj = {
+                ProjectId: projectid,
+                BrowserId: browserId,
+                FingerPrint: fingerprint,
+                HasEmptyCache: hasEmptyCache
+
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/ProjectApply/IntelInnovationProjectVote/Vote",
+                data: obj,
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+                    if (message.Success) {
+                        //投票成功，更新当前票数
+                        $("#votecount" + projectid).html(message.ReturnId);
+
+                    } else {
+
+                        //如果投票失败，且判断此次投票前清空了缓存，则添加不允许投票cookie
+                        if (hasEmptyCache) {
+                            var allowVoteTag = "false";
+                            //将AllowVoteTag存储到cookie,过期时间
+                            var expireDay = '@voteconfig.VoteInterval' / (24 * 60);
+                            setCache(allowVoteTagId, allowVoteTag, expireDay);
+                        }
+
+
+                        alert(message.Content);
+                    }
+
+                }
+            });
+        });
+
+
+    }
+
+    ///获取浏览器唯一标识
+    function GetAndSetBrowerUniqueID() {
+        //用户浏览器ID
+        var browserId = "";
+
+        if (!(document.cookie || navigator.cookieEnabled)) {
+            // alert("开启浏览器缓存后才能进行投票。");
+            //未开启浏览器缓存
+            return browserId;
+        }
+
+        var deviceid = getDeviceId();
+
+        if (deviceid == null || deviceid == "") {
+            //如果获取不到ID，则生成一个新的ID
+            $.ajax({
+                type: "POST",
+                url: "/ProjectApply/IntelInnovationProjectVote/GenerateGUID",
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+                    if (message.Success) {
+
+                        deviceid = message.ReturnStrId;
+
+                        //将ID存储到cookie,过期时间
+                        var expireDay = '@voteconfig.VoteInterval' / (24 * 60);
+                        setCache(deviceId, deviceid, expireDay);
+
+
+                    }
+                }
+            });
+        }
+
+        return deviceid;
+
+
+    }
+
+    ///获取设备ID
+    function getDeviceId() {
+        var deviceID = getCache(deviceId);
+
+        return deviceID;
+    }
+
+    //获取是否允许投票标志
+    function getAllowVoteTag() {
+        var allowVoteTag = getCache(allowVoteTagId);
+
+        return allowVoteTag;
+    }
+
+    function getCache(key) {
+        var value = "";
+
+        //从cookie获取
+        value = getCookie(key);
+        return value;
+    }
+
+    ///设置缓存
+    function setCache(key, value, expiredays) {
+        //存入cookie
+        setCookie(key, value, expiredays);
+    }
+
+
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=")
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1
+                c_end = document.cookie.indexOf(";", c_start)
+                if (c_end == -1) c_end = document.cookie.length
+                return unescape(document.cookie.substring(c_start, c_end))
+            }
+        }
+        return ""
+    }
+
+    function setCookie(c_name, value, expiredays) {
+        var exdate = new Date()
+        exdate.setDate(exdate.getDate() + expiredays)
+        document.cookie = c_name + "=" + escape(value) +
+        ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+    }
+
+    //判断是否清除了缓存
+    function HasEmptyCache() {
+        var hasEmptyCache = false;
+
+        //如果cookiehe和localStorage的数据都为空，则假设用户做了清空缓存的操作
+        if (document.cookie.length == 0 &&
+                window.localStorage.length == 0) {
+            hasEmptyCache = true;
+        }
+        return hasEmptyCache;
+    }
+
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+                    "SymbianOS", "Windows Phone",
+                    "iPad", "iPod"];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+</script>

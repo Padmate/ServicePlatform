@@ -52,5 +52,9 @@ namespace Padmate.ServicePlatform.Models
 
         [Required(ErrorMessage = "请设置投票截止时间")]
         public string VoteEndTime { get; set; }
+
+        [Required(ErrorMessage = "投票时间间隔")]
+        [RegularExpression(@"^[1-9]\d*|0$", ErrorMessage = "投票时间间隔格式不正确，只能是0或者正整数")]
+        public string VoteInterval { get; set; }
     }
 }

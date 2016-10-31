@@ -82,6 +82,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
 
             M_VoteConfig voteConfig = bProject.ReadVoteConfiguration();
+            ViewData["voteconfig"] = voteConfig;
 
             var voteStartTime = System.Convert.ToDateTime(voteConfig.VoteStartTime);
             var voteEndTime = System.Convert.ToDateTime(voteConfig.VoteEndTime);
@@ -148,12 +149,14 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
         /// <param name="FingerPrint">浏览器指纹</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Vote(string ProjectId, string BrowserId,string FingerPrint)
+        public ActionResult Vote(string ProjectId, string BrowserId, string FingerPrint, bool HasEmptyCache)
         {
             Message message = new Message();
             B_IntelInnovationProjectApply bProject = new B_IntelInnovationProjectApply();
 
             M_VoteConfig voteConfig = bProject.ReadVoteConfiguration();
+
+            #region 校验
             //判断投票是否已经结束
             var voteStartTime = System.Convert.ToDateTime(voteConfig.VoteStartTime);
             var voteEndTime = System.Convert.ToDateTime(voteConfig.VoteEndTime);
@@ -173,19 +176,21 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             }
 
 
-            //一个用户每天可以投票的次数
-            int eachDayVotes = System.Convert.ToInt32(voteConfig.EachDayVoteTimes);
-
-
             if (string.IsNullOrEmpty(ProjectId))
             {
                 message.Success = false;
                 message.Content = "获取项目信息失败，请刷新重试。";
                 return Json(message);
             }
+            #endregion
 
             //获取当前project信息
             var project =  bProject.GetIntelInnovationProjectApplyById(ProjectId);
+
+            //一个用户某个时间间隔内可以投票的次数
+            int intervalEachVotes = System.Convert.ToInt32(voteConfig.EachDayVoteTimes);
+            //投票时间间隔（分钟）
+            int voteInterval = System.Convert.ToInt32(voteConfig.VoteInterval);
 
             bool hasVoteRight = true;
             #region 校验当前匿名用户是否有权投票
@@ -193,13 +198,13 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             var clientIP = Client.GetHostAddress();
             B_Vote bVote = new B_Vote();
 
-            //查询该FingerPrint今日的投票次数
-            var todayVotesByFingerprint = bVote.GetTodyVotesByFingerPrint(FingerPrint);
+            //查询该FingerPrint该时间间隔的投票次数
+            var todayVotesByFingerprint = bVote.GetIntervalVotesByFingerPrint(FingerPrint,voteInterval);
             if(string.IsNullOrEmpty(BrowserId))
             {
                 //如果BrowserId为空(这种情况下用户禁用了缓存)
                 //则根据FingerPrint校验
-                if(todayVotesByFingerprint >= eachDayVotes)
+                if(todayVotesByFingerprint >= intervalEachVotes)
                 {
                     hasVoteRight = false;
                 }
@@ -207,18 +212,31 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             else
             {
                 //如果BrowserId不为空（这种情况下可以使用浏览器缓存，但是用户有可能通过清空缓存进行刷票）
-                //查询该BrowserId今日的投票次数
-                var todayVotesByBrowserId = bVote.GetTodyVotesByBrowserId(BrowserId);
-                //如果投票次数大于今天的投票次数，则不能再投票
-                if (todayVotesByBrowserId >= eachDayVotes)
+
+                //如果判断出用户进行了清空缓存操作
+                if(HasEmptyCache)
                 {
-                    hasVoteRight = false;
+                    //如果已经存在相同IP和相同FingerPrint的数据，则把此次投票当做刷票
+                    var todayVotesByIPAndFingerPrint = bVote.GetIntervalVotesByClientIPAndFingerPrint(FingerPrint,clientIP,voteInterval);
+                    if(todayVotesByIPAndFingerPrint >0){
+                        hasVoteRight = false;
+                    }
                 }
-                else
+                
+                //继续判断
+                if(hasVoteRight)
                 {
-                    //为了防止用户清空缓存刷票，此处进行校验
-                    //
+                    //查询该BrowserId某个时间间隔的投票次数
+                    var todayVotesByBrowserId = bVote.GetIntervalVotesByBrowserId(BrowserId, voteInterval);
+                    //如果投票次数大于今天的投票次数，则不能再投票
+                    if (todayVotesByBrowserId >= intervalEachVotes)
+                    {
+                        hasVoteRight = false;
+                    }
+
                 }
+                
+                
             }
 
             
@@ -226,8 +244,13 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
             if(!hasVoteRight)
             {
+                var intervalDay = voteInterval / (24 * 60);
+                var intervalMinute = voteInterval % (24 * 60);
+
+                var dayTip = intervalDay == 0 ? "" : intervalDay + "天";
+                var minuteTip = intervalMinute == 0 ? "" : intervalMinute + "分钟";
                 message.Success = false;
-                message.Content = "您已经投过票了，一天只能投" + eachDayVotes + "票";
+                message.Content = string.Format("您已经投过票了，{0}{1}内只能投{2}票",dayTip,minuteTip,intervalEachVotes);
                 return Json(message);
             }
 
@@ -282,14 +305,28 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             Message message = new Message();
 
             #region 校验
-            if (string.IsNullOrEmpty(config.EachDayVoteTimes))
+            if (string.IsNullOrEmpty(config.VoteInterval))
             {
                 message.Success = false;
-                message.Content = "请设置每天的投票次数";
+                message.Content = "请设置投票时间间隔格";
+                return Json(message);
+            }
+            var rightFormat = Regex.IsMatch(config.VoteInterval, @"^[1-9]\d*|0$");
+            if (!rightFormat)
+            {
+                message.Success = false;
+                message.Content = "投票时间间隔格式不正确，只能是0或者正整数";
                 return Json(message);
             }
 
-            var rightFormat = Regex.IsMatch(config.EachDayVoteTimes, @"^[1-9]\d*|0$");
+            if (string.IsNullOrEmpty(config.EachDayVoteTimes))
+            {
+                message.Success = false;
+                message.Content = "请设置投票时间间隔格内的投票次数";
+                return Json(message);
+            }
+
+            rightFormat = Regex.IsMatch(config.EachDayVoteTimes, @"^[1-9]\d*|0$");
             if (!rightFormat)
             {
                 message.Success = false;

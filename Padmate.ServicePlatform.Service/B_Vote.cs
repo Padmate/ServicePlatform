@@ -21,24 +21,35 @@ namespace Padmate.ServicePlatform.Service
         }
 
         /// <summary>
-        /// 根据BrowserId，获取今天的投票次数
+        /// 根据BrowserId，获取某个时间间隔的投票次数
         /// </summary>
         /// <param name="browserId"></param>
         /// <returns></returns>
-        public int GetTodyVotesByBrowserId(string browserId)
+        public int GetIntervalVotesByBrowserId(string browserId,int interval)
         {
-            var todayVotes = _dVote.GetTodayVotes(browserId,null);
+            var todayVotes = _dVote.GetIntervalVotes(browserId, null, null, interval);
             return todayVotes;
         }
 
         /// <summary>
-        /// 根据FingerPrint获取今天的投票次数
+        /// 根据FingerPrint获取某个时间间隔的投票次数
         /// </summary>
         /// <param name="browserId"></param>
         /// <returns></returns>
-        public int GetTodyVotesByFingerPrint(string fingerprint)
+        public int GetIntervalVotesByFingerPrint(string fingerprint, int interval)
         {
-            var todayVotes = _dVote.GetTodayVotes(null, fingerprint);
+            var todayVotes = _dVote.GetIntervalVotes(null, fingerprint, null, interval);
+            return todayVotes;
+        }
+
+        /// <summary>
+        /// 根据IP和FingerPrint获取某个时间间隔的投票次数
+        /// </summary>
+        /// <param name="browserId"></param>
+        /// <returns></returns>
+        public int GetIntervalVotesByClientIPAndFingerPrint(string fingerprint, string clientip, int interval)
+        {
+            var todayVotes = _dVote.GetIntervalVotes(null, fingerprint, clientip, interval);
             return todayVotes;
         }
 

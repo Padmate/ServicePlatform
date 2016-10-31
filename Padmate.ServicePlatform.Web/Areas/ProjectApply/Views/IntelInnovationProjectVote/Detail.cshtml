@@ -12,6 +12,8 @@
 }
 
 <link href="~/Content/vote.css" rel="stylesheet" />
+<!--浏览器指纹识别-->
+<script src="~/Scripts/fingerprint2.min.js"></script>
 
 <section class="contact vote-bg">
     <div class="container">
@@ -44,10 +46,10 @@
                             <label class="customer-content-xs">@project.VoteNo 号</label>
                         </div>
                         <div class="col-xs-6 col-is-6 col-sm-6 col-md-6">
-                            <label class="customer-content-xs"><font id="votecount'@project.VoteNo'">@project.TotalVotes</font>票</label>
+                            <label class="customer-content-xs"><font id='@string.Format("votecount{0}",project.Id)'>@project.TotalVotes</font>票</label>
                         </div>
                         <div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">
-                            <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)">
+                            <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote('@project.Id')">
                                 <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-xs">投票</strong>
                             </a>
                         </div>
@@ -70,13 +72,4 @@
 
 }
 
-<script>
-    $(function () {
-
-      
-        $('.btn-vote').clicl(function (event) {
-            
-
-        });
-    })
-</script>
+@Html.Partial("_VoteFun")
