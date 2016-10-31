@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,6 +138,14 @@ namespace Padmate.ServicePlatform.Entities
         /// </summary>
         [DefaultValue(0)]
         public int TotalVotes { get; set; }
+
+        /// <summary>
+        /// 并发控制
+        /// </summary>
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
+
         #endregion
 
         public string UserId { get; set; }

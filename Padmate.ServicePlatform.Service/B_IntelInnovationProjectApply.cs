@@ -534,11 +534,6 @@ namespace Padmate.ServicePlatform.Service
 
             try
             {
-                //添加投票记录
-                B_Vote bVote = new B_Vote();
-                message = bVote.AddVote(vote);
-                if (!message.Success) return message;
-
                 //更新投票数据
                 var id = System.Convert.ToInt32(projectId);
 
@@ -547,8 +542,13 @@ namespace Padmate.ServicePlatform.Service
 
                 var newVotes = ++ project.TotalVotes;
 
-
+                //此处可能会有并发
                 dApply.EditTotalVotes(id, newVotes);
+
+                //添加投票记录
+                B_Vote bVote = new B_Vote();
+                message = bVote.AddVote(vote);
+                if (!message.Success) return message;
 
                 //返回当前票数
                 message.ReturnId = newVotes;
@@ -557,7 +557,7 @@ namespace Padmate.ServicePlatform.Service
             catch (Exception e)
             {
                 message.Success = false;
-                message.Content = "投票失败，项目Id：" + projectId;
+                message.Content = "投票失败，请刷新页面重新投票";
             }
 
             return message;

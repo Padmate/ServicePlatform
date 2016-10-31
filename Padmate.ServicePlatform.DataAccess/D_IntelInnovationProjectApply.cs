@@ -426,7 +426,7 @@ namespace Padmate.ServicePlatform.DataAccess
             return projcet.Id;
         }
 
-        public int EditTotalVotes(int id,int totalVotes)
+        public int EditTotalVotes(int id, int totalVotes)
         {
             var projcet = _dbContext.IntelInnovationProjectApplies.FirstOrDefault(a => a.Id == id);
 
@@ -434,5 +434,7 @@ namespace Padmate.ServicePlatform.DataAccess
             _dbContext.SaveChanges();
             return projcet.Id;
         }
+
+       
     }
 }
