@@ -193,6 +193,8 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             int voteInterval = System.Convert.ToInt32(voteConfig.VoteInterval);
 
             bool hasVoteRight = true;
+            //判断是不是违法操作
+            bool isIllegalOperator = false;
             #region 校验当前匿名用户是否有权投票
             //获取客户端IP
             var clientIP = Client.GetHostAddress();
@@ -220,6 +222,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                     var todayVotesByIPAndFingerPrint = bVote.GetIntervalVotesByClientIPAndFingerPrint(FingerPrint,clientIP,voteInterval);
                     if(todayVotesByIPAndFingerPrint >0){
                         hasVoteRight = false;
+                        isIllegalOperator = true;
                     }
                 }
                 
@@ -250,6 +253,7 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                 var dayTip = intervalDay == 0 ? "" : intervalDay + "天";
                 var minuteTip = intervalMinute == 0 ? "" : intervalMinute + "分钟";
                 message.Success = false;
+                message.ReturnStrId = isIllegalOperator.ToString().ToLower();
                 message.Content = string.Format("您已经投过票了，{0}{1}内只能投{2}票",dayTip,minuteTip,intervalEachVotes);
                 return Json(message);
             }

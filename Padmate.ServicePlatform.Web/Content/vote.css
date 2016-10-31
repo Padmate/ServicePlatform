@@ -55,7 +55,7 @@
 }
 .btn-vote-search {
     width:12%;
-
+    padding:10px 5px;
 }
 .vote-search {
     display: inline-block;
