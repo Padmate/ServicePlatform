@@ -55,7 +55,7 @@
 }
 .btn-vote-search {
     width:12%;
-    padding:10px 5px;
+    padding:10px 7px;
 }
 .vote-search {
     display: inline-block;
@@ -110,6 +110,13 @@
    .btn-vote .customer-content-xs{
        font-size:18px;
    }
+
+   .btn-vote-search {
+        width:18%;
+    }
+    .vote-search {
+        width: 80%;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 767px) {

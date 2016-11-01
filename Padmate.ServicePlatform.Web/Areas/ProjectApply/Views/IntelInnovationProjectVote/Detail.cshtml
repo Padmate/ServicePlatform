@@ -1,7 +1,7 @@
 ﻿@using Padmate.ServicePlatform.Models;
 @using Padmate.ServicePlatform.Utility;
 @using System.Configuration;
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "2016英特尔创新创业大赛投票";
     //项目内容
@@ -43,14 +43,18 @@
                     </div>
                     <div class="vote-content">
                         <div class="col-xs-6 col-is-6 col-sm-12 col-md-12">
-                            <label class="customer-content-xs">@project.VoteNo 号</label>
+                            <label class="customer-content-sm">@project.VoteNo 号</label>
+                            
                         </div>
                         <div class="col-xs-6 col-is-6 col-sm-6 col-md-6">
-                            <label class="customer-content-xs"><font id='@string.Format("votecount{0}",project.Id)'>@project.TotalVotes</font>票</label>
+                            <label class="customer-content-sm">
+                                <font id='@string.Format("votecount{0}",project.Id)'>@project.TotalVotes</font>票
+                            </label>
+                            <a class="btn-vote-show" id="@string.Format("btn-vote-show{0}",project.Id)" style="visibility:hidden"></a>
                         </div>
                         <div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">
                             <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote('@project.Id')">
-                                <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-xs">投票</strong>
+                                <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-sm">投票</strong>
                             </a>
                         </div>
                     </div>
@@ -66,6 +70,11 @@
        
     </div>
 </section>
+@if(User.IsInRole(SystemRole.BackstageAdmin) || User.IsInRole(SystemRole.SystemAdmin))
+{
+    @Html.Partial("_VoteAnalysis")
+
+}
 
 @if (isEndVote)
 {

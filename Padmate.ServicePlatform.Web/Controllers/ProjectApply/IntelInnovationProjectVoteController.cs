@@ -218,9 +218,10 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                 //如果判断出用户进行了清空缓存操作
                 if(HasEmptyCache)
                 {
-                    //如果已经存在相同IP和相同FingerPrint的数据，则把此次投票当做刷票
+                    //如果已经存在的相同IP和相同FingerPrint的数据超过了该时间段的投票票数，则把此次投票当做刷票
                     var todayVotesByIPAndFingerPrint = bVote.GetIntervalVotesByClientIPAndFingerPrint(FingerPrint,clientIP,voteInterval);
-                    if(todayVotesByIPAndFingerPrint >0){
+                    if (todayVotesByIPAndFingerPrint >= intervalEachVotes)
+                    {
                         hasVoteRight = false;
                         isIllegalOperator = true;
                     }
@@ -274,6 +275,69 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             return Json(message);
         }
 
+        [HttpPost]
+        public ActionResult GetVotesByVoteNo(string VoteNo)
+        {
+            B_Vote bVote = new B_Vote();
+            M_Vote model = new M_Vote();
+            model.VoteNo = VoteNo;
+
+            var votes = bVote.GetByMulitCond(model);
+            return Json(votes);
+        }
+
+        /// <summary>
+        /// 获取图表X Y轴数据
+        /// </summary>
+        /// <param name="VoteNo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetChartXYAxis(string VoteNo)
+        {
+            #region 图标数据分析
+
+            B_Vote bVote = new B_Vote();
+            M_Vote model = new M_Vote();
+            model.VoteNo = VoteNo;
+
+            var votes = bVote.GetByMulitCond(model);
+
+            //先按时间进行分组
+            var timeGroup = votes.GroupBy(v => v.VoteTime.ToString("yyyy-MM-dd"));
+            //获取图表X轴,单位为/天
+            var chartXAxis = timeGroup.Select(v => v.First().VoteTime.ToString("yyyy-MM-dd"))
+                .OrderBy(v => v)
+                .ToArray();
+
+            //根据IP分组
+            var ipGroup = votes.GroupBy(v => v.ClientIP);
+
+            //获取图片的Y轴,单位为票数
+            List<VoteChartY> chartSeries = new List<VoteChartY>();
+
+
+            foreach (var ipG in ipGroup)
+            {
+                VoteChartY ipYAxisValues = new VoteChartY();
+                ipYAxisValues.name = ipG.First().ClientIP;
+                ipYAxisValues.data = new int[chartXAxis.Count()];
+                for (int j = 0; j < chartXAxis.Count(); j++)
+                {
+                    //获取当前IP，在该时间段的票数
+                    var ipVotes = votes.Where(v => v.ClientIP == ipG.First().ClientIP
+                        && v.VoteTime.ToString("yyyy-MM-dd") == chartXAxis[j]).ToList();
+                    ipYAxisValues.data[j] = ipVotes.Count();
+                }
+                chartSeries.Add(ipYAxisValues);
+            }
+
+            Chart chart = new Chart();
+            chart.XAxis = chartXAxis;
+            chart.YSeries = chartSeries.ToArray();
+            #endregion 
+
+            return Json(chart);
+        }
 
         /// <summary>
         /// 生成GUID

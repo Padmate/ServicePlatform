@@ -1,0 +1,86 @@
+﻿@using Padmate.ServicePlatform.Models;
+@using Padmate.ServicePlatform.Utility;
+@using System.Configuration;
+
+@{
+    //项目内容
+    var project = (M_IntelInnovationProjectApply)ViewData["project"];
+}
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="vote-analysis-chart"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/highcharts/highcharts.js"></script>
+
+<script>
+
+  
+    $(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetChartXYAxis",
+            data: {VoteNo:'@project.VoteNo'},
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+                
+                var chartXAxis =result.XAxis;
+                var chartSeries = result.YSeries;
+                debugger;
+                InitChart(chartXAxis,chartSeries);
+
+            }
+        });
+
+       
+    });
+
+
+
+    function InitChart(chartXAxis, chartSeries)
+    {
+        $('.vote-analysis-chart').highcharts({
+            title: {
+                text: '@project.VoteNo',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '投票统计',
+                x: -20
+            },
+            xAxis: {
+                categories: chartXAxis
+            },
+            yAxis: {
+                title: {
+                    text: '票数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '票',
+                crosshairs: true,
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: chartSeries
+        });
+    }
+</script>

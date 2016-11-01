@@ -62,6 +62,27 @@ namespace Padmate.ServicePlatform.Service
         }
 
         /// <summary>
+        /// 多条件查询
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public List<M_Vote> GetByMulitCond(M_Vote model)
+        {
+            var search = new Vote()
+            {
+                VoteNo = model.VoteNo,
+                ClientIP = model.ClientIP,
+                BrowserId = model.BrowserId,
+                BrowserFingerPrint = model.BrowserFingerPrint
+            };
+
+            var votes = _dVote.GetByMulitCond(search);
+            var result = votes.Select(a => ConverEntityToModel(a)).ToList();
+
+            return result;
+        }
+
+        /// <summary>
         /// 根据BrowserId获取投票数据
         /// </summary>
         /// <param name="browserId"></param>

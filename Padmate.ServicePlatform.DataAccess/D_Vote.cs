@@ -89,6 +89,37 @@ namespace Padmate.ServicePlatform.DataAccess
         }
 
         /// <summary>
+        /// 多条件查询
+        /// </summary>
+        /// <param name="vote"></param>
+        /// <returns></returns>
+        public List<Vote> GetByMulitCond(Vote vote)
+        {
+            var query = _dbContext.Votes.Where(a => 1 == 1);
+
+            if(!string.IsNullOrEmpty(vote.VoteNo))
+            {
+                query = query.Where(v=>v.VoteNo == vote.VoteNo);
+            }
+            if (!string.IsNullOrEmpty(vote.ClientIP))
+            {
+                query = query.Where(v => v.ClientIP == vote.ClientIP);
+            }
+            if (!string.IsNullOrEmpty(vote.BrowserId))
+            {
+                query = query.Where(v => v.BrowserId == vote.BrowserId);
+            }
+            if (!string.IsNullOrEmpty(vote.BrowserFingerPrint))
+            {
+                query = query.Where(v => v.BrowserFingerPrint == vote.BrowserFingerPrint);
+            }
+
+            var votes = query.ToList();
+
+            return votes;
+        }
+
+        /// <summary>
         /// 新增
         /// </summary>
         /// <param name="vote"></param>

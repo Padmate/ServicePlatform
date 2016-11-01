@@ -16,6 +16,8 @@
     var minuteTip = intervalMinute == 0 ? "" : intervalMinute + "分钟";
     var errtip = string.Format("您已经投过票了，{0}{1}内只能投{2}票", dayTip, minuteTip, intervalEachVotes);
 }
+<!--文字点赞特效-->
+<script src="~/Scripts/text-tipbox.js"></script>
 
 <script>
     var deviceId = "vdeviceidandallowvotetagxxxxx_lkjlkjl";
@@ -28,6 +30,17 @@
         ///获取浏览器指纹
         new Fingerprint2().get(function (result, components) {
             _browserFingerPrint = result;
+        });
+
+        //点击投票按钮后谈特效信息
+        $(".btn-vote-show").click(function () {
+            $.tipsBox({
+                obj: $(this),
+                str: "<strong>+1票</storng>",
+                callback: function () {
+                    //alert(5);
+                }
+            });
         });
     })
 
@@ -63,9 +76,10 @@
             async: false,   //同步
             success: function (message) {
                 if (message.Success) {
-                    //投票成功，更新当前票数
+                    //更新票数
                     $("#votecount" + projectid).html(message.ReturnId);
-
+                    $("#btn-vote-show"+projectid).click();
+                    
                 } else {
 
                     var isIllegalOperator = message.ReturnStrId; 

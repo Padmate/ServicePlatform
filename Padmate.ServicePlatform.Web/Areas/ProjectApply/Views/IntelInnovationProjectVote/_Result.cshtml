@@ -4,6 +4,10 @@
         padding:10px 5px;
     }
 
+    .firstsix{
+        color:red;
+    }
+
 </style>
 <section id="result">
     <div class="container">
@@ -53,11 +57,23 @@
             dynamicHtml += '<col width="80%" />';
             dynamicHtml += '<col width="20%" />';
             dynamicHtml += '</colgroup>';
+
+            
             for (var i = 0; i < voteResults.length; i++) {
                 dynamicHtml += '<tr>';
+                
                 dynamicHtml += '<td>' + voteResults[i].VoteNo + '号</td>';
-                dynamicHtml += '<td>'+voteResults[i].Name+'</td>';
-                dynamicHtml += '<td class="text-center">'+voteResults[i].TotalVotes+'票</td>';
+                dynamicHtml += '<td>' + voteResults[i].Name + '</td>';
+
+                var voteClass = "text-center";
+                if (i < 3) {
+                    voteClass += " firstsix";
+
+                }
+
+                dynamicHtml += '<td class="' + voteClass + '">' + voteResults[i].TotalVotes + '票</td>';
+
+
                 dynamicHtml += '</tr>';
             }
             

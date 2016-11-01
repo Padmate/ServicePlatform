@@ -60,7 +60,7 @@
             <div class="col-md-5 col-md-offset-7">
                 <fieldset class="vote-search-section">
                     <input type="text" class="form-control input-lg vote-search" placeholder="先输入编号或项目名称">
-                    <a href="javaScript:void(0)" class="btn-vote-search"><i class="fa fa-search fa-2x text-info"></i></a>
+                    <a href="javaScript:void(0)" class="btn btn-vote-search"><i class="fa fa-search fa-2x text-info"></i></a>
 
                 </fieldset>
             </div>
@@ -121,6 +121,8 @@
 <script src="~/Scripts/fingerprint2.min.js"></script>
 <!--倒计时-->
 <script src="~/Scripts/count-down.js"></script>
+
+
 <script>
     var currentPage = '@Request["page"]';
     var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
@@ -132,11 +134,12 @@
         InitPaging();
 
         //查询按钮事件
-        $(".btn-vote-search").click(function (e) {
+        $(".vote-search").change(function (e) {
 
             InitPaging();
         });
-       
+
+      
 
         document.onkeydown = function (e) {
             var ev = document.all ? window.event : e;
@@ -279,6 +282,7 @@
                 dynamicHtml += '<label class="customer-content-xs">';
                 dynamicHtml += '<font id="votecount' + projects[i].Id + '">' + projects[i].TotalVotes + '</font>票';
                 dynamicHtml += '</label>';
+                dynamicHtml += '<a class="btn-vote-show" id="btn-vote-show' + projects[i].Id + '" style="visibility:hidden"></a>';
                 dynamicHtml += '</div>';
                 dynamicHtml += '<div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">';
                 dynamicHtml += '<a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote(' + projects[i].Id + ')">';
