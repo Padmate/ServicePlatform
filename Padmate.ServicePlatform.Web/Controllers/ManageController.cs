@@ -292,6 +292,8 @@ namespace Padmate.ServicePlatform.Web.Controllers
         [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult IntelInnovationProjectApply()
         {
+            //用户类型
+            ViewData["UserType"] = JsonHandler.ToJson(Common.Dic_UserTypes);
             //审核状态
             ViewData["AuditStatus"] = JsonHandler.ToJson(Common.Dic_Audit);
             return View();

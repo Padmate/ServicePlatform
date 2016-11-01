@@ -52,7 +52,8 @@ namespace Padmate.ServicePlatform.DataAccess
                         que.AuditRemark,
                         que.AuditStatus,
                         que.Application,
-                        que.ApplicationDate
+                        que.ApplicationDate,
+                        u.UserType
                         from 
                         --查找最新的队列
                         (select IntelInnovationProjectApplyId,max(CreateDate) CreateDate
@@ -62,7 +63,10 @@ namespace Padmate.ServicePlatform.DataAccess
                         on app.Id = latestQue.IntelInnovationProjectApplyId
                         --左链接que
                         left join dbo.IntelInnovationProjectApplyQues que
-                        on que.CreateDate = latestQue.CreateDate";
+                        on que.CreateDate = latestQue.CreateDate
+                        --左链接用户信息
+						left join dbo.AspNetUsers u
+						on app.UserId = u.Id";
 
             //var args = new DbParameter[] {
             //      new SqlParameter {ParameterName = "culture", Value = culture}};
@@ -76,6 +80,9 @@ namespace Padmate.ServicePlatform.DataAccess
 
             if (!string.IsNullOrEmpty(projcet.AuditStatus))
                 query = query.Where(a => a.AuditStatus.Contains(projcet.AuditStatus));
+
+            if (!string.IsNullOrEmpty(projcet.UserType))
+                query = query.Where(a => a.UserType == projcet.UserType);
             #endregion
 
             var result = query.OrderByDescending(a => a.ApplicationDate)
@@ -95,7 +102,8 @@ namespace Padmate.ServicePlatform.DataAccess
                         que.AuditRemark,
                         que.AuditStatus,
                         que.Application,
-                        que.ApplicationDate
+                        que.ApplicationDate,
+                        u.UserType
                         from 
                         --查找最新的队列
                         (select IntelInnovationProjectApplyId,max(CreateDate) CreateDate
@@ -105,7 +113,10 @@ namespace Padmate.ServicePlatform.DataAccess
                         on app.Id = latestQue.IntelInnovationProjectApplyId
                         --左链接que
                         left join dbo.IntelInnovationProjectApplyQues que
-                        on que.CreateDate = latestQue.CreateDate";
+                        on que.CreateDate = latestQue.CreateDate
+                        --左链接用户信息
+						left join dbo.AspNetUsers u
+						on app.UserId = u.Id";
 
 
 

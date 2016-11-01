@@ -351,5 +351,7 @@ namespace Padmate.ServicePlatform.Models
         /// 查询条件
         /// </summary>
         public string Search { get; set; }
+
+        public string UserType { get; set; }
     }
 }

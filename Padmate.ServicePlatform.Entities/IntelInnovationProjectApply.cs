@@ -316,6 +316,8 @@ namespace Padmate.ServicePlatform.Entities
         public int TotalVotes { get; set; }
 
         public string Search { get; set; }
+
+        public string UserType { get; set; }
     }
 
 }

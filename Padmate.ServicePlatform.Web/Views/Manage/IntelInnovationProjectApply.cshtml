@@ -12,6 +12,9 @@
     {
         color:#0088cc;
     }
+    .success-audit{
+        color:green;
+    }
 </style>
 <section>
     <div class="container">
@@ -55,7 +58,19 @@
                                         </div>
                                         <input class="input-mediu" id="tbSearchName" />
                                     </div>
-                                    
+                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                        <div class="col-xs-5 col-is-5 col-sm-5 col-md-5 text-right">
+                                            <label class="customer-content-xs">用户类型：</label>
+
+                                        </div>
+                                        <select id="selSearchUserType" class="customer-content-xs select-mediu">
+                                            <option value="">所有</option>
+                                            @foreach (var key in Common.Dic_UserTypes.Keys)
+                                            {
+                                                <option value="@key">@Common.Dic_UserTypes[key]</option>
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -108,6 +123,7 @@
 <script type="text/javascript">
 
     var dicAuditStatus = $.parseJSON('@Html.Raw(ViewData["AuditStatus"])');
+    var dicUserTypes = $.parseJSON('@Html.Raw(ViewData["UserType"])');
 
     $(document).ready(function () {
         InitTable();
@@ -129,6 +145,16 @@
         for (var i = 0; i < dicAuditStatus.length; i++) {
             if (key == dicAuditStatus[i].Key) {
                 result = dicAuditStatus[i].Value;
+            }
+        }
+        return result;
+    }
+
+    function DicUserTypes(key) {
+        var result = key;
+        for (var i = 0; i < dicUserTypes.length; i++) {
+            if (key == dicUserTypes[i].Key) {
+                result = dicUserTypes[i].Value;
             }
         }
         return result;
@@ -169,11 +195,29 @@
 
                 },
                 {
+                    field: 'OrganizationName',
+                    title: '组织名称',
+                    sortable: true
+
+                },
+                {
+                    field: 'UserType',
+                    title: '用户类型',
+                    align:'center',
+                    formatter: function (value, row, index) {
+
+                        var result = DicUserTypes(value);
+
+                        return result;
+                    }
+
+                },
+                {
                     field: 'AuditStatus',
                     title: '审核状态',
                     formatter: function (value, row, index) {
 
-                        var fontClass = ""
+                        var fontClass = "success-audit"
                         if (value == '@Common.Audit_Waiting') {
                             fontClass = "waiting-audit";
                         } else if (value == '@Common.Audit_Failue') {
@@ -188,7 +232,7 @@
                 {
                     field: 'AuditRemark',
                     title: '审核备注',
-                    width: '15%',
+                    width: '10%',
                     formatter: function (value, row, index) {
 
                         var result = value;
@@ -253,11 +297,11 @@
                         return result;
                     }
 
-                },{
+                }, {
                     field: 'VoteNo',
                     title: '投票编号',
                     sortable: true
-                 }
+                }
 
 
             ]
@@ -269,7 +313,9 @@
             offset: param.offset,//偏移数量
             page: param.offset / param.limit, //页码
             Name: $("#tbSearchName").val(),
-            AuditStatus: $("#selSearchAuditStatus").val()
+            AuditStatus: $("#selSearchAuditStatus").val(),
+            UserType: $("#selSearchUserType").val()
+
         };
         return params;
     }
@@ -351,8 +397,7 @@
 
             //只有审核状态为："等待审核"才允许审核
             var auditStatus = selections[0].AuditStatus;
-            if (auditStatus != '@Common.Audit_Waiting')
-            {
+            if (auditStatus != '@Common.Audit_Waiting') {
                 layer.alert("只有'等待审核'的数据才能进行审核", {
                     skin: 'layui-layer-molv'
                             , closeBtn: 0
@@ -388,11 +433,11 @@
                 title: '请输入备注',
                 formType: 2 //prompt风格，支持0-2
             }, function (remark) {
-                
+
                 var jsonProjectQueId = JSON.stringify(projectQueIds);
                 var obj = {
                     AuditRemark: remark,
-                    Id:jsonProjectQueId
+                    Id: jsonProjectQueId
 
                 };
 
@@ -414,7 +459,7 @@
                                 , closeBtn: 0
                                 , shift: 5 //动画类型
                             });
-                            
+
                         }
 
                     }
@@ -422,12 +467,11 @@
             });
 
 
-            
+
         });
     }
 
-    function RefreshTable()
-    {
+    function RefreshTable() {
         $('#table').bootstrapTable('refresh');
 
     }

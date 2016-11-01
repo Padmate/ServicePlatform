@@ -96,7 +96,8 @@ namespace Padmate.ServicePlatform.Service
             {
                 Name = project.Name,
                 AuditStatus = project.AuditStatus,
-                VoteNo = project.VoteNo
+                VoteNo = project.VoteNo,
+                UserType = project.UserType
             };
 
             var offset = project.offset;
@@ -284,7 +285,8 @@ namespace Padmate.ServicePlatform.Service
                 Application = project.Application,
                 ApplicationDate = project.ApplicationDate,
                 VoteNo = project.VoteNo,
-                TotalVotes = project.TotalVotes
+                TotalVotes = project.TotalVotes,
+                UserType = project.UserType
 
             };
             return model;
