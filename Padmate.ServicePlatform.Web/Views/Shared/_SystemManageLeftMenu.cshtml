@@ -94,17 +94,17 @@
                     资讯管理
                 </a>
             </li>
-            <li>
+            @if (User.IsInRole(SystemRole.SystemAdmin))
+            {
+                //系统管理员才有权限
+                <li>
 
-                <a data-toggle="collapse" data-parent="#accordion" class="menu-first" href="#usermanage">
-                    <i class="fa fa-cogs"></i>
-                    用户管理
-                    <span class="fa fa-chevron-left"></span>
-                </a>
-                <ul id="usermanage" class="panel-collapse collapse menu-second">
-                    @if (User.IsInRole(SystemRole.SystemAdmin))
-                    {
-                        //系统管理员才有权限
+                    <a data-toggle="collapse" data-parent="#accordion" class="menu-first" href="#usermanage">
+                        <i class="fa fa-cogs"></i>
+                        用户管理
+                        <span class="fa fa-chevron-left"></span>
+                    </a>
+                    <ul id="usermanage" class="panel-collapse collapse menu-second">
                         <li>
                             <a href="@string.Format("/manage/rolemanage{0}", urlRewriteExtension)">
                                 <i class="fa fa-angle-double-up"></i>
@@ -112,17 +112,18 @@
                             </a>
                         </li>
 
-                    }
-                    
-                    <li>
-                        <a href="@string.Format("/manage/usermanage{0}", urlRewriteExtension)">
-                            <i class="fa fa-user-md"></i>
-                            用户管理
-                        </a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="@string.Format("/manage/usermanage{0}", urlRewriteExtension)">
+                                <i class="fa fa-user-md"></i>
+                                用户管理
+                            </a>
+                        </li>
+                    </ul>
 
-            </li>
+                </li>
+
+            }
+            
             <li>
                 <a data-toggle="collapse" data-parent="#accordion" class="menu-first" href="#contactmanage">
                     <i class="fa fa-cogs"></i>
