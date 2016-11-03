@@ -167,6 +167,8 @@ namespace Padmate.ServicePlatform.Entities
     {
         public int Id { get; set; }
 
+        public string UserId { get; set; }
+
         /// <summary>
         /// 项目名称
         /// </summary>

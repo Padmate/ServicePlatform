@@ -255,6 +255,7 @@ namespace Padmate.ServicePlatform.Service
             var model = new M_IntelInnovationProjectApplySearch()
             {
                 Id = project.Id.ToString(),
+                UserId = project.UserId,
                 QueId = project.QueId.ToString(),
                 Name = string.IsNullOrEmpty(project.Name) ? string.Empty : project.Name,
                 Description = string.IsNullOrEmpty(project.Description) ? string.Empty : project.Description,

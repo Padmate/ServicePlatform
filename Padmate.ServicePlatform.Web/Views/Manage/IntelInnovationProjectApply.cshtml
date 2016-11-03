@@ -15,6 +15,7 @@
     .success-audit{
         color:green;
     }
+
 </style>
 <section>
     <div class="container">
@@ -218,6 +219,16 @@
 
                 },
                 {
+                    field: 'BusinessLicense',
+                    title: '营业执照',
+                    formatter: function (value, row, index) {
+
+                        
+                        return '<a href="javaScript:void(0);" onclick="ShowBusinessLicense(&apos;' + row.UserId + '&apos;,&apos;' + row.OrganizationName + '&apos;)">' + value + '</a>';
+                    }
+
+                },
+                {
                     field: 'AuditStatus',
                     title: '审核状态',
                     formatter: function (value, row, index) {
@@ -324,6 +335,57 @@
         };
         return params;
     }
+
+    ///查看营业执照
+    function ShowBusinessLicense(userid,orgName)
+    {
+        var licenseAttachments = GetBusinessLicenseAttachment(userid);
+        if(licenseAttachments != null)
+        {
+            var dynamicHtml = '<div>';
+            dynamicHtml += '<img class="img-responsive" src="' + licenseAttachments[0].VirtualPath + '" style="margin:10px auto;"></img>'
+            dynamicHtml += '</div>';
+
+            //自定页
+            layer.open({
+                title: '营业执照 - ' + orgName,
+                area:['90%','90%'],
+                type: 1,
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                shift: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: dynamicHtml
+            });
+
+           
+        }
+
+        
+        
+    }
+
+    ///获取营业执照附件
+    function GetBusinessLicenseAttachment(userid)
+    {
+        var attachment = null;
+
+        $.ajax({
+            type: "post",//使用get方法访问后台
+            dataType: "json",//返回json格式的数据
+            url: "/User/User/GetBusinessLicenseByUserId",
+            data: { UserId: userid },
+            async: false,
+            success: function (message) {
+                attachment = JSON.parse(message.Content);
+                
+            }
+        });
+
+        return attachment;
+    }
+
+    
 
     function CloseAuditScreen() {
         $('#intelProjectAudit').modal('hide');

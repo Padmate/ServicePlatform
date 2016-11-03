@@ -274,7 +274,7 @@
 
     function LinkHrefEvent()
     {
-        $(".linkhref").change(function () {
+        $(".linkhref").blur(function () {
             var imageId = $(this).parent().attr("id");
             var href = $(this).val();
 
