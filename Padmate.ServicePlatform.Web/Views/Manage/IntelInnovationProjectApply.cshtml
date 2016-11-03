@@ -15,6 +15,20 @@
     .success-audit{
         color:green;
     }
+    .showlicenseimage{
+        display:none;
+    }
+    .showlicenseimage img{
+        width:600px;
+        margin:0px auto;
+    }
+    .imagescroll{
+        width:100px;
+        margin:10px auto;
+    }
+    .imagescroll a{
+        margin:10px;
+    }
 
 </style>
 <section>
@@ -92,7 +106,7 @@
 
             </div>
         </div>
-
+        
 
     </div>
 </section>
@@ -117,6 +131,24 @@
 
         </div>
     </div>
+</div>
+
+<div class="showlicenseimage">
+    <div class="imagearea">
+        <div class="imagescroll">
+            <a href="javaScript:void(0)" onclick="scrollImage(true)">
+                <i class="fa fa-plus fa-2x"></i>
+
+            </a>
+            <a href="javaScript:void(0)" onclick="scrollImage(false)">
+                <i class="fa fa-minus fa-2x"></i>
+
+            </a>
+        </div>
+        <img class="img-responsive licenseimage" src="" style="margin:0px auto;" />
+    </div>
+    
+
 </div>
 
 <!--#endregion 详细-->
@@ -342,10 +374,10 @@
         var licenseAttachments = GetBusinessLicenseAttachment(userid);
         if(licenseAttachments != null)
         {
-            var dynamicHtml = '<div>';
-            dynamicHtml += '<img class="img-responsive" src="' + licenseAttachments[0].VirtualPath + '" style="margin:10px auto;"></img>'
-            dynamicHtml += '</div>';
 
+            $(".licenseimage").width(600);
+            $(".licenseimage").attr("src", licenseAttachments[0].VirtualPath);
+            var contentHtml = $(".showlicenseimage").html();
             //自定页
             layer.open({
                 title: '营业执照 - ' + orgName,
@@ -355,7 +387,7 @@
                 closeBtn: 0, //不显示关闭按钮
                 shift: 2,
                 shadeClose: true, //开启遮罩关闭
-                content: dynamicHtml
+                content: contentHtml
             });
 
            
@@ -385,7 +417,25 @@
         return attachment;
     }
 
-    
+    //图片放大缩小
+    function scrollImage(isplus)
+    {
+        var imageareaWidth = $(window).width() * 0.9;
+        
+        var scrollZoom = 1.1;
+        if(!isplus)
+        {
+            scrollZoom = 0.9;
+        }
+        var newWidth = $(".licenseimage").width() * scrollZoom;
+
+        //最大不能超过显示区域
+        if (newWidth < imageareaWidth)
+        {
+            $(".licenseimage").width(newWidth);
+
+        }
+    }
 
     function CloseAuditScreen() {
         $('#intelProjectAudit').modal('hide');
