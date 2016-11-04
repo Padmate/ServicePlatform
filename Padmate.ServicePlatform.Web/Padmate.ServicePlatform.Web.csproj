@@ -214,6 +214,7 @@
     <Compile Include="Controllers\Infra\ArticleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Information\InformationController.cs" />
+    <Compile Include="Controllers\Infra\CommonController.cs" />
     <Compile Include="Controllers\Infra\ContactController.cs" />
     <Compile Include="Controllers\Infra\ImageController.cs" />
     <Compile Include="Controllers\Infra\MailController.cs" />
@@ -1030,6 +1031,7 @@
     <Content Include="Scripts\bootstrap-table\export\bootstrap-table-export.min.js" />
     <Content Include="Scripts\bootstrap-table\export\tableExport.js" />
     <Content Include="Scripts\bootstrap-table\export\tableExport.min.js" />
+    <Content Include="Scripts\bootstrap-table\filter-control\bootstrap-table-filter-control.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ckeditor\.htaccess" />

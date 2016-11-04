@@ -40,59 +40,7 @@
                 @Html.Partial("_SystemManageLeftMenu")
             </div>
             <div class="col-xs-8 col-is-8 col-sm-10 col-md-10">
-                <div class="panel-group search-area" id="accordion">
-                    <div class="panel search-panel">
-                        <div class="panel-heading">
-                            <span class="customer-content-sm whitefont search-title">
-                                <i class="fa fa-search"></i>检索条件
-                            </span>
-                            <a class="search-collapse searcharea-btn whitefont" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch">
-                                <i class="fa fa-chevron-down"></i>
-                            </a>
-
-                            <div class="clearfix"></div>
-                        </div>
-                        <div id="collapseSearch" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <div class="row search-row">
-                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
-                                        <div class="col-xs-5 col-is-5 col-sm-5 col-md-5 text-right">
-                                            <label class="customer-content-xs">审核状态：</label>
-
-                                        </div>
-                                        <select id="selSearchAuditStatus" class="customer-content-xs select-mediu">
-                                            <option value="">所有</option>
-                                            @foreach(var key in Common.Dic_Audit.Keys)
-                                            {
-                                                <option value="@key">@Common.Dic_Audit[key]</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
-                                        <div class="col-xs-5 col-is-5 col-sm-5 col-md-5 text-right">
-                                            <label class="customer-content-xs">项目名称：</label>
-
-                                        </div>
-                                        <input class="input-mediu" id="tbSearchName" />
-                                    </div>
-                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
-                                        <div class="col-xs-5 col-is-5 col-sm-5 col-md-5 text-right">
-                                            <label class="customer-content-xs">用户类型：</label>
-
-                                        </div>
-                                        <select id="selSearchUserType" class="customer-content-xs select-mediu">
-                                            <option value="">所有</option>
-                                            @foreach (var key in Common.Dic_UserTypes.Keys)
-                                            {
-                                                <option value="@key">@Common.Dic_UserTypes[key]</option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div id="toolbar">
                     <button id="btnAudit" class="btn btn-danger">
                         <i class="glyphicon glyphicon-check"></i> 审核
@@ -160,6 +108,20 @@
     var dicAuditStatus = $.parseJSON('@Html.Raw(ViewData["AuditStatus"])');
     var dicUserTypes = $.parseJSON('@Html.Raw(ViewData["UserType"])');
 
+    //bootstrap filter 选择项
+    var AuditStatusAableSelect = {};
+    for (var i = 0; i < dicAuditStatus.length; i++) {
+        AuditStatusAableSelect[dicAuditStatus[i].Key] = dicAuditStatus[i].Value;
+        
+    }
+
+    var UserTypeAableSelect = {};
+    for (var i = 0; i < dicUserTypes.length; i++) {
+        UserTypeAableSelect[dicUserTypes[i].Key] = dicUserTypes[i].Value;
+
+    }
+   
+
     $(document).ready(function () {
         InitTable();
         InitModalEvent();
@@ -195,9 +157,12 @@
         return result;
     }
 
+
+
+
     function InitTable() {
         $('#table').bootstrapTable({
-            height: 500,
+            height: 550,
             method: 'post',                 //The method type to request remote data.
             url: '/ProjectApply/IntelInnovationProjectApply/GetPageDataForAudit',
             dataType: "json",               //The type of data that you are expecting back from the server.
@@ -220,6 +185,8 @@
             showExport: true, //数据导出
             exportDataType: 'basic', // 'basic', 'all', 'selected'.
             exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
             columns: [{
                 checkbox: true
             },
@@ -231,8 +198,8 @@
                 {
                     field: 'Name',
                     title: '项目名称',
-                    sortable: true
-
+                    sortable: true,
+                    filterControl: "input"
                 },
                 {
                     field: 'OrganizationName',
@@ -243,7 +210,9 @@
                 {
                     field: 'UserType',
                     title: '用户类型',
-                    align:'center',
+                    align: 'center',
+                    filterControl: 'select',
+                    filterData: 'var:UserTypeAableSelect',
                     formatter: function (value, row, index) {
 
                         var result = DicUserTypes(value);
@@ -257,7 +226,7 @@
                     title: '营业执照',
                     formatter: function (value, row, index) {
 
-                        
+
                         return '<a href="javaScript:void(0);" onclick="ShowBusinessLicense(&apos;' + row.UserId + '&apos;,&apos;' + row.OrganizationName + '&apos;)">' + value + '</a>';
                     }
 
@@ -265,6 +234,9 @@
                 {
                     field: 'AuditStatus',
                     title: '审核状态',
+                    filterControl: 'select',
+                    //filterData: 'url:/Infra/Common/GetAuditStatusDic',
+                    filterData: 'var:AuditStatusAableSelect',
                     formatter: function (value, row, index) {
 
                         var fontClass = "success-audit"
@@ -358,24 +330,28 @@
         });
     }
     function ConstructQueryParams(param) {
+
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
         var params = {
             limit: param.limit, //页面大小
             offset: param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            Name: $("#tbSearchName").val(),
-            AuditStatus: $("#selSearchAuditStatus").val(),
-            UserType: $("#selSearchUserType").val()
+            Name: filterObj.Name == null ? "" : filterObj.Name,
+            AuditStatus: filterObj.AuditStatus == null ? "" : filterObj.AuditStatus,
+            UserType: filterObj.UserType == null ? "" : filterObj.UserType
 
         };
         return params;
     }
 
     ///查看营业执照
-    function ShowBusinessLicense(userid,orgName)
-    {
+    function ShowBusinessLicense(userid, orgName) {
         var licenseAttachments = GetBusinessLicenseAttachment(userid);
-        if(licenseAttachments != null)
-        {
+        if (licenseAttachments != null) {
 
             $(".licenseimage").width(600);
             $(".licenseimage").attr("src", licenseAttachments[0].VirtualPath);
@@ -383,7 +359,7 @@
             //自定页
             layer.open({
                 title: '营业执照 - ' + orgName,
-                area:['90%','90%'],
+                area: ['90%', '90%'],
                 type: 1,
                 skin: 'layui-layer-demo', //样式类名
                 closeBtn: 0, //不显示关闭按钮
@@ -392,16 +368,15 @@
                 content: contentHtml
             });
 
-           
+
         }
 
-        
-        
+
+
     }
 
     ///获取营业执照附件
-    function GetBusinessLicenseAttachment(userid)
-    {
+    function GetBusinessLicenseAttachment(userid) {
         var attachment = null;
 
         $.ajax({
@@ -412,7 +387,7 @@
             async: false,
             success: function (message) {
                 attachment = JSON.parse(message.Content);
-                
+
             }
         });
 
@@ -420,20 +395,17 @@
     }
 
     //图片放大缩小
-    function scrollImage(isplus)
-    {
+    function scrollImage(isplus) {
         var imageareaWidth = $(window).width() * 0.9;
-        
+
         var scrollZoom = 1.1;
-        if(!isplus)
-        {
+        if (!isplus) {
             scrollZoom = 0.9;
         }
         var newWidth = $(".licenseimage").width() * scrollZoom;
 
         //最大不能超过显示区域
-        if (newWidth < imageareaWidth)
-        {
+        if (newWidth < imageareaWidth) {
             $(".licenseimage").width(newWidth);
 
         }

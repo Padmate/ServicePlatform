@@ -101,7 +101,7 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         [OptionalRequired(ErrorMessage = "负责人联系电话不能为空")]
         [MaxLength(100, ErrorMessage = "负责人联系电话不能超过100个字符")]
-        [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)",ErrorMessage="负责人电话格式不正确。")]
+        //[RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)",ErrorMessage="负责人电话格式不正确。")]
         public string PrincipalPhone { get; set; }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         [OptionalRequired(ErrorMessage = "负责人联系邮箱不能为空")]
         [MaxLength(100, ErrorMessage = "负责人联系邮箱不能超过100个字符")]
-        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "负责人邮件格式不正确")]
+        //[RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "负责人邮件格式不正确")]
         public string PrincipalMail { get; set; }
 
 
@@ -132,7 +132,7 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         [OptionalRequired(ErrorMessage = "联系人电话不能为空")]
         [MaxLength(100, ErrorMessage = "联系人电话不能超过100个字符")]
-        [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessage = "联系人电话格式不正确。")]
+        //[RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessage = "联系人电话格式不正确。")]
         public string ContactPhone { get; set; }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         [OptionalRequired(ErrorMessage = "联系人邮箱不能为空")]
         [MaxLength(100, ErrorMessage = "联系人邮箱不能超过100个字符")]
-        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "联系人邮件格式不正确")]
+        //[RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "联系人邮件格式不正确")]
         public string ContactMail { get; set; }
 
         /// <summary>
