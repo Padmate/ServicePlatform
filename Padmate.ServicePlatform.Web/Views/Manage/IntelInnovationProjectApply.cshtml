@@ -514,15 +514,23 @@
                 return;
             }
             var projectQueIds = [];
+            var defaultRemark = "";
             for (var i = 0; i < selections.length; i++) {
                 var id = selections[i].QueId;
                 projectQueIds.push(id);
 
             }
 
+            //如果只选择一条数据，则显示原来的remark
+            if(selections.length ==1)
+            {
+                defaultRemark = selections[0].AuditRemark;
+            }
+
             var prompt = layer.prompt({
                 title: '请输入备注',
-                formType: 2 //prompt风格，支持0-2
+                formType: 2, //prompt风格，支持0-2
+                value:defaultRemark
             }, function (remark) {
 
                 var jsonProjectQueId = JSON.stringify(projectQueIds);
