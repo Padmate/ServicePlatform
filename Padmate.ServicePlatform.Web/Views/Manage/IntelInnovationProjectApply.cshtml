@@ -22,6 +22,9 @@
         width:600px;
         margin:0px auto;
     }
+    .licenseimage{
+        padding-top:50px;
+    }
     .imagescroll{
         width:150px;
         margin:10px auto;
@@ -361,9 +364,10 @@
 
             $(".licenseimage").width(600);
             $(".licenseimage").attr("src", licenseAttachments[0].VirtualPath);
-            var contentHtml = $(".showlicenseimage").html();
             //图片角度初始化为0
-            currDeg = 0;
+            $(".licenseimage").css('transform', 'rotate(0deg)');
+            var contentHtml = $(".showlicenseimage").html();
+            
             //自定页
             layer.open({
                 title: '营业执照 - ' + orgName,
