@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config )
 	// config.language = 'fr';
     // config.uiColor = '#AADC6E';
     // 设置宽高
-    config.height = 400;
+    config.height = 800;
     config.filebrowserImageUploadUrl = "/Manage/CKEditorUpload";
     config.font_names = '宋体/SimSun;新宋体/NSimSun;仿宋/FangSong;楷体/KaiTi;仿宋_GB2312/FangSong_GB2312;' +
         '楷体_GB2312/KaiTi_GB2312;黑体/SimHei;华文细黑/STXihei;华文楷体/STKaiti;华文宋体/STSong;华文中宋/STZhongsong;' +

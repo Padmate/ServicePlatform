@@ -23,10 +23,11 @@
         margin:0px auto;
     }
     .imagescroll{
-        width:100px;
+        width:150px;
         margin:10px auto;
         position:fixed;
         right:10px;
+        z-index:999;
     }
     .imagescroll a{
         margin:10px;
@@ -86,6 +87,11 @@
 <div class="showlicenseimage">
     <div class="imagearea">
         <div class="imagescroll">
+            <a href="javaScript:void(0)" onclick="roateImage()">
+                <i class="fa fa-rotate-right fa-2x"></i>
+
+            </a>
+
             <a href="javaScript:void(0)" onclick="scrollImage(true)">
                 <i class="fa fa-plus fa-2x"></i>
 
@@ -356,6 +362,8 @@
             $(".licenseimage").width(600);
             $(".licenseimage").attr("src", licenseAttachments[0].VirtualPath);
             var contentHtml = $(".showlicenseimage").html();
+            //图片角度初始化为0
+            currDeg = 0;
             //自定页
             layer.open({
                 title: '营业执照 - ' + orgName,
@@ -409,6 +417,14 @@
             $(".licenseimage").width(newWidth);
 
         }
+    }
+
+    //旋转图片
+    var currDeg = 0;
+    function roateImage() {
+
+        currDeg = (currDeg + 90) % 360;
+        $(".licenseimage").css('transform','rotate(' + currDeg + 'deg)');
     }
 
     function CloseAuditScreen() {
