@@ -65,6 +65,10 @@
         BORDER-BOTTOM-STYLE: solid;
         outline:none;
     }
+    .projectdoc{
+        text-decoration:underline;
+        color:red;
+    }
 </style>
 
 <div class="container">
@@ -78,16 +82,17 @@
                         <span id="AuditStatusMsg" class="customer-content-sm red"></span><br />
                         <textarea id="taAuditRemarkMsg" hidden></textarea>
                         <span id="spAuditRemarkMsg" class="customer-content-sm red"></span>
+
                     </div>
+                    
                 </div>
             </div>
 
         </div>
-
-
         <div class="col-sm-12 col-md-7">
             
             <div class="form-horizontal">
+               
                 <div class="form-group">
                     <div class="col-xs-3 col-sm-3 col-md-3 control-label">
                         <label class="customer-content-sm">@string.Format("{0}名称",userType)：</label>
@@ -268,8 +273,7 @@
                     </div>
 
                 </div>
-
-
+               
             </div>
         </div>
 
@@ -316,7 +320,7 @@
 
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12">
-                        <label class="customer-content-sm">联系人人信息</label>
+                        <label class="customer-content-sm">联系人信息</label>
                     </div>
                 </div>
 
@@ -352,7 +356,17 @@
                         <input class="input-large-full data-ContactPosition" placeholder="联系人职位" type="text" />
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-xs-3 col-sm-3 col-md-3 text-right">
+                        <label class="customer-content-sm">评分标准：</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9">
 
+                        <a href="../Upload/IntelInnovationProjectAttachment/预赛评判标准1114.doc" class="customer-content-md projectdoc">大赛预赛评分标准</a>
+
+                    </div>
+                </div>
+                
             </div>
             
         </div>
