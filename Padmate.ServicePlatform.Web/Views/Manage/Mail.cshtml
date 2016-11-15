@@ -125,8 +125,43 @@
             {
                 field: 'SendDate',
                 title: '发送时间',
-                sortable: true
+                formatter: function (value, row, index) {
+                    var result = value;
+                    if (value != null) {
+                        result = JsonDateFormat2(value);
+                    }
+
+
+                    return result;
+                }
+            }, {
+                field: 'ReadTag',
+                title: '读取状态',
+                sortable: true,
+                formatter: function (value, row, index) {
+
+                    if (row.ReadTag) {
+                        return "已读";
+                    } else {
+                        return "未读";
+                    }
+                }
+
+            },
+            {
+                field: 'ReadDate',
+                title: '读取时间',
+                formatter: function (value, row, index) {
+                    var result = value;
+                    if (value != null) {
+                        result = JsonDateFormat2(value);
+                    }
+
+
+                    return result;
+                }
             }
+
             ]
         });
     }

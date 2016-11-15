@@ -60,6 +60,14 @@ namespace Padmate.ServicePlatform.Service
             return result;
         }
 
+        public List<M_Mail> GetAllUnReadMail()
+        {
+            var contacts = _dMail.GetAllUnReadMail();
+            var result = contacts.Select(a => ConverEntityToModel(a)).ToList();
+
+            return result;
+        }
+
         /// <summary>
         /// 获取分页数据
         /// </summary>
@@ -172,6 +180,45 @@ namespace Padmate.ServicePlatform.Service
             return message;
         }
 
+        public Message EditSendTag(int id,bool sendtag)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "邮件发送状态修改成功";
+
+            try
+            {
+                 _dMail.EditSendStatus(id, sendtag);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "邮件发送状态修改失败，异常：" + e.Message;
+            }
+            return message;
+        }
+
+
+        public Message EditReadTag(int id, bool readtag)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "邮件读取状态修改成功";
+
+            try
+            {
+                _dMail.EditReadStatus(id, readtag);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "邮件读取状态修改失败，异常：" + e.Message;
+            }
+            return message;
+        }
+
 
         public Message DeleteMail(int id)
         {
@@ -230,7 +277,9 @@ namespace Padmate.ServicePlatform.Service
                 Modifier = mail.Modifier,
                 ModifiedDate = mail.ModifiedDate,
                 SendTag = mail.SendTag,
-                SendDate = mail.SendDate
+                SendDate = mail.SendDate,
+                ReadTag = mail.ReadTag,
+                ReadDate = mail.ReadDate
             };
             return model;
         }

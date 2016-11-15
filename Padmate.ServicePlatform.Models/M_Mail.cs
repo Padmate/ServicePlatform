@@ -67,6 +67,17 @@ namespace Padmate.ServicePlatform.Models
         /// 邮件发送标记
         /// </summary>
         public bool SendTag { get; set; }
+
+        /// <summary>
+        /// 是否读取邮件
+        /// </summary>
+        public bool ReadTag { get; set; }
+
+        /// <summary>
+        /// 阅读邮件日期
+        /// </summary>
+        public DateTime? ReadDate { get; set; }
+
     }
 
     /// <summary>

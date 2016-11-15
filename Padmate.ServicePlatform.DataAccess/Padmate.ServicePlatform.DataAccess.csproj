@@ -158,6 +158,10 @@
     <Compile Include="Migrations\201610310754424_AddRowVersionToIntelProject.Designer.cs">
       <DependentUpon>201610310754424_AddRowVersionToIntelProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611150222268_UpdateTableMails.cs" />
+    <Compile Include="Migrations\201611150222268_UpdateTableMails.Designer.cs">
+      <DependentUpon>201611150222268_UpdateTableMails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceDBContext.cs" />
@@ -226,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610310754424_AddRowVersionToIntelProject.resx">
       <DependentUpon>201610310754424_AddRowVersionToIntelProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611150222268_UpdateTableMails.resx">
+      <DependentUpon>201611150222268_UpdateTableMails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

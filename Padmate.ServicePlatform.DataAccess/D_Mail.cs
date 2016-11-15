@@ -77,6 +77,16 @@ namespace Padmate.ServicePlatform.DataAccess
         }
 
         /// <summary>
+        /// 查询所有未读取的邮件
+        /// </summary>
+        /// <returns></returns>
+        public List<Mail> GetAllUnReadMail()
+        {
+            var mails = _dbContext.Mails.Where(m => m.ReadTag == false).ToList();
+            return mails;
+        }
+
+        /// <summary>
         /// 新增
         /// </summary>
         /// <param name="mail"></param>
@@ -102,6 +112,39 @@ namespace Padmate.ServicePlatform.DataAccess
             mail.Modifier = model.Modifier;
             mail.ModifiedDate = model.ModifiedDate;
 
+
+            _dbContext.SaveChanges();
+            return mail.Id;
+        }
+
+        /// <summary>
+        /// 修改发送状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int EditSendStatus(int id,bool sendtag)
+        {
+            var mail = _dbContext.Mails.FirstOrDefault(a => a.Id == id);
+
+            mail.SendDate = DateTime.Now;
+            mail.SendTag = sendtag;
+            _dbContext.SaveChanges();
+            return mail.Id;
+        }
+
+        /// <summary>
+        /// 修改读取状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int EditReadStatus(int id, bool readtag)
+        {
+            var mail = _dbContext.Mails.FirstOrDefault(a => a.Id == id);
+
+            mail.ReadDate = DateTime.Now;
+            mail.ReadTag = readtag;
 
             _dbContext.SaveChanges();
             return mail.Id;

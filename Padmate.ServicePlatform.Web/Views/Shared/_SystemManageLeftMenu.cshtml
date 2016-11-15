@@ -5,7 +5,7 @@
 @using Padmate.ServicePlatform.Utility;
 @{
     B_Mail bMail = new B_Mail();
-    int unSendMailNum = bMail.GetAllUnSendMail().Count();
+    int unSendMailNum = bMail.GetAllUnReadMail().Count();
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 }
 

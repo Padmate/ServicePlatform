@@ -155,6 +155,9 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
 
             ViewData["Mail"] = mail;
 
+            //修改邮件读取状态为已读
+            bMail.EditReadTag(mailId,true);
+
 
             return View();
         }

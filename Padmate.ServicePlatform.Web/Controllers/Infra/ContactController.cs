@@ -256,6 +256,15 @@ namespace Padmate.ServicePlatform.Web.Controllers.Infra
             }
 
             B_Mail bMail = new B_Mail();
+            //发送邮件
+            message =  SendCloudMail.Send(model);
+            if(message.Success)
+            {
+                //邮件发送成功
+                model.SendTag = true;
+                model.SendDate = DateTime.Now;
+
+            }
             message = bMail.AddMail(model);
 
             if (message.Success) message.Content = "邮件发送成功，我们将会尽快给您回复。";
