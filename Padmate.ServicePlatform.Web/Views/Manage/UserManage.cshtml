@@ -88,6 +88,13 @@
     var dicUserType = $.parseJSON('@Html.Raw(ViewData["UserType"])');
     var dicRoles = $.parseJSON('@Html.Raw(ViewData["Roles"])');
 
+    //bootstrap filter 选择项
+    var UserTypeTableSelect = {};
+    for (var i = 0; i < dicUserType.length; i++) {
+        UserTypeTableSelect[dicUserType[i].Key] = dicUserType[i].Value;
+
+    }
+
     $(document).ready(function () {
         InitTable();
         InitToolBarButton();
@@ -108,10 +115,16 @@
             idField: 'Id',
             toolbar: '#toolbar',
             showRefresh: true,
-            search: true,
+            search: false,
             clickToSelect: true,     //单击行选中数据
             queryParams: ConstructQueryParams,
-            //queryParamsType: "limit",
+            showColumns: true,
+            showToggle: true,
+            showExport: true, //数据导出
+            exportDataType: 'basic', // 'basic', 'all', 'selected'.
+            exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
             locale: 'zh-CN',
             columns: [{
                 checkbox: true
@@ -124,7 +137,7 @@
             {
                 field: 'UserName',
                 title: '用户名称',
-                sortable: true
+                filterControl: 'input'
 
             },
             {
@@ -150,6 +163,8 @@
             {
                 field: 'UserType',
                 title: '用户类型',
+                filterControl: 'select',
+                filterData: 'var:UserTypeTableSelect',
                 formatter: function (value, row, index) {
 
                     return DicUserType(value);;
@@ -171,11 +186,18 @@
         });
     }
     function ConstructQueryParams(param) {
+
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
         var params = {
             limit: param.limit, //页面大小
             offset: param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            UserName: param.search
+            UserName: filterObj.UserName == null ? "" : filterObj.UserName,
+            UserType: filterObj.UserType == null ? "" : filterObj.UserType
         };
         return params;
     }
@@ -297,27 +319,41 @@
                 }
 
             }
-            //delete records
-            var jsonUserId = JSON.stringify(contactIds);
-            $.ajax({
-                type: "post",//使用get方法访问后台
-                dataType: "json",//返回json格式的数据
-                url: "/User/User/BachDeleteById",
-                data: jsonUserId,
-                async: false,
-                success: function (message) {
-                    if (message.Success) {
-                        RefreshTable();
-                    } else {
-                        layer.alert(message.Content, {
-                            skin: 'layui-layer-molv'
-                            , closeBtn: 0
-                            , shift: 5 //动画类型
-                        });
-                    }
 
-                }
+            layer.confirm('确定删除该条记录吗？', {
+                btn: ['确定', '取消'] //可以无限个按钮
+
+            }, function (index, layero) {
+
+                layer.close(index);
+                //delete records
+                var jsonUserId = JSON.stringify(contactIds);
+                $.ajax({
+                    type: "post",//使用get方法访问后台
+                    dataType: "json",//返回json格式的数据
+                    url: "/User/User/BachDeleteById",
+                    data: jsonUserId,
+                    async: false,
+                    success: function (message) {
+                        if (message.Success) {
+                            RefreshTable();
+                        } else {
+                            layer.alert(message.Content, {
+                                skin: 'layui-layer-molv'
+                                , closeBtn: 0
+                                , shift: 5 //动画类型
+                            });
+                        }
+
+                    }
+                });
+
+                
+            }, function (index) {
+                
             });
+
+            
         });
 
         //详细

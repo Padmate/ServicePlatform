@@ -60,7 +60,8 @@ namespace Padmate.ServicePlatform.Service
         {
             User searchModel = new User()
             {
-                UserName = user.UserName
+                UserName = user.UserName,
+                UserType = user.UserType
             };
 
             var offset = user.offset;
@@ -81,7 +82,9 @@ namespace Padmate.ServicePlatform.Service
         {
             User searchModel = new User()
             {
-                UserName = user.UserName
+                UserName = user.UserName,
+                UserType = user.UserType
+
             };
 
             var totalCount = _dUser.GetPageDataTotalCount(searchModel);

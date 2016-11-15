@@ -84,7 +84,7 @@ namespace Padmate.ServicePlatform.Service
             var limit = contact.limit;
 
 
-            var pageResult = _dMail.GetPageData(searchModel, offset, limit);
+            var pageResult = _dMail.GetPageData(searchModel,contact.SendTagSearch,contact.ReadTagSearch, offset, limit);
             var result = pageResult.Select(a => ConverEntityToModel(a)).ToList();
 
             return result;
@@ -101,7 +101,7 @@ namespace Padmate.ServicePlatform.Service
                 Subject = contact.Subject
             };
 
-            var totalCount = _dMail.GetPageDataTotalCount(searchModel);
+            var totalCount = _dMail.GetPageDataTotalCount(searchModel, contact.SendTagSearch, contact.ReadTagSearch);
             return totalCount;
         }
 

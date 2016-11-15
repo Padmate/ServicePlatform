@@ -83,6 +83,8 @@ namespace Padmate.ServicePlatform.DataAccess
 
             if (!string.IsNullOrEmpty(projcet.UserType))
                 query = query.Where(a => a.UserType == projcet.UserType);
+            if (!string.IsNullOrEmpty(projcet.OrganizationName))
+                query = query.Where(a => a.OrganizationName.Contains(projcet.OrganizationName));
             #endregion
 
             var result = query.OrderByDescending(a => a.ApplicationDate)
@@ -129,6 +131,11 @@ namespace Padmate.ServicePlatform.DataAccess
 
             if (!string.IsNullOrEmpty(projcet.AuditStatus))
                 query = query.Where(a => a.AuditStatus.Contains(projcet.AuditStatus));
+
+            if (!string.IsNullOrEmpty(projcet.UserType))
+                query = query.Where(a => a.UserType == projcet.UserType);
+            if (!string.IsNullOrEmpty(projcet.OrganizationName))
+                query = query.Where(a => a.OrganizationName.Contains(projcet.OrganizationName));
             #endregion
 
             var result = query.Count();

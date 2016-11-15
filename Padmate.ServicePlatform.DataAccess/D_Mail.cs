@@ -18,13 +18,37 @@ namespace Padmate.ServicePlatform.DataAccess
         /// <param name="skip"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public List<Mail> GetPageData(Mail mail, int skip, int limit)
+        public List<Mail> GetPageData(Mail mail,string sendtagsearch,string readtagsearch ,int skip, int limit)
         {
             var query = _dbContext.Mails.Where(a => 1 == 1);
 
             #region　条件过滤\
             if (!string.IsNullOrEmpty(mail.Subject))
                 query = query.Where(a => a.Subject.Contains(mail.Subject));
+            if(!string.IsNullOrEmpty(sendtagsearch))
+            {
+                if(sendtagsearch =="0")
+                {
+                    query = query.Where(a => a.SendTag == true);
+
+                }else{
+                    query = query.Where(a => a.SendTag == false);
+
+                }
+            }
+            if (!string.IsNullOrEmpty(readtagsearch))
+            {
+                if (readtagsearch == "0")
+                {
+                    query = query.Where(a => a.ReadTag == true);
+
+                }
+                else
+                {
+                    query = query.Where(a => a.ReadTag == false);
+
+                }
+            }
             #endregion
 
             var result = query.OrderByDescending(a => a.CreateDate)
@@ -35,13 +59,39 @@ namespace Padmate.ServicePlatform.DataAccess
             return result;
         }
 
-        public int GetPageDataTotalCount(Mail mail)
+        public int GetPageDataTotalCount(Mail mail,string sendtagsearch,string readtagsearch)
         {
             var query = _dbContext.Mails.Where(a => 1 == 1);
 
             #region　条件过滤
             if (!string.IsNullOrEmpty(mail.Subject))
                 query = query.Where(a => a.Subject.Contains(mail.Subject));
+            if (!string.IsNullOrEmpty(sendtagsearch))
+            {
+                if (sendtagsearch == "0")
+                {
+                    query = query.Where(a => a.SendTag == true);
+
+                }
+                else
+                {
+                    query = query.Where(a => a.SendTag == false);
+
+                }
+            }
+            if (!string.IsNullOrEmpty(readtagsearch))
+            {
+                if (readtagsearch == "0")
+                {
+                    query = query.Where(a => a.ReadTag == true);
+
+                }
+                else
+                {
+                    query = query.Where(a => a.ReadTag == false);
+
+                }
+            }
             #endregion
 
             var result = query.ToList().Count();

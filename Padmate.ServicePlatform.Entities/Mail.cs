@@ -67,6 +67,7 @@ namespace Padmate.ServicePlatform.Entities
         [DefaultValue(false)]        
         public bool SendTag { get; set; }
 
+
         /// <summary>
         /// 是否读取邮件
         /// </summary>

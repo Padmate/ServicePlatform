@@ -68,10 +68,14 @@ namespace Padmate.ServicePlatform.Models
         /// </summary>
         public bool SendTag { get; set; }
 
+        public string SendTagSearch { get; set; }
+
         /// <summary>
         /// 是否读取邮件
         /// </summary>
         public bool ReadTag { get; set; }
+
+        public string ReadTagSearch { get; set; }
 
         /// <summary>
         /// 阅读邮件日期

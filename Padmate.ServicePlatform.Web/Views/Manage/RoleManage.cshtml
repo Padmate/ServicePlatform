@@ -13,13 +13,13 @@
 
                 <div id="toolbar">
                     <button id="btnAdd" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-plus"></i>Add
+                        <i class="glyphicon glyphicon-plus"></i>新 增
                     </button>
                     <button id="btnEdit" class="btn btn-success">
-                        <i class="glyphicon glyphicon-plus"></i>Edit
+                        <i class="glyphicon glyphicon-plus"></i>修 改
                     </button>
                     <button id="btnDelete" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-remove"></i> Delete
+                        <i class="glyphicon glyphicon-remove"></i> 删 除
                     </button>
                 </div>
                 <table id="table"></table>
@@ -59,6 +59,12 @@
 
     var dicRoles = $.parseJSON('@Html.Raw(ViewData["Roles"])');
 
+    //bootstrap filter 选择项
+    var RoleNameTableSelect = {};
+    for (var i = 0; i < dicRoles.length; i++) {
+        RoleNameTableSelect[dicRoles[i].Key] = dicRoles[i].Value;
+
+    }
 
     $(document).ready(function () {
         InitTable();
@@ -81,11 +87,17 @@
             idField:'Id',
             toolbar:'#toolbar',
             showRefresh:true,
-            search: true,
+            search: false,
             clickToSelect: true,     //单击行选中数据
             queryParams: ConstructQueryParams,
-            //queryParamsType: "limit",
-            locale:'en-US',
+            showColumns: true,
+            showToggle: true,
+            showExport: true, //数据导出
+            exportDataType: 'basic', // 'basic', 'all', 'selected'.
+            exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
+            locale:'zh-CN',
             columns: [{
                 checkbox: true
             },
@@ -97,7 +109,8 @@
             {
                 field: 'Name',
                 title: '角色名称',
-                sortable: true,
+                filterControl: 'select',
+                filterData: 'var:RoleNameTableSelect',
                 formatter: function (value, row, index) {
 
                     return DicRoles(value);;
@@ -109,11 +122,16 @@
     }
     function ConstructQueryParams(param)
     {
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
         var params = {
             limit: param.limit, //页面大小
             offset:param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            Name:param.search
+            Name: filterObj.Name == null ? "" : filterObj.Name,
         };
         return params;
     }

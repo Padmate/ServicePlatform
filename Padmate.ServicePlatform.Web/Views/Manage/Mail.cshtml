@@ -42,6 +42,17 @@
 
 <!--Script要放在HTML标签后，才能将值绑定到标签-->
 <script type="text/javascript">
+
+    //bootstrap filter 选择项
+    var SendTagTableSelect = {};
+    SendTagTableSelect[0] = "已发送";
+    SendTagTableSelect[1] = "未发送";
+
+    var ReadTagTableSelect = {};
+    ReadTagTableSelect[0] = "已读";
+    ReadTagTableSelect[1] = "未读";
+
+    
     $(document).ready(function () {
         InitTable();
         InitModalEvent();
@@ -63,11 +74,17 @@
             idField:'Id',
             toolbar:'#toolbar',
             showRefresh:true,
-            search:true,
+            search:false,
             queryParams: ConstructQueryParams,
             clickToSelect: true,     //单击行选中数据
-            //queryParamsType: "limit",
-            locale:'en-US',
+            showColumns: true,
+            showToggle: true,
+            showExport: true, //数据导出
+            exportDataType: 'basic', // 'basic', 'all', 'selected'.
+            exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
+            locale:'zh-CN',
             columns: [{
                 checkbox: true
             },
@@ -91,7 +108,7 @@
             {
                 field: 'Subject',
                 title: '邮件主题',
-                sortable: true
+                filterControl: 'input'
 
             },
             {
@@ -110,14 +127,15 @@
             },
             {
                 field: 'SendTag',
-                title: '是否发送',
-                sortable: true,
+                title: '发送状态',
+                filterControl: 'select',
+                filterData: 'var:SendTagTableSelect',
                 formatter: function (value, row, index) {
 
                     if (row.SendTag) {
-                        return "是";
+                        return "<label style='color:blue'>已发送</label>";
                     } else {
-                        return "否";
+                        return "<label style='color:red'>未发送</label>";
                     }
                 }
 
@@ -137,13 +155,14 @@
             }, {
                 field: 'ReadTag',
                 title: '读取状态',
-                sortable: true,
+                filterControl: 'select',
+                filterData: 'var:ReadTagTableSelect',
                 formatter: function (value, row, index) {
 
                     if (row.ReadTag) {
-                        return "已读";
+                        return "<label style='color:green'>已读</label>";
                     } else {
-                        return "未读";
+                        return "<label style='color:red'>未读</label>";
                     }
                 }
 
@@ -167,11 +186,19 @@
     }
     function ConstructQueryParams(param)
     {
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
         var params = {
             limit: param.limit, //页面大小
             offset:param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            Subject:param.search
+            Subject: filterObj.Subject == null ? "" : filterObj.Subject,
+            SendTagSearch: filterObj.SendTag,
+            ReadTagSearch: filterObj.ReadTag
+
         };
         return params;
     }

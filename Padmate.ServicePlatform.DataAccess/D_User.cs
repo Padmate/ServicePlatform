@@ -41,7 +41,8 @@ namespace Padmate.ServicePlatform.DataAccess
             #region　条件过滤
             if (!string.IsNullOrEmpty(user.UserName))
                 query = query.Where(a => a.UserName.Contains(user.UserName));
-
+            if (!string.IsNullOrEmpty(user.UserType))
+                query = query.Where(a => a.UserType == user.UserType);
             #endregion
 
             var applicationUser = query.OrderBy(r => r.Id)
@@ -63,7 +64,8 @@ namespace Padmate.ServicePlatform.DataAccess
             #region　条件过滤
             if (!string.IsNullOrEmpty(user.UserName))
                 query = query.Where(a => a.UserName.Contains(user.UserName));
-
+            if (!string.IsNullOrEmpty(user.UserType))
+                query = query.Where(a => a.UserType == user.UserType);
             #endregion
 
             var result = query.ToList().Count();
