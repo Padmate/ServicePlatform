@@ -201,7 +201,7 @@ namespace Padmate.ServicePlatform.DataAccess
             #endregion
 
             var votePrifix = VoteNoPrefix();
-            var result = query.OrderBy(a => System.Convert.ToInt32(a.VoteNo.Replace(votePrifix,string.Empty)))
+            var result = query.OrderBy(a => System.Convert.ToInt32(a.VoteNo))
             .Skip(skip)
             .Take(limit)
             .ToList();
@@ -264,7 +264,7 @@ namespace Padmate.ServicePlatform.DataAccess
 
             var votePrifix = VoteNoPrefix();
             var result = query.OrderByDescending(a=>a.TotalVotes)
-            .ThenBy(a => System.Convert.ToInt32(a.VoteNo.Replace(votePrifix,string.Empty)))
+            .ThenBy(a => System.Convert.ToInt32(a.VoteNo))
             .ToList();
 
             return result.ToList();
@@ -394,7 +394,7 @@ namespace Padmate.ServicePlatform.DataAccess
         /// <returns></returns>
         public string VoteNoPrefix()
         {
-            return " ";
+            return "";
         }
         
         /// <summary>
@@ -421,7 +421,6 @@ namespace Padmate.ServicePlatform.DataAccess
             }
             else
             {
-                var prefix = VoteNoPrefix();
                 returnVoteNo = System.Convert.ToInt32(maxVoteNo);
             }
 
