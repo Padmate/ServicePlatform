@@ -15,6 +15,10 @@
     
     
 }
+<!--浏览器不使用缓存-->
+@*<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />*@
 
 <link href="~/Content/vote.css" rel="stylesheet" />
 
@@ -69,31 +73,7 @@
         
         <div class="row">
             
-            @*<div class="col-is-6 col-sm-4 col-md-3">
-                <div class="vote-area">
-                    <a href="/intel-innovation-project-vote/XP10.html">
-
-                        <div class="vote-head" style="height: 180px;">
-                            <p class="customer-content-sm whitefont">团队：机器人团队</p>
-                             <p class="customer-content-sm">项目：这是一款使用纯js制作的炫酷Material Design风格按钮点击波特效。该...</p>
-                         </div>
-                    </a>
-                <div class="vote-content">
-                    <div class="col-xs-6 col-is-6 col-sm-12 col-md-12">
-                        <label class="customer-content-xs">XP10号</label>
-                    </div>
-                    <div class="col-xs-6 col-is-6 col-sm-6 col-md-6">
-                        <label class="customer-content-xs"><font id="votecount59">2</font>票</label>
-                    </div>
-                    <div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">
-                        <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote(59)">
-                            <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-xs">投票</strong>
-                        </a>
-                    </div>
-                </div>
-                <div style="clear:both"></div>
-                </div>
-            </div>*@
+            
             <div class="votebody" id="votebody"></div>
 
         </div>
@@ -150,7 +130,9 @@
             }
         }
         
-
+        $(window).resize(function () {
+            ResizeVoteHead();
+        });
     })
 
    
@@ -169,6 +151,8 @@
         if (pageResult.totalPages > 1) {
             InitPaginator(pageResult.totalPages);
         }
+
+       
 
     }
     //重置分页条
@@ -256,11 +240,18 @@
             for (var i = 0; i < projects.length; i++) {
                 var voteHref = "/intel-innovation-project-vote/" + projects[i].VoteNo + '@urlRewriteExtension';
                 var projectName = projects[i].Name;
+                var projectDescription = projects[i].Description;
 
                 //获取字节长度
-                var projectNameCharNum = projects[i].Name.replace(/[^\x00-\xff]/g, "**").length;
-                if (projectNameCharNum > 50) {
-                    projectName = autoAddEllipsis(projectName, 50);
+                //var projectNameCharNum = projects[i].Name.replace(/[^\x00-\xff]/g, "**").length;
+                //if (projectNameCharNum > 50) {
+                //    projectName = autoAddEllipsis(projectName, 50);
+                //}
+
+                //获取字节长度
+                var projectDesCharNum = projects[i].Description.replace(/[^\x00-\xff]/g, "**").length;
+                if (projectDesCharNum > 100) {
+                    projectDescription = autoAddEllipsis(projectDescription, 100);
                 }
 
                 dynamicHtml += '<div class="col-is-6 col-sm-4 col-md-3">';
@@ -268,9 +259,9 @@
 
                 dynamicHtml += '<a href="' + voteHref + '">';
                 dynamicHtml += '<div class="vote-head">';
-                dynamicHtml += ' <p class="customer-content-sm whitefont">团队：' + projects[i].OrganizationName + '</p>';
-                dynamicHtml += ' <p class="customer-content-sm">项目：' + projectName + '</p>';
-
+                dynamicHtml += ' <p class="customer-content-sm whitefont companyname">' + projects[i].OrganizationName + '</p>';
+                dynamicHtml += ' <p class="customer-content-sm project-title">项目：' + projectName + '</p>';
+                dynamicHtml += ' <p class="customer-content-xs project-desc">简介：' + projectDescription + '</p>';
                 dynamicHtml += '</div>';
                 dynamicHtml += '</a>';
 
@@ -306,18 +297,28 @@
 
     }
 
+    
+
     function ResizeVoteHead()
     {
         var higestCaption = 0;
         $(".vote-head").each(function () {
 
-            var sectionHight = $(this).height();
-            if (higestCaption < sectionHight) {
-                higestCaption = sectionHight;
+           // var sectionHight = $(this).height();
+            var pElement = $(this).children("p");
+            var allPHeight = 0;
+            for (var i = 0; i < pElement.length;i++)
+            {
+                allPHeight += pElement[i].clientHeight;
+            }
+            
+            if (higestCaption < allPHeight) {
+                higestCaption = allPHeight;
             }
         });
+        debugger
         $(".vote-head").each(function () {
-            $(this).css({ 'height': higestCaption });
+            $(this).css({ 'height': higestCaption+40 });
 
 
         });

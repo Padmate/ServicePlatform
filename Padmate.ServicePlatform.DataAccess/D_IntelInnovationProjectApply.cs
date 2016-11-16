@@ -394,7 +394,7 @@ namespace Padmate.ServicePlatform.DataAccess
         /// <returns></returns>
         public string VoteNoPrefix()
         {
-            return "XP";
+            return " ";
         }
         
         /// <summary>

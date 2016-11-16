@@ -56,6 +56,7 @@ namespace Padmate.ServicePlatform.Models
         [Required(ErrorMessage = "投票时间间隔")]
         [RegularExpression(@"^[1-9]\d*|0$", ErrorMessage = "投票时间间隔格式不正确，只能是0或者正整数")]
         public string VoteInterval { get; set; }
+
     }
 
     public class Chart

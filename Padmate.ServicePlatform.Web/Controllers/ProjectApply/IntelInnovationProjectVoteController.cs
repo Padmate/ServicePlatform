@@ -415,6 +415,8 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
                 B_IntelInnovationProjectApply bApply = new B_IntelInnovationProjectApply();
 
                 bApply.SaveVoteConfiguration(config);
+
+                
                 message.Content = "参数设置成功";
 
 

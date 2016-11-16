@@ -2,7 +2,7 @@
 .vote-bg{
         background-image:url("../img/votebg.jpg");
         background-repeat:no-repeat;
-        background-attachment:fixed;
+        background-position:center;
         background-size:cover;
         min-height:600px;
     }
