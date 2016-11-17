@@ -122,6 +122,7 @@ namespace Padmate.ServicePlatform.Service
                 Name = project.Name,
                 AuditStatus = project.AuditStatus,
                 VoteNo = project.VoteNo,
+                UserType = project.UserType,
                 OrganizationName = project.OrganizationName
 
 
