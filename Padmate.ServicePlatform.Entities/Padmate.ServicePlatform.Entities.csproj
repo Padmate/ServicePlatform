@@ -65,6 +65,7 @@
     <Compile Include="UserAttachment.cs" />
     <Compile Include="UserProfile.cs" />
     <Compile Include="Vote.cs" />
+    <Compile Include="VoteBlackList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

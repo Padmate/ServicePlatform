@@ -11,6 +11,14 @@
         enableEdit = true;
     }
 
+    //报名时间
+    var endRegisterTime = System.Convert.ToDateTime("2016-11-25 23:59");
+    //判断是否已经报名
+    var isEndRegister = false;
+    if (DateTime.Compare(DateTime.Now, endRegisterTime) > 0)
+    {
+        isEndRegister = true;
+    }
 
 }
 
@@ -23,7 +31,18 @@
     .content-body-padding, .contact {
         padding: 0px 0px;
     }
-
+    .endtip
+    {
+        color:red;
+    }
+    .endtip a{
+        color:red;
+        text-decoration:underline;
+    }
+    .endtip a:hover,.endtip a:focus,.endtip a:active
+    {
+        color:red;
+    }
 </style>
 
 
@@ -34,17 +53,37 @@
 
         </div>
     </div>
+
+    @if(isEndRegister)
+    {
+        <div class="container">
+            <div class="col-md-12">
+                <p class="customer-h2 endtip">
+                    2016英特尔海峡创新创业大赛报名已经截止，感谢您的关注~12月3日上午有2016智享生态两岸创新创业高峰论坛，
+                    下午大赛决赛公开路演，期待您报名参加！
+                    <a href="/activity/activityforecast/b7eceaf2-f0b1-e611-86b3-1418775b817d.html">了解更多。。。</a>
+                </p>
+
+            </div>
+        </div>
+
+
+    }
+
     @if (enableEdit)
     {
-        @Html.Partial("_Edit")
+        if (!isEndRegister)
+        {
+            @Html.Partial("_Edit")
+
+        }
 
     }
     else
     {
-        @Html.Partial("_Detail")
+    @Html.Partial("_Detail")
 
     }
-
 
 
 

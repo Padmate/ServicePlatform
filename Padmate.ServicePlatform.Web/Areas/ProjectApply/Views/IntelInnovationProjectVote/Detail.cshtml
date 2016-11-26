@@ -38,23 +38,20 @@
                 <div class="vote-area">
 
                     <div class="vote-head" >
-                        <p class="customer-content-sm whitefont">@project.OrganizationName</p>
+                        <p class="customer-content-sm whitefont">@project.VoteNo 号</p>
                         <p class="customer-content-sm">项目：@project.Name</p>
                         <p class="customer-content-sm">简介：@project.Description</p>
 
                     </div>
                     <div class="vote-content">
-                        <div class="col-xs-6 col-is-6 col-sm-12 col-md-12">
-                            <label class="customer-content-sm">@project.VoteNo 号</label>
-                            
-                        </div>
+                        
                         <div class="col-xs-6 col-is-6 col-sm-6 col-md-6">
-                            <label class="customer-content-sm">
+                            <label class="customer-content-sm" style="color:red;">
                                 <font id='@string.Format("votecount{0}",project.Id)'>@project.TotalVotes</font>票
                             </label>
                             <a class="btn-vote-show" id="@string.Format("btn-vote-show{0}",project.Id)" style="visibility:hidden"></a>
                         </div>
-                        <div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">
+                        <div class="col-xs-5 col-is-6 col-sm-6 col-md-6 vote-btn">
                             <a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote('@project.Id')">
                                 <i class="fa fa-thumbs-o-up"></i><strong class="customer-content-sm">投票</strong>
                             </a>

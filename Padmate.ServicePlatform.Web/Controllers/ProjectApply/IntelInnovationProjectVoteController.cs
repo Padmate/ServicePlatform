@@ -1,4 +1,6 @@
-﻿using Padmate.ServicePlatform.Models;
+﻿using Padmate.ServicePlatform.DataAccess;
+using Padmate.ServicePlatform.Entities;
+using Padmate.ServicePlatform.Models;
 using Padmate.ServicePlatform.Service;
 using Padmate.ServicePlatform.Utility;
 using System;
@@ -103,6 +105,18 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             }
             ViewData["isEndVote"] = isEndVote;
 
+            #region 获取改票的投票时间段
+            B_Vote bVote = new B_Vote();
+            M_Vote model = new M_Vote();
+            model.VoteNo = voteno;
+
+            var votes = bVote.GetByMulitCond(model);
+
+            //按时间进行分组
+            var timeGroup = votes.GroupBy(v => v.VoteTime.ToString("yyyy-MM-dd"));
+            var voteTimeArea = timeGroup.Select(v => v.First().VoteTime.ToString("yyyy-MM-dd")).ToList();
+            ViewData["voteTimeArea"] = voteTimeArea.OrderByDescending(v => v).ToList() ;
+            #endregion
 
             return View();
 
@@ -248,15 +262,86 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
 
             if(!hasVoteRight)
             {
-                var intervalDay = voteInterval / (24 * 60);
+                var intervalHours = voteInterval / 60;
                 var intervalMinute = voteInterval % (24 * 60);
 
-                var dayTip = intervalDay == 0 ? "" : intervalDay + "天";
+                var hourTip = intervalHours == 0 ? "" : intervalHours + "小时";
                 var minuteTip = intervalMinute == 0 ? "" : intervalMinute + "分钟";
                 message.Success = false;
                 message.ReturnStrId = isIllegalOperator.ToString().ToLower();
-                message.Content = string.Format("您已经投过票了，{0}{1}内只能投{2}票",dayTip,minuteTip,intervalEachVotes);
+                message.Content = string.Format("您已经投过票了，{0}{1}内只能投{2}票", hourTip, minuteTip, intervalEachVotes);
                 return Json(message);
+            }
+            else
+            {
+                #region 投票黑名单校验
+                //判断当前IP是否在黑名单中
+                D_VoteBlackList dBlack = new D_VoteBlackList();
+                VoteBlackList entity = new VoteBlackList();
+                entity.VoteNo = project.VoteNo;
+                entity.ClientIP = clientIP;
+                var existBlackList = dBlack.GetByMulitCond(entity);
+                if (existBlackList.Count > 0)
+                {
+                    //
+                    message.Success = false;
+                    message.Content = "对不起，您存在作弊行为，已被禁止投票。";
+                    return Json(message);
+                }
+                else
+                {
+                    var isFake = false;
+                    //查询当前投票编号，IP的总投票数
+                    M_Vote model = new M_Vote();
+                    model.VoteNo = project.VoteNo;
+                    model.ClientIP = clientIP;
+                    var currentIPTotalVotes = bVote.GetByMulitCond(model);
+                    foreach (var ipVote in currentIPTotalVotes)
+                    {
+                        TimeSpan counttimespan = new TimeSpan(ipVote.VoteTime.Ticks);
+                        //以当前循环的投票时间为准，查询相差10秒内的投票记录数
+                        var tenSecondData = currentIPTotalVotes.Where(v =>
+                             new TimeSpan(v.VoteTime.Ticks).Subtract(counttimespan).Duration().TotalSeconds <= 10
+                            );
+                        //如果任意10秒内投票数超过5条
+                        if (tenSecondData.Count() > 5)
+                        {
+                            isFake = true;
+                            break;
+                        }
+                    }
+
+                    D_Vote dVote = new D_Vote();
+                    if (isFake)
+                    {
+                        //加入黑名单
+                        VoteBlackList black = new VoteBlackList();
+                        black.VoteNo = project.VoteNo;
+                        black.ClientIP = clientIP;
+                        dBlack.AddVoteBlackList(black);
+
+                        //计算该IP总共投了多少票，从现有票数中减去
+                        Vote totalBlackVote = new Vote();
+                        totalBlackVote.VoteNo = project.VoteNo;
+                        totalBlackVote.ClientIP = clientIP;
+                        var totalBlackVotes = dVote.GetByMulitCond(totalBlackVote);
+
+                        //获取当前project信息
+                        D_IntelInnovationProjectApply dProject = new D_IntelInnovationProjectApply();
+                        var currentProject = bProject.GetIntelInnovationProjectApplyById(ProjectId);
+                        int newCount = currentProject.TotalVotes - totalBlackVotes.Count();
+                        //更新当前票数:现有票数-作弊票数
+                        dProject.EditTotalVotes(System.Convert.ToInt32(ProjectId), newCount);
+
+
+                        message.Success = false;
+                        message.Content = "对不起，您存在作弊行为，已被禁止投票。";
+                        return Json(message);
+                    }
+
+
+                }
+                #endregion
             }
 
             M_Vote vote = new M_Vote();
@@ -335,6 +420,137 @@ namespace Padmate.ServicePlatform.Web.Controllers.ProjectApply
             chart.XAxis = chartXAxis;
             chart.YSeries = chartSeries.ToArray();
             #endregion 
+
+            return Json(chart);
+        }
+
+        [HttpPost]
+        public ActionResult GetEachDayChartXYAxis(string VoteNo)
+        {
+            #region 图标数据分析
+
+            B_Vote bVote = new B_Vote();
+            M_Vote model = new M_Vote();
+            model.VoteNo = VoteNo;
+
+            var votes = bVote.GetByMulitCond(model);
+
+            //先按时间进行分组
+            var timeGroup = votes.GroupBy(v => v.VoteTime.ToString("yyyy-MM-dd"));
+            //获取图表X轴,单位为/天
+            var chartXAxis = timeGroup.Select(v => v.First().VoteTime.ToString("yyyy-MM-dd"))
+                .OrderBy(v => v)
+                .ToArray();
+
+
+            //获取图片的Y轴,单位为票数
+            List<VoteChartY> chartSeries = new List<VoteChartY>();
+
+            VoteChartY ipYAxisValues = new VoteChartY();
+            ipYAxisValues.name = VoteNo + "号"; 
+            ipYAxisValues.data = new int[timeGroup.Count()];
+            int i = 0;
+            foreach (var tG in timeGroup)
+            {
+                ipYAxisValues.data[i++] = tG.Count();
+            }
+            chartSeries.Add(ipYAxisValues);
+
+            Chart chart = new Chart();
+            chart.XAxis = chartXAxis;
+            chart.YSeries = chartSeries.ToArray();
+            #endregion
+
+            return Json(chart);
+        }
+
+        [HttpPost]
+        public ActionResult GetEachHourChartXYAxis(string VoteNo,string VoteTime)
+        {
+            #region 图表数据分析
+
+            B_Vote bVote = new B_Vote();
+            M_Vote model = new M_Vote();
+            model.VoteNo = VoteNo;
+
+            var votes = bVote.GetByMulitCond(model);
+            var timeVotes = votes.Where(v => v.VoteTime.ToString("yyyy-MM-dd") == VoteTime).ToList();
+
+            //先按小时进行分组
+            var hourGroup = timeVotes.GroupBy(v => v.VoteTime.ToString("HH"));
+            //获取图表X轴,单位为/小时
+            //var chartXAxis = hourGroup.Select(v => v.First().VoteTime.ToString("HH"))
+            //    .OrderBy(v => v)
+            //    .ToArray();
+            //获取图表X轴,单位为/小时
+            string[] chartXAxis = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" 
+                                  ,"13","14","15","16","17","18","19","20","21","22","23","24"}; 
+
+            //获取图片的Y轴,单位为票数
+            List<VoteChartY> chartSeries = new List<VoteChartY>();
+
+            VoteChartY ipYAxisValues = new VoteChartY();
+            ipYAxisValues.name = VoteNo + "号";
+            ipYAxisValues.data = new int[chartXAxis.Count()];
+            int i = 0;
+            foreach(var hour in chartXAxis)
+            {
+                var hourVotesCount = timeVotes.Where(v => v.VoteTime.ToString("HH") == hour).ToList().Count();
+                ipYAxisValues.data[i++] = hourVotesCount;
+            }
+            
+            chartSeries.Add(ipYAxisValues);
+
+            Chart chart = new Chart();
+            chart.XAxis = chartXAxis;
+            chart.YSeries = chartSeries.ToArray();
+            #endregion
+
+            return Json(chart);
+        }
+
+        [HttpPost]
+        public ActionResult GetEachTotalDayChartXYAxis(string VoteNo)
+        {
+            #region 图标数据分析
+
+            B_Vote bVote = new B_Vote();
+            M_Vote model = new M_Vote();
+            model.VoteNo = VoteNo;
+
+            var votes = bVote.GetByMulitCond(model);
+
+            //先按天进行分组
+            var dayGroup = votes.GroupBy(v => v.VoteTime.ToString("yyyy-MM-dd"));
+            //获取图表X轴,单位为/小时
+            string[] chartXAxis = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" 
+                                  ,"13","14","15","16","17","18","19","20","21","22","23","24"}; 
+
+           
+
+            //获取图片的Y轴,单位为票数
+            List<VoteChartY> chartSeries = new List<VoteChartY>();
+
+
+            foreach (var day in dayGroup)
+            {
+                VoteChartY hourYAxisValues = new VoteChartY();
+                hourYAxisValues.name = day.First().VoteTime.ToString("yyyy-MM-dd");
+                hourYAxisValues.data = new int[chartXAxis.Count()];
+                for (int j = 0; j < chartXAxis.Count(); j++)
+                {
+                    //获取当天，在该时间点的票数
+                    var hourVotes = votes.Where(v => v.VoteTime.ToString("yyyy-MM-dd") == day.First().VoteTime.ToString("yyyy-MM-dd")
+                        && v.VoteTime.ToString("HH") == chartXAxis[j]).ToList();
+                    hourYAxisValues.data[j] = hourVotes.Count();
+                }
+                chartSeries.Add(hourYAxisValues);
+            }
+
+            Chart chart = new Chart();
+            chart.XAxis = chartXAxis;
+            chart.YSeries = chartSeries.ToArray();
+            #endregion
 
             return Json(chart);
         }

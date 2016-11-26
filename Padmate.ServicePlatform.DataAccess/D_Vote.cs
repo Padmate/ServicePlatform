@@ -68,6 +68,37 @@ namespace Padmate.ServicePlatform.DataAccess
             return todayVotes;
         }
 
+
+        public int GetOneMinuteDataCount(string voteno,string clientip)
+        {
+            var sql = @"select * from 
+                        (
+	                        select 
+	                        datediff(minute,a.VoteTime,getDate()) diffminute , --投票日期与当前时间相差多少分钟
+	                        a.* 
+	                        from Votes a
+                        ) temp where diffminute <{0} ";
+
+            //1分钟内
+            sql = string.Format(sql, 1);
+            var querySql = _dbContext.Database.SqlQuery<Vote>(sql);
+
+            var query = querySql.Where(a => 1 == 1);
+
+            if (!string.IsNullOrEmpty(voteno))
+            {
+                query = query.Where(v => v.BrowserId == voteno);
+            }
+            if (!string.IsNullOrEmpty(clientip))
+            {
+                query = query.Where(v => v.ClientIP == clientip);
+
+            }
+            var totalCount = query.ToList().Count(); ;
+
+            return totalCount;
+        }
+
         /// <summary>
         /// 根据设备ID，获取投票信息
         /// </summary>

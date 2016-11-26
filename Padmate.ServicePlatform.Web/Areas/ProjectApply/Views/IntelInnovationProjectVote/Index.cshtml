@@ -83,6 +83,28 @@
                 <div class="votePageBar">
                     <ul id="votePaginator"></ul>
                 </div>
+                
+            </div>
+            <div class="col-md-12">
+                <div class="rule">
+
+                    <h3 class="customer-h3 whitefont">
+                        投票规则：
+                    </h3>
+                    <p class="customer-content-lg whitefont">
+                        1、投票日期：2016年11月17日——11月30日23:55
+                    </p>
+                    <p class="customer-content-lg whitefont">
+                        2、每天每个ip每个用户仅限投1票
+                    </p>
+                    <p class="customer-content-lg whitefont">
+
+                        3、本次活动公平公正公开，禁止以不正当手段进行作弊行为（如异常投票），一经发现则按票数归零处理，作弊行为超过3次者，将被取消人气奖评选资格
+                    </p>
+                    <p class="customer-content-lg whitefont">
+                        4、本活动最终解释权归派美特所有
+                    </p>
+                </div>
             </div>
 
         </div>
@@ -259,23 +281,20 @@
 
                 dynamicHtml += '<a href="' + voteHref + '">';
                 dynamicHtml += '<div class="vote-head">';
-                dynamicHtml += ' <p class="customer-content-sm whitefont companyname">' + projects[i].OrganizationName + '</p>';
+                dynamicHtml += ' <p class="customer-content-sm whitefont companyname">' + projects[i].VoteNo + '号</p>';
                 dynamicHtml += ' <p class="customer-content-sm project-title">项目：' + projectName + '</p>';
                 dynamicHtml += ' <p class="customer-content-xs project-desc">简介：' + projectDescription + '</p>';
                 dynamicHtml += '</div>';
                 dynamicHtml += '</a>';
 
                 dynamicHtml += '<div class="vote-content">';
-                dynamicHtml += '<div class="col-xs-6 col-is-6 col-sm-12 col-md-12">';
-                dynamicHtml += '<label class="customer-content-xs">' + projects[i].VoteNo + '号</label>';
-                dynamicHtml += '</div>';
-                dynamicHtml += '<div class="col-xs-6 col-is-6 col-sm-6 col-md-6">';
-                dynamicHtml += '<label class="customer-content-xs">';
-                dynamicHtml += '<font id="votecount' + projects[i].Id + '">' + projects[i].TotalVotes + '</font>票';
+                dynamicHtml += '<div class="col-xs-5 col-is-6 col-sm-6 col-md-6">';
+                dynamicHtml += '<label class="customer-content-sm" style="color:red;">';
+                dynamicHtml += '<font id="votecount' + projects[i].Id + '" >' + projects[i].TotalVotes + '</font>票';
                 dynamicHtml += '</label>';
                 dynamicHtml += '<a class="btn-vote-show" id="btn-vote-show' + projects[i].Id + '" style="visibility:hidden"></a>';
                 dynamicHtml += '</div>';
-                dynamicHtml += '<div class="col-xs-12 col-is-12 col-sm-6 col-md-6 vote-btn">';
+                dynamicHtml += '<div class="col-xs-7 col-is-6 col-sm-6 col-md-6 vote-btn">';
                 dynamicHtml += '<a class="btn btn-gelatine btn-vote" href="javaScript:void(0)" onclick="vote(' + projects[i].Id + ')">';
                 dynamicHtml += '<i class="fa fa-thumbs-o-up"></i>';
                 dynamicHtml += '<strong class="customer-content-xs">投票</strong>';
@@ -316,7 +335,7 @@
                 higestCaption = allPHeight;
             }
         });
-        debugger
+        
         $(".vote-head").each(function () {
             $(this).css({ 'height': higestCaption+40 });
 

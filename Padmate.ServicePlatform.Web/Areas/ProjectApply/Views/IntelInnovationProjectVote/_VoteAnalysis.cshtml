@@ -5,55 +5,277 @@
 @{
     //项目内容
     var project = (M_IntelInnovationProjectApply)ViewData["project"];
+    var voteTimeAreas = (List<string>)ViewData["voteTimeArea"];
 }
 
 
 <section>
     <div class="container">
         <div class="row">
+
             <div class="col-md-12">
+                
+                <div class="col-md-2 text-right">
+                    表格分析：
+                </div>
+                <div class="col-md-4">
+
+                    <select class="select-mediu-full" id="charttype">
+                        <option value="eachday">每日总票数统计</option>
+                        <option value="totalday">每日投票趋势统计</option>
+                        <option value="eachip">每个IP投票统计</option>
+                       
+                    </select>
+                </div>
+
+
                 <div class="vote-analysis-chart"></div>
             </div>
+            <div class="col-md-12" style="margin-top:50px;">
+                <div class="col-md-2 text-right">
+                    日期选择：
+                </div>
+               <div class="col-md-4">
+                   
+                   <select class="select-mediu-full" id="votearea">
+                       @{
+                           foreach (var time in voteTimeAreas)
+                           {
+                               <option value="@time">@time</option>
+                           }
+                       }
+                   </select>
+               </div>
+               
+                
+                <div class="vote-analysis-eachhourchart"></div>
+            </div>
+
+            </div>
         </div>
-    </div>
+   
 </section>
+@Html.Partial("_Result")
 <script src="~/Scripts/highcharts/highcharts.js"></script>
 
 <script>
 
-  
+
     $(function () {
 
-        $.ajax({
-            type: "POST",
-            url: "/ProjectApply/IntelInnovationProjectVote/GetChartXYAxis",
-            data: {VoteNo:'@project.VoteNo'},
-            dataType: "json",
-            async: false,   //同步
-            success: function (result) {
-                
-                var chartXAxis =result.XAxis;
-                var chartSeries = result.YSeries;
-                debugger;
-                InitChart(chartXAxis,chartSeries);
+        //InitIPVoteChart();
+        InitEachDayVoteChart();
+        InitEachHourVoteChart();
 
+        $("#votearea").change(function () {
+            InitEachHourVoteChart();
+        });
+
+        $("#charttype").change(function () {
+            var charttype = this.value;
+            if (charttype == "eachip") {
+
+                InitIPVoteChart();
+            } else if (charttype == "eachday") {
+                InitEachDayVoteChart();
+            } else if (charttype == "totalday") {
+                InitTotalDayVoteChart();
             }
         });
 
-       
     });
 
+    function InitTotalDayVoteChart() {
 
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetEachTotalDayChartXYAxis",
+            data: { VoteNo: '@project.VoteNo' },
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
 
-    function InitChart(chartXAxis, chartSeries)
-    {
+                var chartXAxis = result.XAxis;
+                var chartSeries = result.YSeries;
+                InitTotalDayChart(chartXAxis, chartSeries);
+
+            }
+        });
+    }
+
+    function InitEachHourVoteChart() {
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetEachHourChartXYAxis",
+            data: { VoteNo: '@project.VoteNo', VoteTime: $("#votearea").val() },
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                var chartXAxis = result.XAxis;
+                var chartSeries = result.YSeries;
+                InitEachHourChart(chartXAxis, chartSeries);
+
+            }
+        });
+    }
+
+    function InitEachDayVoteChart() {
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetEachDayChartXYAxis",
+            data: { VoteNo: '@project.VoteNo' },
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                var chartXAxis = result.XAxis;
+                var chartSeries = result.YSeries;
+                InitEachDayChart(chartXAxis, chartSeries);
+
+            }
+        });
+    }
+    //IP投票分析图片
+    function InitIPVoteChart() {
+        $.ajax({
+            type: "POST",
+            url: "/ProjectApply/IntelInnovationProjectVote/GetChartXYAxis",
+            data: { VoteNo: '@project.VoteNo' },
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                var chartXAxis = result.XAxis;
+                var chartSeries = result.YSeries;
+                InitIPChart(chartXAxis, chartSeries);
+
+            }
+        });
+    }
+
+    function InitIPChart(chartXAxis, chartSeries) {
         $('.vote-analysis-chart').highcharts({
             title: {
-                text: '@project.VoteNo',
+                text: '@project.VoteNo 号',
                 x: -20 //center
             },
             subtitle: {
-                text: '投票统计',
+                text: '每个IP每天的投票票数',
+                x: -20
+            },
+            xAxis: {
+                categories: chartXAxis
+            },
+            yAxis: {
+                title: {
+                    text: '票数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '票',
+                crosshairs: true,
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: chartSeries
+        });
+    }
+
+    function InitTotalDayChart(chartXAxis, chartSeries) {
+        $('.vote-analysis-chart').highcharts({
+            title: {
+                text: '@project.VoteNo 号',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '每天每小时的投票票数',
+                x: -20
+            },
+            xAxis: {
+                categories: chartXAxis
+            },
+            yAxis: {
+                title: {
+                    text: '票数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '票',
+                crosshairs: true,
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: chartSeries
+        });
+    }
+
+    function InitEachDayChart(chartXAxis, chartSeries) {
+        $('.vote-analysis-chart').highcharts({
+            title: {
+                text: '@project.VoteNo 号',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '每天的投票总数',
+                x: -20
+            },
+            xAxis: {
+                categories: chartXAxis
+            },
+            yAxis: {
+                title: {
+                    text: '票数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '票',
+                crosshairs: true,
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: chartSeries
+        });
+    }
+
+    function InitEachHourChart(chartXAxis, chartSeries) {
+        $('.vote-analysis-eachhourchart').highcharts({
+            title: {
+                text: '@project.VoteNo 号',
+                x: -20 //center
+            },
+            subtitle: {
+                text: $("#votearea").val() + '每小时的投票总数',
                 x: -20
             },
             xAxis: {

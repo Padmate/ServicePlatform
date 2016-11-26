@@ -45,6 +45,8 @@ namespace Padmate.ServicePlatform.DataAccess
 
         public DbSet<Vote> Votes { get; set; }
 
+        public DbSet<VoteBlackList> VoteBlackLists { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -64,7 +66,7 @@ namespace Padmate.ServicePlatform.DataAccess
             modelBuilder.Configurations.Add(new IntelInnovationProjectApplyAttachmentConfiguration());
             modelBuilder.Configurations.Add(new ModuleConfiguration());
             modelBuilder.Configurations.Add(new VoteConfiguration());
-
+            modelBuilder.Configurations.Add(new VoteBlackListConfiguration());
         }
 
         public static ServiceDbContext Create()

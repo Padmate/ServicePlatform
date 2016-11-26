@@ -59,6 +59,7 @@ namespace Padmate.ServicePlatform.Models
     {
         [Required(ErrorMessage = "用户名不能为空")]
         [Display(Name = "用户名")]
+        [RegularExpression(@"^[\u4e00-\u9fa5a-zA-Z]+[\u4e00-\u9fa5a-zA-Z0-9\-_]*$", ErrorMessage = "用户名只能由中英文、数字或_组成,且只能以中英文开头")]
         public string UserName { get; set; }
 
         /// <summary>
